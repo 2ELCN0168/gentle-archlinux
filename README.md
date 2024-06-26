@@ -33,3 +33,4 @@ chmod +x ./Archlinux_Gentle_Installer.sh
 - [ ] - motd et issue.net ;
 - [ ] - Conditions LVM ;
 - [ ] - Repair f_partition_disks.sh ;
+- [ ] - Remake the formatting and LVM part to eliminate duplicate or non-pratical code
