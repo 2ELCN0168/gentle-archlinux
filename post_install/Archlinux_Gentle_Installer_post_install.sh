@@ -56,4 +56,4 @@ systemd_resolved
 # ENDING
 ending
 
-#rm -rf /post_install
+rm -rf /post_install

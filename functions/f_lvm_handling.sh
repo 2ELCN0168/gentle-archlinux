@@ -23,11 +23,11 @@ lvm_handling() {
 
     pvcreate ${root_part}
     vgcreate VG_Archlinux ${root_part}
-    lvcreate -l 20%FREE VG_Archlinux -n root
-    lvcreate -l 40%FREE VG_Archlinux -n home
-    lvcreate -l 20%FREE VG_Archlinux -n usr
-    lvcreate -l 10%FREE VG_Archlinux -n var
-    lvcreate -l 10%FREE VG_Archlinux -n tmp
+    lvcreate -l 20%VG VG_Archlinux -n root
+    lvcreate -l 40%VG VG_Archlinux -n home
+    lvcreate -l 20%VG VG_Archlinux -n usr
+    lvcreate -l 10%VG VG_Archlinux -n var
+    lvcreate -l 10%VG VG_Archlinux -n tmp
 
     case "$filesystem" in
       XFS)
