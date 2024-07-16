@@ -14,8 +14,8 @@ set_issue() {
                                 printf "${C_WHITE}> ${INFO}Type the message you want to be displayed before logging in: "
                                 printf "\n"
                                 read -p "" issue
-                                local issue=${issue}
-                                cat $issue > /etc/issue
+                                local issue="${issue}"
+                                cat "${issue}" > /etc/issue
                                 jump
                                 break
                                 ;;
@@ -41,8 +41,8 @@ set_motd() {
                                 printf "${C_WHITE}> ${INFO}Type the message you want to be displayed after logging in: "
                                 printf "\n"
                                 read -p "" motd
-                                local motd=${motd}
-                                cat $motd > /etc/motd
+                                local motd="${motd}"
+                                cat "${motd}" > /etc/motd
                                 jump
                                 break
                                 ;;
