@@ -99,12 +99,16 @@ locales_gen() {
 
 set_hostname() {
   # Setting up /etc/hostname
-  read -p "Enter your hostname with domain (optional). Recommended hostname length: 15 chars. (e.g., MH1DVMARXXX001O.home.arpa). Default is 'localhost.home.arpa'. " hostname
-  hostname=${hostname:-'localhost.home.arpa'}
+  read -p "Enter your hostname without domain. Recommended hostname length: 15 chars. (e.g., MH1DVMARXXX001O). Default is 'localhost'. " hostname
+  hostname=${hostname:-'localhost'}
+  jump
+  read -p "Enter your domain name. Default is 'home.arpa' (RFC 8375). " domain
+  domain=${domain:-'home.arpa'}
+
   if [[ -n $hostname ]]; then
-    printf $hostname > /etc/hostname
+    printf ${hostname}.${domain} > /etc/hostname
     jump
-    printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}${NO_FORMAT}."
+    printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}.${domain}${NO_FORMAT} (FQDN)."
     jump 
   fi 
 }
@@ -117,8 +121,8 @@ set_hosts() {
 
   printf "127.0.0.1 localhost.localdomain localhost localhost-ipv4\n" > /etc/hosts
   printf "::1       localhost.localdomain localhost localhost-ipv6\n" >> /etc/hosts
-  printf "127.0.0.1 $hostname.localdomain  $hostname  $hostname-ipv4\n" >> /etc/hosts
-  printf "::1       $hostname.localdomain  $hostname  $hostname-ipv6\n" >> /etc/hosts
+  printf "127.0.0.1 $hostname.localdomain  $hostname.$domain    $hostname.$domain-ipv4\n" >> /etc/hosts
+  printf "::1       $hostname.localdomain  $hostname.$domain    $hostname.$domain-ipv6\n" >> /etc/hosts
 
   cat /etc/hosts
   sleep 1

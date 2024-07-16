@@ -8,6 +8,7 @@ source_files() {
     source $f_path/f_formatting.sh
     source $f_path/f_greetings_pi.sh
     source $f_path/f_configs.sh
+    source $f_path/f_messages.sh
     source $f_path/f_set_shellrc.sh
     source $f_path/f_install_bootloader.sh
     source $f_path/f_theming.sh
@@ -27,6 +28,9 @@ greetings_pi
 
 # CHANGE MULTIPLE CONFIG FILES
 make_config
+
+# CUSTOMIZE MESSAGES
+messages
 
 # INSTALL BOOTLOADER
 install_bootloader
