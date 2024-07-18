@@ -9,6 +9,7 @@ set_issue() {
         read -p "[?] - Would you like to setup a /etc/issue file? [Y/n] " response
         local response=${response:-Y}
         while true; do
+                printf "\n"
                 case "$response" in
                         [yY])
                                 printf "${C_WHITE}> ${INFO}Type the message you want to be displayed before logging in: "

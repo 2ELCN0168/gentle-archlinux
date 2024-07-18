@@ -30,7 +30,7 @@ greetings_pi
 make_config
 
 # CUSTOMIZE MESSAGES
-messages
+#messages
 
 # INSTALL BOOTLOADER
 install_bootloader
