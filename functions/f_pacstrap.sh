@@ -100,6 +100,10 @@ pacstrap_install() {
     additionalPackages="$additionalPackages amd-ucode"
   fi
 
+  if [[ $net_manager == 'networkmanager' ]]; then
+    additionalPackages="$additionalPackages networkmanager"
+  fi
+
   # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
   sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
   
@@ -112,8 +116,8 @@ pacstrap_install() {
   sleep 4
   
   # Perform the installation of the customized system
-  pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-  systemctl-tui hdparm neovim vim dos2unix tree fastfetch networkmanager tmux ${additionalPackages}
+  pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute tracepath zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
+  systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
   jump
   printf "${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${C_GREEN}Vim${NO_FORMAT}."
 }

@@ -257,12 +257,19 @@ EOF
 
 }
 
+enable_net_manager() {
+
+        if [[ $net_manager == 'networkmanager' ]]; then
+                printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}"
+                systemctl enable NetworkManager &> /dev/null
+        elif [[ $net_manager == 'systemd-networkd' ]]; then
+                printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-networkd.${NO_FORMAT}"
+                systemctl enable systemd-networkd &> /dev/null
+        fi
+}
 make_config() {
 
-  printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}"
-  systemctl enable NetworkManager &> /dev/null
-
-  jump
+    jump
 
   set_time
   locales_gen
@@ -273,4 +280,5 @@ make_config() {
   set_mkinitcpio
   set_root_passwd
   set_vim_nvim
+  enable_net_manager
 }

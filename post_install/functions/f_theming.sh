@@ -19,11 +19,13 @@ create_themes() {
     case "$response" in
       [0])
         echo include themes/catppuccin/latte.conf >> /boot/EFI/refind/refind.conf
+        cp -a /boot/EFI/refind/themes/catppuccin/assets/latte/icons/os_arch.png /boot/vmlinuz-linux.png
         choice=0
         break
         ;;
       [1])
         echo include themes/catppuccin/mocha.conf >> /boot/EFI/refind/refind.conf
+        cp -a /boot/EFI/refind/themes/catppuccin/assets/mocha/icons/os_arch.png /boot/vmlinuz-linux.png
         choice=1
         break
         ;;

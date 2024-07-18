@@ -20,6 +20,7 @@ source_files() {
     source $f_path/f_disk_choice.sh
     source $f_path/f_partition_disks.sh
     source $f_path/f_format_choice.sh
+    source $f_path/f_network_manager_choice.sh
     source $f_path/f_pacstrap.sh
     source $f_path/f_genfstab.sh
     source $f_path/f_systemd_resolved.sh
@@ -60,6 +61,9 @@ partition_disk
 
 # START FORMATING PARTITIONS BTRFS|XFS|EXT4 WITH(OUT) LUKS
 format_partitions
+
+# ASK NETWORK MANAGER
+net_manager
 
 # INSTALL THE SYSTEM
 pacstrap_install
