@@ -18,7 +18,7 @@ systemd_networkd() {
                                network_interface="${response}"
                                printf "\n"
                                printf "${C_WHITE}> ${INFO} ${NO_FORMAT}The interface to configure is ${C_GREEN}${network_interface}${NO_FORMAT}"
-                               printf "\n"
+                               jump
                                break
                        else
                                printf "\n"
@@ -34,7 +34,7 @@ systemd_networkd() {
                local gateway=${gateway}
                printf "\n"
 
-               cp /post-install/files/systemd-networkd-template.conf /etc/systemd/network/05-${network_interface}.network
+               cp /root/gentle-archlinux/post-install/files/systemd-networkd-template.conf /mnt/etc/systemd/network/05-${network_interface}.network
                chmod 644 /etc/systemd/network/*
 
                sed -i "s/name/${network_interface}" /etc/systemd/network/05-${network_interface}.network
