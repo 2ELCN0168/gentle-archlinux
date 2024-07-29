@@ -34,7 +34,7 @@ systemd_networkd() {
                local gateway=${gateway}
                printf "\n"
 
-               cp /root/gentle-archlinux/post-install/files/systemd-networkd-template.conf /mnt/etc/systemd/network/05-${network_interface}.network
+               cp /post-install/files/systemd-networkd-template.conf /mnt/etc/systemd/network/05-${network_interface}.network
                chmod 644 /etc/systemd/network/*
 
                sed -i "s/name/${network_interface}" /etc/systemd/network/05-${network_interface}.network
