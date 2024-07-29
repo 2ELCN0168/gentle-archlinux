@@ -10,7 +10,10 @@ systemd-networkd() {
                        read -p "[?] - Which interface do you want to configure with systemd-networkd? Type full name. " response
                        local response=${response}
                        printf "\n"
-                       if [ -d "/sys/class/net/${response}" ]; then
+
+                       if [[ $network_interface == '' ]]; then
+                               invalid_answer
+                       else if [ -d "/sys/class/net/${response}" ]; then
                                network_interface="${response}"
                                printf "\n"
                                printf "${C_WHITE}> ${INFO} ${NO_FORMAT}The interface to configure is ${C_GREEN}${network_interface}${NO_FORMAT}"
