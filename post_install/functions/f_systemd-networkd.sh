@@ -26,8 +26,8 @@ systemd_networkd() {
                        fi
                done
                
-               read -p "[?] - What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) " ip
-               local address=${ip}
+               read -p "[?] - What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) " address
+               local address=${address}
                printf "\n"
 
                read -p "[?] - What will be the gateway IP? WARNING WHEN TYPING (e.g., 192.168.1.1) " gateway 
@@ -39,6 +39,6 @@ systemd_networkd() {
                sed -i "s/name/${network_interface}/g" /etc/systemd/network/05-${network_interface}.network
                sed -i "s/domain/${domain}/g" /etc/systemd/network/05-${network_interface}.network
                sed -i "s/gateway/${gateway}/g" /etc/systemd/network/05-${network_interface}.network
-               sed -i "s/address/${address}/g" /etc/systemd/network/05-${network_interface}.network
+               sed -i "s#ip#${address}#g" /etc/systemd/network/05-${network_interface}.network
        fi
 }
