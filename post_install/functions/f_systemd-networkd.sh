@@ -34,7 +34,7 @@ systemd_networkd() {
                local gateway=${gateway}
                printf "\n"
 
-               cp /post-install/files/systemd-networkd-template.conf /etc/systemd/network/05-${network_interface}.network
+               cp /post_install/files/systemd-networkd-template.conf /etc/systemd/network/05-${network_interface}.network
 
                sed -i "s/name/${network_interface}/g" /etc/systemd/network/05-${network_interface}.network
                sed -i "s/domain/${domain}/g" /etc/systemd/network/05-${network_interface}.network
