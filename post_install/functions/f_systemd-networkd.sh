@@ -36,9 +36,9 @@ systemd_networkd() {
 
                cp /post-install/files/systemd-networkd-template.conf /mnt/etc/systemd/network/05-${network_interface}.network
 
-               sed -i 's/name/${network_interface}' /etc/systemd/network/05-${network_interface}.network
-               sed -i 's/domain/${domain}' /etc/systemd/network/05-${network_interface}.network
-               sed -i 's/gateway/${gateway}' /etc/systemd/network/05-${network_interface}.network
-               sed -i 's/address/${address}' /etc/systemd/network/05-${network_interface}.network
+               sed -i "s/name/${network_interface}/g" /etc/systemd/network/05-${network_interface}.network
+               sed -i "s/domain/${domain}/g" /etc/systemd/network/05-${network_interface}.network
+               sed -i "s/gateway/${gateway}/g" /etc/systemd/network/05-${network_interface}.network
+               sed -i "s/address/${address}/g" /etc/systemd/network/05-${network_interface}.network
        fi
 }
