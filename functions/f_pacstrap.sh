@@ -111,6 +111,7 @@ pacstrap_install() {
   ask_packages
 
   # Display additional packages
+  printf "\n"
   printf "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}"
   jump
   sleep 4

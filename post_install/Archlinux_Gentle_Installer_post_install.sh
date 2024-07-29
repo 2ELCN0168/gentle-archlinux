@@ -56,7 +56,7 @@ ask_newuser
 install_paru
 
 # CONFIGURE systemd-networkd
-systemd-networkd
+systemd_networkd
 
 # CONFIGURE SYSTEMD-RESOLVED
 systemd_resolved

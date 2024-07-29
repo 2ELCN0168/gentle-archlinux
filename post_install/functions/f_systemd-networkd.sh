@@ -1,4 +1,4 @@
-systemd-networkd() {
+systemd_networkd() {
        
        if [[ $net_manager == 'systemd-networkd' ]]; then
                local network_interface=
