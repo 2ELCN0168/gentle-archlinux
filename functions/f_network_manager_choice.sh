@@ -5,7 +5,7 @@ net_manager() {
                 printf "==NETWORK MANAGER==="
                 jump
                 printf "${C_WHITE}[0] - ${C_GREEN}systemd-networkd${NO_FORMAT} [default]\n"
-                printf "${C_WHITE}[1] - ${C_WHITE}NetworkManager${NO_FORMAT} \n"
+                printf "${C_WHITE}[1] - ${C_WHITE}NetworkManager${NO_FORMAT}"
                 jump
                 printf "====================\n"
                 read -p "[?] - Which network manager do you want to use? " answer

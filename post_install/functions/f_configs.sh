@@ -103,7 +103,7 @@ set_hostname() {
   hostname=${hostname:-'localhost'}
   jump
   read -p "Enter your domain name. Default is 'home.arpa' (RFC 8375). " domain
-  domain=${domain:-'home.arpa'}
+  export domain=${domain:-'home.arpa'}
 
   if [[ -n $hostname ]]; then
     printf ${hostname}.${domain} > /etc/hostname

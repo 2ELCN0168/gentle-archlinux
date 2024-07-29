@@ -16,6 +16,7 @@ source_files() {
     source $f_path/f_install_frw.sh
     source $f_path/f_user_management.sh
     source $f_path/f_paru.sh
+    source $f_path/f_systemd-networkd.sh
     source $f_path/f_systemd_resolved.sh
     source $f_path/f_ending.sh
 }
@@ -53,6 +54,9 @@ ask_newuser
 
 # INSTALL PARU
 install_paru
+
+# CONFIGURE systemd-networkd
+systemd-networkd
 
 # CONFIGURE SYSTEMD-RESOLVED
 systemd_resolved

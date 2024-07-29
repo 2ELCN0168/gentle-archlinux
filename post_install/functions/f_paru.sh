@@ -9,6 +9,7 @@ install_paru() {
     fi
     printf "[?] - Would you like to install paru? It's an AUR helper like yay. [y/N]\n"
     read -p "[?] - Warning, this can take some time... " response
+    printf "\n"
     local response=${response:-N}
     if [[ ! $createUser == 'Y' ]]; then
       break

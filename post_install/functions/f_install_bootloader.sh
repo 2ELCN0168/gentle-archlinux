@@ -38,7 +38,10 @@ install_refind() {
   # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
   echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
 
+  # For Linux kernel
   echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
+  # For Linux-LTS kernel
+  echo -e \"Arch Linux LTS\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux-lts.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
 
   printf "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}"
   jump

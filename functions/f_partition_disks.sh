@@ -17,6 +17,7 @@ partition_disk() {
        #parted -s $user_disk mkpart ESP fat32 1Mib 512Mib && \
        sgdisk -n 1::+512M -t 1:ef00 $user_disk
        parted -s $user_disk mkpart Archlinux 600Mib 100%
+       printf "\n"
       printf "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}"
       jump
     else
