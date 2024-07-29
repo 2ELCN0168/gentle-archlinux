@@ -13,13 +13,13 @@ net_manager() {
                 printf "\n"
                 case $answer in
                         0)
-                                printf "${C_WHITE}> ${INFO}You chose ${C_GREEN}systemd-networkd${NO_FORMAT}."
+                                printf "${C_WHITE}> ${INFO} You chose ${C_GREEN}systemd-networkd${NO_FORMAT}."
                                 printf "\n"
                                 net_manager="systemd-networkd"
                                 break
                                 ;;
                         1)
-                                printf "${C_WHITE}> ${INFO}You chose ${C_CYAN}NetworkManager${NO_FORMAT}."
+                                printf "${C_WHITE}> ${INFO} You chose ${C_CYAN}NetworkManager${NO_FORMAT}."
                                 printf "\n"
                                 net_manager="networkmanager" 
                                 break

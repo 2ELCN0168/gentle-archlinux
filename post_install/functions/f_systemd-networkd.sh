@@ -2,7 +2,7 @@ systemd-networkd() {
        
        if [[ $net_manager == 'systemd-networkd' ]]; then
                local network_interface=
-               while True; do
+               while true; do
                        printf "==INT. CONFIG.======"
                        ip link show | grep -v "lo:" | awk -F ': ' '{ print $2 }'
                        printf "====================\n"
