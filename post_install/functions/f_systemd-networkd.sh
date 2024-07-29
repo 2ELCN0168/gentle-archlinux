@@ -3,15 +3,15 @@ systemd-networkd() {
        if [[ $net_manager == 'systemd-networkd' ]]; then
                local network_interface=
                while true; do
-                       printf "==INT. CONFIG.======"
+                       printf "==INT. CONFIG.======\n"
                        ip link show | grep -v "lo:" | awk -F ': ' '{ print $2 }'
                        printf "====================\n"
 
                        read -p "[?] - Which interface do you want to configure with systemd-networkd? Type full name. " response
                        local response=${response}
                        printf "\n"
-                       if [[ -e /sys/class/net/$response ]]; then
-                               network_interface="$response"
+                       if ls "/sys/class/net/${response}" &> /dev/null; then
+                               network_interface="${response}"
                                printf "\n"
                                printf "${C_WHITE}> ${INFO} ${NO_FORMAT}The interface to configure is ${C_GREEN}${network_interface}${NO_FORMAT}"
                                printf "\n"
