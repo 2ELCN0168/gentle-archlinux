@@ -4,8 +4,8 @@ source_files() {
 
     local f_path="/post_install/functions"
 
-    source ./config/c_config.sh
-    source ./config/c_formatting.sh
+    source /post_install/config/c_config.sh
+    source /post_install/config/c_formatting.sh
     source $f_path/f_greetings_pi.sh
     source $f_path/f_configs.sh
     source $f_path/f_messages.sh
