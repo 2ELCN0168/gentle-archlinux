@@ -6,6 +6,7 @@ source_files() {
 
     source ./config/c_config.sh
     source ./config/c_formatting.sh
+    source ./config/c_theme.sh
 
     source $f_path/f_greetings.sh
     source $f_path/f_internet.sh
@@ -25,6 +26,8 @@ source_files() {
     source $f_path/f_genfstab.sh
     source $f_path/f_systemd_resolved.sh
 }
+
+__tty_theme
 
 # SOURCE FILES
 source_files
