@@ -4,8 +4,8 @@ source_files() {
 
     local f_path="./functions"
 
-    source ./c_config.sh
-    source $f_path/f_formatting.sh
+    source ./config/c_config.sh
+    source ./config/c_formatting.sh
 
     source $f_path/f_greetings.sh
     source $f_path/f_internet.sh
