@@ -74,8 +74,8 @@ pacstrap_install
 # GENERATE FSTAB
 gen_fstab
 
-cp -a ./config/c_config.sh post_install/config
-cp -a ./config/c_formatting.sh post_install/config
+cp -a ./config/c_config.sh post_install/config/c_config.sh
+cp -a ./config/c_formatting.sh post_install/config/c_formatting.sh
 cp -a post_install /mnt
 chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
 arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh
