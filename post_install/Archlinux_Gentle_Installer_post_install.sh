@@ -4,7 +4,8 @@ source_files() {
 
     local f_path="/post_install/functions"
 
-    #source ./c_config.sh
+    source ./config/c_config.sh
+    source ./config/c_formatting.sh
     source $f_path/f_greetings_pi.sh
     source $f_path/f_configs.sh
     source $f_path/f_messages.sh
@@ -18,15 +19,6 @@ source_files() {
     source $f_path/f_systemd-networkd.sh
     source $f_path/f_systemd_resolved.sh
     source $f_path/f_ending.sh
-}
-
-jump() {
-  printf "\n\n"
-}
-
-invalid_answer() {
-  printf "${C_WHITE}> ${WARN} ${C_RED} Not a valid answer.${NO_FORMAT}"
-  jump
 }
 
 # SOURCE FILES
