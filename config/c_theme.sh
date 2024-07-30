@@ -1,26 +1,27 @@
-### THEME
+# Theme generated using: https://ari.lt/page/ttytheme
+# Installation: Just add these lines to your ~/.bashrc
 
 __tty_theme() {
-  [ "\$TERM" = 'linux' ] || return # Only run in a TTY
+    [ "$TERM" = 'linux' ] || return # Only run in a TTY
 
-  printf "\e]P01e1e2e" # black         rgb(30, 30, 46)     #1e1e2e
-  printf "\e]P1f38ba8" # red           rgb(243, 139, 168)  #f38ba8
-  printf "\e]P2a6e3a1" # green         rgb(166, 227, 161)  #a6e3a1
-  printf "\e]P3fab387" # brown         rgb(250, 179, 135)  #fab387
-  printf "\e]P489b4fa" # blue          rgb(137, 180, 250)  #89b4fa
-  printf "\e]P5cba6f7" # magenta       rgb(203, 166, 247)  #cba6f7
-  printf "\e]P694e2d5" # cyan          rgb(148, 226, 213)  #94e2d5
-  printf "\e]P79399b2" # light_gray    rgb(147, 153, 178)  #9399b2
-  printf "\e]P8585b70" # gray          rgb(88, 91, 112)    #585b70
-  printf "\e]P9eba0ac" # bold_red      rgb(235, 160, 172)  #eba0ac
-  printf "\e]PAa6e3a1" # bold_green    rgb(166, 227, 161)  #a6e3a1
-  printf "\e]PBf9e2af" # bold_yellow   rgb(249, 226, 175)  #f9e2af
-  printf "\e]PCb4befe" # bold_blue     rgb(180, 190, 254)  #b4befe
-  printf "\e]PDf5c2e7" # bold_magenta  rgb(245, 194, 231)  #f5c2e7
-  printf "\e]PE89dceb" # bold_cyan     rgb(137, 220, 235)  #89dceb
-  printf "\e]PFcdd6f4" # bold_white    rgb(205, 214, 244)  #cdd6f4
+    printf "\e]P01b1a26" # black         rgb(27, 26, 38)     #1b1a26
+    printf "\e]P1ff757f" # red           rgb(255, 117, 127)  #ff757f
+    printf "\e]P29ece6a" # green         rgb(158, 206, 106)  #9ece6a
+    printf "\e]P3e1ae67" # brown         rgb(225, 174, 103)  #e1ae67
+    printf "\e]P47aa2f7" # blue          rgb(122, 162, 247)  #7aa2f7
+    printf "\e]P5b998f5" # magenta       rgb(185, 152, 245)  #b998f5
+    printf "\e]P67cceff" # cyan          rgb(124, 206, 255)  #7cceff
+    printf "\e]P7c0cbf5" # light_gray    rgb(192, 203, 245)  #c0cbf5
+    printf "\e]P8c0cbf5" # gray          rgb(192, 203, 245)  #c0cbf5
+    printf "\e]P9ff757f" # bold_red      rgb(255, 117, 127)  #ff757f
+    printf "\e]PA9ece6a" # bold_green    rgb(158, 206, 106)  #9ece6a
+    printf "\e]PBe1ae67" # bold_yellow   rgb(225, 174, 103)  #e1ae67
+    printf "\e]PC7aa2f7" # bold_blue     rgb(122, 162, 247)  #7aa2f7
+    printf "\e]PDb998f5" # bold_magenta  rgb(185, 152, 245)  #b998f5
+    printf "\e]PE7cceff" # bold_cyan     rgb(124, 206, 255)  #7cceff
+    printf "\e]PFc0cbf5" # bold_white    rgb(192, 203, 245)  #c0cbf5
 
-  clear # To fix the background
+    clear # To fix the background
 }
 
 __tty_theme
