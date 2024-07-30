@@ -51,10 +51,11 @@ btrfs_handling() {
   # FORMATTING DONE
 
   export btrfsSubvols=0
+  local btrfsQuotas=
 
   while true; do
     read -p "[?] - It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? [0=default/1] -> " response
-    response=${response:-0}
+    local response=${response:-0}
     jump
     case "$response" in
       [0])
@@ -74,6 +75,30 @@ btrfs_handling() {
         ;;
     esac
   done
+
+  if [ $btrfsSubvols -eq 1 ]; then
+          while true; do
+                read -p "[?] - Do you want to enable quotas on your subvolumes? [Y/n] " response
+                local response=${response:-Y}
+                case "$response" in
+                        [yY])
+                                btrfsQuotas=1
+                                printf "${C_WHITE}> ${INFO} ${C_GREEN}You chose to enable quotas.${NO_FORMAT}"
+                                jump
+                                break
+                                ;;
+                        [nN])
+                                btrfsQuotas=0
+                                printf "${C_WHITE}> ${INFO} ${C_YELLOW}There will be no quotas on your subvolumes.${NO_FORMAT}"
+                                jump
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+          done
+  fi
 
   printf "${C_WHITE}> ${INFO} Formatting ${root_part} to ${filesystem}.${NO_FORMAT}\n"
   mkfs.btrfs -f -L Archlinux ${root_part} &> /dev/null
@@ -117,6 +142,19 @@ btrfs_handling() {
     lsblk -f
   elif [[ $btrfsSubvols -eq 0 ]]; then
     mount_default
+  fi
+
+
+  if [[ $btrfsSubvols -eq 1 && $btrfsQuotas -eq 1 ]]; then
+        
+        # MUST BE REFORMATTED
+
+        btrfs quota enable /mnt/var      
+        btrfs quota enable /mnt/tmp      
+        btrfs quota rescan /mnt/var
+        btrfs quota rescan /mnt/tmp
+        btrfs qgroup limit 2G /mnt/tmp
+        btrfs qgroup limit 5G /mnt/var
   fi
 }
   
