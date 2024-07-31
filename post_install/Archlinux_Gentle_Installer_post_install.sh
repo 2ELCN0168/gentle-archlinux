@@ -12,6 +12,7 @@ source_files() {
     source $f_path/f_set_shellrc.sh
     source $f_path/f_install_bootloader.sh
     source $f_path/f_theming.sh
+    source $f_path/f_refind_theming.sh
     source $f_path/f_pacman_hooks.sh
     source $f_path/f_install_frw.sh
     source $f_path/f_user_management.sh
@@ -48,6 +49,7 @@ set_zshrc
 
 # THEMING
 create_themes
+refind_theming
 
 # CREATE USER
 ask_newuser

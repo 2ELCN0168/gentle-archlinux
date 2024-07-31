@@ -11,7 +11,7 @@ set_bashrc() {
   fi
 
   cp /etc/skel/.bashrc /root
-
+  cp /etc/skel/.bash_profile /root
 }
 
 set_zshrc() {

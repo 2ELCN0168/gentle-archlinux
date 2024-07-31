@@ -1,9 +1,6 @@
 create_themes() {
-
-  mkdir -p /boot/EFI/refind/themes
-  git clone https://github.com/catppuccin/refind /boot/EFI/refind/themes/catppuccin &> /dev/null
-
-  local choice=0
+  
+  theme_color=0
 
   while true; do
     printf "==THEMES============"
@@ -18,20 +15,23 @@ create_themes() {
     local response=${response:-1}
     case "$response" in
       [0])
-        echo include themes/catppuccin/latte.conf >> /boot/EFI/refind/refind.conf
-        cp -a /boot/EFI/refind/themes/catppuccin/assets/latte/icons/os_arch.png /boot/vmlinuz-linux.png
-        choice=0
+        echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.bashrc
+        echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.zshrc 
+        echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /root/.bashrc
+        echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /root/.zshrc
+        theme_color=0
         break
         ;;
       [1])
-        echo include themes/catppuccin/mocha.conf >> /boot/EFI/refind/refind.conf
-        cp -a /boot/EFI/refind/themes/catppuccin/assets/mocha/icons/os_arch.png /boot/vmlinuz-linux.png
-        choice=1
+        echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /etc/skel/.bashrc
+        echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /etc/skel/.zshrc
+        echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /root/.bashrc
+        echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /root/.zshrc
+        theme_color=1
         break
         ;;
       [2])
-        rm -rf /boot/EFI/refind/themes/catppuccin &> /dev/null
-        choice=2
+        theme_color=2
         break
         ;;
       *)
@@ -41,12 +41,6 @@ create_themes() {
   done
 
   mkdir /etc/tty_themes.d
-
-  if [[ $choice -eq 0 ]]; then
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.bashrc
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /etc/skel/.zshrc 
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /root/.bashrc
-    echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> /root/.zshrc
     cat << EOF > /etc/tty_themes.d/tty_catppuccin_latte.sh
     __tty_theme() {
     [ "$TERM" = 'linux' ] || return # Only run in a TTY
@@ -73,11 +67,7 @@ create_themes() {
 
 __tty_theme
 EOF
-  elif [[ $choice -eq 1 ]]; then
-    echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /etc/skel/.bashrc
-    echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /etc/skel/.zshrc
-    echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /root/.bashrc
-    echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> /root/.zshrc
+   
     cat << EOF > /etc/tty_themes.d/tty_tokyonight_storm.sh
     __tty_theme() {
     [ "\$TERM" = 'linux' ] || return # Only run in a TTY
@@ -104,10 +94,5 @@ EOF
 
 __tty_theme
 EOF
-  elif [[ $choice -eq 2 ]]; then
-    continue
-  fi
-
-  
 
 }
