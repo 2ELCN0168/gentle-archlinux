@@ -27,7 +27,7 @@ disk_choice() {
                 echo -e "${B_CYAN} [?] - Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT} \c"
 
                 declare ans_block_device="sda"
-                echo "${ans_block_device}"
+                echo "BLOCK = ${ans_block_device}"
                 read ans_block_device
                 echo ""
 
