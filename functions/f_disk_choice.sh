@@ -28,7 +28,7 @@ disk_choice() {
 
                 declare ans_block_device=""
                 read ans_block_device
-                : "${ans_block_device:-sda}"
+                : "${ans_block_device:=sda}"
                 echo ""
                 echo "BLOCK = ${ans_block_device}"
 
