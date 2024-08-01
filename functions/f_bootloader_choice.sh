@@ -21,7 +21,7 @@ bootloader_choice() {
 
                         echo -e "====================\n"
                         
-                        echo -e "${B_CYAN} Which one do you prefer? [0/1/2] -> ${NO_FORMAT} "
+                        echo -e "${B_CYAN} Which one do you prefer? [0/1/2] -> ${NO_FORMAT} \c"
 
                         declare -i ans_bootloader="0"
                         read ans_bootloader
