@@ -49,7 +49,7 @@
           ;;
       esac
     done
-  elif [[ UEFI -eq 0 ]]; then
+  elif [[ "${UEFI}" -eq 0 ]]; then
     bootloader="GRUB"
   fi
 }

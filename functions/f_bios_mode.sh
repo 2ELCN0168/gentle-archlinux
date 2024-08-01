@@ -9,7 +9,7 @@ get_bios_mode() {
         # FORMATTING DONE
 
         #export UEFI=0
-        declare -ix UEFI="0"
+        declare -igx UEFI="0"
 
         if [[ -e /sys/firmware/efi/fw_platform_size && -s /sys/firmware/efi/fw_platform_size ]]; then
                 echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Running in ${C_CYAN}UEFI${NO_FORMAT} mode."
