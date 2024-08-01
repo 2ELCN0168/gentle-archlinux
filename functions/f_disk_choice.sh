@@ -26,12 +26,12 @@ disk_choice() {
 
                 echo -e "${B_CYAN} [?] - Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT} \c"
 
-                declare ans_block_device="sda"
+                local ans_block_device="sda"
                 echo "BLOCK = ${ans_block_device}"
                 read ans_block_device
                 echo ""
 
-                if [[ -b /dev/"${ans_block_device}" ]]; then
+                if [[ -b "/dev/${ans_block_device}" ]]; then
                         disk="${ans_block_device}"
                         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}\n"
 
