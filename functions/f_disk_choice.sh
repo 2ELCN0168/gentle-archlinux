@@ -20,7 +20,7 @@ disk_choice() {
                 echo -e "==DISK==============\n"
 
                 lsblk -d --output NAME | grep -vE 'NAME|sr0|loop0'
-                echo -e "\n"
+                echo -e ""
 
                 echo -e "====================\n"
 
@@ -32,9 +32,7 @@ disk_choice() {
 
                 if [[ -b "/dev/${ans_block_device}" ]]; then
                         disk="${ans_block_device}"
-                        echo -e "\n"
-                        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}"
-                        echo -e "\n"
+                        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}\n"
 
                         if [[ "${disk}" =~ nvme... ]]; then 
                                 partitionType="p"
@@ -45,9 +43,7 @@ disk_choice() {
                         root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 
                         break
-
                 else
-                        echo -e "\n"
                         invalid_answer
                         continue
                 fi
