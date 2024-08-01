@@ -10,7 +10,7 @@
 
   export bootloader=""
   
-  if [[ UEFI -eq 1 ]]; then
+  if [[ "${UEFI}" -eq 1 ]]; then
     while true; do
       printf "==BOOTLOADER========"
       jump
