@@ -30,7 +30,7 @@ disk_choice() {
                 read ans_block_device
                 echo ""
 
-                if [[ -b "/dev/${ans_block_device}" ]]; then
+                if [[ -b /dev/"${ans_block_device}" ]]; then
                         disk="${ans_block_device}"
                         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}\n"
 
