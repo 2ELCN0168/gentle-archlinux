@@ -7,6 +7,13 @@ export C_YELLOW="\033[93m"
 export C_PINK="\033[95m"
 export C_WHITE="\033[97m"
 
+export B_RED="\033[41;30m"
+export B_GREEN="\033[42;30m"
+export B_CYAN="\033[46;30m"
+export B_YELLOW="\033[43;30m"
+export B_PINK="\033[45;30m"
+export B_WHITE="\033[47;30m"
+
 # End of the color sequence
 export NO_FORMAT="\033[0m"
 
