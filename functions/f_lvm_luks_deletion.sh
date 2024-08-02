@@ -23,7 +23,7 @@ lvm_luks_try() {
 
         case "${result}" in
                 [0])
-                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}It seems that there is no ${C_CYAN}LVM ${C_YELLOW}nor${C_CYAN} LUKS${C_YELLOW}, continue...${NO_FORMAT}"
+                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}It seems that there is no ${C_CYAN}LVM ${C_YELLOW}nor${C_CYAN} LUKS${C_YELLOW}, continue...${NO_FORMAT}\n"
                         ;;
                 [1])
                         lvm_deletion
