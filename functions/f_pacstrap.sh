@@ -88,9 +88,6 @@ ask_packages() {
                         ;;
         esac
 
-
-
-
         if [[ "${disk}" =~ "nvme" ]]; then
                 additionalPackages="${additionalPackages} nvme-cli libnvme"
         fi
@@ -128,11 +125,11 @@ ask_packages() {
         ask_packages
 
         # Display additional packages
-        echo -e "\n${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
         sleep 4
 
         # Perform the installation of the customized system
         pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-        systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux "${additionalPackages}"
+        systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
         echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN}Vim${NO_FORMAT}.\n"
 }
