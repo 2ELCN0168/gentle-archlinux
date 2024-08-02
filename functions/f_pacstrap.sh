@@ -35,7 +35,7 @@ ask_packages() {
 
                 case "${ans_help_pack}" in
                         "y"|"Y")
-                                echo -e "\n${C_WHITE}> ${INFO} ${C_GREEN}Helping pack${NO_FORMAT} will be installed.\n"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}Helping pack${NO_FORMAT} will be installed.\n"
                                 additionalPackages="${additionalPackages} texinfo tealdeer man man-pages"
                                 break
                                 ;;
@@ -58,7 +58,7 @@ ask_packages() {
 
                 case "${ans_monitoring_pack}" in
                         "y"|"Y")
-                                echo -e "\n${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed.\n"
+                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed.\n"
                                 additionalPackages="${additionalPackages} btop htop bmon"
                                 break
                                 ;;
@@ -70,7 +70,7 @@ ask_packages() {
                                 ;;
                 esac
         done
-        }
+}
 
         pacstrap_install() {
 

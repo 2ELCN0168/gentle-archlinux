@@ -16,9 +16,9 @@ filesystem_choice() {
                 echo -e "${C_WHITE}[1] - ${C_CYAN}XFS${NO_FORMAT}"
                 echo -e "${C_WHITE}[2] - ${C_RED}EXT4${NO_FORMAT}"
                 
-                echo -e "====================\n"
+                echo -e "\n====================\n"
 
-                echo -e "${B_CYAN} [?] - Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN} [?] ${NO_FORMAT} - Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
                 
                 declare -i ans_filesystem="0"
                 read ans_filesystem

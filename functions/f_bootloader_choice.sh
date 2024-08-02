@@ -19,7 +19,7 @@ bootloader_choice() {
                         echo -e "${C_WHITE}[1] - ${C_YELLOW}GRUB2${NO_FORMAT}"
                         echo -e "${C_WHITE}[2] - ${C_RED}systemd-boot${NO_FORMAT}"
 
-                        echo -e "====================\n"
+                        echo -e "\n====================\n"
                         
                         echo -e "${B_CYAN} [?] - Which one do you prefer? [0/1/2] -> ${NO_FORMAT} \c"
 

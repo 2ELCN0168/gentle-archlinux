@@ -24,9 +24,9 @@ partition_disk() {
                 #         exit 1
                 # fi
                 
-                if parted -s "${user_disk}" mklabel gpt; then
-                        sgdisk -n 1::+512M -t 1:ef00 "${user_disk}"
-                        parted -s "${user_disk}" mkpart Archlinux 600Mib 100%
+                if parted -s "${user_disk}" mklabel gpt 1> /dev/null 2>&1; then
+                        sgdisk -n 1::+512M -t 1:ef00 "${user_disk}" 1> /dev/null 2>&1
+                        parted -s "${user_disk}" mkpart Archlinux 600Mib 100% 1> /dev/null 2>&1
                         
                         if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
                                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}\n"
@@ -51,9 +51,9 @@ partition_disk() {
                 #         exit 1
                 # fi
                 
-                if parted -s "${user_disk}" mklabel msdos; then
-                        parted -s "${user_disk}" mkpart primary EST fat32 1Mib 512Mib
-                        parted -s "${user_disk}" mkpart primary Archlinux 512Mib 100%
+                if parted -s "${user_disk}" mklabel msdos 1> /dev/null 2>&1; then
+                        parted -s "${user_disk}" mkpart primary EST fat32 1Mib 512Mib 1> /dev/null 2>&1
+                        parted -s "${user_disk}" mkpart primary Archlinux 512Mib 100% 1> /dev/null 2>&1
                         
                         if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
                                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}\n"
