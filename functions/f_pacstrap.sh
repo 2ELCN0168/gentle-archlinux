@@ -1,3 +1,5 @@
+# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
+
 ask_packages() {
 
         while true; do
