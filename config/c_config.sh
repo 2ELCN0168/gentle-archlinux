@@ -14,6 +14,8 @@ export B_YELLOW="\033[43;30m"
 export B_PINK="\033[45;30m"
 export B_WHITE="\033[47;30m"
 
+export BOLD="\033[1m"
+
 # End of the color sequence
 export NO_FORMAT="\033[0m"
 

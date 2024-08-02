@@ -10,6 +10,8 @@ install_refind() {
   local isEncrypt=""
   local isEncryptEnding=""
   local uuid=""
+  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+
   if [[ $cpuBrand == 'INTEL' ]]; then
     isMicrocode=" initrd=intel-ucode.img"
   elif [[ $cpuBrand == 'AMD' ]]; then
@@ -35,8 +37,10 @@ install_refind() {
     uuid=$(blkid -o value -s UUID "$root_part")
   fi
 
+  
+
   # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
-  echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
+  echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
 
   # For Linux kernel
   echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf

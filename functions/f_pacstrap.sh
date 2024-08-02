@@ -120,6 +120,21 @@ pacstrap_install() {
                 additionalPackages="${additionalPackages} networkmanager"
         fi
 
+        case "${linux_kernel}" in
+                "linux")
+                        additionalPackages="${additionalPackages} linux linux-headers"
+                        ;;
+                "linux-lts")
+                        additionalPackages="${additionalPackages} linux-lts linux-lts-headers"
+                        ;;
+                "linux-hardened")
+                        additionalPackages="${additionalPackages} linux-hardened linux-hardened-headers"
+                        ;;
+                "linux-zen")
+                        additionalPackages="${additionalPackages} linux-zen linux-zen-headers"
+                        ;;
+        esac
+
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
         sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
 
@@ -131,7 +146,7 @@ pacstrap_install() {
         sleep 4
 
         # Perform the installation of the customized system
-        pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
+        pacstrap -K /mnt base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
         systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
         echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN}Vim${NO_FORMAT}.\n"
         sleep 5

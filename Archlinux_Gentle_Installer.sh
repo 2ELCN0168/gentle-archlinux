@@ -22,6 +22,7 @@ source_files() {
     source $f_path/f_partition_disks.sh
     source $f_path/f_format_choice.sh
     source $f_path/f_network_manager_choice.sh
+    source $f_path/f_kernel_choice.sh
     source $f_path/f_pacstrap.sh
     source $f_path/f_genfstab.sh
     source $f_path/f_systemd_resolved.sh
@@ -67,6 +68,9 @@ format_partitions
 
 # ASK NETWORK MANAGER
 net_manager
+
+# ASK KERNEL
+ask_kernel
 
 # INSTALL THE SYSTEM
 pacstrap_install
