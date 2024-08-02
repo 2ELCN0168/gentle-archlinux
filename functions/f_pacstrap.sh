@@ -148,6 +148,6 @@ pacstrap_install() {
         # Perform the installation of the customized system
         pacstrap -K /mnt base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
         systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
-        echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN}Vim${NO_FORMAT}.\n"
+        echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN} Vim ${NO_FORMAT}.\n"
         sleep 5
 }

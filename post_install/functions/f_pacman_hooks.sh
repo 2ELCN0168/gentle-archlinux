@@ -9,7 +9,11 @@ b_display_state() {
 e_display_state() {
 
   jump
-  printf "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
+  if [[ -e "/etc/pacman.d/hooks/${1}" ]]; then
+          printf "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
+  else
+          printf "${C_WHITE}> ${ERR} Creating a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
+  fi
 }
 
 refind_hook() {
@@ -116,7 +120,7 @@ EOF
 
 create_pacman_hooks() {
 
-  if ! ls /etc/pacman.d/hooks; then
+  if [[ ! -e "/etc/pacman.d/hooks" ]]; then
     mkdir -p /etc/pacman.d/hooks &> /dev/null
   fi
   

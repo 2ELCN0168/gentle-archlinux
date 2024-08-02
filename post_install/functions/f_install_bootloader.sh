@@ -43,9 +43,7 @@ install_refind() {
   echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
 
   # For Linux kernel
-  echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
-  # For Linux-LTS kernel
-  echo -e \"Arch Linux LTS\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux-lts.img$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
+  echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
 
   printf "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}"
   jump
@@ -101,6 +99,7 @@ install_grub() {
   local isBTRFS=""
   local isEncrypt=""
   local isEncryptEnding=""
+  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
 
   # Make a backup of /etc/default/grub
   cp -a /etc/default/grub /etc/default/grub.bak
@@ -127,7 +126,7 @@ install_grub() {
   # uuid=$(blkid -o value -s UUID "$partition")
   local uuid=$(blkid -o value -s UUID $root_part)
 
-  grubKernelParameters="\"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=initramfs-linux.img$isBTRFS$isMicrocode\""
+  grubKernelParameters="\"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\""
   printf "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
 
   # VERY IMPORTANT LINE, SO ANNOYING TO GET IT WORKING, DO NOT DELETE!
@@ -143,6 +142,8 @@ install_systemdboot() {
   local isBTRFS=""
   local isEncrypt=""
   local isEncryptEnding=""
+  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+  # declare -gx kernel_name="" -> /functions/f_kernel_choice.sh 
 
   if [[ $cpuBrand == 'INTEL' ]]; then
     isMicrocode="initrd=intel-ucode.img"
@@ -170,8 +171,8 @@ install_systemdboot() {
   
   if bootctl install --esp-path=/boot &> /dev/null; then
     echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
-    echo -e "linux   /vmlinuz-linux" >> /boot/loader/entries/arch.conf
-    echo -e "initrd  /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+    echo -e "linux   /${kernel_name}" >> /boot/loader/entries/arch.conf
+    echo -e "initrd  /${kernel_initramfs}" >> /boot/loader/entries/arch.conf
     if [[ -z $isMicrocode ]];then
       echo -e "initrd  /$isMicrocode" >> /boot/loader/entries/arch.conf
     fi

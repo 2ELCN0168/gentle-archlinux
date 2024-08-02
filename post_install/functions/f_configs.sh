@@ -116,10 +116,8 @@ set_hostname() {
 
         declare -gx domain="${ans_domain_name}"
 
-        if [[ -n "${ans_hostname}" ]]; then
-                echo -e "${ans_hostname}.${domain}" > /etc/hostname
-                echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${ans_hostname}.${domain}${NO_FORMAT} (FQDN).\n"
-        fi 
+        echo -e "${ans_hostname}.${domain}" > /etc/hostname
+        echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${ans_hostname}.${domain}${NO_FORMAT} (FQDN).\n"
 }
 
 set_hosts() {
@@ -205,7 +203,10 @@ set_mkinitcpio() {
 
         # Making a clean backup of /mnt/etc/mkinitcpio.conf
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}...\n"
-        mkdir /etc/mkinitcpio.conf.d
+
+        if [[ ! -e "/etc/mkinitcpio.conf.d" ]]; then
+                mkdir /etc/mkinitcpio.conf.d
+        fi
         cp -a /etc/mkinitcpio.conf /etc/mkinitcpio.conf.d/$(date +%Y%m%d)-mkinitcpio.conf.bak
 
         # Setting up /etc/mkinitcpio.conf
