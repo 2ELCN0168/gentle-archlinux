@@ -125,8 +125,7 @@ set_hostname() {
 set_hosts() {
 
         # Setting up /mnt/etc/hosts
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
-        jump
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}\n"
 
         echo -e "127.0.0.1 localhost.localdomain localhost localhost-ipv4\n" > /etc/hosts
         echo -e "::1       localhost.localdomain localhost localhost-ipv6\n" >> /etc/hosts
@@ -253,7 +252,7 @@ set_vim_nvim() {
         cat << EOF > /etc/skel/.vimrc
         set number
         set relativenumber
-        EOF
+EOF
 
         cp /etc/skel/.vimrc /root
 
@@ -263,7 +262,7 @@ set_vim_nvim() {
         set relativenumber
         syntax on
         set cursorline
-        EOF
+EOF
 
         cp -r /etc/skel/.config /root
 
