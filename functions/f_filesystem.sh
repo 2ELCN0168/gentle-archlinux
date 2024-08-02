@@ -82,8 +82,9 @@ btrfs_handling() {
                 while true; do
                         echo -e "${B_CYAN} [?] - Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT} \c"
 
-                        declare ans_btrfs_subvols_quotas="Y"
+                        declare ans_btrfs_subvols_quotas=""
                         read ans_btrfs_subvols_quotas
+                        : "${ans_btrfs_subvols_quotas:=Y}"
                         echo ""
 
                         case "${ans_btrfs_subvols_quotas}" in

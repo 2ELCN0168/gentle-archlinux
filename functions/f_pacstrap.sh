@@ -1,124 +1,138 @@
 ask_packages() {
-  
-  printf "\n"
-  while true; do
-    read -p "[?] - Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.) [Y/n] " netPack
-    local netPack=${netPack:-Y}
-    case "$netPack" in
-      [yY])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${C_CYAN}Networking pack${NO_FORMAT} will be installed."
-        jump
-        additionalPackages="$additionalPackages bind-tools ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
-        break
-        ;;
-      [nN])
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
 
-  while true; do
-    read -p "[?] - Do you want to add helping tools (e.g., tealdeer, man, texinfo, etc.) [Y/n] " helpPack
-    local helpPack=${helpPack:-Y}
-    case "$helpPack" in
-      [yY])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${C_GREEN}Helping pack${NO_FORMAT} will be installed."
-        jump
-        additionalPackages="$additionalPackages texinfo tealdeer man man-pages"
-        break
-        ;;
-      [nN])
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
+        while true; do
+                echo -e "${B_CYAN} [?] - Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.) [Y/n] -> ${NO_FORMAT} \c" 
 
-  while true; do
-    read -p "[?] - Do you want to add monitoring tools (e.g., btop, htop, bmon, etc.) [Y/n] " monPack
-    local monPack=${monPack:-Y}
-    case "$monPack" in
-      [yY])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed."
-        jump
-        additionalPackages="$additionalPackages btop htop bmon"
-        break
-        ;;
-      [nN])
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
-}
+                declare ans_net_pack=""
+                read ans_net_pack
+                : "${ans_net_pack:=Y}"
+                echo ""
 
-pacstrap_install() {
+                case "${ans_net_pack}" in
+                        "y"|"Y")
+                                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Networking pack${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} bind-tools ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
+                                break
+                                ;;
+                        "n"|"N")
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
 
-  # FORMATTING DONE
-  # List of additional packages depending on parameters specified by the user, avoiding installation of useless things
-  additionalPackages=""
+        while true; do
+                echo -e "${B_CYAN} [?] - Do you want to add helping tools (e.g., tealdeer, man, texinfo, etc.) [Y/n] -> ${NO_FORMAT} \c"
+                
+                declare ans_help_pack=""
+                read ans_help_pack
+                : "${ans_help_pack:=Y}"
+                echo ""
 
-  if [[ $filesystem == 'BTRFS' ]]; then
-    additionalPackages="$additionalPackages btrfs-progs"
-  elif [[ $filesystem == 'XFS' ]]; then
-    additionalPackages="$additionalPackages xfsprogs"
-  fi
+                case "${ans_help_pack}" in
+                        "y"|"Y")
+                                echo -e "\n${C_WHITE}> ${INFO} ${C_GREEN}Helping pack${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} texinfo tealdeer man man-pages"
+                                break
+                                ;;
+                        "n"|"N")
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
 
-  if [[ $disk =~ "nvme" ]]; then
-    additionalPackages="$additionalPackages nvme-cli libnvme"
-  fi
+        while true; do
+                echo -e "${B_CYAN} [?] - Do you want to add monitoring tools (e.g., btop, htop, bmon, etc.) [Y/n] -> ${NO_FORMAT} \c"
+                
+                declare ans_monitoring_pack=""
+                read ans_monitoring_pack
+                : "${ans_monitoring_pack:=Y}"
+                echo "" 
 
-  if [[ $LVM -eq 1 ]]; then
-    additionalPackages="$additionalPackages lvm2"
-  fi
+                case "${ans_monitoring_pack}" in
+                        "y"|"Y")
+                                echo -e "\n${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} btop htop bmon"
+                                break
+                                ;;
+                        "n"|"N")
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
+        }
 
-  if [[ $wantEncrypted -eq 1 ]]; then
-    additionalPackages="$additionalPackages cryptsetup"
-  fi
+        pacstrap_install() {
 
-  if [[ $bootloader == 'REFIND' ]]; then
-    additionalPackages="$additionalPackages refind"
-  elif [[ $bootloader == 'GRUB' && $UEFI -eq 1 ]]; then
-    additionalPackages="$additionalPackages grub efibootmgr"
-  elif [[ $bootloader == 'GRUB' && $UEFI -eq 0 ]]; then
-    additionalPackages="$additionalPackages grub"
-  fi
+        # FORMATTING DONE
+        # List of additional packages depending on parameters specified by the user, avoiding installation of useless things
+        declare -g additionalPackages=""
 
-  if [[ $cpuBrand == 'INTEL' ]]; then
-    additionalPackages="$additionalPackages intel-ucode"
-  elif [[ $cpuBrand == 'AMD' ]]; then
-    additionalPackages="$additionalPackages amd-ucode"
-  fi
+        case "${filesystem}" in
+                "BTRFS")
+                        additionalPackages="${additionalPackages} btrfs-progs"
+                        ;;
+                "XFS")
+                        additionalPackages="${additionalPackages} xfsprogs"
+                        ;;
+                *)
+                        exit 1
+                        ;;
+        esac
 
-  if [[ $net_manager == 'networkmanager' ]]; then
-    additionalPackages="$additionalPackages networkmanager"
-  fi
 
-  # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
-  sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
-  
-  # Ask for additional packages
-  ask_packages
 
-  # Display additional packages
-  printf "\n"
-  printf "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}"
-  jump
-  sleep 4
-  
-  # Perform the installation of the customized system
-  pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-  systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
-  jump
-  printf "${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${C_GREEN}Vim${NO_FORMAT}."
+
+        if [[ "${disk}" =~ "nvme" ]]; then
+                additionalPackages="${additionalPackages} nvme-cli libnvme"
+        fi
+
+        if [[ "${LVM}" -eq 1 ]]; then
+                additionalPackages="${additionalPackages} lvm2"
+        fi
+
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                additionalPackages="${additionalPackages} cryptsetup"
+        fi
+
+        if [[ "${bootloader}" == 'REFIND' ]]; then
+                additionalPackages="${additionalPackages} refind"
+        elif [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 1 ]]; then
+                additionalPackages="${additionalPackages} grub efibootmgr"
+        elif [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 0 ]]; then
+                additionalPackages="${additionalPackages} grub"
+        fi
+
+        if [[ "${cpuBrand}" == 'INTEL' ]]; then
+                additionalPackages="${additionalPackages} intel-ucode"
+        elif [[ $cpuBrand == 'AMD' ]]; then
+                additionalPackages="${additionalPackages} amd-ucode"
+        fi
+
+        if [[ "${net_manager}" == 'networkmanager' ]]; then
+                additionalPackages="${additionalPackages} networkmanager"
+        fi
+
+        # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
+        sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
+
+        # Ask for additional packages
+        ask_packages
+
+        # Display additional packages
+        echo -e "\n${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
+        sleep 4
+
+        # Perform the installation of the customized system
+        pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
+        systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux "${additionalPackages}"
+        echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN}Vim${NO_FORMAT}.\n"
 }
