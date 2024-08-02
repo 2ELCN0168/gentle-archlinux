@@ -2,6 +2,7 @@
 # ---
 # This function asks the user which disk they want to use.
 # It verifies if the input exists and asks again if it doesn't.
+# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
 disk_choice() {
@@ -30,7 +31,6 @@ disk_choice() {
                 read ans_block_device
                 : "${ans_block_device:=sda}"
                 echo ""
-                echo "BLOCK = ${ans_block_device}"
 
                 if [[ -b "/dev/${ans_block_device}" ]]; then
                         disk="${ans_block_device}"
@@ -47,7 +47,6 @@ disk_choice() {
                         break
                 else
                         invalid_answer
-                        continue
                 fi
         done
 }

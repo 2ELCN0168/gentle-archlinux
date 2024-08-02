@@ -2,6 +2,7 @@
 # ---
 # This function asks the user which filesystem they want to use. 
 # Choices are BTRFS (default), XFS, EXT4.
+# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
 filesystem_choice() {
