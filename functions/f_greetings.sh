@@ -2,6 +2,7 @@
 # ---
 # Greetings is the initialization function, it displays the first messages 
 # before starting and ensure there's nothing mounted on /mnt
+# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
 greetings() {

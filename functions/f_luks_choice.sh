@@ -5,30 +5,32 @@
 
 luks_choice() {
 
-  export wantEncrypted=0
+        declare -igx wantEncrypted=0
 
-  # FORMATTING DONE
-  while true; do
-    read -p "Do you want your system to be encrypted with LUKS? [y/N] -> " response
-    response=${response:-N}
-    case "$response" in
-      [yY])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${C_GREEN}cryptsetup${NO_FORMAT} will be installed."
-        jump
-        wantEncrypted=1
-        break
-        ;;
-      [nN])
-        printf "\n"
-        printf "${C_WHITE}> ${INFO} ${C_RED}cryptsetup${NO_FORMAT} won't be installed."
-        jump
-        wantEncrypted=0
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
+        # FORMATTING DONE
+        while true; do
+
+                echo -e "${B_CYAN} Do you want your system to be encrypted with LUKS? [y/N] -> ${NO_FORMAT} \c"
+
+                declare ans_luks=""
+                : "${ans_luks:=N}"
+                read ans_luks
+                echo ""
+
+                case "${ans_luks}" in
+                        "y"|"Y")
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}cryptsetup${NO_FORMAT} will be installed.\n"
+                                wantEncrypted=1
+                                break
+                                ;;
+                        "n"|"N")
+                                echo -e "${C_WHITE}> ${INFO} ${C_RED}cryptsetup${NO_FORMAT} won't be installed.\n"
+                                wantEncrypted=0
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
 }
