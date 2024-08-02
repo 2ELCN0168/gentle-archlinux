@@ -16,7 +16,7 @@ set_time() {
                 echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}\n"
         fi
 
-        declare -i nKorea=0
+        declare -ig nKorea=0
 
         while true; do
                 echo -e "==TIME==============\n"
@@ -115,9 +115,10 @@ set_hostname() {
         : "${ans_domain_name:=home.arpa}"
 
         declare -gx domain="${ans_domain_name}"
+        declare -gx hostname="${ans_hostname}"
 
-        echo -e "${ans_hostname}.${domain}" > /etc/hostname
-        echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${ans_hostname}.${domain}${NO_FORMAT} (FQDN).\n"
+        echo -e "${hostname}.${domain}" > /etc/hostname
+        echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}.${domain}${NO_FORMAT} (FQDN).\n"
 }
 
 set_hosts() {

@@ -12,8 +12,9 @@ e_display_state() {
   if [[ -e "/etc/pacman.d/hooks/${1}" ]]; then
           printf "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
   else
-          printf "${C_WHITE}> ${ERR} Creating a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
+          printf "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
   fi
+  jump
 }
 
 refind_hook() {
@@ -102,8 +103,6 @@ linux_hook() {
   Operation=Remove
   Type=Package
   Target=coreutils
-  Target=linux
-  Target=linux-firmware
   Target=systemd
   Target=base
   Target=base-devel
