@@ -13,8 +13,8 @@ luks_choice() {
                 echo -e "${B_CYAN} Do you want your system to be encrypted with LUKS? [y/N] -> ${NO_FORMAT} \c"
 
                 declare ans_luks=""
-                : "${ans_luks:=N}"
                 read ans_luks
+                : "${ans_luks:=N}"
                 echo ""
 
                 case "${ans_luks}" in
