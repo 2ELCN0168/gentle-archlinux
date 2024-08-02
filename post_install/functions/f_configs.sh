@@ -1,286 +1,293 @@
 set_time() {
 
-  printf "${C_WHITE}> ${INFO} Setting system clock to UTC."
-  jump
+        echo -e "${C_WHITE}> ${INFO} Setting system clock to UTC.\n"
 
-  if hwclock --systohc &> /dev/null; then
-    printf "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up system clock to UTC.${NO_FORMAT}"
-  else
-    printf "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting system clock to UTC.${NO_FORMAT}"
-  fi
-  jump
+        if hwclock --systohc 1> /dev/null 2>&1; then
+                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up system clock to UTC.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting system clock to UTC.${NO_FORMAT}\n"
+        fi
 
-  printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}"
-  jump
-  if systemctl enable systemd-timesyncd &> /dev/null; then
-    printf "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up NTP.${NO_FORMAT}"
-  else
-    printf "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}"
-  fi
-  jump
+        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}\n"
+        
+        if systemctl enable systemd-timesyncd 1> /dev/null 2>&1; then
+                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up NTP.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}\n"
+        fi
 
-  nKorea=0
+        declare -i nKorea=0
 
-  while true; do
-    printf "==TIME=============="
-    jump
-    printf "${C_WHITE}[0] - ${C_CYAN}FRANCE${NO_FORMAT} [default]\n"
-    printf "${C_WHITE}[1] - ${C_WHITE}ENGLAND${NO_FORMAT} \n"
-    printf "${C_WHITE}[2] - ${C_WHITE}US (New-York)${NO_FORMAT} \n"
-    printf "${C_WHITE}[3] - ${C_RED}Japan${NO_FORMAT} \n"
-    printf "${C_WHITE}[4] - ${C_CYAN}South Korea (Seoul)${NO_FORMAT} \n"
-    printf "${C_WHITE}[5] - ${C_RED}Russia (Moscow)${NO_FORMAT} \n"
-    printf "${C_WHITE}[6] - ${C_RED}China (CST - Shanghai)${NO_FORMAT} \n"
-    printf "${C_WHITE}[7] - ${C_RED}North Korea (Pyongyang)${NO_FORMAT} "
-    jump
-    printf "====================\n"
-    read -p "[?] - Where do you live? " localtime
-    local localtime=${localtime:-0}
+        while true; do
+                echo -e "==TIME==============\n"
 
-    case "$localtime" in
-      [0])
-        ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
-        break
-        ;;
-      [1])
-        ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
-        break
-        ;;
-      [2])
-        ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
-        break
-        ;;
-      [3])
-        ln -sf /usr/share/zoneinfo/Japan /etc/localtime
-        break
-        ;;
-      [4])
-        ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-        break
-        ;;
-      [5])
-        ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-        break
-        ;;
-      [6])
-        ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-        break
-        ;;
-      [7])
-        ln -sf /usr/share/zoneinfo/Asia/Pyongyang /etc/localtime
-        nKorea=1
-        break
-        ;;
-      *)
-        invalid_answer
-        ;;
-    esac
-  done
-  printf "\n"
+                echo -e "${C_WHITE}[0] - ${C_CYAN}FRANCE${NO_FORMAT} [default]"
+                echo -e "${C_WHITE}[1] - ${C_WHITE}ENGLAND${NO_FORMAT}"
+                echo -e "${C_WHITE}[2] - ${C_WHITE}US (New-York)${NO_FORMAT}"
+                echo -e "${C_WHITE}[3] - ${C_RED}Japan${NO_FORMAT}"
+                echo -e "${C_WHITE}[4] - ${C_CYAN}South Korea (Seoul)${NO_FORMAT}"
+                echo -e "${C_WHITE}[5] - ${C_RED}Russia (Moscow)${NO_FORMAT}"
+                echo -e "${C_WHITE}[6] - ${C_RED}China (CST - Shanghai)${NO_FORMAT}"
+                echo -e "${C_WHITE}[7] - ${C_RED}North Korea (Pyongyang)${NO_FORMAT}"
+                
+                echo -e "\n====================\n"
+
+                echo -e "${B_CYAN} [?] - Where do you live? -> ${NO_FORMAT} \c"
+
+                declare -i ans_localtime=""
+                read ans_localtime
+                : "${ans_localtime:=0}"
+                echo ""
+
+                case "${ans_localtime}" in
+                        [0])
+                                ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+                                break
+                                ;;
+                        [1])
+                                ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+                                break
+                                ;;
+                        [2])
+                                ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+                                break
+                                ;;
+                        [3])
+                                ln -sf /usr/share/zoneinfo/Japan /etc/localtime
+                                break
+                                ;;
+                        [4])
+                                ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+                                break
+                                ;;
+                        [5])
+                                ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+                                break
+                                ;;
+                        [6])
+                                ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+                                break
+                                ;;
+                        [7])
+                                ln -sf /usr/share/zoneinfo/Asia/Pyongyang /etc/localtime
+                                nKorea=1
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
+        echo -e ""
 }
 
 locales_gen() {
 
-  # Uncomment #en_US.UTF-8 UTF-8 in /mnt/etc/locale.gen
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_CYAN}en_US.UTF-8 UTF-8${NO_FORMAT} in ${C_PINK}/etc/locale.gen${NO_FORMAT}..."
-  sed -i '/^\s*#\(en_US.UTF-8 UTF-8\)/ s/^#//' /etc/locale.gen
-  jump
+        # Uncomment #en_US.UTF-8 UTF-8 in /mnt/etc/locale.gen
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_CYAN}en_US.UTF-8 UTF-8${NO_FORMAT} in ${C_PINK}/etc/locale.gen${NO_FORMAT}...\n"
+        sed -i '/^\s*#\(en_US.UTF-8 UTF-8\)/ s/^#//' /etc/locale.gen
 
-  printf "${C_WHITE}> ${INFO} ${C_CYAN}Generating locales...${NO_FORMAT}"
-  jump
+        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Generating locales...${NO_FORMAT}\n"
 
-  if locale-gen &> /dev/null; then
-    printf "${C_WHITE}> ${SUC} ${C_GREEN}Locales generated successfully.${NO_FORMAT}"
-  else
-    printf "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to generate locales.${NO_FORMAT}"
-  fi
-  jump
+        if locale-gen 1> /dev/null 2>&1; then
+                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Locales generated successfully.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to generate locales.${NO_FORMAT}\n"
+        fi
 }
 
 set_hostname() {
-  # Setting up /etc/hostname
-  read -p "Enter your hostname without domain. Recommended hostname length: 15 chars. (e.g., MH1DVMARXXX001O). Default is 'localhost'. " hostname
-  hostname=${hostname:-'localhost'}
-  jump
-  read -p "Enter your domain name. Default is 'home.arpa' (RFC 8375). " domain
-  export domain=${domain:-'home.arpa'}
 
-  if [[ -n $hostname ]]; then
-    printf ${hostname}.${domain} > /etc/hostname
-    jump
-    printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}.${domain}${NO_FORMAT} (FQDN)."
-    jump 
-  fi 
+        # Setting up /etc/hostname
+
+        echo -e "${B_CYAN} [?] - Enter your hostname without domain."
+        echo -e "Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT} \c"
+
+        declare ans_hostname=""
+        read ans_hostname
+        : "${ans_hostname:='localhost'}"
+        echo ""
+
+        echo -e "${B_CYAN} [?] - Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT} \c."
+
+        declare ans_domain_name=""
+        read ans_domain_name
+        : "${ans_domain_name:='home.arpa'}"
+
+        declare -gx domain="${ans_domain_name}"
+
+        if [[ -n "${ans_hostname}" ]]; then
+                echo -e "${ans_hostname}.${domain}" > /etc/hostname
+                echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${ans_hostname}.${domain}${NO_FORMAT} (FQDN).\n"
+        fi 
 }
 
 set_hosts() {
 
-  # Setting up /mnt/etc/hosts
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
-  jump
+        # Setting up /mnt/etc/hosts
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
+        jump
 
-  printf "127.0.0.1 localhost.localdomain localhost localhost-ipv4\n" > /etc/hosts
-  printf "::1       localhost.localdomain localhost localhost-ipv6\n" >> /etc/hosts
-  printf "127.0.0.1 $hostname.localdomain  $hostname.$domain    $hostname.$domain-ipv4\n" >> /etc/hosts
-  printf "::1       $hostname.localdomain  $hostname.$domain    $hostname.$domain-ipv6\n" >> /etc/hosts
+        echo -e "127.0.0.1 localhost.localdomain localhost localhost-ipv4\n" > /etc/hosts
+        echo -e "::1       localhost.localdomain localhost localhost-ipv6\n" >> /etc/hosts
+        echo -e "127.0.0.1 ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv4\n" >> /etc/hosts
+        echo -e "::1       ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv6\n" >> /etc/hosts
 
-  cat /etc/hosts
-  sleep 1
-  jump
+        cat /etc/hosts
+        echo ""
+        sleep 1
 }
 
 set_vconsole() {
 
-  # Creating /mnt/etc/vconsole.conf
-    printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating the file ${C_PINK}/etc/vconsole.conf${NO_FORMAT}."
-    jump
-    local keymap=""
-    while true; do
-      printf "==KEYMAP============"
-      jump
-      printf "${C_WHITE}[0] - ${C_WHITE}US INTL. - QWERTY${NO_FORMAT} [default]\n"
-      printf "${C_WHITE}[1] - ${C_WHITE}US - QWERTY${NO_FORMAT} \n"
-      printf "${C_WHITE}[2] - ${C_WHITE}FR - AZERTY${NO_FORMAT}"
-      jump
-      printf "====================\n"
-      read -p "[?] - Select your keymap " response
-      local response=${response:-0}
-      case "$response" in
-        [0])
-          printf "\n"
-          keymap="us-acentos"
-          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
-          break
-          ;;
-        [1])
-          printf "\n"
-          keymap="us"
-          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
-          break
-          ;;
-        [2])
-          printf "\n"
-          keymap="fr"
-          printf "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
-          break
-          ;;
-        *)
-          invalid_answer
-          ;;
-      esac
-    done
+        # Creating /mnt/etc/vconsole.conf
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating the file ${C_PINK}/etc/vconsole.conf${NO_FORMAT}."
 
-    jump
-    echo "KEYMAP=${keymap}" > /etc/vconsole.conf
-    echo "FONT=ter-116b" >> /etc/vconsole.conf
+        declare keymap=""
+
+        while true; do
+                echo -e "\n==KEYMAP============\n"
+
+                echo -e "${C_WHITE}[0] - ${C_WHITE}US INTL. - QWERTY${NO_FORMAT} [default]"
+                echo -e "${C_WHITE}[1] - ${C_WHITE}US - QWERTY${NO_FORMAT}"
+                echo -e "${C_WHITE}[2] - ${C_WHITE}FR - AZERTY${NO_FORMAT}"
+                
+                echo -e "\n====================\n"
+
+                echo -e "${B_CYAN} [?] - Select your keymap -> ${NO_FORMAT} \c"
+
+                declare -i ans_keymap=""
+                read ans_keymap
+                : "${ans_keymap:=0}"
+                echo ""
+
+                declare keymap=""
+
+                case "${ans_keymap}" in
+                        [0])
+                                keymap="us-acentos"
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+                                break
+                                ;;
+                        [1])
+                                keymap="us"
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+                                break
+                                ;;
+                        [2])
+                                keymap="fr"
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
+
+        echo "KEYMAP=${keymap}" > /etc/vconsole.conf
+        echo "FONT=ter-116b" >> /etc/vconsole.conf
 }
 
 set_pacman() {
 
-  # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf AGAIIIIN
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_WHITE}'Color'${NO_FORMAT} and ${C_WHITE}'ParallelDownloads 5'${NO_FORMAT} in ${C_PINK}/mnt/etc/pacman.conf${NO_FORMAT} AGAIIIIN."
-  jump
+        # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf AGAIIIIN
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_WHITE}'Color'${NO_FORMAT} and ${C_WHITE}'ParallelDownloads 5'${NO_FORMAT} in ${C_PINK}/mnt/etc/pacman.conf${NO_FORMAT} AGAIIIIN.\n"
 
-  #sed -i '/^\s*#\(Color\|ParallelDownloads\)/ s/^#//' /etc/pacman.conf
-  sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
+        #sed -i '/^\s*#\(Color\|ParallelDownloads\)/ s/^#//' /etc/pacman.conf
+        sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
 
-  if tldr -v &> /dev/null; then
-    tldr --update &> /dev/null
-  fi
+        if tldr -v 1> /dev/null 2>&1; then
+                tldr --update 1> /dev/null 2>&1
+        fi
 }
 
 set_mkinitcpio() {
 
-  # Making a clean backup of /mnt/etc/mkinitcpio.conf
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}..."
-  jump
-  cp -a /etc/mkinitcpio.conf /etc/mkinitcpio.conf.bak
+        # Making a clean backup of /mnt/etc/mkinitcpio.conf
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}...\n"
+        mkdir /etc/mkinitcpio.conf.d
+        cp -a /etc/mkinitcpio.conf /etc/mkinitcpio.conf.d/$(date +%Y%m%d)-mkinitcpio.conf.bak
 
-  # Setting up /etc/mkinitcpio.conf
-  isBTRFS=""
-  isLUKS=""
-  isLVM=""
+        # Setting up /etc/mkinitcpio.conf
+        declare isBTRFS=""
+        declare isLUKS=""
+        declare isLVM=""
 
-  if [[ $filesystem == 'BTRFS' ]]; then
-    isBTRFS="btrfs "
-  fi
+        if [[ "${filesystem}" == "BTRFS" ]]; then
+                isBTRFS="btrfs "
+        fi
 
-  if [[ $wantEncrypted -eq 1 ]]; then
-    isLUKS="sd-encrypt "
-  fi
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                isLUKS="sd-encrypt "
+        fi
 
-  if [[ $LVM -eq 1 ]]; then
-    isLVM="lvm2 "
-  fi
-  
-  printf "${C_WHITE}> ${INFO} ${NO_FORMAT}Updating ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT} with custom parameters..."
-  jump
+        if [[ "${LVM}" -eq 1 ]]; then
+                isLVM="lvm2 "
+        fi
 
-  local mkcpioHOOKS="HOOKS=(base systemd ${isBTRFS}autodetect modconf kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
-  awk -v newLine="$mkcpioHOOKS" '!/^#/ && /HOOKS/ { print newLine; next } 1' /etc/mkinitcpio.conf > tmpfile && mv tmpfile /etc/mkinitcpio.conf
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Updating ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT} with custom parameters...\n"
 
-  # Generate initramfs
-  mkinitcpio -P
+        declare mkcpioHOOKS="HOOKS=(base systemd ${isBTRFS}autodetect modconf kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
+        awk -v newLine="${mkcpioHOOKS}" '!/^#/ && /HOOKS/ { print newLine; next } 1' /etc/mkinitcpio.conf > tmpfile && mv tmpfile /etc/mkinitcpio.conf
+
+        # Generate initramfs
+        mkinitcpio -P
 }
 
 set_root_passwd() {
 
-  jump
-  printf "${C_WHITE}> ${INFO} ${C_CYAN}Changing root password...${NO_FORMAT}"
-  jump
-  while true; do
-    if passwd; then
-      break
-    fi
-  done
-  jump
+        echo -e "\n${C_WHITE}> ${INFO} ${C_CYAN}Changing root password...${NO_FORMAT}\n"
+        while true; do
+                if passwd; then
+                        break
+                fi
+        done
+        echo ""
 }
 
 set_vim_nvim() {
 
-  cat << EOF > /etc/skel/.vimrc
-  set number
-  set relativenumber
-EOF
+        cat << EOF > /etc/skel/.vimrc
+        set number
+        set relativenumber
+        EOF
 
-  cp /etc/skel/.vimrc /root
+        cp /etc/skel/.vimrc /root
 
-  mkdir -p /etc/skel/.config/nvim
-  cat << EOF > /etc/skel/.config/nvim/init.vim
-  set number
-  set relativenumber
-  syntax on
-  set cursorline
-EOF
+        mkdir -p /etc/skel/.config/nvim
+        cat << EOF > /etc/skel/.config/nvim/init.vim
+        set number
+        set relativenumber
+        syntax on
+        set cursorline
+        EOF
 
-  cp -r /etc/skel/.config /root
+        cp -r /etc/skel/.config /root
 
 }
 
 enable_net_manager() {
 
-        if [[ $net_manager == 'networkmanager' ]]; then
-                printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}"
-                jump
-                systemctl enable NetworkManager &> /dev/null
-        elif [[ $net_manager == 'systemd-networkd' ]]; then
-                printf "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-networkd.${NO_FORMAT}"
-                jump
-                systemctl enable systemd-networkd &> /dev/null
+        if [[ "${net_manager}" == "networkmanager" ]]; then
+                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}\n"
+                systemctl enable NetworkManager 1> /dev/null 2>&1
+        elif [[ "${net_manager}" == "systemd-networkd" ]]; then
+                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-networkd.${NO_FORMAT}\n"
+                systemctl enable systemd-networkd 1> /dev/null 2>&1
         fi
 }
+
 make_config() {
 
-    jump
-
-  set_time
-  locales_gen
-  set_hostname
-  set_hosts
-  set_vconsole
-  set_pacman
-  set_mkinitcpio
-  set_root_passwd
-  set_vim_nvim
-  enable_net_manager
+        set_time
+        locales_gen
+        set_hostname
+        set_hosts
+        set_vconsole
+        set_pacman
+        set_mkinitcpio
+        set_root_passwd
+        set_vim_nvim
+        enable_net_manager
 }
