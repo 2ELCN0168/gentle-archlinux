@@ -72,7 +72,7 @@ ask_packages() {
         done
 }
 
-        pacstrap_install() {
+pacstrap_install() {
 
         # FORMATTING DONE
         # List of additional packages depending on parameters specified by the user, avoiding installation of useless things
@@ -112,7 +112,7 @@ ask_packages() {
 
         if [[ "${cpuBrand}" == 'INTEL' ]]; then
                 additionalPackages="${additionalPackages} intel-ucode"
-        elif [[ $cpuBrand == 'AMD' ]]; then
+        elif [[ "${cpuBrand}" == 'AMD' ]]; then
                 additionalPackages="${additionalPackages} amd-ucode"
         fi
 
@@ -134,4 +134,5 @@ ask_packages() {
         pacstrap -K /mnt linux{,-{firmware,lts{,-headers}}} base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
         systemctl-tui hdparm neovim vim dos2unix tree fastfetch dhclient tmux ${additionalPackages}
         echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN}Vim${NO_FORMAT}.\n"
+        sleep 5
 }
