@@ -13,12 +13,14 @@ lvm_luks_try() {
                 echo -e "${C_WHITE}> ${INFO} ${C_PINK} A LVM is detected.${NO_FORMAT}\n"
                 #result=$result+1
                 (( result + 1 ))
+                echo "result = $result"
         fi
 
         if lsblk -f | grep -qi 'LUKS'; then
                 echo -e "${C_WHITE}> ${INFO} ${C_PINK} LUKS partition is detected.${NO_FORMAT}\n"
                 #result=$result+2
                 (( result + 2 ))
+                echo "result = $result"
         fi
 
         case "${result}" in
