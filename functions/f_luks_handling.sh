@@ -5,29 +5,21 @@
 
 luks_handling() {
 
-    # FORMATTING DONE
-    printf "${C_WHITE}> ${INFO} Starting to encrypt your new system..."
-    jump
+        # FORMATTING DONE
+        echo -e "${C_WHITE}> ${INFO} Starting to encrypt your new system...\n"
 
-    if cryptsetup luksFormat ${root_part}; then
-      printf "\n"
-      printf "${C_WHITE}> ${SUC} ${C_GREEN}Successfully created LUKS partition on ${root_part}.${NO_FORMAT}"
-      jump
-    else
-      printf "\n"
-      printf "${C_WHITE}> ${ERR} ${C_RED}Error during LUKS partition creation on ${root_part}.${NO_FORMAT}"
-      jump
-      exit 1
-    fi
+        if cryptsetup luksFormat "${root_part}"; then
+                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully created LUKS partition on ${root_part}.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during LUKS partition creation on ${root_part}.${NO_FORMAT}\n"
+                exit 1
+        fi
 
-    printf "${C_WHITE}> ${INFO} Opening the new encrypted volume."
-    jump
+        echo -e "${C_WHITE}> ${INFO} Opening the new encrypted volume.\n"
 
-    cryptsetup open ${root_part} root
-    
-    printf "\n"
-    printf "${C_WHITE}> ${INFO} Replacing ${root_part} by ${C_PINK}/dev/mapper/root.${NO_FORMAT}"
-    jump
-    
-    export root_part="/dev/mapper/root"
+        cryptsetup open "${root_part}" root
+
+        echo -e "${C_WHITE}> ${INFO} Replacing ${root_part} by ${C_PINK}/dev/mapper/root.${NO_FORMAT}\n"
+
+        declare -gx root_part="/dev/mapper/root"
 }

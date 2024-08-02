@@ -1,6 +1,7 @@
 # FUNCTION(S)
 # ---
 # This function asks the user if they want to use LUKS to encrypt their filesystem.
+# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
 luks_choice() {
