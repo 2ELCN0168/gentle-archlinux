@@ -105,14 +105,14 @@ set_hostname() {
 
         declare ans_hostname=""
         read ans_hostname
-        : "${ans_hostname:='localhost'}"
+        : "${ans_hostname:=localhost}"
         echo ""
 
         echo -e "${B_CYAN} [?] - Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT} \c."
 
         declare ans_domain_name=""
         read ans_domain_name
-        : "${ans_domain_name:='home.arpa'}"
+        : "${ans_domain_name:=home.arpa}"
 
         declare -gx domain="${ans_domain_name}"
 
