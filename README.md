@@ -14,20 +14,20 @@ It detects if you're booting in UEFI or BIOS mode, and adjusts its questions aut
 First, you need an Internet connection. If you have a wired connection, it should already be set up. Otherwise, you have to configure it with `iwctl`.
 
 ```bash
+pacman-key --init
+pacman-key --populate archlinux
 pacman -Sy git
 git clone https://github.com/2ELCN068/gentle-archlinux
 cd gentle-archlinux
-chmod +x ./Archlinux_Gentle_Installer.sh
 ./Archlinux_Gentle_Installer.sh
 ```
 
-
 ## TODO
 
-- [X] - Generate zshrc ;
-- [X] - Ask for additionnal packages ;
-- [X] - nftables + sshguard ;
-- [X] - pacman hooks ;
+- [x] - Generate zshrc ;
+- [x] - Ask for additionnal packages ;
+- [x] - nftables + sshguard ;
+- [x] - pacman hooks ;
 - [ ] - pacman hook for archlinux news (informant) ;
 - [ ] - pacdiff ;
 - [ ] - motd et issue.net ;
