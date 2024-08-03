@@ -1,28 +1,21 @@
-messages() {
-        set_issue
-        set_motd
-}
-
-
 set_issue() {
         
-        read -p "[?] - Would you like to setup a /etc/issue file? [Y/n] " response
-        local response=${response:-Y}
         while true; do
-                printf "\n"
-                case "$response" in
-                        [yY])
-                                printf "${C_WHITE}> ${INFO}Type the message you want to be displayed before logging in: "
-                                printf "\n"
-                                read -p "" issue
-                                local issue="${issue}"
-                                cat "${issue}" > /etc/issue
-                                jump
+                echo -e "${C_CYAN}:: ${C_WHITE} Would you like to setup a /etc/issue file [Y/n] ->${NO_FORMAT} \c"
+
+                declare ans_issue=""
+                read ans_issue
+                : "${ans_issue:=Y}"
+                echo ""
+
+                case "${ans_issue}" in
+                        "y"|"Y")
+                                echo -e "${C_WHITE}> ${INFO}If you want to change it, edit the file /etc/issue after reboot.\n"
+                                cp -a files/issue /etc/issue
                                 break
                                 ;;
-                        [nN])
-                                printf "${C_WHITE}> ${INFO}No /etc/issue file will be created."
-                                jump
+                        "n"|"N")
+                                echo -e "${C_WHITE}> ${INFO}No /etc/issue file will be created.\n"
                                 break
                                 ;;
                         *)
@@ -34,22 +27,22 @@ set_issue() {
 
 set_motd() {
         
-        read -p "[?] - Would you like to setup a /etc/motd file? [Y/n] " response
-        local response=${response:-Y}
+        echo -e "${C_CYAN}:: ${C_WHITE} Would you like to setup a /etc/motd file [Y/n] ->${NO_FORMAT} \c"
+
+        declare ans_motd=""
+        read ans_motd
+        : "${ans_motd}"
+        echo ""
+
         while true; do
-                case "$response" in
-                        [yY])
-                                printf "${C_WHITE}> ${INFO}Type the message you want to be displayed after logging in: "
-                                printf "\n"
-                                read -p "" motd
-                                local motd="${motd}"
-                                cat "${motd}" > /etc/motd
-                                jump
+                case "${ans_motd}" in
+                        "y"|"Y")
+                                echo -e "${C_WHITE}> ${INFO}If you want to change it, edit the file /etc/motd after reboot.\n"
+                                cp -a /files/motd /etc/motd
                                 break
                                 ;;
-                        [nN])
-                                printf "${C_WHITE}> ${INFO}No /etc/motd file will be created."
-                                jump
+                        "n"|"N")
+                                echo -e "${C_WHITE}> ${INFO}No /etc/motd file will be created.\n"
                                 break
                                 ;;
                         *)

@@ -1,130 +1,66 @@
 # CREATE PACMAN HOOKS 
 
-b_display_state() {
+create_pacman_hooks() {
 
-  jump
-  printf "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
-}
+        if [[ ! -e "/etc/pacman.d/hooks" ]]; then
+                mkdir -p /etc/pacman.d/hooks 1> /dev/null 2>&1
+        fi
 
-e_display_state() {
-
-  jump
-  if [[ -e "/etc/pacman.d/hooks/${1}" ]]; then
-          printf "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
-  else
-          printf "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}$1.${NO_FORMAT}"
-  fi
-  jump
+        refind_hook
+        bash_zsh_hook
 }
 
 refind_hook() {
 
-  # This hook launches refind-install after a package update.
+        # This hook launches refind-install after a package update.
 
-  if [[ "$bootloader" != 'REFIND' ]]; then
-    return 1;
-  fi
+        if [[ "$bootloader" != 'REFIND' ]]; then
+                return 1;
+        fi
 
-  local hookName="rEFInd"
+        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}rEFInd.${NO_FORMAT}\n"
 
-  b_display_state "$hookName"
+        cat << EOF > /etc/pacman.d/hooks/refind.hook
+        [Trigger]
+        Operation=Upgrade
+        Type=Package
+        Target=refind
 
-  cat << EOF > /etc/pacman.d/hooks/refind.hook
-  [Trigger]
-  Operation=Upgrade
-  Type=Package
-  Target=refind
-
-  [Action]
-  Description=Updating rEFInd to ESP...
-  When=PostTransaction
-  Exec=/usr/bin/refind-install
+        [Action]
+        Description=Updating rEFInd to ESP...
+        When=PostTransaction
+        Exec=/usr/bin/refind-install
 EOF
 
-  e_display_state "$hookName"
+        if [[ -e "/etc/pacman.d/hooks/refind.hook" ]]; then
+                echo -e "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}${1}.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}${1}.${NO_FORMAT}\n"
+        fi
 }
 
 bash_zsh_hook() {
 
-  # This hook avoids bash to be uninstalled.
-  local hookName="bash and zsh"
+        # This hook avoids bash to be uninstalled.
 
-  b_display_state "$hookName"
+        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}\n"
 
-  cat << EOF > /etc/pacman.d/hooks/bash_zsh_no_remove.hook
-  [Trigger]
-  Operation=Remove
-  Type=Package
-  Target=bash
-  Target=zsh
+        cat << EOF > /etc/pacman.d/hooks/bash_zsh_no_remove.hook
+        [Trigger]
+        Operation=Remove
+        Type=Package
+        Target=bash
+        Target=zsh
 
-  [Action]
-  Description=CAN'T UNINSTALL BASH/ZSH
-  When=PreTransaction
-  Exec=/usr/bin/false
-  AbortOnFail
+        [Action]
+        Description=CAN'T UNINSTALL BASH/ZSH
+        When=PreTransaction
+        Exec=/usr/bin/false
+        AbortOnFail
 EOF
-
-  e_display_state "$hookName"
-}
-
-pacman_hook() {
-
-  # This hook avoids bash to be uninstalled.
-  local hookName="pacman"
-
-  b_display_state "$hookName"
-
-  cat << EOF > /etc/pacman.d/hooks/pacman_no_remove.hook
-  [Trigger]
-  Operation=Remove
-  Type=Package
-  Target=pacman
-
-  [Action]
-  Description=CAN'T UNINSTALL PACMAN
-  When=PreTransaction
-  Exec=/usr/bin/false
-  AbortOnFail
-EOF
-
-  e_display_state "$hookName"
-}
-
-linux_hook() {
-
-  # This hook avoids bash to be uninstalled.
-  local hookName="base system (linux)"
-
-  b_display_state "$hookName"
-
-  cat << EOF > /etc/pacman.d/hooks/system_no_remove.hook
-  [Trigger]
-  Operation=Remove
-  Type=Package
-  Target=coreutils
-  Target=systemd
-  Target=base
-  Target=base-devel
-
-  [Action]
-  Description=CAN'T UNINSTALL BASE SYSTEM
-  When=PreTransaction
-  Exec=/usr/bin/false
-  AbortOnFail
-EOF
-
-  e_display_state "$hookName"
-}
-
-create_pacman_hooks() {
-
-  if [[ ! -e "/etc/pacman.d/hooks" ]]; then
-    mkdir -p /etc/pacman.d/hooks &> /dev/null
-  fi
-  
-  refind_hook
-  bash_zsh_hook
-  pacman_hook
-  linux_hook
+        if [[ -e "/etc/pacman.d/hooks/bash_zsh_no_remove.hook" ]]; then
+                echo -e "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}\n"
+        else
+                echo -e "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}\n"
+        fi
 }

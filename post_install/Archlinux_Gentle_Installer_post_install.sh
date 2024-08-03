@@ -22,48 +22,54 @@ source_files() {
     source $f_path/f_ending.sh
 }
 
-# SOURCE FILES
-source_files
+main() {
+        
+        # SOURCE FILES
+        source_files
 
-# START SECOND PART
-greetings_pi
+        # START SECOND PART
+        greetings_pi
 
-# CHANGE MULTIPLE CONFIG FILES
-make_config
+        # CHANGE MULTIPLE CONFIG FILES
+        make_config
 
-# CUSTOMIZE MESSAGES
-#messages
+        # CUSTOMIZE MESSAGES
+        set_issue
+        set_motd
 
-# INSTALL BOOTLOADER
-install_bootloader
+        # INSTALL BOOTLOADER
+        install_bootloader
 
-# PACMAN HOOKS CREATION
-create_pacman_hooks
+        # PACMAN HOOKS CREATION
+        create_pacman_hooks
 
-# INSTALL FIREWALL + SSHGUARD
-install_frw
+        # INSTALL FIREWALL + SSHGUARD
+        install_frw
 
-# SET SHELLS .RCs
-set_bashrc
-set_zshrc
+        # SET SHELLS .RCs
+        set_bashrc
+        set_zshrc
 
-# THEMING
-create_themes
-refind_theming
+        # THEMING
+        create_themes
+        refind_theming
 
-# CREATE USER
-ask_newuser
+        # CREATE USER
+        ask_newuser
 
-# INSTALL PARU
-install_paru
+        # INSTALL PARU
+        install_paru
 
-# CONFIGURE systemd-networkd
-systemd_networkd
+        # CONFIGURE systemd-networkd
+        systemd_networkd
 
-# CONFIGURE SYSTEMD-RESOLVED
-systemd_resolved
+        # CONFIGURE SYSTEMD-RESOLVED
+        systemd_resolved
 
-# ENDING
-ending
+        # ENDING
+        ending
 
-rm -rf /post_install
+        rm -rf /post_install
+}
+
+main

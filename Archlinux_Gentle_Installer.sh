@@ -30,56 +30,61 @@ source_files() {
 
 __tty_theme
 
-# SOURCE FILES
-source_files
+main() {
+        
+        # SOURCE FILES
+        source_files
 
-# INIT
-greetings
+        # INIT
+        greetings
 
-# TEST INTERNET CONNECTION
-test_internet
+        # TEST INTERNET CONNECTION
+        test_internet
 
-# ASK FOR LVM AND LUKS DESTRUCTION
-lvm_luks_try
+        # ASK FOR LVM AND LUKS DESTRUCTION
+        lvm_luks_try
 
-# TEST UEFI/BIOS MODE
-get_bios_mode
+        # TEST UEFI/BIOS MODE
+        get_bios_mode
 
-# DETECT CPU MANUFACTURER
-get_cpu_brand
+        # DETECT CPU MANUFACTURER
+        get_cpu_brand
 
-# ASK FOR BOOTLOADER
-bootloader_choice
+        # ASK FOR BOOTLOADER
+        bootloader_choice
 
-# ASK FOR LUKS
-luks_choice
+        # ASK FOR LUKS
+        luks_choice
 
-# ASK FOR FILESYSTEM
-filesystem_choice
+        # ASK FOR FILESYSTEM
+        filesystem_choice
 
-# ASK FOR BLOCK DEVICE
-disk_choice
+        # ASK FOR BLOCK DEVICE
+        disk_choice
 
-# INIT PARTITIONING
-partition_disk
+        # INIT PARTITIONING
+        partition_disk
 
-# START FORMATING PARTITIONS BTRFS|XFS|EXT4 WITH(OUT) LUKS
-format_partitions
+        # START FORMATING PARTITIONS BTRFS|XFS|EXT4 WITH(OUT) LUKS
+        format_partitions
 
-# ASK NETWORK MANAGER
-net_manager
+        # ASK NETWORK MANAGER
+        net_manager
 
-# ASK KERNEL
-ask_kernel
+        # ASK KERNEL
+        ask_kernel
 
-# INSTALL THE SYSTEM
-pacstrap_install
+        # INSTALL THE SYSTEM
+        pacstrap_install
 
-# GENERATE FSTAB
-gen_fstab
+        # GENERATE FSTAB
+        gen_fstab
 
-cp -a ./config/c_config.sh post_install/config/c_config.sh
-cp -a ./config/c_formatting.sh post_install/config/c_formatting.sh
-cp -a post_install /mnt
-chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
-arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh
+        cp -a ./config/c_config.sh post_install/config/c_config.sh
+        cp -a ./config/c_formatting.sh post_install/config/c_formatting.sh
+        cp -a post_install /mnt
+        chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
+        arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh
+}
+
+main

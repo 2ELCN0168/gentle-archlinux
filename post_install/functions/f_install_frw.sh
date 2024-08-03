@@ -12,7 +12,7 @@ install_frw() {
         fi
 
         # Install sshguard (fail2ban like)
-        echo -e "${C_WHITE}> ${INFO} Installing ${C_WHITE}sshguard.${NO_FORMAT}"
+        echo -e "${C_WHITE}> ${INFO} Installing ${C_WHITE}sshguard.${NO_FORMAT}\n"
         pacman -S sshguard --noconfirm 1> /dev/null 2>&1
         if [[ ! "${?}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${ERR} Cannot install ${C_WHITE}sshguard.${NO_FORMAT}\n"

@@ -110,14 +110,13 @@ btrfs_handling() {
 
         if [[ "${btrfsSubvols}" -eq 1 ]]; then
                 mount "${root_part}" /mnt 1> /dev/null 2>&1
-                btrfs subvolume create /mnt/{@,@home,@usr,@tmp,@var,.snapshots} 1> /dev/null 2>&1
+                btrfs subvolume create /mnt/{@,@home,@usr,@tmp,@var} 1> /dev/null 2>&1
 
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@home${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@usr${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@tmp${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@var${NO_FORMAT}"
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}.snapshots${NO_FORMAT}\n"
 
                 umount -R /mnt 1> /dev/null 2>&1
 
@@ -135,9 +134,6 @@ btrfs_handling() {
 
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to ${C_WHITE}/mnt/var${NO_FORMAT}"
                 mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var "${root_part}" /mnt/var
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}.snapshots${NO_FORMAT} to ${C_WHITE}/mnt/.snapshots${NO_FORMAT}"
-                mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=.snapshots "${root_part}" /mnt/.snapshots
 
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
                 mount --mkdir "${boot_part}" /mnt/boot
