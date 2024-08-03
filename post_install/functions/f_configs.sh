@@ -157,7 +157,7 @@ set_vconsole() {
                 declare -i ans_keymap=""
                 read ans_keymap
                 : "${ans_keymap:=0}"
-                echo "\n"
+                echo -e "\n"
 
                 declare keymap=""
 

@@ -16,7 +16,6 @@ source_files() {
     source $f_path/f_pacman_hooks.sh
     source $f_path/f_install_frw.sh
     source $f_path/f_user_management.sh
-    source $f_path/f_paru.sh
     source $f_path/f_systemd-networkd.sh
     source $f_path/f_systemd_resolved.sh
     source $f_path/f_ending.sh
@@ -56,9 +55,6 @@ main() {
 
         # CREATE USER
         ask_newuser
-
-        # INSTALL PARU
-        install_paru
 
         # CONFIGURE systemd-networkd
         systemd_networkd
