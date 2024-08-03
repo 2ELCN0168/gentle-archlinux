@@ -5,7 +5,7 @@ ask_newuser() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Would you like to create a user? [y/N] ->${NO_FORMAT} \c"
                 read createUser
-                : "${createUser:-N}"
+                : "${createUser:=N}"
                 echo ""
 
                 case "${createUser}" in
@@ -48,7 +48,7 @@ create_user() {
 
                 case "${ans_sudoer}" in
                         "y"|"Y")
-                                sudo="-G wheel "
+                                sudo="-G wheel"
                                 break
                                 ;;
                         "n"|"N")
@@ -65,8 +65,7 @@ create_user() {
 
         declare -i i=""
 
-        echo "${sudo}-s /bin/zsh ${username}"
-        useradd -m -U "${sudo}"-s /bin/zsh "${username}" 1> "/dev/null" 2>&1
+        useradd -m -U ${sudo} -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
         if [[ "${?}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} created.\n"
                 passwd "${username}"

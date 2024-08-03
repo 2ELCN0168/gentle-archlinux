@@ -32,7 +32,7 @@ set_time() {
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? ->${NO_FORMAT} \c"
 
                 declare -i ans_localtime=""
                 read ans_localtime
@@ -100,14 +100,14 @@ set_hostname() {
         # Setting up /etc/hostname
 
         echo -e "${C_CYAN}:: ${C_WHITE}Enter your hostname without domain."
-        echo -e "${C_CYAN}:: ${C_WHITE}Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT} \c"
+        echo -e "${C_CYAN}:: ${C_WHITE}Recommended hostname length: 15 chars. Default is 'localhost' ->${NO_FORMAT} \c"
 
         declare ans_hostname=""
         read ans_hostname
         : "${ans_hostname:=localhost}"
         echo ""
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT} \c."
+        echo -e "${C_CYAN}:: ${C_WHITE}Enter your domain name. Default is 'home.arpa' (RFC 8375) ->${NO_FORMAT} \c."
 
         declare ans_domain_name=""
         read ans_domain_name
@@ -156,7 +156,7 @@ set_vconsole() {
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap ->${NO_FORMAT} \c"
 
                 declare -i ans_keymap=""
                 read ans_keymap
