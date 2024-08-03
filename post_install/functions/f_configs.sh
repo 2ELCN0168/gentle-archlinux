@@ -32,7 +32,7 @@ set_time() {
                 
                 echo -e "\n====================\n"
 
-                echo -e "${B_CYAN} [?] - Where do you live? -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? -> ${NO_FORMAT} \c"
 
                 declare -i ans_localtime=""
                 read ans_localtime
@@ -100,7 +100,7 @@ set_hostname() {
 
         # Setting up /etc/hostname
 
-        echo -e "${B_CYAN} [?] - Enter your hostname without domain."
+        echo -e "${C_CYAN}:: ${C_WHITE}Enter your hostname without domain."
         echo -e "Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT} \c"
 
         declare ans_hostname=""
@@ -108,7 +108,7 @@ set_hostname() {
         : "${ans_hostname:=localhost}"
         echo ""
 
-        echo -e "${B_CYAN} [?] - Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT} \c."
+        echo -e "${C_CYAN}:: ${C_WHITE}Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT} \c."
 
         declare ans_domain_name=""
         read ans_domain_name
@@ -152,29 +152,24 @@ set_vconsole() {
                 
                 echo -e "\n====================\n"
 
-                echo -e "${B_CYAN} [?] - Select your keymap -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap -> ${NO_FORMAT} \c"
 
                 declare -i ans_keymap=""
                 read ans_keymap
                 : "${ans_keymap:=0}"
                 echo -e "\n"
 
-                declare keymap=""
-
                 case "${ans_keymap}" in
                         [0])
                                 keymap="us-acentos"
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
                                 break
                                 ;;
                         [1])
                                 keymap="us"
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
                                 break
                                 ;;
                         [2])
                                 keymap="fr"
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}."
                                 break
                                 ;;
                         *)
@@ -183,6 +178,7 @@ set_vconsole() {
                 esac
         done
 
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}.\n"
         echo "KEYMAP=${keymap}" > /etc/vconsole.conf
         echo "FONT=ter-116b" >> /etc/vconsole.conf
 }

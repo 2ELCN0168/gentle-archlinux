@@ -8,11 +8,11 @@ net_manager() {
                 echo -e "\n==NETWORK MANAGER===\n"
 
                 echo -e "${C_WHITE}[0] - ${C_GREEN}systemd-networkd${NO_FORMAT} [default]"
-                echo -e "${C_WHITE}[1] - ${C_WHITE}NetworkManager${NO_FORMAT}"
+                echo -e "${C_WHITE}[1] - ${C_CYAN}NetworkManager${NO_FORMAT}"
 
                 echo -e "\n====================\n"
 
-                echo -e "${B_CYAN} [?] - Which network manager do you want to use? -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN}:: ${C_WHITE}Which network manager do you want to use? -> ${NO_FORMAT} \c"
                 
                 declare -i ans_net_manager=""
                 read ans_net_manager

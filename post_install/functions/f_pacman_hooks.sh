@@ -18,7 +18,7 @@ refind_hook() {
                 return 1;
         fi
 
-        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}rEFInd.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}rEFInd.${NO_FORMAT}"
 
         cat << EOF > /etc/pacman.d/hooks/refind.hook
         [Trigger]
@@ -33,9 +33,9 @@ refind_hook() {
 EOF
 
         if [[ -e "/etc/pacman.d/hooks/refind.hook" ]]; then
-                echo -e "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}${1}.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${SUC} Created a pacman hook for ${C_WHITE}rEFInd.${NO_FORMAT}\n"
         else
-                echo -e "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}${1}.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${ERR} While creating a pacman hook for ${C_WHITE}rEFInd${NO_FORMAT}\n"
         fi
 }
 
@@ -43,7 +43,7 @@ bash_zsh_hook() {
 
         # This hook avoids bash to be uninstalled.
 
-        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}"
 
         cat << EOF > /etc/pacman.d/hooks/bash_zsh_no_remove.hook
         [Trigger]

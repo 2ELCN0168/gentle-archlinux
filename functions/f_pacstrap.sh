@@ -3,7 +3,7 @@
 ask_packages() {
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.) [Y/n] -> ${NO_FORMAT} \c" 
+                echo -e "${B_CYAN}:: ${C_WHITE}Do you want to add networking tools (e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.) [Y/n] -> ${NO_FORMAT} \c" 
 
                 declare ans_net_pack=""
                 read ans_net_pack
@@ -26,7 +26,7 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to add helping tools (e.g., tealdeer, man, texinfo, etc.) [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN}:: ${C_WHITE}Do you want to add helping tools (e.g., tealdeer, man, texinfo, etc.) [Y/n] -> ${NO_FORMAT} \c"
                 
                 declare ans_help_pack=""
                 read ans_help_pack
@@ -49,7 +49,7 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to add monitoring tools (e.g., btop, htop, bmon, etc.) [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN}:: ${C_WHITE}Do you want to add monitoring tools (e.g., btop, htop, bmon, etc.) [Y/n] -> ${NO_FORMAT} \c"
                 
                 declare ans_monitoring_pack=""
                 read ans_monitoring_pack

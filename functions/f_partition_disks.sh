@@ -8,7 +8,7 @@ partition_disk() {
         # FORMATTING DONE
 
         if [[ "${UEFI}" -eq 1 ]]; then
-                echo -e "\n${C_WHITE}> ${INFO} Creating two partitions for ${C_CYAN}GPT${NO_FORMAT} disk.\n"
+                echo -e "${C_WHITE}> ${INFO} Creating two partitions for ${C_CYAN}GPT${NO_FORMAT} disk."
 
                 # PROBLEM HERE, NEED TO REMOVE THE IF TO GET IT WORKING
                 # if parted -s $user_disk mklabel gpt; then
@@ -38,7 +38,7 @@ partition_disk() {
                 
         elif [[ "${UEFI}" -eq 0 ]]; then
 
-                echo -e "${C_WHITE}> ${INFO} Creating two partitions for MBR disk.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} Creating two partitions for MBR disk.${NO_FORMAT}"
                 
                 # if parted -s $user_disk mklabel msdos && \
                 #         parted -s $user_disk mkpart primary ESP fat32 1Mib 512Mib && \
