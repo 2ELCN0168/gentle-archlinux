@@ -61,17 +61,22 @@ create_user() {
                 esac
         done
 
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_WHITE}${username}${NO_FORMAT}.\n"
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_YELLOW}${username}${NO_FORMAT}.\n"
 
-        if useradd -m -U "${sudo}" -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_WHITE}${username}${NO_FORMAT} created.\n"
+        declare -i i=""
+
+        useradd -m -U "${sudo}" -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
+        if [[ "${?}" -eq 0 ]]; then
+                echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} created.\n"
                 passwd "${username}"
+                i=0
                 echo ""
         else
-                echo -e "${C_WHITE}> ${ERR} ${NO_FORMAT}New user ${C_WHITE}${username}${NO_FORMAT} cannot be created.\n"
+                echo -e "${C_WHITE}> ${ERR} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} cannot be created.\n"
+                i=1
         fi
 
-        if [[ -z "${sudo}" ]]; then
+        if [[ -z "${sudo}" && "${i}" -ne 1 ]]; then
                 echo "${username} ALL=(ALL:ALL) ALL" > "/etc/sudoers.d/${username}"
         fi
 

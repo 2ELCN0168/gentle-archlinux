@@ -116,7 +116,7 @@ btrfs_handling() {
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@home${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@usr${NO_FORMAT}"
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@tmp${NO_FORMAT}"
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@var${NO_FORMAT}"
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}@var${NO_FORMAT}\n"
 
                 umount -R /mnt 1> /dev/null 2>&1
 
