@@ -18,11 +18,10 @@ install_paru() {
                 case "${ans_paru}" in 
                         "y"|"Y")
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Installing ${C_CYAN}paru${NO_FORMAT}..."
-                                su $username
                                 git clone https://aur.archlinux.org/paru.git /home/$username/paru
                                 cd /home/$username/paru
-                                makepkg -si
-                                exit
+                                chown "$username": -R ../paru
+                                su "${username}" -c makepkg -si
                                 mv /home/$username/paru /usr/src
 
                                 if paru --version; then
