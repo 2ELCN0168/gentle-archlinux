@@ -1,232 +1,229 @@
+install_bootloader() {
+
+        case "${bootloader}" in 
+                "REFIND")
+                        install_refind
+                        ;;
+                "GRUB")
+                        install_grub
+                        ;;
+                "SYSTEMDBOOT")
+                        install_systemdboot
+                        ;;
+        esac
+}
+
+declare_bootloader_vars() {
+
+        declare rootLine=""
+        declare isMicrocode=""
+        declare isBTRFS=""
+        declare isEncrypt=""
+        declare isEncryptEnding=""
+        declare uuid=""
+        # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+}
+
+refind_as_fallback() {
+
+        while true; do
+                echo -e "${C_CYAN}:: ${C_WHITE}Should we install rEFInd? [Y/n] ->${NO_FORMAT} \c"
+
+                declare ans_install_refind=""
+                read ans_install_refind
+                : "${ans_install_refind:=Y}"
+                echo ""
+
+                case "${ans_install_refind}" in 
+                        "y"|"Y")
+                                bootloader="REFIND"
+                                install_refind
+                                break
+                                ;;
+                        "n"|"N")
+                                echo -e "${C_WHITE}> ${WARN} Fine, I guess you know what you're doing.\n"
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
+}
+
 install_refind() {
 
-  printf "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
-  jump
-  refind-install &> /dev/null
+        declare_bootloader_vars
 
-  local rootLine=""
-  local isMicrocode=""
-  local isBTRFS=""
-  local isEncrypt=""
-  local isEncryptEnding=""
-  local uuid=""
-  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}\n"
+        
+        refind-install 1> /dev/null 2>&1
 
-  if [[ $cpuBrand == 'INTEL' ]]; then
-    isMicrocode=" initrd=intel-ucode.img"
-  elif [[ $cpuBrand == 'AMD' ]]; then
-    isMicrocode=" initrd=amd-ucode.img"
-  fi
+                if [[ "${cpuBrand}" == "INTEL" ]]; then
+                isMicrocode=" initrd=intel-ucode.img"
+        elif [[ "${cpuBrand}" == "AMD" ]]; then
+                isMicrocode=" initrd=amd-ucode.img"
+        fi
 
-  if [[ $wantEncrypted -eq 1 ]]; then
-    rootLine=""
-    isEncrypt="rd.luks.name="
-    isEncryptEnding="=root root=/dev/mapper/root"
-  elif [[ $wantEncrypted -eq 0 ]]; then
-    rootLine="root=UUID="
-  fi
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                rootLine=""
+                isEncrypt="rd.luks.name="
+                isEncryptEnding="=root root=/dev/mapper/root"
+        elif [[ "${wantEncrypted}" -eq 0 ]]; then
+                rootLine="root=UUID="
+        fi
 
-  if [[ $filesystem == 'BTRFS' && $btrfsSubvols -eq 1 ]]; then
-    isBTRFS=" rootflags=subvol=@"
-  fi
+        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 ]]; then
+                isBTRFS=" rootflags=subvol=@"
+        fi
 
 
-  if [[ $filesystem == 'BTRFS' && $btrfsSubvols -eq 1 && $wantEncrypted -eq 1 ]]; then
-    uuid=$(blkid -o value -s UUID "$user_disk")
-  else
-    uuid=$(blkid -o value -s UUID "$root_part")
-  fi
+        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
+                uuid=$(blkid -o value -s UUID "${user_disk}")
+        else
+                uuid=$(blkid -o value -s UUID "${root_part}")
+        fi
 
-  
 
-  # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
-  echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
 
-  # For Linux kernel
-  echo -e \"Arch Linux\" \"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\" > /boot/refind_linux.conf
+        # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
+        echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
 
-  printf "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}"
-  jump
+        # For Linux kernel
+        echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > /boot/refind_linux.conf
+
+        echo -e "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}\n"
 }
 
 install_grub() {
-  if [[ $UEFI -eq 1 ]]; then
-    printf "${C_WHITE}> ${INFO} Installing grub for EFI to /boot."
-    jump
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB &> /dev/null
-    if [[ ! $? -eq 0 ]]; then
-      printf "${C_WHITE}> ${ERR} GRUB installation failed, trying another method..."
-      jump
-      grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --force &> /dev/null
-    if [[ ! $? -eq 0 ]]; then
-      printf "${C_WHITE}> ${ERR} ${C_RED}GRUB installation failed even with different parameters, you will have to install and configure a bootloader manually. Good luck.${NO_FORMAT}"
-      while true; do
-        read -p "[?] - Should we install REFIND? [Y/n] -> " installrefind
-        local installrefind="${installrefind:-Y}"
-        case "$installrefind" in 
-          [yY])
-          bootloader="REFIND"
-          install_refind
-          break
-          ;;
-        [nN])
-          jump
-          printf "${C_WHITE}> ${WARN} Fine, I guess you know what you're doing."
-          jump
-          break
-          ;;
-        *)
-          invalid_answer
-          ;;
-        esac
-      done
-    fi
-  fi
 
-  elif [[ $UEFI -eq 0 ]]; then
-    printf "${C_WHITE}> ${INFO} Installing grub for BIOS to /boot."
-    jump
-    grub-install --target=i386-pc /dev/$disk &> /dev/null
-  fi
+        if [[ "${UEFI}" -eq 1 ]]; then
+                echo -e "${C_WHITE}> ${INFO} Installing grub for EFI to /boot.\n"
 
-  # Add a verifcation for partition name with testing if ls /dev/$partname returns error or not instead of lsblk
-  #read -p "Type your root partition name (e.g., sda2, nvme0n1p2 (default=sda2)) -> " partition
-  #partition="${partition:-sda2}"
-  #partition="/dev/${partition}"
+                grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB 1> /dev/null 2>&1
 
-  local rootLine=""
-  local isMicrocode=""
-  local isBTRFS=""
-  local isEncrypt=""
-  local isEncryptEnding=""
-  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+                if [[ ! "${?}" -eq 0 ]]; then
+                        echo -e "${C_WHITE}> ${ERR} GRUB installation failed, trying another method...\n"
 
-  # Make a backup of /etc/default/grub
-  cp -a /etc/default/grub /etc/default/grub.bak
+                        grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --force 1> /dev/null 2>&1
 
-  if [[ $cpuBrand == 'INTEL' ]]; then
-    isMicrocode=" initrd=intel-ucode.img"
-  elif [[ $cpuBrand == 'AMD' ]]; then
-    isMicrocode=" initrd=amd-ucode.img"
-  fi
+                        if [[ ! "${?}" -eq 0 ]]; then
+                                echo -e "${C_WHITE}> ${ERR} ${C_RED}GRUB installation failed even with different parameters, you will have to install and configure a bootloader manually. Good luck.${NO_FORMAT}"
+                                refind_as_fallback
+                                
+                        fi
+                fi
 
-  if [[ $wantEncrypted -eq 1 ]]; then
-    rootLine=""
-    isEncrypt="rd.luks.name="
-    isEncryptEnding="=root root=/dev/mapper/root"
-    sed -i '/^\s*#\(GRUB_ENABLE_CRYPTODISK\)/ s/^#//' /etc/default/grub
-  elif [[ $wantEncrypted -eq 0 ]]; then
-    rootLine="root=UUID="
-  fi
+        elif [[ "${UEFI}" -eq 0 ]]; then
+                echo -e "${C_WHITE}> ${INFO} Installing grub for BIOS to /boot.\n"
+                grub-install --target=i386-pc /dev/$disk 1> /dev/null 2>&1
+        fi
 
-  if [[ $filesystem == 'BTRFS' && $btrfsSubvols -eq 1 ]]; then
-    isBTRFS=" rootflags=subvol=@"
-  fi
+        # Add a verifcation for partition name with testing if ls /dev/$partname returns error or not instead of lsblk
+        #read -p "Type your root partition name (e.g., sda2, nvme0n1p2 (default=sda2)) -> " partition
+        #partition="${partition:-sda2}"
+        #partition="/dev/${partition}"
 
-  # uuid=$(blkid -o value -s UUID "$partition")
-  local uuid=$(blkid -o value -s UUID $root_part)
+        declare_bootloader_vars
+        #
+        # Make a backup of /etc/default/grub
+        cp -a /etc/default/grub /etc/default/grub.bak
 
-  grubKernelParameters="\"$rootLine$isEncrypt$uuid$isEncryptEnding rw initrd=${kernel_initramfs}$isBTRFS$isMicrocode\""
-  printf "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
+        if [[ "${cpuBrand}" == "INTEL" ]]; then
+                isMicrocode=" initrd=intel-ucode.img"
+        elif [[ "${cpuBrand}" == "AMD" ]]; then
+                isMicrocode=" initrd=amd-ucode.img"
+        fi
 
-  # VERY IMPORTANT LINE, SO ANNOYING TO GET IT WORKING, DO NOT DELETE!
-  awk -v params="$grubKernelParameters" '/GRUB_CMDLINE_LINUX=""/{$0 = "GRUB_CMDLINE_LINUX=" params ""} 1' /etc/default/grub > tmpfile && mv tmpfile /etc/default/grub
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                rootLine=""
+                isEncrypt="rd.luks.name="
+                isEncryptEnding="=root root=/dev/mapper/root"
+                sed -i '/^\s*#\(GRUB_ENABLE_CRYPTODISK\)/ s/^#//' /etc/default/grub
+        elif [[ "${wantEncrypted}" -eq 0 ]]; then
+                rootLine="root=UUID="
+        fi
 
-  grub-mkconfig -o /boot/grub/grub.cfg
+        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 ]]; then
+                isBTRFS=" rootflags=subvol=@"
+        fi
+
+        # uuid=$(blkid -o value -s UUID "$partition")
+        uuid=$(blkid -o value -s UUID ${root_part})
+
+        grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
+        echo -e "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
+
+        # VERY IMPORTANT LINE, SO ANNOYING TO GET IT WORKING, DO NOT DELETE!
+        # If it doesn't work anymore, remove brackets to ${grubKernelParameters}
+        awk -v params="${grubKernelParameters}" '/GRUB_CMDLINE_LINUX=""/{$0 = "GRUB_CMDLINE_LINUX=" params ""} 1' /etc/default/grub > tmpfile && mv tmpfile /etc/default/grub
+        # Should be reformatted once I have learnt AWK
+
+        grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 install_systemdboot() {
 
-  local rootLine=""
-  local isMicrocode=""
-  local isBTRFS=""
-  local isEncrypt=""
-  local isEncryptEnding=""
-  # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
-  # declare -gx kernel_name="" -> /functions/f_kernel_choice.sh 
+        declare_bootloader_vars
+        # declare -gx kernel_name="" -> /functions/f_kernel_choice.sh 
 
-  if [[ $cpuBrand == 'INTEL' ]]; then
-    isMicrocode="initrd=intel-ucode.img"
-  elif [[ $cpuBrand == 'AMD' ]]; then
-    isMicrocode="initrd=amd-ucode.img"
-  fi
+        if [[ "${cpuBrand}" == "INTEL" ]]; then
+                isMicrocode="initrd=intel-ucode.img"
+        elif [[ "${cpuBrand}" == "AMD" ]]; then
+                isMicrocode="initrd=amd-ucode.img"
+        fi
 
-  if [[ $wantEncrypted -eq 1 ]]; then
-    rootLine=""
-    isEncrypt="rd.luks.name="
-    isEncryptEnding="=root root=/dev/mapper/root"
-  elif [[ $wantEncrypted -eq 0 ]]; then
-    rootLine="root=UUID="
-  fi
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                rootLine=""
+                isEncrypt="rd.luks.name="
+                isEncryptEnding="=root root=/dev/mapper/root"
+        elif [[ "${wantEncrypted}" -eq 0 ]]; then
+                rootLine="root=UUID="
+        fi
 
-  if [[ $filesystem == 'BTRFS' && $btrfsSubvols -eq 1 ]]; then
-    isBTRFS=" rootflags=subvol=@"
-  fi
+        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 ]]; then
+                isBTRFS=" rootflags=subvol=@"
+        fi
 
-  local uuid=$(blkid -o value -s UUID "$root_part")
+        local uuid=$(blkid -o value -s UUID "${root_part}")
+
+        echo -e "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
 
-  printf "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}"
-  jump
-  
-  if bootctl install --esp-path=/boot &> /dev/null; then
-    echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
-    echo -e "linux   /${kernel_name}" >> /boot/loader/entries/arch.conf
-    echo -e "initrd  /${kernel_initramfs}" >> /boot/loader/entries/arch.conf
-    if [[ -z $isMicrocode ]];then
-      echo -e "initrd  /$isMicrocode" >> /boot/loader/entries/arch.conf
-    fi
-    echo -e "options $rootLine$isEncrypt$uuid$isEncryptEnding rw $isBTRFS" >> /boot/loader/entries/arch.conf
+        bootctl install --esp-path=/boot 1> /dev/null 2>&1
 
-    printf "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}"
-    jump
-    if ! ls /etc/pacman.d/hooks; then
-      printf "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
-      mkdir -p /etc/pacman.d/hooks
-      cat << EOF > /etc/pacman.d/hooks/95-systemd-boot.hook
-      [Trigger]
-      Type = Package
-      Operation = Upgrade
-      Target = systemd
+        if [[ "${?}" -eq 0 ]]; then
+                echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
+                echo -e "linux   /${kernel_name}" >> /boot/loader/entries/arch.conf
+                echo -e "initrd  /${kernel_initramfs}" >> /boot/loader/entries/arch.conf
+                if [[ -z "${isMicrocode}" ]];then
+                        echo -e "initrd  /${isMicrocode}" >> /boot/loader/entries/arch.conf
+                fi
+                echo -e "options ${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw ${isBTRFS}" >> /boot/loader/entries/arch.conf
 
-      [Action]
-      Description = Gracefully upgrading systemd-boot...
-      When = PostTransaction
-      Exec = /usr/bin/systemctl restart systemd-boot-update.service
+                echo -e "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}\n"
+
+                if ! ls /etc/pacman.d/hooks; then
+                        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
+
+                        if [[ ! -e "/etc/pacman.d/hooks" ]]; then
+                                mkdir -p /etc/pacman.d/hooks
+                        fi
+                        cat << EOF > /etc/pacman.d/hooks/95-systemd-boot.hook
+                        [Trigger]
+                        Type = Package
+                        Operation = Upgrade
+                        Target = systemd
+
+                        [Action]
+                        Description = Gracefully upgrading systemd-boot...
+                        When = PostTransaction
+                        Exec = /usr/bin/systemctl restart systemd-boot-update.service
 EOF
-    fi
-  else
-    printf "${C_WHITE}> ${ERR} Error during installation of ${C_RED}systemd-boot.${NO_FORMAT}"
-    jump
-    while true; do
-      read -p "[?] - Would you like to install rEFInd instead? [Y/n] " response
-      local response=${response:-Y}
-      case "$response" in 
-        [yY])
-          install_refind
-          break
-          ;;
-        [nN])
-          jump
-          printf "${C_WHITE}> ${WARN} Fine, I guess you know what you're doing."
-          jump
-          break
-          ;;
-        *)
-          invalid_answer
-          ;;
-      esac
-    done
-  fi
+                fi
+        else
+                echo -e "${C_WHITE}> ${ERR} Error during installation of ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
-}
-
-install_bootloader() {
-  if [[ $bootloader == 'REFIND' ]]; then
-    install_refind
-  elif [[ $bootloader == 'GRUB' ]]; then
-    install_grub
-  elif [[ $bootloader == 'SYSTEMDBOOT' ]]; then
-    install_systemdboot
-  fi
+                refind_as_fallback
+       fi
 }
