@@ -7,7 +7,7 @@
 gen_fstab() {
 
         # Generate /etc/fstab of the new system
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Generating ${C_PINK}/mnt/etc/fstab${NO_FORMAT} file.\n"
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Generating ${C_PINK}/mnt/etc/fstab${NO_FORMAT} file."
         if genfstab -U /mnt >> /mnt/etc/fstab; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}Generated ${C_PINK}/mnt/etc/fstab${NO_FORMAT} file.\n"
         else

@@ -17,7 +17,7 @@ systemd_networkd() {
 
                 declare ans_interface=""
                 read ans_interface
-                echo -e "\n"
+                echo ""
 
                 if [[ -d "/sys/class/net/${ans_interface}" ]]; then
                         network_interface="${ans_interface}"
@@ -27,6 +27,8 @@ systemd_networkd() {
                         invalid_answer
                 fi
         done
+
+        cp "/post_install/files/systemd-networkd-template.conf" "/etc/systemd/network/05-${network_interface}.network"
 
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure your interface manually? If no, the DHCP option will be set. [y/N] ->${NO_FORMAT} \c"
@@ -60,7 +62,6 @@ systemd_networkd() {
         read gateway
         echo "\n"
 
-        cp "/post_install/files/systemd-networkd-template.conf" "/etc/systemd/network/05-${network_interface}.network"
 
         sed -i "s/name/${network_interface}/g" "/etc/systemd/network/05-${network_interface}.network"
         sed -i "s/domain/${domain}/g" "/etc/systemd/network/05-${network_interface}.network"

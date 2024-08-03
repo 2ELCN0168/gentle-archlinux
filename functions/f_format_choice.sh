@@ -10,7 +10,7 @@ source ./functions/f_luks_handling.sh
 format_partitions() {
 
         # FORMATTING DONE
-        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${boot_part} to FAT32.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${boot_part} to FAT32.${NO_FORMAT}"
 
         if mkfs.fat -F 32 -n ESP "${boot_part}" &> /dev/null; then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully formatted ${boot_part} to FAT32.${NO_FORMAT}\n"

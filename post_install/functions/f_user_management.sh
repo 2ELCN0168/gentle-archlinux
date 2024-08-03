@@ -36,7 +36,7 @@ create_user() {
                 echo -e "${C_CYAN}:: ${C_WHITE}What will be the name of the new user? ->${NO_FORMAT} \c"
                 read ans_username
                 username="${ans_username}"
-                echo -e "\n"
+                echo ""
         done
 
         while true; do
@@ -48,7 +48,7 @@ create_user() {
 
                 case "${ans_sudoer}" in
                         "y"|"Y")
-                                sudo="-G wheel "
+                                sudo="-G wheel"
                                 break
                                 ;;
                         "n"|"N")
@@ -63,7 +63,7 @@ create_user() {
 
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_WHITE}${username}${NO_FORMAT}.\n"
 
-        if useradd -m -U "${sudo}"-s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1; then
+        if useradd -m -U "${sudo}" -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_WHITE}${username}${NO_FORMAT} created.\n"
                 passwd "${username}"
                 echo ""

@@ -18,7 +18,7 @@ filesystem_choice() {
                 
                 echo -e "\n====================\n"
 
-                echo -e "${B_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
                 
                 declare -i ans_filesystem="0"
                 read ans_filesystem
@@ -55,7 +55,7 @@ btrfs_handling() {
         declare btrfsQuotas=""
 
         while true; do
-                echo -e "${B_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT} \c"
 
                 declare -i ans_btrfs_subvols="0"
                 read ans_btrfs_subvols
@@ -80,7 +80,7 @@ btrfs_handling() {
 
         if [ "${btrfsSubvols}" -eq 1 ]; then
                 while true; do
-                        echo -e "${B_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT} \c"
+                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT} \c"
 
                         declare ans_btrfs_subvols_quotas=""
                         read ans_btrfs_subvols_quotas
@@ -164,7 +164,7 @@ fs_handling() {
 
         # FORMATTING DONE
         while true; do
-                echo -e "${B_CYAN}:: ${C_WHITE}It seems that you've picked ${filesystem}, do you want to use LVM? [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked ${filesystem}, do you want to use LVM? [Y/n] -> ${NO_FORMAT}\c"
 
                 declare ans_lvm="Y"
                 read ans_lvm

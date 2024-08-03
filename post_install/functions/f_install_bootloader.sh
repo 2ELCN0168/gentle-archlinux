@@ -55,7 +55,7 @@ install_refind() {
 
         declare_bootloader_vars
 
-        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
         
         refind-install 1> /dev/null 2>&1
 

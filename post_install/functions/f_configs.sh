@@ -1,6 +1,6 @@
 set_time() {
 
-        echo -e "${C_WHITE}> ${INFO} Setting system clock to UTC.\n"
+        echo -e "${C_WHITE}> ${INFO} Setting system clock to UTC."
 
         if hwclock --systohc 1> /dev/null 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up system clock to UTC.${NO_FORMAT}\n"
@@ -8,7 +8,7 @@ set_time() {
                 echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting system clock to UTC.${NO_FORMAT}\n"
         fi
 
-        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}"
         
         if systemctl enable systemd-timesyncd 1> /dev/null 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up NTP.${NO_FORMAT}\n"
@@ -78,7 +78,6 @@ set_time() {
                                 ;;
                 esac
         done
-        echo -e ""
 }
 
 locales_gen() {
@@ -87,7 +86,7 @@ locales_gen() {
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_CYAN}en_US.UTF-8 UTF-8${NO_FORMAT} in ${C_PINK}/etc/locale.gen${NO_FORMAT}...\n"
         sed -i '/^\s*#\(en_US.UTF-8 UTF-8\)/ s/^#//' /etc/locale.gen
 
-        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Generating locales...${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Generating locales...${NO_FORMAT}"
 
         if locale-gen 1> /dev/null 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Locales generated successfully.${NO_FORMAT}\n"
@@ -101,7 +100,7 @@ set_hostname() {
         # Setting up /etc/hostname
 
         echo -e "${C_CYAN}:: ${C_WHITE}Enter your hostname without domain."
-        echo -e "Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT} \c"
+        echo -e "${C_CYAN}:: ${C_WHITE}Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT} \c"
 
         declare ans_hostname=""
         read ans_hostname
@@ -124,14 +123,15 @@ set_hostname() {
 set_hosts() {
 
         # Setting up /mnt/etc/hosts
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
+        echo -e "${C_GREEN}Here is the file:${NO_FORMAT}\n"
 
-        echo -e "127.0.0.1 localhost.localdomain localhost localhost-ipv4\n" > /etc/hosts
-        echo -e "::1       localhost.localdomain localhost localhost-ipv6\n" >> /etc/hosts
-        echo -e "127.0.0.1 ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv4\n" >> /etc/hosts
-        echo -e "::1       ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv6\n" >> /etc/hosts
+        echo -e "127.0.0.1 localhost.localdomain localhost localhost-ipv4" > /etc/hosts
+        echo -e "::1       localhost.localdomain localhost localhost-ipv6" >> /etc/hosts
+        echo -e "127.0.0.1 ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv4" >> /etc/hosts
+        echo -e "::1       ${hostname}.localdomain  ${hostname}.${domain}    ${hostname}.${domain}-ipv6" >> /etc/hosts
 
-        cat /etc/hosts
+        cat "/etc/hosts"
         echo ""
         sleep 1
 }
@@ -199,7 +199,7 @@ set_pacman() {
 set_mkinitcpio() {
 
         # Making a clean backup of /mnt/etc/mkinitcpio.conf
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}...\n"
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}..."
 
         if [[ ! -e "/etc/mkinitcpio.conf.d" ]]; then
                 mkdir /etc/mkinitcpio.conf.d

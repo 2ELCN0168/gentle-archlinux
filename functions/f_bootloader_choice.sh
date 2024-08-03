@@ -29,17 +29,17 @@ bootloader_choice() {
                         #response=${response:-0}
                         case "${ans_bootloader}" in
                                 [0])
-                                        echo -e "${C_WHITE}> ${NO_FORMAT}We will install ${C_CYAN}rEFInd${NO_FORMAT}\n"
+                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_CYAN}rEFInd${NO_FORMAT}\n"
                                         bootloader="REFIND"
                                         break
                                         ;;
                                 [1])
-                                        echo -e "${C_WHITE}> ${NO_FORMAT}We will install ${C_YELLOW}GRUB2${NO_FORMAT}\n"
+                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_YELLOW}GRUB2${NO_FORMAT}\n"
                                         bootloader="GRUB"
                                         break
                                         ;;
                                 [2])
-                                        echo -e "${C_WHITE}> ${NO_FORMAT}We will install ${C_RED}systemd-boot${NO_FORMAT}\n"
+                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_RED}systemd-boot${NO_FORMAT}\n"
                                         bootloader="SYSTEMDBOOT"
                                         break
                                         ;;
