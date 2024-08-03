@@ -65,7 +65,7 @@ create_user() {
 
         declare -i i=""
 
-        useradd -m -U "${sudo}" -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
+        useradd -m -U "${sudo}" -s /bin/zsh "${username}" 1> "/dev/null" 2>&1
         echo "${sudo} -s /bin/zsh ${username}"
         if [[ "${?}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} created.\n"
