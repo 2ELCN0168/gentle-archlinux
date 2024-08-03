@@ -19,8 +19,8 @@ install_paru() {
                         "y"|"Y")
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Installing ${C_CYAN}paru${NO_FORMAT}..."
                                 git clone https://aur.archlinux.org/paru.git /home/$username/paru
-                                cd /home/$username/paru
-                                chown "$username": -R ../paru
+                                cd /home/$username/
+                                chown -R "${username}": paru
                                 su "${username}" -c makepkg -si
                                 mv /home/$username/paru /usr/src
 
