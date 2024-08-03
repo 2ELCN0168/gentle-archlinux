@@ -12,7 +12,7 @@ net_manager() {
 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Which network manager do you want to use? -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Which network manager do you want to use? -> ${NO_FORMAT}\c"
                 
                 declare -i ans_net_manager=""
                 read ans_net_manager

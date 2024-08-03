@@ -126,16 +126,16 @@ set_hosts() {
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
         echo -e "> ${C_GREEN}Here is the file:${NO_FORMAT}\n"
 
-        echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::"
-        echo ""
         echo -e "127.0.0.1      localhost.localdomain           localhost                       localhost-ipv4" > /etc/hosts
         echo -e "::1            localhost.localdomain           localhost                       localhost-ipv6" >> /etc/hosts
         echo -e "127.0.0.1      ${hostname}.localdomain         ${hostname}.${domain}           ${hostname}.${domain}-ipv4" >> /etc/hosts
         echo -e "::1            ${hostname}.localdomain         ${hostname}.${domain}           ${hostname}.${domain}-ipv6" >> /etc/hosts
+
+        echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::"
+        echo ""
+        cat "/etc/hosts"
         echo ""
         echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::"
-
-        cat "/etc/hosts"
         echo ""
         sleep 1
 }
