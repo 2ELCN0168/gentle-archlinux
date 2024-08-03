@@ -31,7 +31,7 @@ set_motd() {
 
         declare ans_motd=""
         read ans_motd
-        : "${ans_motd}"
+        : "${ans_motd:=Y}"
         echo ""
 
         while true; do
