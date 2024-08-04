@@ -8,6 +8,7 @@ source_files() {
     source ./config/c_formatting.sh
     source ./config/c_theme.sh
 
+    source $f_path/f_help.sh
     source $f_path/f_greetings.sh
     source $f_path/f_internet.sh
     source $f_path/f_lvm_luks_deletion.sh
@@ -31,6 +32,8 @@ source_files() {
 __tty_theme
 
 main() {
+
+        trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
         
         # SOURCE FILES
         source_files
@@ -86,5 +89,20 @@ main() {
         chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
         arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh
 }
+
+while getopts "he:" ${opts}; do
+        case "${opts}" in
+                h)
+                        opt_h_help
+                        ;;
+                e)
+                        echo -e "Hardening mode not available yet."
+                        exit 0
+                        ;;
+                \?)
+                        opt_h_help
+                        ;;
+        esac
+done
 
 main

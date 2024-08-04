@@ -20,7 +20,7 @@ filesystem_choice() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
                 
-                declare -i ans_filesystem="0"
+                declare ans_filesystem=0
                 read ans_filesystem
                 echo ""
 
