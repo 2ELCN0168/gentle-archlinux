@@ -32,21 +32,6 @@ main() {
 
         trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
         
-        while getopts "he" opts; do
-                case "${opts}" in
-                        h)
-                                opt_h_help
-                                ;;
-                        e)
-                                echo -e "Hardening mode not available yet."
-                                exit 0
-                                ;;
-                        \?)
-                                opt_h_help
-                                ;;
-                esac
-        done
-
         # INIT
         greetings
 
@@ -101,8 +86,21 @@ main() {
 
 # SOURCE FILES
 source_files
+__tty_theme
 
-
+while getopts "he" opts; do
+                case "${opts}" in
+                        h)
+                                opt_h_help
+                                ;;
+                        e)
+                                echo -e "Hardening mode not available yet."
+                                exit 0
+                                ;;
+                        \?)
+                                opt_h_help
+                                ;;
+                esac
+        done
 
 main
-__tty_theme
