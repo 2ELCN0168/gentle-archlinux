@@ -32,8 +32,20 @@ main() {
 
         trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
         
-        # SOURCE FILES
-        source_files
+        while getopts "he" opts; do
+                case "${opts}" in
+                        h)
+                                opt_h_help
+                                ;;
+                        e)
+                                echo -e "Hardening mode not available yet."
+                                exit 0
+                                ;;
+                        \?)
+                                opt_h_help
+                                ;;
+                esac
+        done
 
         # INIT
         greetings
@@ -80,28 +92,17 @@ main() {
         # GENERATE FSTAB
         gen_fstab
 
-        cp -a ./config/c_config.sh post_install/config/c_config.sh
-        cp -a ./config/c_formatting.sh post_install/config/c_formatting.sh
-        cp -a post_install /mnt
-        chmod +x /mnt/post_install/Archlinux_Gentle_Installer_post_install.sh
-        arch-chroot /mnt /post_install/Archlinux_Gentle_Installer_post_install.sh
+        cp -a "./config/c_config.sh" "post_install/config/c_config.sh"
+        cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
+        cp -a "post_install" "/mnt"
+        chmod +x "/mnt/post_install/Archlinux_Gentle_Installer_post_install.sh"
+        arch-chroot "/mnt" "/post_install/Archlinux_Gentle_Installer_post_install.sh"
 }
 
-while getopts "he:" ${opts}; do
-        case "${opts}" in
-                h)
-                        opt_h_help
-                        ;;
-                e)
-                        echo -e "Hardening mode not available yet."
-                        exit 0
-                        ;;
-                \?)
-                        opt_h_help
-                        ;;
-        esac
-done
+# SOURCE FILES
+source_files
+
+
 
 main
-
 __tty_theme

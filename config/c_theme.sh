@@ -21,7 +21,4 @@ __tty_theme() {
     printf "\e]PE7cceff" # bold_cyan     rgb(124, 206, 255)  #7cceff
     printf "\e]PFc0cbf5" # bold_white    rgb(192, 203, 245)  #c0cbf5
 
-    clear # To fix the background
 }
-
-__tty_theme
