@@ -2,34 +2,31 @@
 
 source_files() {
 
-    local f_path="./functions"
+    declare f_path="./functions"
 
-    source ./config/c_config.sh
-    source ./config/c_formatting.sh
-    source ./config/c_theme.sh
+    source "./config/c_config.sh"
+    source "./config/c_formatting.sh"
+    source "./config/c_theme.sh"
 
-    source $f_path/f_help.sh
-    source $f_path/f_greetings.sh
-    source $f_path/f_internet.sh
-    source $f_path/f_lvm_luks_deletion.sh
-    source $f_path/f_bios_mode.sh
-    source $f_path/f_cpu_manufacturer.sh
-    source $f_path/f_bootloader_choice.sh
-    source $f_path/f_luks_choice.sh
-    source $f_path/f_lvm_handling.sh
-    source $f_path/f_mount_default.sh
-    source $f_path/f_filesystem.sh
-    source $f_path/f_disk_choice.sh
-    source $f_path/f_partition_disks.sh
-    source $f_path/f_format_choice.sh
-    source $f_path/f_network_manager_choice.sh
-    source $f_path/f_kernel_choice.sh
-    source $f_path/f_pacstrap.sh
-    source $f_path/f_genfstab.sh
-    source $f_path/f_systemd_resolved.sh
+    source "${f_path}/f_help.sh"
+    source "${f_path}/f_greetings.sh"
+    source "${f_path}/f_internet.sh"
+    source "${f_path}/f_lvm_luks_deletion.sh"
+    source "${f_path}/f_bios_mode.sh"
+    source "${f_path}/f_cpu_manufacturer.sh"
+    source "${f_path}/f_bootloader_choice.sh"
+    source "${f_path}/f_luks_choice.sh"
+    source "${f_path}/f_lvm_handling.sh"
+    source "${f_path}/f_mount_default.sh"
+    source "${f_path}/f_filesystem.sh"
+    source "${f_path}/f_disk_choice.sh"
+    source "${f_path}/f_partition_disks.sh"
+    source "${f_path}/f_format_choice.sh"
+    source "${f_path}/f_network_manager_choice.sh"
+    source "${f_path}/f_kernel_choice.sh"
+    source "${f_path}/f_pacstrap.sh"
+    source "${f_path}/f_genfstab.sh"
 }
-
-__tty_theme
 
 main() {
 
@@ -106,3 +103,5 @@ while getopts "he:" ${opts}; do
 done
 
 main
+
+__tty_theme
