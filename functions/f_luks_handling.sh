@@ -22,5 +22,5 @@ luks_handling() {
 
         echo -e "\n${C_WHITE}> ${INFO} Replacing ${root_part} by ${C_PINK}/dev/mapper/root.${NO_FORMAT}\n"
 
-        declare -gx root_part="/dev/mapper/root"
+        root_part="/dev/mapper/root"
 }

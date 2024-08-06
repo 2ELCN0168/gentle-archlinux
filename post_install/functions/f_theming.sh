@@ -1,6 +1,6 @@
 create_themes() {
 
-        declare -i theme_color=0
+        declare -gx theme_color=""
 
         while true; do
                 echo -e "\n==THEMES============\n"

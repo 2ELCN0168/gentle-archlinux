@@ -131,6 +131,8 @@ set_hosts() {
         echo -e "127.0.0.1      ${hostname}.localdomain         ${hostname}.${domain}           ${hostname}.${domain}-ipv4" >> /etc/hosts
         echo -e "::1            ${hostname}.localdomain         ${hostname}.${domain}           ${hostname}.${domain}-ipv6" >> /etc/hosts
 
+        column -t "/etc/hosts"
+
         echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::"
         echo ""
         cat "/etc/hosts"
