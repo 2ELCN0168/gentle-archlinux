@@ -34,7 +34,7 @@ set_time() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? ->${NO_FORMAT} \c"
 
-                declare -i ans_localtime=""
+                declare ans_localtime=""
                 read ans_localtime
                 : "${ans_localtime:=0}"
                 echo ""
@@ -158,7 +158,7 @@ set_vconsole() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap ->${NO_FORMAT} \c"
 
-                declare -i ans_keymap=""
+                declare ans_keymap=""
                 read ans_keymap
                 : "${ans_keymap:=0}"
                 echo -e "\n"

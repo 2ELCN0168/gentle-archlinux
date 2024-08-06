@@ -13,7 +13,7 @@ create_themes() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which theme do you prefer for your TTY? Each one will be created anyway. ->${NO_FORMAT} \c"
 
-                declare -i ans_tty_theme=""
+                declare ans_tty_theme=""
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
                 echo ""

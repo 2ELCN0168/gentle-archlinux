@@ -80,4 +80,5 @@ create_user() {
                 echo "${username} ALL=(ALL:ALL) ALL" > "/etc/sudoers.d/${username}"
         fi
 
+        unset i
 }

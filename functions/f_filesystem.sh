@@ -51,7 +51,7 @@ btrfs_handling() {
 
         # FORMATTING DONE
 
-        declare -igx btrfsSubvols="0"
+        declare -gx btrfsSubvols="0"
         declare btrfsQuotas=""
 
         while true; do
