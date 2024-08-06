@@ -20,8 +20,9 @@ filesystem_choice() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
                 
-                declare ans_filesystem=0
+                declare ans_filesystem=""
                 read ans_filesystem
+                : "${ans_filesystem:=0}"
                 echo ""
 
                 case "${ans_filesystem}" in
@@ -57,8 +58,9 @@ btrfs_handling() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT} \c"
 
-                declare -i ans_btrfs_subvols="0"
+                declare ans_btrfs_subvols=""
                 read ans_btrfs_subvols
+                : "${ans_btrfs_subvols:=0}"
                 echo ""
 
                 case "${ans_btrfs_subvols}" in

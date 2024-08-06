@@ -25,8 +25,9 @@ bootloader_choice() {
 
                         declare ans_bootloader=""
                         read ans_bootloader
+                        : "${ans_bootloader:=0}"
                         echo ""
-                        response=${response:=0}
+
                         case "${ans_bootloader}" in
                                 0)
                                         echo -e "${C_WHITE}> ${INFO} We will install ${C_CYAN}rEFInd${NO_FORMAT}\n"
