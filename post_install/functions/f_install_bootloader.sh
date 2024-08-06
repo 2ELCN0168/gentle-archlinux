@@ -15,12 +15,12 @@ install_bootloader() {
 
 declare_bootloader_vars() {
 
-        declare rootLine=""
-        declare isMicrocode=""
-        declare isBTRFS=""
-        declare isEncrypt=""
-        declare isEncryptEnding=""
-        declare uuid=""
+        declare -g rootLine=""
+        declare -g isMicrocode=""
+        declare -g isBTRFS=""
+        declare -g isEncrypt=""
+        declare -g isEncryptEnding=""
+        declare -g uuid=""
         # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
 }
 
@@ -57,7 +57,7 @@ install_refind() {
 
         echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
         
-        refind-install 1> /dev/null 2>&1
+        refind-install 1> "/dev/null" 2>&1
 
         if [[ "${cpuBrand}" == "INTEL" ]]; then
                 isMicrocode=" initrd=intel-ucode.img"
