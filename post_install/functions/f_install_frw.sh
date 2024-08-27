@@ -4,7 +4,7 @@ install_frw() {
         echo -e "${C_WHITE}> ${INFO} Installing ${C_WHITE}nftables.${NO_FORMAT}"
 
 
-        if [[ systemctl status nftables 1> "/dev/null" 2>&1 ]]; then
+        if systemctl status nftables 1> "/dev/null" 2>&1; then
                 pacman -S nftables --noconfirm 1> /dev/null 2>&1
                 if [[ "${?}" -eq 0 ]]; then
                         echo -e "${C_WHITE}> ${SUC} Installed ${C_WHITE}nftables.${NO_FORMAT}"
