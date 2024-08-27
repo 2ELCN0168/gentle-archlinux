@@ -79,7 +79,7 @@ install_refind() {
 
         
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
-                uuid=$(blkid -o value -s UUID "${user_disk}")
+                uuid=$(blkid -o value -s UUID ${user_disk})
                 #uuid=$(blkid -o value -s UUID "${user_disk}")
                 # A problem has been spotted here. With the former one, it doesn't boot and the blkid command returns nothing.
                 # Need to inverstigate.
