@@ -6,7 +6,7 @@
 
 luks_choice() {
 
-        declare -igx wantEncrypted=0
+        declare -gx wantEncrypted=0
 
         # FORMATTING DONE
         while true; do
