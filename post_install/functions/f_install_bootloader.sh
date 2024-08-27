@@ -78,14 +78,14 @@ install_refind() {
         fi
         echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
         echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-        echo -e "VARIABLE \$user_disk = ${user_disk}"
+        echo -e "VARIABLE \$user_disk = ${user_disk}2"
         echo -e "VARIABLE \$root_part = ${root_part}"
         echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
         echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
         sleep 2
         
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
-                uuid=$(blkid -o value -s UUID "$user_disk")
+                uuid=$(blkid -o value -s UUID "${user_disk}2")
                 #uuid=$(blkid -o value -s UUID "${user_disk}")
                 # A problem has been spotted here. With the former one, it doesn't boot and the blkid command returns nothing.
                 # Need to inverstigate.
