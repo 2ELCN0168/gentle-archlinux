@@ -85,6 +85,9 @@ pacstrap_install() {
                 "XFS")
                         additionalPackages="${additionalPackages} xfsprogs"
                         ;;
+                "EXT4")
+                        additionalPackages="${additionalPackages} e2fsprogs"
+                        ;;
                 *)
                         exit 1
                         ;;
