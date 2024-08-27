@@ -76,8 +76,11 @@ install_refind() {
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 ]]; then
                 isBTRFS=" rootflags=subvol=@"
         fi
-
+        echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+        echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
         echo -e "VARIABLE \$user_disk = ${user_disk}"
+        echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+        echo -e "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
         sleep 2
         
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
