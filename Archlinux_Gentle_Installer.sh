@@ -2,7 +2,7 @@
 
 source_files() {
 
-    declare f_path="./functions"
+    local f_path="./functions"
 
     source "./config/c_config.sh"
     source "./config/c_formatting.sh"

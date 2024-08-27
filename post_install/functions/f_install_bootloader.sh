@@ -15,13 +15,13 @@ install_bootloader() {
 
 declare_bootloader_vars() {
 
-        declare -g rootLine=""
-        declare -g isMicrocode=""
-        declare -g isBTRFS=""
-        declare -g isEncrypt=""
-        declare -g isEncryptEnding=""
-        declare -g uuid=""
-        # declare -gx kernel_initramfs="" -> /functions/f_kernel_choice.sh 
+         rootLine=""
+         isMicrocode=""
+         isBTRFS=""
+         isEncrypt=""
+         isEncryptEnding=""
+         uuid=""
+        # x kernel_initramfs="" -> /functions/f_kernel_choice.sh 
 }
 
 refind_as_fallback() {
@@ -29,7 +29,7 @@ refind_as_fallback() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Should we install rEFInd? [Y/n] ->${NO_FORMAT} \c"
 
-                declare ans_install_refind=""
+                local ans_install_refind=""
                 read ans_install_refind
                 : "${ans_install_refind:=Y}"
                 echo ""
@@ -171,7 +171,7 @@ install_grub() {
 install_systemdboot() {
 
         declare_bootloader_vars
-        # declare -gx kernel_name="" -> /functions/f_kernel_choice.sh 
+        # x kernel_name="" -> /functions/f_kernel_choice.sh 
 
         if [[ "${cpuBrand}" == "INTEL" ]]; then
                 isMicrocode="initrd=intel-ucode.img"

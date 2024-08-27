@@ -16,7 +16,7 @@ set_time() {
                 echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}\n"
         fi
 
-        declare -ig nKorea=0
+        nKorea=0
 
         while true; do
                 echo -e "==TIME==============\n"
@@ -34,7 +34,7 @@ set_time() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? ->${NO_FORMAT} \c"
 
-                declare ans_localtime=""
+                local ans_localtime=""
                 read ans_localtime
                 : "${ans_localtime:=0}"
                 echo ""
@@ -102,19 +102,19 @@ set_hostname() {
         echo -e "${C_CYAN}:: ${C_WHITE}Enter your hostname without domain."
         echo -e "${C_CYAN}:: ${C_WHITE}Recommended hostname length: 15 chars. Default is 'localhost' ->${NO_FORMAT} \c"
 
-        declare ans_hostname=""
+        local ans_hostname=""
         read ans_hostname
         : "${ans_hostname:=localhost}"
         echo ""
 
         echo -e "${C_CYAN}:: ${C_WHITE}Enter your domain name. Default is 'home.arpa' (RFC 8375) ->${NO_FORMAT} \c."
 
-        declare ans_domain_name=""
+        local ans_domain_name=""
         read ans_domain_name
         : "${ans_domain_name:=home.arpa}"
 
-        declare -gx domain="${ans_domain_name}"
-        declare -gx hostname="${ans_hostname}"
+        export domain="${ans_domain_name}"
+        export hostname="${ans_hostname}"
 
         echo -e "${hostname}.${domain}" > /etc/hostname
         echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}.${domain}${NO_FORMAT} (FQDN).\n"
@@ -148,7 +148,7 @@ set_vconsole() {
         # Creating /mnt/etc/vconsole.conf
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating the file ${C_PINK}/etc/vconsole.conf${NO_FORMAT}."
 
-        declare keymap=""
+        local keymap=""
 
         while true; do
                 echo -e "\n==KEYMAP============\n"
@@ -161,7 +161,7 @@ set_vconsole() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap ->${NO_FORMAT} \c"
 
-                declare ans_keymap=""
+                local ans_keymap=""
                 read ans_keymap
                 : "${ans_keymap:=0}"
                 echo -e "\n"
@@ -214,9 +214,9 @@ set_mkinitcpio() {
         cp -a /etc/mkinitcpio.conf /etc/mkinitcpio.conf.d/$(date +%Y%m%d)-mkinitcpio.conf.bak
 
         # Setting up /etc/mkinitcpio.conf
-        declare isBTRFS=""
-        declare isLUKS=""
-        declare isLVM=""
+        local isBTRFS=""
+        local isLUKS=""
+        local isLVM=""
 
         if [[ "${filesystem}" == "BTRFS" ]]; then
                 isBTRFS="btrfs "
@@ -232,7 +232,7 @@ set_mkinitcpio() {
 
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Updating ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT} with custom parameters...\n"
 
-        declare mkcpioHOOKS="HOOKS=(base systemd ${isBTRFS}autodetect modconf kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
+        local mkcpioHOOKS="HOOKS=(base systemd ${isBTRFS}autodetect modconf kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
 
         awk -v newLine="$mkcpioHOOKS" '!/^#/ && /HOOKS/ { print newLine; next } 1' /etc/mkinitcpio.conf > tmpfile && mv tmpfile /etc/mkinitcpio.conf
 

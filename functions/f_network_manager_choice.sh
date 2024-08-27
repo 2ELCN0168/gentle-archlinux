@@ -2,7 +2,7 @@
 
 net_manager() {
 
-        declare -gx net_manager=""
+        export net_manager=""
 
         while true; do
                 echo -e "\n==NETWORK MANAGER===\n"
@@ -14,7 +14,7 @@ net_manager() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which network manager do you want to use? -> ${NO_FORMAT}\c"
                 
-                declare ans_net_manager=""
+                local ans_net_manager=""
                 read ans_net_manager
                 : "${ans_net_manager:=0}"
                 echo ""

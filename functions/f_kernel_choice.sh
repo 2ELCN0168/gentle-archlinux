@@ -1,8 +1,8 @@
 
 ask_kernel() {
 
-        declare -gx linux_kernel=""
-        declare -gx kernel_initramfs=""
+        export linux_kernel=""
+        export kernel_initramfs=""
 
         while true; do
                 echo -e "==KERNEL============\n"
@@ -17,7 +17,7 @@ ask_kernel() {
 
                 echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you want to install? ->${NO_FORMAT} \c"
 
-                declare -i ans_kernel=0
+                local ans_kernel=0
                 read ans_kernel
                 : $"{$ans_kernel:=0}"
                 echo ""
@@ -54,6 +54,6 @@ ask_kernel() {
         done
 
         if [[ "${bootloader}" == "SYSTEMDBOOT" ]]; then
-                declare -gx kernel_name="vmlinuz-${linux_kernel}"
+                export kernel_name="vmlinuz-${linux_kernel}"
         fi
 }

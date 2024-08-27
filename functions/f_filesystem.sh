@@ -7,7 +7,7 @@
 
 filesystem_choice() {
 
-        declare -gx filesystem=""
+        export filesystem=""
 
         while true; do
                 echo -e "==FILESYSTEM========\n"
@@ -20,7 +20,7 @@ filesystem_choice() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT} \c"
                 
-                declare ans_filesystem=""
+                local ans_filesystem=""
                 read ans_filesystem
                 : "${ans_filesystem:=0}"
                 echo ""
@@ -52,13 +52,13 @@ btrfs_handling() {
 
         # FORMATTING DONE
 
-        declare -gx btrfsSubvols="0"
-        declare btrfsQuotas=""
+        export btrfsSubvols="0"
+        local btrfsQuotas=""
 
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT} \c"
 
-                declare ans_btrfs_subvols=""
+                local ans_btrfs_subvols=""
                 read ans_btrfs_subvols
                 : "${ans_btrfs_subvols:=0}"
                 echo ""
@@ -162,13 +162,13 @@ btrfs_handling() {
 
 fs_handling() {
 
-        declare -igx LVM="0"
+        export LVM="0"
 
         # FORMATTING DONE
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked ${filesystem}, do you want to use LVM? [Y/n] -> ${NO_FORMAT}\c"
 
-                declare ans_lvm="Y"
+                local ans_lvm="Y"
                 read ans_lvm
                 echo ""
 

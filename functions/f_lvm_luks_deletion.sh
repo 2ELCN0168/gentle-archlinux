@@ -7,7 +7,7 @@
 
 lvm_luks_try() {
 
-        declare -i result=0
+        local result=0
 
         if pvscan --cache | grep -q '/dev'; then
                 echo -e "${C_WHITE}> ${INFO} ${C_PINK} A LVM is detected.${NO_FORMAT}\n"
@@ -43,7 +43,7 @@ lvm_deletion() {
         while true; do
                 echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [Y/n] -> ${NO_FORMAT} \c"
 
-                declare ans_wipe_lvm=""
+                local ans_wipe_lvm=""
                 read ans_wipe_lvm
                 : "{$ans_wipe_lvm:=Y}"
                 echo ""
@@ -72,7 +72,7 @@ luks_deletion() {
         while true; do
                 echo -e "${B_CYAN} [?] - Do you want to close any present LUKS partition? [Y/n] -> ${NO_FORMAT} \c"
 
-                declare ans_close_luks=""
+                local ans_close_luks=""
                 read ans_close_luks
                 : "${ans_close_luks:=Y}"
                 echo ""

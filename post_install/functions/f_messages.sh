@@ -3,7 +3,7 @@ set_issue() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Would you like to setup a /etc/issue file [Y/n] ->${NO_FORMAT} \c"
 
-                declare ans_issue=""
+                local ans_issue=""
                 read ans_issue
                 : "${ans_issue:=Y}"
                 echo ""
@@ -29,7 +29,7 @@ set_motd() {
         
         echo -e "${C_CYAN}:: ${C_WHITE}Would you like to setup a /etc/motd file [Y/n] ->${NO_FORMAT} \c"
 
-        declare ans_motd=""
+        local ans_motd=""
         read ans_motd
         : "${ans_motd:=Y}"
         echo ""

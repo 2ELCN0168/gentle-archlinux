@@ -4,7 +4,7 @@ systemd_networkd() {
                 return 1
         fi
 
-        declare network_interface=""
+        local network_interface=""
 
         while true; do
                 echo -e "==INT. CONFIG.======\n"
@@ -15,7 +15,7 @@ systemd_networkd() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it. ->${NO_FORMAT} \c"
 
-                declare ans_interface=""
+                local ans_interface=""
                 read ans_interface
                 echo ""
 
@@ -33,7 +33,7 @@ systemd_networkd() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure your interface manually? If no, the DHCP option will be set. [y/N] ->${NO_FORMAT} \c"
 
-                declare ans_dhcp=""
+                local ans_dhcp=""
                 read ans_dhcp
                 : "${ans_dhcp:=N}"
                 echo ""
@@ -51,8 +51,8 @@ systemd_networkd() {
                 esac
         done
 
-        declare address=""
-        declare gateway=""
+        local address=""
+        local gateway=""
 
         echo -e "${C_CYAN}:: ${C_WHITE}What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) ->${NO_FORMAT} \c"
         read address

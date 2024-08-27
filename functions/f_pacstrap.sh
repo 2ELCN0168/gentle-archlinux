@@ -5,7 +5,7 @@ ask_packages() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add networking tools ${C_GREEN}(e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c" 
 
-                declare ans_net_pack=""
+                local ans_net_pack=""
                 read ans_net_pack
                 : "${ans_net_pack:=Y}"
                 echo ""
@@ -28,7 +28,7 @@ ask_packages() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add helping tools ${C_GREEN}(e.g., tealdeer, man, texinfo, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c"
                 
-                declare ans_help_pack=""
+                local ans_help_pack=""
                 read ans_help_pack
                 : "${ans_help_pack:=Y}"
                 echo ""
@@ -51,7 +51,7 @@ ask_packages() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add monitoring tools ${C_GREEN}(e.g., btop, htop, bmon, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c"
                 
-                declare ans_monitoring_pack=""
+                local ans_monitoring_pack=""
                 read ans_monitoring_pack
                 : "${ans_monitoring_pack:=Y}"
                 echo "" 
@@ -76,7 +76,7 @@ pacstrap_install() {
 
         # FORMATTING DONE
         # List of additional packages depending on parameters specified by the user, avoiding installation of useless things
-        declare -g additionalPackages=""
+        additionalPackages=""
 
         case "${filesystem}" in
                 "BTRFS")

@@ -7,7 +7,7 @@
 
 test_internet() {
 
-        declare -igx attempt=3
+        export attempt=3
 
         while (( "${attempt}" > 0 )); do
                 if ping -c 3 1.1.1.1 &> /dev/null; then
@@ -30,7 +30,7 @@ run_iwctl() {
 
         echo -e "${B_YELLOW}:: ${C_WHITE}Would you like to run the iwctl utility to setup a wifi connection? [Y/n] -> ${NO_FORMAT} \c"
 
-        declare ans_iwctl=""
+        local ans_iwctl=""
         read ans_iwctl
         : "${ans_iwctl:=Y}"
         echo ""

@@ -1,6 +1,6 @@
 ask_newuser() {
 
-        declare -g createUser=""
+        createUser=""
 
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Would you like to create a user? [y/N] ->${NO_FORMAT} \c"
@@ -27,10 +27,10 @@ ask_newuser() {
 
 create_user() {
 
-        declare -gx username=""
-        declare sudo=""
-        declare ans_username=""
-        declare ans_sudoer=""
+        export username=""
+        local sudo=""
+        local ans_username=""
+        local ans_sudoer=""
 
         while [[ -z "${username}" ]]; do
                 echo -e "${C_CYAN}:: ${C_WHITE}What will be the name of the new user? ->${NO_FORMAT} \c"
@@ -63,7 +63,7 @@ create_user() {
 
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_YELLOW}${username}${NO_FORMAT}.\n"
 
-        declare -i i=""
+        i=""
 
         useradd -m -U ${sudo} -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
         if [[ "${?}" -eq 0 ]]; then

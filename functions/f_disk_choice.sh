@@ -7,11 +7,11 @@
 
 disk_choice() {
 
-        declare -gx user_disk="" # Former was finalDisk
-        declare -gx disk=""
-        declare -gx partitionType=""
-        declare -gx boot_part="" # Former was finalPartBoot
-        declare -gx root_part="" # Former was finalPartRoot
+        export user_disk="" # Former was finalDisk
+        export disk=""
+        export partitionType=""
+        export boot_part="" # Former was finalPartBoot
+        export root_part="" # Former was finalPartRoot
 
         # finalDisk="/dev/${diskToUse}"
         # finalPartBoot="/dev/${diskToUse}${partitionType}1"
@@ -27,7 +27,7 @@ disk_choice() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT} \c"
 
-                declare ans_block_device=""
+                local ans_block_device=""
                 read ans_block_device
                 : "${ans_block_device:=sda}"
                 echo ""

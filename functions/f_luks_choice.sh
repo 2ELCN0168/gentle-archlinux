@@ -6,14 +6,14 @@
 
 luks_choice() {
 
-        declare -gx wantEncrypted=0
+        export wantEncrypted=0
 
         # FORMATTING DONE
         while true; do
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want your system to be encrypted with LUKS? [y/N] -> ${NO_FORMAT} \c"
 
-                declare ans_luks=""
+                local ans_luks=""
                 read ans_luks
                 : "${ans_luks:=N}"
                 echo ""

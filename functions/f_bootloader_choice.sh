@@ -9,7 +9,7 @@ bootloader_choice() {
 
         # FORMATTING DONE
 
-        declare -gx bootloader=""
+        export bootloader=""
 
         if [[ "${UEFI}" -eq 1 ]]; then
                 while true; do
@@ -23,7 +23,7 @@ bootloader_choice() {
                         
                         echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which one do you prefer? [0/1/2] -> ${NO_FORMAT} \c"
 
-                        declare ans_bootloader=""
+                        local ans_bootloader=""
                         read ans_bootloader
                         : "${ans_bootloader:=0}"
                         echo ""

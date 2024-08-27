@@ -6,8 +6,8 @@
 
 get_cpu_brand() {
 
-        declare vendor=""
-        declare -gx cpuBrand=""
+        vendor=""
+        export cpuBrand=""
 
         vendor="$(lscpu | grep -i vendor | awk '{ print $3 }' | head -1)"
 
