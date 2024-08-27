@@ -17,7 +17,7 @@ ask_kernel() {
 
                 echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you want to install? ->${NO_FORMAT} \c"
 
-                local ans_kernel=0
+                local ans_kernel=""
                 read ans_kernel
                 : $"{$ans_kernel:=0}"
                 echo ""

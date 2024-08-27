@@ -84,7 +84,7 @@ btrfs_handling() {
                 while true; do
                         echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT} \c"
 
-                        declare ans_btrfs_subvols_quotas=""
+                        local ans_btrfs_subvols_quotas=""
                         read ans_btrfs_subvols_quotas
                         : "${ans_btrfs_subvols_quotas:=Y}"
                         echo ""
@@ -168,8 +168,9 @@ fs_handling() {
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked ${filesystem}, do you want to use LVM? [Y/n] -> ${NO_FORMAT}\c"
 
-                local ans_lvm="Y"
+                local ans_lvm=""
                 read ans_lvm
+                : "${ans_lvm:=Y}"
                 echo ""
 
                 case "${ans_lvm}" in

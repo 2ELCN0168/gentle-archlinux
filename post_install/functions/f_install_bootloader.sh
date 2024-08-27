@@ -15,12 +15,12 @@ install_bootloader() {
 
 declare_bootloader_vars() {
 
-         rootLine=""
-         isMicrocode=""
-         isBTRFS=""
-         isEncrypt=""
-         isEncryptEnding=""
-         uuid=""
+         local rootLine=""
+         local isMicrocode=""
+         local isBTRFS=""
+         local isEncrypt=""
+         local isEncryptEnding=""
+         local uuid=""
         # x kernel_initramfs="" -> /functions/f_kernel_choice.sh 
 }
 
@@ -79,12 +79,12 @@ install_refind() {
 
         
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
-                uuid=$(blkid -o value -s UUID ${user_disk})
+                uuid=$(blkid -o value -s UUID "$user_disk")
                 #uuid=$(blkid -o value -s UUID "${user_disk}")
                 # A problem has been spotted here. With the former one, it doesn't boot and the blkid command returns nothing.
                 # Need to inverstigate.
         else
-                uuid=$(blkid -o value -s UUID "${root_part}")
+                uuid=$(blkid -o value -s UUID "$root_part")
         fi
 
 
