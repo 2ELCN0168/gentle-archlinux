@@ -77,6 +77,8 @@ install_refind() {
                 isBTRFS=" rootflags=subvol=@"
         fi
 
+        echo -e "VARIABLE \$user_disk = ${user_disk}"
+        sleep 2
         
         if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
                 uuid=$(blkid -o value -s UUID "$user_disk")
