@@ -56,11 +56,11 @@ systemd_networkd() {
 
         echo -e "${C_CYAN}:: ${C_WHITE}What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) ->${NO_FORMAT} \c"
         read address
-        echo "\n"
+        echo -e "\n"
 
         echo -e "${C_CYAN}:: ${C_WHITE}What will be the gateway IP? WARNING WHEN TYPING (e.g., 192.168.1.1) ->${NO_FORMAT} \c"
         read gateway
-        echo "\n"
+        echo -e "\n"
 
 
         sed -i "s/name/${network_interface}/g" "/etc/systemd/network/05-${network_interface}.network"

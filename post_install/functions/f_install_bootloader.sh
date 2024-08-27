@@ -87,15 +87,11 @@ install_refind() {
         #         uuid=$(blkid -o value -s UUID "$root_part")
         # fi
 
-
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 uuid=$(blkid -o value -s UUID "${user_disk}2")
         else
                 uuid=$(blkid -o value -s UUID "${root_part}")
         fi
-
-
-
 
         # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
         echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
@@ -159,10 +155,10 @@ install_grub() {
                 isBTRFS=" rootflags=subvol=@"
         fi
 
-        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
                 uuid=$(blkid -o value -s UUID "${user_disk}2")
         else
-                uuid=$(blkid -o value -s UUID "$root_part")
+                uuid=$(blkid -o value -s UUID "${root_part}")
         fi
 
         grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
@@ -199,7 +195,12 @@ install_systemdboot() {
                 isBTRFS=" rootflags=subvol=@"
         fi
 
-        local uuid=$(blkid -o value -s UUID "${root_part}")
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
+                uuid=$(blkid -o value -s UUID "${user_disk}2")
+        else
+                uuid=$(blkid -o value -s UUID "${root_part}")
+        fi
+
 
         echo -e "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
@@ -217,24 +218,24 @@ install_systemdboot() {
 
                 echo -e "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
-                if ! ls /etc/pacman.d/hooks; then
-                        echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
+                #if ! ls /etc/pacman.d/hooks; then
+                echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
 
-                        if [[ ! -e "/etc/pacman.d/hooks" ]]; then
-                                mkdir -p /etc/pacman.d/hooks
-                        fi
-                        cat << EOF > /etc/pacman.d/hooks/95-systemd-boot.hook
-                        [Trigger]
-                        Type = Package
-                        Operation = Upgrade
-                        Target = systemd
-
-                        [Action]
-                        Description = Gracefully upgrading systemd-boot...
-                        When = PostTransaction
-                        Exec = /usr/bin/systemctl restart systemd-boot-update.service
-EOF
+                if [[ ! -e "/etc/pacman.d/hooks" ]]; then
+                        mkdir -p /etc/pacman.d/hooks
                 fi
+                cat << EOF > /etc/pacman.d/hooks/95-systemd-boot.hook
+                [Trigger]
+                Type = Package
+                Operation = Upgrade
+                Target = systemd
+
+                [Action]
+                Description = Gracefully upgrading systemd-boot...
+                When = PostTransaction
+                Exec = /usr/bin/systemctl restart systemd-boot-update.service
+EOF
+                #fi
         else
                 echo -e "${C_WHITE}> ${ERR} Error during installation of ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
