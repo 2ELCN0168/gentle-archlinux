@@ -77,17 +77,22 @@ install_refind() {
                 isBTRFS=" rootflags=subvol=@"
         fi
         
-        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
+        # if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
+        #         uuid=$(blkid -o value -s UUID "${user_disk}2")
+        #         #uuid=$(blkid -o value -s UUID "${user_disk}")
+        #         # A problem has been spotted here. With the former one, it doesn't boot and the blkid command returns nothing.
+        #         # Need to inverstigate.
+        #         # Edit: Investigation done, it works now.
+        # else
+        #         uuid=$(blkid -o value -s UUID "$root_part")
+        # fi
+
+
+        if [[ "${wantEncrypted}" -eq 1 ]]; then
                 uuid=$(blkid -o value -s UUID "${user_disk}2")
-                #uuid=$(blkid -o value -s UUID "${user_disk}")
-                # A problem has been spotted here. With the former one, it doesn't boot and the blkid command returns nothing.
-                # Need to inverstigate.
-                # Edit: Investigation done, it works now.
         else
-                uuid=$(blkid -o value -s UUID "$root_part")
+                uuid=$(blkid -o value -s UUID "${root_part}")
         fi
-
-
 
 
 
@@ -154,8 +159,11 @@ install_grub() {
                 isBTRFS=" rootflags=subvol=@"
         fi
 
-        # uuid=$(blkid -o value -s UUID ${root_part})
-        uuid=$(blkid -o value -s UUID "${user_disk}2")
+        if [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 && "${wantEncrypted}" -eq 1 ]]; then
+                uuid=$(blkid -o value -s UUID "${user_disk}2")
+        else
+                uuid=$(blkid -o value -s UUID "$root_part")
+        fi
 
         grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
         echo -e "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."

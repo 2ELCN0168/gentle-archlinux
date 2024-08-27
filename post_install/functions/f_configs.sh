@@ -21,8 +21,8 @@ set_time() {
         while true; do
                 echo -e "==TIME==============\n"
 
-                echo -e "${C_WHITE}[0] - ${C_CYAN}FRANCE${NO_FORMAT} [default]"
-                echo -e "${C_WHITE}[1] - ${C_WHITE}ENGLAND${NO_FORMAT}"
+                echo -e "${C_WHITE}[0] - ${C_CYAN}France${NO_FORMAT} [default]"
+                echo -e "${C_WHITE}[1] - ${C_WHITE}England${NO_FORMAT}"
                 echo -e "${C_WHITE}[2] - ${C_WHITE}US (New-York)${NO_FORMAT}"
                 echo -e "${C_WHITE}[3] - ${C_RED}Japan${NO_FORMAT}"
                 echo -e "${C_WHITE}[4] - ${C_CYAN}South Korea (Seoul)${NO_FORMAT}"
