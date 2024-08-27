@@ -45,7 +45,7 @@ main() {
         create_pacman_hooks
 
         # INSTALL FIREWALL + SSHGUARD
-        install_frw
+        #install_frw
 
         # SET SHELLS .RCs
         set_bashrc
