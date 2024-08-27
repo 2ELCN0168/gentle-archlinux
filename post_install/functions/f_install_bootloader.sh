@@ -154,8 +154,8 @@ install_grub() {
                 isBTRFS=" rootflags=subvol=@"
         fi
 
-        # uuid=$(blkid -o value -s UUID "$partition")
-        uuid=$(blkid -o value -s UUID ${root_part})
+        # uuid=$(blkid -o value -s UUID ${root_part})
+        uuid=$(blkid -o value -s UUID "${user_disk}2")
 
         grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
         echo -e "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
