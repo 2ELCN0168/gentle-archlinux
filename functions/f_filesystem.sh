@@ -61,7 +61,6 @@ btrfs_handling() {
                 local ans_btrfs_subvols=""
                 read ans_btrfs_subvols
                 : "${ans_btrfs_subvols:=0}"
-                echo ""
 
                 case "${ans_btrfs_subvols}" in
                         [0])
@@ -87,7 +86,6 @@ btrfs_handling() {
                         local ans_btrfs_subvols_quotas=""
                         read ans_btrfs_subvols_quotas
                         : "${ans_btrfs_subvols_quotas:=Y}"
-                        echo ""
 
                         case "${ans_btrfs_subvols_quotas}" in
                                 "y"|"Y")
@@ -171,10 +169,10 @@ fs_handling() {
                 local ans_lvm=""
                 read ans_lvm
                 : "${ans_lvm:=Y}"
-                echo ""
 
                 case "${ans_lvm}" in
                         [yY])
+                                echo ""
                                 LVM="1"
                                 break
                                 ;;            

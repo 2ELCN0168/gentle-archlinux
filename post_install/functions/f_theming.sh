@@ -13,13 +13,15 @@ create_themes() {
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which theme do you prefer for your TTY? Each one will be created anyway. ->${NO_FORMAT} \c"
 
+                local tty_theme=""
                 local ans_tty_theme=""
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
-                echo ""
+                # echo ""
 
                 case "${ans_tty_theme}" in
                         [0])
+                                tty_theme="Catppuccin latte"
                                 echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/etc/skel/.bashrc"
                                 echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/etc/skel/.zshrc"
                                 echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/root/.bashrc"
@@ -28,6 +30,7 @@ create_themes() {
                                 break
                                 ;;
                         [1])
+                                tty_theme="Tokyonight Storm"
                                 echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/etc/skel/.bashrc"
                                 echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/etc/skel/.zshrc"
                                 echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/root/.bashrc"
@@ -36,6 +39,7 @@ create_themes() {
                                 break
                                 ;;
                         [2])
+                                tty_theme="Default"
                                 theme_color=2
                                 break
                                 ;;
@@ -44,6 +48,8 @@ create_themes() {
                                 ;;
                 esac
         done
+        
+        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}TTY theme has been set to ${C_CYAN}${tty_theme}${NO_FORMAT}."
 
         mkdir /etc/tty_themes.d
 

@@ -6,7 +6,7 @@ set_issue() {
                 local ans_issue=""
                 read ans_issue
                 : "${ans_issue:=Y}"
-                echo ""
+                # echo ""
 
                 case "${ans_issue}" in
                         "y"|"Y")
@@ -32,7 +32,7 @@ set_motd() {
         local ans_motd=""
         read ans_motd
         : "${ans_motd:=Y}"
-        echo ""
+        # echo ""
 
         while true; do
                 case "${ans_motd}" in

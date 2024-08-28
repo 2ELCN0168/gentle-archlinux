@@ -17,7 +17,6 @@ net_manager() {
                 local ans_net_manager=""
                 read ans_net_manager
                 : "${ans_net_manager:=0}"
-                echo ""
                 
                 case "${ans_net_manager}" in
                         [0])

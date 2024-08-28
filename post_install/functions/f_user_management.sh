@@ -6,7 +6,7 @@ ask_newuser() {
                 echo -e "${C_CYAN}:: ${C_WHITE}Would you like to create a user? [y/N] ->${NO_FORMAT} \c"
                 read createUser
                 : "${createUser:=N}"
-                echo ""
+                # echo ""
 
                 case "${createUser}" in
                         "y"|"Y")

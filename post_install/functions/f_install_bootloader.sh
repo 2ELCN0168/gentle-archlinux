@@ -55,9 +55,7 @@ install_refind() {
 
         declare_bootloader_vars
 
-        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
         
-        refind-install 1> "/dev/null" 2>&1
 
         if [[ "${cpuBrand}" == "INTEL" ]]; then
                 isMicrocode=" initrd=intel-ucode.img"
@@ -93,13 +91,17 @@ install_refind() {
                 uuid=$(blkid -o value -s UUID "${root_part}")
         fi
 
-        # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
-        echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
+        refind-install 1> "/dev/null" 2>&1
 
-        # For Linux kernel
-        echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > /boot/refind_linux.conf
-
-        echo -e "${C_WHITE}> ${SUC} ${C_WHITE} rEFInd configuration created successfully.${NO_FORMAT}\n"
+        if [[ "${?}" -eq 0 ]]; then
+                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}rEFInd configuration created successfully.${NO_FORMAT}\n"
+                # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
+                echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
+                echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > /boot/refind_linux.conf
+        else
+                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Something went wrong, rEFInd has not been installed, you may want to launch manually \"refind-install\" at the end of the installation. But make sure the file \"/boot/refind_linux.conf\" is correctly set up."
+        fi
 }
 
 install_grub() {

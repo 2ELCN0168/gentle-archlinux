@@ -8,7 +8,7 @@ ask_packages() {
                 local ans_net_pack=""
                 read ans_net_pack
                 : "${ans_net_pack:=Y}"
-                echo ""
+                # echo ""
 
                 case "${ans_net_pack}" in
                         "y"|"Y")
@@ -31,7 +31,7 @@ ask_packages() {
                 local ans_help_pack=""
                 read ans_help_pack
                 : "${ans_help_pack:=Y}"
-                echo ""
+                # echo ""
 
                 case "${ans_help_pack}" in
                         "y"|"Y")
@@ -54,7 +54,7 @@ ask_packages() {
                 local ans_monitoring_pack=""
                 read ans_monitoring_pack
                 : "${ans_monitoring_pack:=Y}"
-                echo "" 
+                # echo "" 
 
                 case "${ans_monitoring_pack}" in
                         "y"|"Y")

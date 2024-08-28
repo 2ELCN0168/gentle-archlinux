@@ -20,7 +20,6 @@ ask_kernel() {
                 local ans_kernel=""
                 read ans_kernel
                 : "${ans_kernel:=0}"
-                echo ""
 
                 case "${ans_kernel}" in
                         0)

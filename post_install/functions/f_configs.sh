@@ -17,6 +17,7 @@ set_time() {
         fi
 
         nKorea=0
+        local country=""
 
         while true; do
                 echo -e "==TIME==============\n"
@@ -37,38 +38,46 @@ set_time() {
                 local ans_localtime=""
                 read ans_localtime
                 : "${ans_localtime:=0}"
-                echo ""
+                # echo ""
 
                 case "${ans_localtime}" in
                         [0])
+                                country="France"
                                 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
                                 break
                                 ;;
                         [1])
+                                country="England"
                                 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
                                 break
                                 ;;
                         [2])
+                                country="the US"
                                 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
                                 break
                                 ;;
                         [3])
+                                country="Japan"
                                 ln -sf /usr/share/zoneinfo/Japan /etc/localtime
                                 break
                                 ;;
                         [4])
+                                country="South Korea"
                                 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
                                 break
                                 ;;
                         [5])
+                                country="Russia"
                                 ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
                                 break
                                 ;;
                         [6])
+                                country="China"
                                 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
                                 break
                                 ;;
                         [7])
+                                country="North Korea >:) "
                                 ln -sf /usr/share/zoneinfo/Asia/Pyongyang /etc/localtime
                                 nKorea=1
                                 break
@@ -78,6 +87,8 @@ set_time() {
                                 ;;
                 esac
         done
+
+        echo -e "${C_WHITE}> ${INFO} You live in ${C_YELLOW}${country}${NO_FORMAT}.\n"
 }
 
 locales_gen() {
@@ -164,7 +175,7 @@ set_vconsole() {
                 local ans_keymap=""
                 read ans_keymap
                 : "${ans_keymap:=0}"
-                echo -e "\n"
+                # echo -e "\n"
 
                 case "${ans_keymap}" in
                         [0])

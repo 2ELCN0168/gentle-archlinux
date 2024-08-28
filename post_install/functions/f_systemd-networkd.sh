@@ -17,7 +17,7 @@ systemd_networkd() {
 
                 local ans_interface=""
                 read ans_interface
-                echo ""
+                # echo ""
 
                 if [[ -d "/sys/class/net/${ans_interface}" ]]; then
                         network_interface="${ans_interface}"
@@ -36,7 +36,7 @@ systemd_networkd() {
                 local ans_dhcp=""
                 read ans_dhcp
                 : "${ans_dhcp:=N}"
-                echo ""
+                # echo ""
 
                 case "${ans_dhcp}" in
                 "y"|"Y")
