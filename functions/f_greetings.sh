@@ -7,7 +7,7 @@
 
 greetings() {
         clear
-        echo -e "${C_CYAN}"
+        echo -e "${C_BLUE}"
         echo -e " ▄▄ • ▄▄▄ . ▐ ▄ ▄▄▄▄▄▄▄▌  ▄▄▄ .                " 
         echo -e "▐█ ▀ ▪▀▄.▀·•█▌▐█•██  ██•  ▀▄.▀·                " 
         echo -e "▄█ ▀█▄▐▀▀▪▄▐█▐▐▌ ▐█.▪██▪  ▐▀▀▪▄                " 
