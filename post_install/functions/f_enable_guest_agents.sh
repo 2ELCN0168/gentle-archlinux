@@ -33,12 +33,12 @@ enable_guest_agents() {
                         fi
                         ;;
                 "HYPERV")
-                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} hv_fcopy_daemon.service.${NO_FORMAT}"
-                        if systemctl enable hv_fcopy_uio_daemon 1> /dev/null 2>&1; then
-                                echo -e "${C_WHITE}> ${SUC} Successfully enabled ${C_GREEN}hv_fcopy_daemon.service.${NO_FORMAT}"
-                        else
-                                echo -e "${C_WHITE}> ${ERR} Error while enabling ${C_RED}hv_fcopy_daemon.service.${NO_FORMAT}"
-                        fi
+                        # echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} hv_fcopy_uio_daemon.service.${NO_FORMAT}"
+                        # if systemctl enable hv_fcopy_uio_daemon 1> /dev/null 2>&1; then
+                        #         echo -e "${C_WHITE}> ${SUC} Successfully enabled ${C_GREEN}hv_fcopy_uio_daemon.service.${NO_FORMAT}"
+                        # else
+                        #         echo -e "${C_WHITE}> ${ERR} Error while enabling ${C_RED}hv_fcopy_uio_daemon.service.${NO_FORMAT}"
+                        # fi
 
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} hv_kvp_daemon.service.${NO_FORMAT}"
                         if systemctl enable hv_kvp_daemon 1> /dev/null 2>&1; then
