@@ -30,7 +30,7 @@ disk_choice() {
                 local ans_block_device=""
                 read ans_block_device
                 : "${ans_block_device:=sda}"
-                echo ""
+                # echo ""
 
                 if [[ -b "/dev/${ans_block_device}" ]]; then
                         disk="${ans_block_device}"

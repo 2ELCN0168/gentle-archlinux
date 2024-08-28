@@ -23,7 +23,7 @@ filesystem_choice() {
                 local ans_filesystem=""
                 read ans_filesystem
                 : "${ans_filesystem:=0}"
-                echo ""
+                # echo ""
 
                 case "${ans_filesystem}" in
                         [0])

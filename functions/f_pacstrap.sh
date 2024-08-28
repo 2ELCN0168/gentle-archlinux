@@ -2,8 +2,63 @@
 
 ask_packages() {
 
+        export guest_agent=""
+
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add networking tools ${C_GREEN}(e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c" 
+                echo -e "==GUEST AGENTS========\n"
+
+                echo -e "${C_WHITE}[0] - ${C_CYAN}qemu-guest-agent (Qemu/Proxmox)${NO_FORMAT} (default)"
+                echo -e "${C_WHITE}[1] - ${C_RED}virtualbox-guest-utils (Virtual Box)${NO_FORMAT}"
+                echo -e "${C_WHITE}[2] - ${C_YELLOW}open-vm-tools (VMWare)${NO_FORMAT}"
+                echo -e "${C_WHITE}[3] - ${C_BLUE}hyperv (Hyper-V(${NO_FORMAT}"
+                echo -e "${C_WHITE}[4] - ${C_GREEN}None${NO_FORMAT}"
+                
+                echo -e "\n====================\n"
+
+                echo -e "${C_CYAN}:: ${C_WHITE}Choose the guest-agent you want to install, if none, choose 2. (useful in virtual machine) ->  ${NO_FORMAT}\c"
+
+                local ans_guest_agent=""
+                read ans_guest_agent
+                : "${ans_guest_agent:=0}"
+
+                case "${ans_guest_agent}" in
+                        [0])
+                                guest_agent="QEMU"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}qemu-guest-agent${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} qemu-guest-agent"
+                                break
+                                ;;
+                        [1])
+                                guest_agent="VIRTUALBOX"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}virtualbox-guest-utils${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} virtualbox-guest-utils"
+                                break
+                                ;;
+                        [2])
+                                guest_agent="VMWARE"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}open-vm-tools${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} open-vm-tools"
+                                break
+                                ;;
+                        [3])
+                                guest_agent="HYPERV"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}hyperv${NO_FORMAT} will be installed.\n"
+                                additionalPackages="${additionalPackages} hyperv"
+                                break
+                                ;;
+                        [4])
+                                # echo -e "${C_WHITE}> ${INFO} ${C_GREEN}No guest-agent${NO_FORMAT} will be installed.\n"
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+                # Check post_install/function/f_enable_guest_agents.sh for enabling guest agents services.
+        done
+
+        while true; do
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add networking tools ${C_GREEN}(e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c" 
 
                 local ans_net_pack=""
                 read ans_net_pack
@@ -26,7 +81,7 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add helping tools ${C_GREEN}(e.g., tealdeer, man, texinfo, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add helping tools ${C_GREEN}(e.g., tealdeer, man, texinfo, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
                 
                 local ans_help_pack=""
                 read ans_help_pack
@@ -49,7 +104,7 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add monitoring tools ${C_GREEN}(e.g., btop, htop, bmon, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add monitoring tools ${C_GREEN}(e.g., btop, htop, bmon, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
                 
                 local ans_monitoring_pack=""
                 read ans_monitoring_pack

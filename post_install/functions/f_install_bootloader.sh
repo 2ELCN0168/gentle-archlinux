@@ -97,7 +97,7 @@ install_refind() {
         if [[ "${?}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}rEFInd configuration created successfully.${NO_FORMAT}\n"
                 # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
-                echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind-linux.conf.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind_linux.conf.${NO_FORMAT}\n"
                 echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > /boot/refind_linux.conf
         else
                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Something went wrong, rEFInd has not been installed, you may want to launch manually \"refind-install\" at the end of the installation. But make sure the file \"/boot/refind_linux.conf\" is correctly set up."

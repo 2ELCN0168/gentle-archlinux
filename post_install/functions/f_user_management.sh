@@ -31,6 +31,7 @@ create_user() {
         local sudo=""
         local ans_username=""
         local ans_sudoer=""
+        echo ""
 
         while [[ -z "${username}" ]]; do
                 echo -e "${C_CYAN}:: ${C_WHITE}What will be the name of the new user? ->${NO_FORMAT} \c"
@@ -44,15 +45,14 @@ create_user() {
 
                 read ans_sudoer
                 : "${ans_sudoer:=Y}"
-                echo -e "\n"
+                # echo -e "\n"
 
                 case "${ans_sudoer}" in
                         "y"|"Y")
-                                sudo="-G wheel"
+                                echo "${username} ALL=(ALL:ALL) ALL" > "/etc/sudoers.d/${username}"
                                 break
                                 ;;
                         "n"|"N")
-                                sudo=""
                                 break
                                 ;;
                         *)
@@ -61,24 +61,16 @@ create_user() {
                 esac
         done
 
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_YELLOW}${username}${NO_FORMAT}.\n"
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating a new user named ${C_YELLOW}${username}${NO_FORMAT}."
 
-        i=""
 
-        useradd -m -U ${sudo} -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
+        useradd -m -U -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
         if [[ "${?}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} created.\n"
                 passwd "${username}"
-                i=0
                 echo ""
         else
                 echo -e "${C_WHITE}> ${ERR} ${NO_FORMAT}New user ${C_YELLOW}${username}${NO_FORMAT} cannot be created.\n"
-                i=1
+                echo ""
         fi
-
-        if [[ -z "${sudo}" && "${i}" -ne 1 ]]; then
-                echo "${username} ALL=(ALL:ALL) ALL" > "/etc/sudoers.d/${username}"
-        fi
-
-        unset i
 }

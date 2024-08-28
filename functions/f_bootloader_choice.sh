@@ -26,7 +26,7 @@ bootloader_choice() {
                         local ans_bootloader=""
                         read ans_bootloader
                         : "${ans_bootloader:=0}"
-                        echo ""
+                        # echo ""
 
                         case "${ans_bootloader}" in
                                 0)

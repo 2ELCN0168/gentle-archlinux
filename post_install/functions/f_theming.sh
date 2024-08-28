@@ -49,7 +49,7 @@ create_themes() {
                 esac
         done
         
-        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}TTY theme has been set to ${C_CYAN}${tty_theme}${NO_FORMAT}."
+        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}TTY theme has been set to ${C_CYAN}${tty_theme}${NO_FORMAT}.\n"
 
         mkdir /etc/tty_themes.d
 

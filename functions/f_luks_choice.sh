@@ -16,7 +16,7 @@ luks_choice() {
                 local ans_luks=""
                 read ans_luks
                 : "${ans_luks:=N}"
-                echo ""
+                # echo ""
 
                 case "${ans_luks}" in
                         "y"|"Y")
