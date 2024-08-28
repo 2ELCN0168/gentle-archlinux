@@ -21,7 +21,7 @@ bootloader_choice() {
 
                         echo -e "\n====================\n"
                         
-                        echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which one do you prefer? [0/1/2] -> ${NO_FORMAT} \c"
+                        echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which one do you prefer? [0/1/2] -> ${NO_FORMAT}\c"
 
                         local ans_bootloader=""
                         read ans_bootloader

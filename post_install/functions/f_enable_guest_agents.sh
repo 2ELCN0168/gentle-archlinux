@@ -55,4 +55,5 @@ enable_guest_agents() {
                         fi
                         ;;
         esac
+        echo ""
 }
