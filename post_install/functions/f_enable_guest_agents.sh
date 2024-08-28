@@ -34,7 +34,7 @@ enable_guest_agents() {
                         ;;
                 "HYPERV")
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} hv_fcopy_daemon.service.${NO_FORMAT}"
-                        if systemctl enable hv_fcopy_daemon 1> /dev/null 2>&1; then
+                        if systemctl enable hv_fcopy_uio_daemon 1> /dev/null 2>&1; then
                                 echo -e "${C_WHITE}> ${SUC} Successfully enabled ${C_GREEN}hv_fcopy_daemon.service.${NO_FORMAT}"
                         else
                                 echo -e "${C_WHITE}> ${ERR} Error while enabling ${C_RED}hv_fcopy_daemon.service.${NO_FORMAT}"
@@ -48,7 +48,7 @@ enable_guest_agents() {
                         fi
 
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} hv_vss_daemon.service.${NO_FORMAT}"
-                        if systemctl enable hv_vss 1> /dev/null 2>&1; then
+                        if systemctl enable hv_vss_daemon 1> /dev/null 2>&1; then
                                 echo -e "${C_WHITE}> ${SUC} Successfully enabled ${C_GREEN}hv_vss_daemon.service.${NO_FORMAT}"
                         else
                                 echo -e "${C_WHITE}> ${ERR} Error while enabling ${C_RED}hv_vss_daemon.service.${NO_FORMAT}"

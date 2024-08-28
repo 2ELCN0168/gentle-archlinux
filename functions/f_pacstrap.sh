@@ -10,12 +10,12 @@ ask_packages() {
                 echo -e "${C_WHITE}[0] - ${C_CYAN}qemu-guest-agent (Qemu/Proxmox)${NO_FORMAT} (default)"
                 echo -e "${C_WHITE}[1] - ${C_RED}virtualbox-guest-utils (Virtual Box)${NO_FORMAT}"
                 echo -e "${C_WHITE}[2] - ${C_YELLOW}open-vm-tools (VMWare)${NO_FORMAT}"
-                echo -e "${C_WHITE}[3] - ${C_BLUE}hyperv (Hyper-V(${NO_FORMAT}"
+                echo -e "${C_WHITE}[3] - ${C_BLUE}hyperv (Hyper-V)${NO_FORMAT}"
                 echo -e "${C_WHITE}[4] - ${C_GREEN}None${NO_FORMAT}"
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Choose the guest-agent you want to install, if none, choose 2. (useful in virtual machine) ->  ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Choose the guest-agent you want to install, if none, choose 4. (useful in virtual machine) -> ${NO_FORMAT}\c"
 
                 local ans_guest_agent=""
                 read ans_guest_agent
