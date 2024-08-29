@@ -27,21 +27,21 @@ __tty_theme() {
 __tty_theme_hard() {
     [ "$TERM" = 'linux' ] || return # Only run in a TTY
 
-    printf "\e]P0292d46" # black         rgb(27, 26, 38)     #292d46
-    printf "\e]P1bb3840" # red           rgb(255, 117, 127)  #bb3840
-    printf "\e]P2d7d6ce" # green         rgb(158, 206, 106)  #d7d6ce
-    printf "\e]P36a334f" # brown         rgb(225, 174, 103)  #6a334f
-    printf "\e]P44b4d6c" # blue          rgb(122, 162, 247)  #4b4d6c
-    printf "\e]P5715d7e" # magenta       rgb(185, 152, 245)  #715d7e
-    printf "\e]P69593a7" # cyan          rgb(124, 206, 255)  #9593a7
-    printf "\e]P79593a7" # light_gray    rgb(192, 203, 245)  #9793a7
-    printf "\e]P89593a7" # gray          rgb(192, 203, 245)  #9793a7
-    printf "\e]P9ff757f" # bold_red      rgb(255, 117, 127)  #ff757f
-    printf "\e]PAd7d6ce" # bold_green    rgb(158, 206, 106)  #d7d6ce
-    printf "\e]PB6a334f" # bold_yellow   rgb(225, 174, 103)  #6a334f
-    printf "\e]PC4b4d6c" # bold_blue     rgb(122, 162, 247)  #4b4d6c
-    printf "\e]PD715d7e" # bold_magenta  rgb(185, 152, 245)  #715d7e
-    printf "\e]PE9593a7" # bold_cyan     rgb(124, 206, 255)  #9593a7
+    printf "\e]P0181425" # black         rgb(27, 26, 38)     #181425
+    printf "\e]P17c183c" # red           rgb(255, 117, 127)  #7c183c
+    printf "\e]P2d53c6a" # green         rgb(158, 206, 106)  #d53c6a
+    printf "\e]P3d53c6a" # brown         rgb(225, 174, 103)  #d53c6a
+    printf "\e]P4d53c6a" # blue          rgb(122, 162, 247)  #d53c6a
+    printf "\e]P5d53c6a" # magenta       rgb(185, 152, 245)  #d53c6a
+    printf "\e]P6d53c6a" # cyan          rgb(124, 206, 255)  #d53c6a
+    printf "\e]P7ffffff" # light_gray    rgb(192, 203, 245)  #ffffff
+    printf "\e]P8ffffff" # gray          rgb(192, 203, 245)  #ffffff
+    printf "\e]P9d53c6a" # bold_red      rgb(255, 117, 127)  #d53c6a
+    printf "\e]PAd53c6a" # bold_green    rgb(158, 206, 106)  #d53c6a
+    printf "\e]PBd53c6a" # bold_yellow   rgb(225, 174, 103)  #d53c6a
+    printf "\e]PCd53c6a" # bold_blue     rgb(122, 162, 247)  #d53c6a
+    printf "\e]PDd53c6a" # bold_magenta  rgb(185, 152, 245)  #d53c6a
+    printf "\e]PEd53c6a" # bold_cyan     rgb(124, 206, 255)  #d53c6a
     printf "\e]PFffffff" # bold_white    rgb(192, 203, 245)  #ffffff
 
     clear
