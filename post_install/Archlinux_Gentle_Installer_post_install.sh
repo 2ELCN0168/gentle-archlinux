@@ -16,6 +16,7 @@ source_files() {
     source "${f_path}/f_refind_theming.sh"
     source "${f_path}/f_pacman_hooks.sh"
     source "${f_path}/f_install_frw.sh"
+    source "${f_path}/f_desktop_environment.sh"
     source "${f_path}/f_user_management.sh"
     source "${f_path}/f_enable_guest_agents.sh"
     source "${f_path}/f_systemd-networkd.sh"
@@ -74,6 +75,10 @@ main() {
                 set_motd
         fi
 
+        if [[ "${param_full}" -eq 1 ]]; then
+                # INSTALL DESKTOP ENVIRONMENT
+                desktop_env
+        fi
         
         # CREATE USER
         ask_newuser

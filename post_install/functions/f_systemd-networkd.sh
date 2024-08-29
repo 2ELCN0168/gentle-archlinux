@@ -55,7 +55,7 @@ systemd_networkd() {
         local address=""
         local gateway=""
 
-        echo -e "${C_CYAN}:: ${C_WHITE}What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) ->${NO_FORMAT} \c"
+        echo -e "${C_CYAN}:: ${C_WHITE}What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) -> ${NO_FORMAT}\c"
         read address
         echo -e "\n"
 
@@ -64,8 +64,20 @@ systemd_networkd() {
         echo -e "\n"
 
 
-        sed -i "s/name/${network_interface}/g" "/etc/systemd/network/05-${network_interface}.network"
-        sed -i "s/domain/${domain}/g" "/etc/systemd/network/05-${network_interface}.network"
-        sed -i "s/gateway/${gateway}/g" "/etc/systemd/network/05-${network_interface}.network"
-        sed -i "s#ip#${address}#g" "/etc/systemd/network/05-${network_interface}.network"
+        # sed -i "s/name/${network_interface}/g" "/etc/systemd/network/05-${network_interface}.network"
+        # sed -i "s/domain/${domain}/g" "/etc/systemd/network/05-${network_interface}.network"
+        # sed -i "s/gateway/${gateway}/g" "/etc/systemd/network/05-${network_interface}.network"
+        # sed -i "s#ip#${address}#g" "/etc/systemd/network/05-${network_interface}.network"
+
+        sed -i 's/^\(Name=\).*/\1${network_interface}/' "/etc/systemd/network/05-${network_interface}.network"
+        sed -i 's/^\(Domains=\).*/\1${domain}/'  "/etc/systemd/network/05-${network_interface}.network"
+        sed -i 's/^\(Gateway=\).*/\1${gateway}/' "/etc/systemd/network/05-${network_interface}.network"
+        sed -i 's#^\(Address=\).*#\1${address}#' "/etc/systemd/network/05-${network_interface}.network"
+
+
+        if [[ "${ans_dhcp}" == [yY]]]; then
+                head -6 "/etc/systemd/network/05-${network_interface}.network" > "/tmp/net.conf"
+                mv "/tmp/net.conf" "/etc/systemd/network/05-${network_interface}.network"
+                sed -i 's/^\(DHCP=\).*/\1yes/' "/etc/systemd/network/05-${network_interface}.network" 
+        fi
 }
