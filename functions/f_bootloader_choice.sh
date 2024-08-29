@@ -49,7 +49,7 @@ bootloader_choice() {
                                         ;;
                         esac
                 done
-        elif [[ "${UEFI}" -eq 0 || "${param_minimal=1}" ]]; then
+        elif [[ "${UEFI}" -eq 0 || "${param_minimal}" -eq 1 ]]; then
                 bootloader="GRUB"
         fi
 }
