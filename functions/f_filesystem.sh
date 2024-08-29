@@ -10,7 +10,7 @@ filesystem_choice() {
         export filesystem=""
 
         while true; do
-                echo -e "==FILESYSTEM========\n"
+                echo -e "==${C_CYAN}FILESYSTEM${NO_FORMAT}========\n"
 
                 echo -e "${C_WHITE}[0] - ${C_YELLOW}BTRFS${NO_FORMAT} (default)"
                 echo -e "${C_WHITE}[1] - ${C_CYAN}XFS${NO_FORMAT}"

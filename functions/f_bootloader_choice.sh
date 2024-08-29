@@ -13,7 +13,7 @@ bootloader_choice() {
 
         if [[ "${UEFI}" -eq 1 ]]; then
                 while true; do
-                        echo -e "==BOOTLOADER========\n"
+                        echo -e "==${C_CYAN}BOOTLOADER${NO_FORMAT}========\n"
 
                         echo -e "${C_WHITE}[0] - ${C_CYAN}rEFInd${NO_FORMAT} (default)"
                         echo -e "${C_WHITE}[1] - ${C_YELLOW}GRUB2${NO_FORMAT}"

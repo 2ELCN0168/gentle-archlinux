@@ -3,7 +3,7 @@ create_themes() {
         export theme_color=""
 
         while true; do
-                echo -e "\n==THEMES============\n"
+                echo -e "\n==${C_CYAN}THEMES${NO_FORMAT}============\n"
 
                 echo -e "${C_WHITE}[0] - ${C_WHITE}Catppuccin latte (light)${NO_FORMAT}"
                 echo -e "${C_WHITE}[1] - ${C_CYAN}Tokyonight storm (dark)${NO_FORMAT} [default]"
@@ -11,7 +11,7 @@ create_themes() {
 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Which theme do you prefer for your TTY? Each one will be created anyway. ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Which theme do you prefer for your TTY? Each one will be created anyway. -> ${NO_FORMAT}\c"
 
                 local tty_theme=""
                 local ans_tty_theme=""
@@ -51,9 +51,9 @@ create_themes() {
         
         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}TTY theme has been set to ${C_CYAN}${tty_theme}${NO_FORMAT}.\n"
 
-        mkdir /etc/tty_themes.d
+        mkdir "/etc/tty_themes.d"
 
-        cat << EOF > /etc/tty_themes.d/tty_catppuccin_latte.sh
+        cat << EOF > "/etc/tty_themes.d/tty_catppuccin_latte.sh"
         __tty_theme() {
         [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 
@@ -80,7 +80,7 @@ create_themes() {
         __tty_theme
 EOF
    
-        cat << EOF > /etc/tty_themes.d/tty_tokyonight_storm.sh
+        cat << EOF > "/etc/tty_themes.d/tty_tokyonight_storm.sh"
         __tty_theme() {
         [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 

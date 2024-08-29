@@ -5,7 +5,7 @@ ask_kernel() {
         export kernel_initramfs=""
 
         while true; do
-                echo -e "==KERNEL============\n"
+                echo -e "==${C_CYAN}KERNEL${NO_FORMAT}============\n"
 
                 echo -e "${C_WHITE}[0] - ${C_CYAN}linux${NO_FORMAT} (default)"
                 echo -e "${C_WHITE}[1] - ${C_RED}linux-lts${NO_FORMAT}"
@@ -15,7 +15,7 @@ ask_kernel() {
                 echo -e "\n====================\n"
 
 
-                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you want to install? ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you want to install? -> ${NO_FORMAT}\c"
 
                 local ans_kernel=""
                 read ans_kernel

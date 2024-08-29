@@ -7,13 +7,13 @@ systemd_networkd() {
         local network_interface=""
 
         while true; do
-                echo -e "==INT. CONFIG.======\n"
+                echo -e "==${C_CYAN}INT. CONFIG.${NO_FORMAT}======\n"
 
-                ip link show | grep -v "lo:" | awk -F ': ' '{ print $2 }'
+                ls "/sys/class/net" | column -t | grep -v "lo"
 
-                echo -e "====================\n"
+                echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it. ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it. -> ${NO_FORMAT}\c"
 
                 local ans_interface=""
                 read ans_interface
@@ -31,7 +31,7 @@ systemd_networkd() {
         cp "/post_install/files/systemd-networkd-template.conf" "/etc/systemd/network/05-${network_interface}.network"
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure your interface manually? If no, the DHCP option will be set. [y/N] ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure your interface manually? If no, the DHCP option will be set. [y/N] -> ${NO_FORMAT}\c"
 
                 local ans_dhcp=""
                 read ans_dhcp
@@ -58,7 +58,7 @@ systemd_networkd() {
         read address
         echo -e "\n"
 
-        echo -e "${C_CYAN}:: ${C_WHITE}What will be the gateway IP? WARNING WHEN TYPING (e.g., 192.168.1.1) ->${NO_FORMAT} \c"
+        echo -e "${C_CYAN}:: ${C_WHITE}What will be the gateway IP? WARNING WHEN TYPING (e.g., 192.168.1.1) -> ${NO_FORMAT}\c"
         read gateway
         echo -e "\n"
 

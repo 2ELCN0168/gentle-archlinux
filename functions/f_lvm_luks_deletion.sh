@@ -41,7 +41,7 @@ lvm_luks_try() {
 lvm_deletion() {
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [Y/n] -> ${NO_FORMAT}\c"
 
                 local ans_wipe_lvm=""
                 read ans_wipe_lvm
@@ -50,9 +50,9 @@ lvm_deletion() {
 
                 case "${ans_wipe_lvm}" in
                         [yY])
-                                lvremove -f -y /dev/mapper/VG_Archlinux-* 1> /dev/null 2>&1
-                                vgremove -f -y VG_Archlinux 1> /dev/null 2>&1
-                                pvremove -f -y $(pvscan | head -1 | awk '{ print $2 }') 1> /dev/null 2>&1
+                                lvremove -f -y "/dev/mapper/VG_Archlinux-*" 1> "/dev/null" 2>&1
+                                vgremove -f -y VG_Archlinux 1> "/dev/null" 2>&1
+                                pvremove -f -y $(pvscan | head -1 | awk '{ print $2 }') 1> "/dev/null" 2>&1
                                 echo -e "${C_WHITE}> ${SUC} ${C_PINK} LVM deleted.${NO_FORMAT}\n"
                                 break
                                 ;;
@@ -70,7 +70,7 @@ lvm_deletion() {
 luks_deletion() {
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to close any present LUKS partition? [Y/n] -> ${NO_FORMAT} \c"
+                echo -e "${B_CYAN} [?] - Do you want to close any present LUKS partition? [Y/n] -> ${NO_FORMAT}\c"
 
                 local ans_close_luks=""
                 read ans_close_luks
@@ -79,7 +79,7 @@ luks_deletion() {
 
                 case "${ans_close_luks}" in
                         "y"|"Y")
-                                cryptsetup close root 1> /dev/null 2>&1
+                                cryptsetup close root 1> "/dev/null" 2>&1
                                 echo -e "${C_WHITE}> ${SUC} ${C_PINK} LUKS partition closed.${NO_FORMAT}\n"
                                 break
                                 ;;

@@ -71,7 +71,7 @@ main() {
         # ENDING
         ending
 
-        rm -rf /post_install
+        rm -rf "/post_install"
 }
 
 main

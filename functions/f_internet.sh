@@ -28,7 +28,7 @@ test_internet() {
 
 run_iwctl() {
 
-        echo -e "${B_YELLOW}:: ${C_WHITE}Would you like to run the iwctl utility to setup a wifi connection? [Y/n] -> ${NO_FORMAT} \c"
+        echo -e "${B_YELLOW}:: ${C_WHITE}Would you like to run the iwctl utility to setup a wifi connection? [Y/n] -> ${NO_FORMAT}\c"
 
         local ans_iwctl=""
         read ans_iwctl

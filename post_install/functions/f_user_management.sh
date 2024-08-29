@@ -3,7 +3,7 @@ ask_newuser() {
         createUser=""
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Would you like to create a user? [y/N] ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Would you like to create a user? [y/N] -> ${NO_FORMAT}\c"
                 read createUser
                 : "${createUser:=N}"
                 # echo ""
@@ -34,14 +34,14 @@ create_user() {
         echo ""
 
         while [[ -z "${username}" ]]; do
-                echo -e "${C_CYAN}:: ${C_WHITE}What will be the name of the new user? ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}What will be the name of the new user? -> ${NO_FORMAT}\c"
                 read ans_username
                 username="${ans_username}"
                 echo ""
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Will this user be sudoer? [Y/n] ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Will this user be sudoer? [Y/n] -> ${NO_FORMAT}\c"
 
                 read ans_sudoer
                 : "${ans_sudoer:=Y}"

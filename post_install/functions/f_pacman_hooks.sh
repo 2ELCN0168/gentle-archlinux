@@ -3,7 +3,7 @@
 create_pacman_hooks() {
 
         if [[ ! -e "/etc/pacman.d/hooks" ]]; then
-                mkdir -p /etc/pacman.d/hooks 1> /dev/null 2>&1
+                mkdir -p "/etc/pacman.d/hooks" 1> "/dev/null" 2>&1
         fi
 
         refind_hook
@@ -20,7 +20,7 @@ refind_hook() {
 
         echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}rEFInd.${NO_FORMAT}"
 
-        cat << EOF > /etc/pacman.d/hooks/refind.hook
+        cat << EOF > "/etc/pacman.d/hooks/refind.hook"
         [Trigger]
         Operation=Upgrade
         Type=Package
@@ -45,7 +45,7 @@ bash_zsh_hook() {
 
         echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_WHITE}Bash and Zsh.${NO_FORMAT}"
 
-        cat << EOF > /etc/pacman.d/hooks/bash_zsh_no_remove.hook
+        cat << EOF > "/etc/pacman.d/hooks/bash_zsh_no_remove.hook"
         [Trigger]
         Operation=Remove
         Type=Package

@@ -18,7 +18,7 @@ disk_choice() {
         # finalPartRoot="/dev/${diskToUse}${partitionType}2"
 
         while true; do
-                echo -e "==DISK==============\n"
+                echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
                 lsblk -d --output NAME | grep -vE 'NAME|sr0|loop0'
                 echo -e ""

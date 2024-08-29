@@ -5,7 +5,7 @@ ask_packages() {
         export guest_agent=""
 
         while true; do
-                echo -e "==GUEST AGENTS========\n"
+                echo -e "==${C_CYAN}GUEST AGENTS${NO_FORMAT}========\n"
 
                 echo -e "${C_WHITE}[0] - ${C_CYAN}qemu-guest-agent (Qemu/Proxmox)${NO_FORMAT} (default)"
                 echo -e "${C_WHITE}[1] - ${C_RED}virtualbox-guest-utils (Virtual Box)${NO_FORMAT}"

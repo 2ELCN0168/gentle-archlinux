@@ -27,7 +27,7 @@ declare_bootloader_vars() {
 refind_as_fallback() {
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Should we install rEFInd? [Y/n] ->${NO_FORMAT} \c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Should we install rEFInd? [Y/n] -> ${NO_FORMAT}\c"
 
                 local ans_install_refind=""
                 read ans_install_refind
@@ -98,7 +98,7 @@ install_refind() {
                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}rEFInd configuration created successfully.${NO_FORMAT}\n"
                 # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
                 echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind_linux.conf.${NO_FORMAT}\n"
-                echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > /boot/refind_linux.conf
+                echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > "/boot/refind_linux.conf"
         else
                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Something went wrong, rEFInd has not been installed, you may want to launch manually \"refind-install\" at the end of the installation. But make sure the file \"/boot/refind_linux.conf\" is correctly set up."
         fi
@@ -109,12 +109,12 @@ install_grub() {
         if [[ "${UEFI}" -eq 1 ]]; then
                 echo -e "${C_WHITE}> ${INFO} Installing grub for EFI to /boot.\n"
 
-                grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB 1> /dev/null 2>&1
+                grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB 1> "/dev/null" 2>&1
 
                 if [[ ! "${?}" -eq 0 ]]; then
                         echo -e "${C_WHITE}> ${ERR} GRUB installation failed, trying another method...\n"
 
-                        grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --force 1> /dev/null 2>&1
+                        grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --force 1> "/dev/null" 2>&1
 
                         if [[ ! "${?}" -eq 0 ]]; then
                                 echo -e "${C_WHITE}> ${ERR} ${C_RED}GRUB installation failed even with different parameters, you will have to install and configure a bootloader manually. Good luck.${NO_FORMAT}"
@@ -125,7 +125,7 @@ install_grub() {
 
         elif [[ "${UEFI}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${INFO} Installing grub for BIOS to /boot.\n"
-                grub-install --target=i386-pc /dev/$disk 1> /dev/null 2>&1
+                grub-install --target=i386-pc /dev/$disk 1> "/dev/null" 2>&1
         fi
 
         # Add a verifcation for partition name with testing if ls /dev/$partname returns error or not instead of lsblk
@@ -136,7 +136,7 @@ install_grub() {
         declare_bootloader_vars
         #
         # Make a backup of /etc/default/grub
-        cp -a /etc/default/grub /etc/default/grub.bak
+        cp -a "/etc/default/grub" "/etc/default/grub.bak"
 
         if [[ "${cpuBrand}" == "INTEL" ]]; then
                 isMicrocode=" initrd=intel-ucode.img"
@@ -148,7 +148,7 @@ install_grub() {
                 rootLine=""
                 isEncrypt="rd.luks.name="
                 isEncryptEnding="=root root=/dev/mapper/root"
-                sed -i '/^\s*#\(GRUB_ENABLE_CRYPTODISK\)/ s/^#//' /etc/default/grub
+                sed -i '/^\s*#\(GRUB_ENABLE_CRYPTODISK\)/ s/^#//' "/etc/default/grub"
         elif [[ "${wantEncrypted}" -eq 0 ]]; then
                 rootLine="root=UUID="
         fi
@@ -168,10 +168,10 @@ install_grub() {
 
         # VERY IMPORTANT LINE, SO ANNOYING TO GET IT WORKING, DO NOT DELETE!
         # If it doesn't work anymore, remove brackets to ${grubKernelParameters}
-        awk -v params="${grubKernelParameters}" '/GRUB_CMDLINE_LINUX=""/{$0 = "GRUB_CMDLINE_LINUX=" params ""} 1' /etc/default/grub > tmpfile && mv tmpfile /etc/default/grub
+        awk -v params="${grubKernelParameters}" '/GRUB_CMDLINE_LINUX=""/{$0 = "GRUB_CMDLINE_LINUX=" params ""} 1' "/etc/default/grub" > tmpfile && mv tmpfile "/etc/default/grub"
         # Should be reformatted once I have learnt AWK
 
-        grub-mkconfig -o /boot/grub/grub.cfg
+        grub-mkconfig -o "/boot/grub/grub.cfg"
 }
 
 install_systemdboot() {
@@ -207,16 +207,16 @@ install_systemdboot() {
         echo -e "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
 
-        bootctl install --esp-path=/boot 1> /dev/null 2>&1
+        bootctl install --esp-path=/boot 1> "/dev/null" 2>&1
 
         if [[ "${?}" -eq 0 ]]; then
-                echo -e "title   Arch Linux" > /boot/loader/entries/arch.conf
-                echo -e "linux   /${kernel_name}" >> /boot/loader/entries/arch.conf
-                echo -e "initrd  /${kernel_initramfs}" >> /boot/loader/entries/arch.conf
+                echo -e "title   Arch Linux" > "/boot/loader/entries/arch.conf"
+                echo -e "linux   /${kernel_name}" >> "/boot/loader/entries/arch.conf"
+                echo -e "initrd  /${kernel_initramfs}" >> "/boot/loader/entries/arch.conf"
                 if [[ -z "${isMicrocode}" ]];then
-                        echo -e "initrd  /${isMicrocode}" >> /boot/loader/entries/arch.conf
+                        echo -e "initrd  /${isMicrocode}" >> "/boot/loader/entries/arch.conf"
                 fi
-                echo -e "options ${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw ${isBTRFS}" >> /boot/loader/entries/arch.conf
+                echo -e "options ${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw ${isBTRFS}" >> "/boot/loader/entries/arch.conf"
 
                 echo -e "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}\n"
 
@@ -224,9 +224,9 @@ install_systemdboot() {
                 echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
 
                 if [[ ! -e "/etc/pacman.d/hooks" ]]; then
-                        mkdir -p /etc/pacman.d/hooks
+                        mkdir -p "/etc/pacman.d/hooks"
                 fi
-                cat << EOF > /etc/pacman.d/hooks/95-systemd-boot.hook
+                cat << EOF > "/etc/pacman.d/hooks/95-systemd-boot.hook"
                 [Trigger]
                 Type = Package
                 Operation = Upgrade
