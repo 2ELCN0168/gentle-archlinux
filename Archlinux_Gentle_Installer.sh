@@ -91,6 +91,7 @@ __tty_theme
 export param_minimal=0
 export param_full=0
 export param_hardening=0
+export param_standard=1
 
 while getopts "hemc" opts; do
                 case "${opts}" in
@@ -99,12 +100,15 @@ while getopts "hemc" opts; do
                                 ;;
                         e)
                                 param_hardening=1
+                                param_standard=0
                                 ;;
                         m)
                                 param_minimal=1
+                                param_standard=0
                                 ;;
                         c)
                                 param_full=1
+                                param_standard=0
                                 ;;
                         \?)
                                 opt_h_help
