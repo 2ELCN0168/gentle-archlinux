@@ -5,32 +5,19 @@
 # EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
-# echo -e "       ,                       _     _ _                       "
-# echo -e "      /#\        __ _ _ __ ___| |__ | (_)_ __  _   ___  __     "
-# echo -e "     ,###\      / _` | '__/ __| '_ \| | | '_ \| | | \ \/ /     "
-# echo -e "    /#####\    | (_| | | | (__| | | | | | | | | |_| |>  <      "
-# echo -e "   /##;-;##\    \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\TM   "
-# echo -e "  /##(   )##`                                                  "
-# echo -e " /#;--   --;#\              Gentle Installer.                  "
-# echo -e "/`           `\                                                "
+#        ,                       _     _ _                       
+#       /#\        __ _ _ __ ___| |__ | (_)_ __  _   ___  __     
+#      ,###\      / _` | '__/ __| '_ \| | | '_ \| | | \ \/ /     
+#     /#####\    | (_| | | | (__| | | | | | | | | |_| |>  <      
+#    /##;-;##\    \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\TM   
+#   /##(   )##`                                                  
+#  /#;--   --;#\              Gentle Installer.                  
+# /`           `\                                                
 
 
 greetings() {
         clear
-        # echo -e "${C_YELLOW}"
-        # echo -e " ▄▄ • ▄▄▄ . ▐ ▄ ▄▄▄▄▄▄▄▌  ▄▄▄ .                " 
-        # echo -e "▐█ ▀ ▪▀▄.▀·•█▌▐█•██  ██•  ▀▄.▀·                " 
-        # echo -e "▄█ ▀█▄▐▀▀▪▄▐█▐▐▌ ▐█.▪██▪  ▐▀▀▪▄                " 
-        # echo -e "▐█▄▪▐█▐█▄▄▌██▐█▌ ▐█▌·▐█▌▐▌▐█▄▄▌                " 
-        # echo -e "·▀▀▀▀  ▀▀▀ ▀▀ █▪ ▀▀▀ .▀▀▀  ▀▀▀                 " 
-        # echo -e " ▄▄▄· ▄▄▄   ▄▄·  ▄ .▄▄▄▌  ▪   ▐ ▄ ▄• ▄▌▐▄• ▄   " 
-        # echo -e "▐█ ▀█ ▀▄ █·▐█ ▌▪██▪▐███•  ██ •█▌▐██▪██▌ █▌█▌▪  "
-        # echo -e "▄█▀▀█ ▐▀▀▄ ██ ▄▄██▀▐███▪  ▐█·▐█▐▐▌█▌▐█▌ ·██·   " 
-        # echo -e "▐█ ▪▐▌▐█•█▌▐███▌██▌▐▀▐█▌▐▌▐█▌██▐█▌▐█▄█▌▪▐█·█▌  "
-        # echo -e " ▀  ▀ .▀  ▀·▀▀▀ ▀▀▀ ·.▀▀▀ ▀▀▀▀▀ █▪ ▀▀▀ •▀▀ ▀▀  "
-        # echo -e "${NO_FORMAT}"
-
-
+        echo ""
         echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
         echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
         echo -e "${C_BLUE}     ,###\     ${C_CYAN} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
@@ -39,10 +26,9 @@ greetings() {
         echo -e "${C_BLUE}  /##(   )##\`                                                                  "
         echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${NO_FORMAT}            "
         echo -e "${C_BLUE}/\`           \`\                                                               "
-
         echo -e "${NO_FORMAT}"
 
-        echo -e "\n${C_CYAN}███${C_RED}█${C_CYAN}█${C_YELLOW}█${C_CYAN}█${NO_FORMAT}\n"
+        echo -e "\n${C_WHITE}██████████████████████████████████████████████████████████████████████████████████████\n"
 
         date
         echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. ${C_CYAN}<${NO_FORMAT}\n"
