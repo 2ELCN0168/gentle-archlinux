@@ -8,6 +8,7 @@ source_files() {
     source "/post_install/config/c_formatting.sh"
     source "${f_path}/f_greetings_pi.sh"
     source "${f_path}/f_configs.sh"
+    source "${f_path}/f_hardening_rules.sh"
     source "${f_path}/f_messages.sh"
     source "${f_path}/f_set_shellrc.sh"
     source "${f_path}/f_install_bootloader.sh"
@@ -33,7 +34,20 @@ main() {
         greetings_pi
 
         # CHANGE MULTIPLE CONFIG FILES
-        make_config
+        # make_config
+        set_time
+        locales_gen
+        set_hostname
+        set_hosts
+        set_vconsole
+        set_pacman
+        if [[ "${param_hardening}" -eq 1 ]]; then
+                hardening_rules
+        fi
+        set_mkinitcpio
+        set_root_passwd
+        set_vim_nvim
+        enable_net_manager
 
         
 

@@ -297,16 +297,16 @@ enable_net_manager() {
         fi
 }
 
-make_config() {
-
-        set_time
-        locales_gen
-        set_hostname
-        set_hosts
-        set_vconsole
-        set_pacman
-        set_mkinitcpio
-        set_root_passwd
-        set_vim_nvim
-        enable_net_manager
-}
+# make_config() {
+#
+#         set_time
+#         locales_gen
+#         set_hostname
+#         set_hosts
+#         set_vconsole
+#         set_pacman
+#         set_mkinitcpio
+#         set_root_passwd
+#         set_vim_nvim
+#         enable_net_manager
+# }

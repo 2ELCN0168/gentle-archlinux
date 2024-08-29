@@ -16,8 +16,8 @@ systemd_networkd() {
                 echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it (default=ens18). -> ${NO_FORMAT}\c"
 
                 local ans_interface=""
-                : "${ans_interface:=ens18}"
                 read ans_interface
+                : "${ans_interface:=ens18}"
                 # echo ""
 
                 if [[ -d "/sys/class/net/${ans_interface}" ]]; then
