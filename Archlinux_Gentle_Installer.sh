@@ -86,11 +86,6 @@ main() {
 
 # SOURCE FILES
 source_files
-if [[ "${param_hardening}" -eq 1 ]]; then
-        __tty_theme_hard
-else
-        __tty_theme
-fi
 
 export param_minimal=0
 export param_full=0
@@ -119,5 +114,11 @@ while getopts "hemc" opts; do
                                 ;;
                 esac
         done
+
+if [[ "${param_hardening}" -eq 1 ]]; then
+        __tty_theme_hard
+else
+        __tty_theme
+fi
 
 main
