@@ -47,6 +47,7 @@ create_themes() {
                                 echo "source /etc/tty_themes.d/tty_red_impact.sh" >> "/root/.zshrc"
                                 theme_color=1
                                 break
+                                ;;
                         [3])
                                 tty_theme="Default"
                                 theme_color=2
