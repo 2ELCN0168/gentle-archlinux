@@ -86,7 +86,11 @@ main() {
 
 # SOURCE FILES
 source_files
-__tty_theme
+if [[ "${param_hardening}" -eq 1 ]]; then
+        __tty_theme_hard
+else
+        __tty_theme
+fi
 
 export param_minimal=0
 export param_full=0

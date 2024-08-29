@@ -1,9 +1,5 @@
 set_issue() {
         
-        if [[ "${param_minimal}" -eq 1 ]]; then
-                return
-        fi
-
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}Would you like to setup a /etc/issue file [Y/n] -> ${NO_FORMAT}\c"
 
@@ -31,10 +27,6 @@ set_issue() {
 
 set_motd() {
         
-        if [[ "${param_minimal}" -eq 1 ]]; then
-                return
-        fi
-
         echo -e "${C_CYAN}:: ${C_WHITE}Would you like to setup a /etc/motd file [Y/n] -> ${NO_FORMAT}\c"
 
         local ans_motd=""
