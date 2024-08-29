@@ -29,11 +29,7 @@ source_files() {
 }
 
 main() {
-
-        export param_minimal=0
-        export param_full=0
-        export param_hardening=0
-
+        
         trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
         
         # INIT
@@ -91,6 +87,10 @@ main() {
 # SOURCE FILES
 source_files
 __tty_theme
+
+export param_minimal=0
+export param_full=0
+export param_hardening=0
 
 while getopts "hemc" opts; do
                 case "${opts}" in
