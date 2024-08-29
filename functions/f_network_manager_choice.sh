@@ -5,6 +5,12 @@ net_manager() {
         export net_manager=""
 
         while true; do
+
+                if [[ "${param_minimal}" -eq 1 ]]; then
+                        net_manager="networkmanager"
+                        break
+                fi
+
                 echo -e "\n==${C_CYAN}NETWORK MANAGER${NO_FORMAT}===\n"
 
                 echo -e "${C_WHITE}[0] - ${C_GREEN}systemd-networkd${NO_FORMAT} [default]"

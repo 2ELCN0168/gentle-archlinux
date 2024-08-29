@@ -11,6 +11,10 @@ luks_choice() {
         # FORMATTING DONE
         while true; do
 
+                if [[ "${param_minimal}" -eq 1 ]]; then
+                        break
+                fi
+
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you want your system to be encrypted with ${B_RED} LUKS ${NO_FORMAT} ? [y/N] -> ${NO_FORMAT}\c"
 
                 local ans_luks=""

@@ -49,8 +49,10 @@ main() {
         #install_frw
 
         # SET SHELLS .RCs
-        set_bashrc
-        set_zshrc
+        if [[ "${param_minimal}" -ne 1 ]]; then
+                set_bashrc
+                set_zshrc
+        fi
 
         # THEMING
         create_themes

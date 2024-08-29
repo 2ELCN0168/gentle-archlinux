@@ -5,6 +5,13 @@ ask_kernel() {
         export kernel_initramfs=""
 
         while true; do
+
+                if [[ "${param_minimal}" -eq 1 ]]; then
+                        linux_kernel="linux"
+                        kernel_initramfs="initramfs-linux.img"
+                        break
+                fi
+
                 echo -e "==${C_CYAN}KERNEL${NO_FORMAT}============\n"
 
                 echo -e "${C_WHITE}[0] - ${C_CYAN}linux${NO_FORMAT} (default)"

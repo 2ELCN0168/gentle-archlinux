@@ -263,6 +263,10 @@ set_root_passwd() {
 
 set_vim_nvim() {
 
+        if [[ "${param_minimal}" -eq 1 ]]; then
+                return
+        fi
+
         cat << EOF > "/etc/skel/.vimrc"
         set number
         set relativenumber
