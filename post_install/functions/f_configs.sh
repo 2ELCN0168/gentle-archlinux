@@ -151,7 +151,6 @@ set_hosts() {
         echo ""
         echo -e ":::::::::::::::::::::::::::::::::::::::::::::::::::"
         echo ""
-        sleep 1
 }
 
 set_vconsole() {

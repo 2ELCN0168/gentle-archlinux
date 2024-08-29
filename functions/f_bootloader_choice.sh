@@ -11,7 +11,7 @@ bootloader_choice() {
 
         export bootloader=""
 
-        if [[ "${UEFI}" -eq 1 ]]; then
+        if [[ "${UEFI}" -eq 1 && "${param_minimal}" -eq 0 ]]; then
                 while true; do
                         echo -e "==${C_CYAN}BOOTLOADER${NO_FORMAT}========\n"
 
@@ -49,7 +49,7 @@ bootloader_choice() {
                                         ;;
                         esac
                 done
-        elif [[ "${UEFI}" -eq 0 ]]; then
+        elif [[ "${UEFI}" -eq 0 || "${param_minimal=1}" ]]; then
                 bootloader="GRUB"
         fi
 }

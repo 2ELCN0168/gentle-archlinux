@@ -10,6 +10,11 @@ filesystem_choice() {
         export filesystem=""
 
         while true; do
+                
+                if [[ "${param_minimal}" -eq 1 ]]; then
+                        filesystem="EXT4"
+                        break
+                fi
                 echo -e "==${C_CYAN}FILESYSTEM${NO_FORMAT}========\n"
 
                 echo -e "${C_WHITE}[0] - ${C_YELLOW}BTRFS${NO_FORMAT} (default)"

@@ -30,6 +30,10 @@ source_files() {
 
 main() {
 
+        export param_minimal=0
+        export param_full=0
+        export param_hardening=0
+
         trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
         
         # INIT
@@ -94,8 +98,15 @@ while getopts "he" opts; do
                                 opt_h_help
                                 ;;
                         e)
+                                param_hardening=1
                                 echo -e "Hardening mode not available yet."
                                 exit 0
+                                ;;
+                        m)
+                                param_minimal=1
+                                ;;
+                        c)
+                                param_full=1
                                 ;;
                         \?)
                                 opt_h_help

@@ -6,6 +6,8 @@ opt_h_help() {
         echo -e "${C_CYAN}Options:${NO_FORMAT}\n"
         echo -e "${C_BLUE}  -h${C_WHITE}   Display this help.${NO_FORMAT}"
         echo -e "${C_BLUE}  -e${C_WHITE}   Enable hardening mode.${NO_FORMAT}"
+        echo -e "${C_BLUE}  -m${C_WHITE}   Minimal installation.${NO_FORMAT}"
+        echo -e "${C_BLUE}  -c${C_WHITE}   Full detailed installation.${NO_FORMAT}"
         echo -e "\n"
         exit 0
 }

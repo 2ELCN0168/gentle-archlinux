@@ -13,9 +13,10 @@ systemd_networkd() {
 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it. -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE} Which interface do you want to configure with systemd-networkd? Type the name as you see it (default=ens18). -> ${NO_FORMAT}\c"
 
                 local ans_interface=""
+                : "${ans_interface:=ens18}"
                 read ans_interface
                 # echo ""
 
