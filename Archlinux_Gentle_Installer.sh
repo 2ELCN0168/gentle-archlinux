@@ -99,8 +99,6 @@ while getopts "hemc" opts; do
                                 ;;
                         e)
                                 param_hardening=1
-                                echo -e "Hardening mode not available yet."
-                                exit 0
                                 ;;
                         m)
                                 param_minimal=1
