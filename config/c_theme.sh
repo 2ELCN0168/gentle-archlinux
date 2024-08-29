@@ -30,15 +30,15 @@ __tty_theme_hard() {
     printf "\e]P0181425" # black         rgb(27, 26, 38)     #181425
     printf "\e]P17c183c" # red           rgb(255, 117, 127)  #7c183c
     printf "\e]P2d53c6a" # green         rgb(158, 206, 106)  #d53c6a
-    printf "\e]P3d53c6a" # brown         rgb(225, 174, 103)  #d53c6a
+    printf "\e]P3ff8274" # brown         rgb(225, 174, 103)  #ff8274
     printf "\e]P4d53c6a" # blue          rgb(122, 162, 247)  #d53c6a
     printf "\e]P5d53c6a" # magenta       rgb(185, 152, 245)  #d53c6a
     printf "\e]P6d53c6a" # cyan          rgb(124, 206, 255)  #d53c6a
     printf "\e]P7ffffff" # light_gray    rgb(192, 203, 245)  #ffffff
     printf "\e]P8ffffff" # gray          rgb(192, 203, 245)  #ffffff
-    printf "\e]P9d53c6a" # bold_red      rgb(255, 117, 127)  #d53c6a
+    printf "\e]P97c183c" # bold_red      rgb(255, 117, 127)  #d53c6a
     printf "\e]PAd53c6a" # bold_green    rgb(158, 206, 106)  #d53c6a
-    printf "\e]PBd53c6a" # bold_yellow   rgb(225, 174, 103)  #d53c6a
+    printf "\e]PBff8274" # bold_yellow   rgb(225, 174, 103)  #ff8274
     printf "\e]PCd53c6a" # bold_blue     rgb(122, 162, 247)  #d53c6a
     printf "\e]PDd53c6a" # bold_magenta  rgb(185, 152, 245)  #d53c6a
     printf "\e]PEd53c6a" # bold_cyan     rgb(124, 206, 255)  #d53c6a
