@@ -2,7 +2,7 @@
 # Installation: Just add these lines to your ~/.bashrc
 
 __tty_theme() {
-    [ "$TERM" = 'linux' ] || return # Only run in a TTY
+    [ "${TERM}" = 'linux' ] || return # Only run in a TTY
 
     printf "\e]P01b1a26" # black         rgb(27, 26, 38)     #1b1a26
     printf "\e]P1ff757f" # red           rgb(255, 117, 127)  #ff757f
@@ -25,7 +25,7 @@ __tty_theme() {
 }
 
 __tty_theme_hard() {
-    [ "$TERM" = 'linux' ] || return # Only run in a TTY
+    [ "${TERM}" = 'linux' ] || return # Only run in a TTY
 
     printf "\e]P0181425" # black         rgb(27, 26, 38)     #181425
     printf "\e]P17c183c" # red           rgb(255, 117, 127)  #7c183c
