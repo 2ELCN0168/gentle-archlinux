@@ -28,7 +28,9 @@ greetings() {
         echo -e "${C_BLUE}/\`           \`\                                                               "
         echo -e "${NO_FORMAT}"
 
-        echo -e "\n${C_WHITE}██████████████████████████████████████████████████████████████████████████████████████\n"
+        echo -e "\n${C_WHITE}██████████████████████████████████████████████████████████████████████████████████████"
+        echo -e "████████████████████████████████████████████████████"
+        echo -e "████████████████\n${NO_FORMAT}"
 
         date
         echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. ${C_CYAN}<${NO_FORMAT}\n"
