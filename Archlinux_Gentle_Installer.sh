@@ -92,7 +92,7 @@ main() {
 source_files
 __tty_theme
 
-while getopts "he" opts; do
+while getopts "hemc" opts; do
                 case "${opts}" in
                         h)
                                 opt_h_help
