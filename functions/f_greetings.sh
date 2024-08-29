@@ -30,16 +30,15 @@ greetings() {
         echo -e " ▀  ▀ .▀  ▀·▀▀▀ ▀▀▀ ·.▀▀▀ ▀▀▀▀▀ █▪ ▀▀▀ •▀▀ ▀▀  "
         echo -e "${NO_FORMAT}"
 
-        echo -e "${C_YELLOW}"
 
-echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
-echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
-echo -e "${C_BLUE}     ,###\     ${C_CYAN} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
-echo -e "${C_BLUE}    /#####\    ${C_CYAN}| (_| | | | (__| | | | | | | | | |_| |>  <              "
-echo -e "${C_BLUE}   /##;-;##\   ${C_CYAN} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\\${C_GREEN}TM           "
-echo -e "${C_BLUE}  /##(   )##\`                                                         "
-echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${NO_FORMAT}                          "
-echo -e "${C_BLUE}/\`           \`\                                                      "
+        echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
+        echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
+        echo -e "${C_BLUE}     ,###\     ${C_CYAN} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
+        echo -e "${C_BLUE}    /#####\    ${C_CYAN}| (_| | | | (__| | | | | | | | | |_| |>  <              "
+        echo -e "${C_BLUE}   /##;-;##\   ${C_CYAN} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\\${C_GREEN}TM           "
+        echo -e "${C_BLUE}  /##(   )##\`                                                         "
+        echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${NO_FORMAT}                          "
+        echo -e "${C_BLUE}/\`           \`\                                                      "
 
         echo -e "${NO_FORMAT}"
 
