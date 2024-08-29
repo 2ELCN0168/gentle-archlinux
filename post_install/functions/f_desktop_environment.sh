@@ -75,7 +75,7 @@ desktop_env() {
         case "${desktop_env}" in
                 "cinnamon"|"plasma"|"mate"|"xfce4")
                         pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg alacritty
-                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sddm.service .${NO_FORMAT}\n"
+                        echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sddm.service .${NO_FORMAT}\n"
                         systemctl enable sddm.service 1> "/dev/null" 2>&1
 
                         if [[ "${?}" -ne 0 ]]; then
@@ -87,7 +87,7 @@ desktop_env() {
                         echo "Current=sddm-astronaut-theme" >> "/etc/sddm.conf"
                         ;;
                 "gnome")
-                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
+                        echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
                         systemctl enable gdm.service 1> "/dev/null" 2>&1
 
                         if [[ "${?}" -ne 0 ]]; then

@@ -59,20 +59,10 @@ systemd_networkd() {
                 "n"|"N")
                        echo -e "${C_WHITE}> ${INFO} DHCP will be ${C_GREEN}enabled${NO_FORMAT}.\n"
                        # sed -i "s/DHCP=/DHCP=yes/g" "/etc/systemd/network/05-${network_interface}.network"
+                       break
                        ;;
                 esac
         done
-
-        
-
-        echo -e "${C_CYAN}:: ${C_WHITE}What will be your IP address (IP/CIDR)? WARNING WHEN TYPING (e.g., 192.168.1.231/24) -> ${NO_FORMAT}\c"
-        read address
-        echo -e "\n"
-
-        echo -e "${C_CYAN}:: ${C_WHITE}What will be the gateway IP? WARNING WHEN TYPING (e.g., 192.168.1.1) -> ${NO_FORMAT}\c"
-        read gateway
-        echo -e "\n"
-
 
         # sed -i "s/name/${network_interface}/g" "/etc/systemd/network/05-${network_interface}.network"
         # sed -i "s/domain/${domain}/g" "/etc/systemd/network/05-${network_interface}.network"
@@ -105,4 +95,5 @@ EOF
                 Address=${address}
                 Gateway=${gateway}
 EOF
+        fi
 }
