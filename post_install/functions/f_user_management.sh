@@ -45,7 +45,7 @@ create_user() {
 
                 read ans_sudoer
                 : "${ans_sudoer:=Y}"
-                # echo -e "\n"
+                echo -e ""
 
                 case "${ans_sudoer}" in
                         "y"|"Y")

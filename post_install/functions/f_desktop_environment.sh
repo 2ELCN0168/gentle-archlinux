@@ -61,17 +61,20 @@ desktop_env() {
         done
 
         echo -e "${C_WHITE}> ${INFO} Installing ${C_GREEN}${desktop_env}${NO_FORMAT}."
+        sleep 2
         pacman -S --noconfirm "${desktop_env}"
 
         if [[ "${?}" -ne 0 ]]; then
-                echo -e "${C_WHITE}> ${ERR} Cannot install ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
+                echo -e "\n${C_WHITE}> ${ERR} Cannot install ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
         else
-                echo -e "${C_WHITE}> ${SUC} Installed ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
+                echo -e "\n${C_WHITE}> ${SUC} Installed ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
         fi
+
+        sleep 2
 
         case "${desktop_env}" in
                 "cinnamon"|"plasma"|"mate"|"xfce4")
-                        pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg
+                        pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg alacritty
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sddm.service .${NO_FORMAT}\n"
                         systemctl enable sddm.service 1> "/dev/null" 2>&1
 
@@ -80,8 +83,8 @@ desktop_env() {
                         fi
                         git clone "https://github.com/keyitdev/sddm-astronaut-theme.git" "/usr/share/sddm/themes/sddm-astronaut-theme"
                         cp "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" "/usr/share/fonts/"
-                        echo "[Theme]
-                              Current=sddm-astronaut-theme" | tee "/etc/sddm.conf"
+                        echo "[Theme]" >> "/etc/sddm.conf"
+                        echo "Current=sddm-astronaut-theme" >> "/etc/sddm.conf"
                         ;;
                 "gnome")
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
@@ -93,4 +96,5 @@ desktop_env() {
                         ;;
         esac
 
+        echo ""
 }
