@@ -11,7 +11,7 @@ set_issue() {
                 case "${ans_issue}" in
                         "y"|"Y")
                                 echo -e "${C_WHITE}> ${INFO} If you want to change it, edit the file /etc/issue after reboot.\n"
-                                cp -a "files/issue" "/etc/issue"
+                                cp -a "files/issue" "/etc/issue" 1> "/dev/null" 2>&1
                                 break
                                 ;;
                         "n"|"N")
@@ -38,7 +38,7 @@ set_motd() {
                 case "${ans_motd}" in
                         "y"|"Y")
                                 echo -e "${C_WHITE}> ${INFO} If you want to change it, edit the file /etc/motd after reboot.\n"
-                                cp -a "/files/motd" "/etc/motd"
+                                cp -a "/files/motd" "/etc/motd" 1> "/dev/null" 2>&1
                                 break
                                 ;;
                         "n"|"N")
