@@ -1,7 +1,7 @@
 systemd_networkd() {
 
         if [[ "${net_manager}" != "systemd-networkd" ]]; then
-                return 1
+                return
         fi
 
         local network_interface=""
@@ -75,7 +75,7 @@ systemd_networkd() {
         sed -i 's#^\(Address=\).*#\1${address}#' "/etc/systemd/network/05-${network_interface}.network"
 
 
-        if [[ "${ans_dhcp}" == [yY]]]; then
+        if [[ "${ans_dhcp}" == [yY] ]]; then
                 head -6 "/etc/systemd/network/05-${network_interface}.network" > "/tmp/net.conf"
                 mv "/tmp/net.conf" "/etc/systemd/network/05-${network_interface}.network"
                 sed -i 's/^\(DHCP=\).*/\1yes/' "/etc/systemd/network/05-${network_interface}.network" 
