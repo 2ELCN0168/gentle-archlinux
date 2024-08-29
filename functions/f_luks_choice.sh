@@ -11,7 +11,7 @@ luks_choice() {
         # FORMATTING DONE
         while true; do
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want your system to be encrypted with \033[101;34m LUKS ${NO_FORMAT} ? [y/N] -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want your system to be encrypted with ${B_RED} LUKS ${NO_FORMAT} ? [y/N] -> ${NO_FORMAT}\c"
 
                 local ans_luks=""
                 read ans_luks
