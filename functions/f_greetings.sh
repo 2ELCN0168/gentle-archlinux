@@ -17,6 +17,23 @@
 
 greetings() {
         clear
+
+        local mini="${C_PINK}Minimal installation mode.${NO_FORMAT}"
+        local complete="${C_YELLOW}Complete installation mode.${NO_FORMAT}"
+        local hard="${C_RED}Hardened installation mode.${NO_FORMAT}"
+
+        if [[ "${param_minimal}" -eq 0 ]]; then
+                mini=""
+        fi
+
+        if [[ "${param_full}" -eq 0 ]]; then
+                complete=""
+        fi
+
+        if [[ "${param_hardening}" -eq 0 ]]; then
+                hard=""
+        fi
+
         echo ""
         echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
         echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
@@ -24,7 +41,7 @@ greetings() {
         echo -e "${C_BLUE}    /#####\    ${C_CYAN}| (_| | | | (__| | | | | | | | | |_| |>  <              "
         echo -e "${C_BLUE}   /##;-;##\   ${C_CYAN} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\ ${C_GREEN}TM"
         echo -e "${C_BLUE}  /##(   )##\`                                                                  "
-        echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${NO_FORMAT}            "
+        echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${mini}${complete}${hard}"
         echo -e "${C_BLUE}/\`           \`\                                                               "
         echo -e "${NO_FORMAT}"
 
