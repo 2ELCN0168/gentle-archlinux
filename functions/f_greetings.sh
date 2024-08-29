@@ -5,6 +5,16 @@
 # EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
+# echo -e "       ,                       _     _ _                       "
+# echo -e "      /#\        __ _ _ __ ___| |__ | (_)_ __  _   ___  __     "
+# echo -e "     ,###\      / _` | '__/ __| '_ \| | | '_ \| | | \ \/ /     "
+# echo -e "    /#####\    | (_| | | | (__| | | | | | | | | |_| |>  <      "
+# echo -e "   /##;-;##\    \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\TM   "
+# echo -e "  /##(   )##`                                                  "
+# echo -e " /#;--   --;#\              Gentle Installer.                  "
+# echo -e "/`           `\                                                "
+
+
 greetings() {
         clear
         echo -e "${C_YELLOW}"
@@ -21,15 +31,17 @@ greetings() {
         echo -e "${NO_FORMAT}"
 
         echo -e "${C_YELLOW}"
-        cat << EOF >&1
 
-        Bonjour
-        Je
-        Suis
-        La
-EOF                                         
+echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
+echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
+echo -e "${C_BLUE}     ,###\     ${C_CYAN} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
+echo -e "${C_BLUE}    /#####\    ${C_CYAN}| (_| | | | (__| | | | | | | | | |_| |>  <              "
+echo -e "${C_BLUE}   /##;-;##\   ${C_CYAN} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\\${C_GREEN}TM           "
+echo -e "${C_BLUE}  /##(   )##\`                                                         "
+echo -e "${C_BLUE} /#;--   --;#\              ${C_YELLOW}Gentle Installer.${NO_FORMAT}                          "
+echo -e "${C_BLUE}/\`           \`\                                                      "
 
-echo -e "${NO_FORMAT}"
+        echo -e "${NO_FORMAT}"
 
         echo -e "\n${C_CYAN}███${C_RED}█${C_CYAN}█${C_YELLOW}█${C_CYAN}█${NO_FORMAT}\n"
 
