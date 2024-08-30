@@ -73,7 +73,7 @@ desktop_env() {
         sleep 2
 
         case "${desktop_env}" in
-                "cinnamon"|"plasma"|"mate"|"xfce4")
+                "cinnamon"|"plasma"|"mate"|"xfce4"|"gnome")
                         pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg alacritty
                         echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sddm.service .${NO_FORMAT}\n"
                         systemctl enable sddm.service 1> "/dev/null" 2>&1
@@ -82,18 +82,18 @@ desktop_env() {
                                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Cannot enable ${C_YELLOW}sddm.service${NO_FORMAT}.\n"
                         fi
                         git clone "https://github.com/keyitdev/sddm-astronaut-theme.git" "/usr/share/sddm/themes/sddm-astronaut-theme"
-                        cp "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" "/usr/share/fonts/"
+                        cp -a "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" "/usr/share/fonts/" 1> "/dev/null" 2>&1
                         echo "[Theme]" >> "/etc/sddm.conf"
                         echo "Current=sddm-astronaut-theme" >> "/etc/sddm.conf"
                         ;;
-                "gnome")
-                        echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
-                        systemctl enable gdm.service 1> "/dev/null" 2>&1
-
-                        if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Cannot enable ${C_YELLOW}gdm.service${NO_FORMAT}.\n"
-                        fi
-                        ;;
+                # "gnome")
+                #         echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
+                #         systemctl enable gdm.service 1> "/dev/null" 2>&1
+                #
+                #         if [[ "${?}" -ne 0 ]]; then
+                #                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Cannot enable ${C_YELLOW}gdm.service${NO_FORMAT}.\n"
+                #         fi
+                #         ;;
         esac
 
         echo ""
