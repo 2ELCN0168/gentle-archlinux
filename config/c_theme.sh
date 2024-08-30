@@ -27,7 +27,7 @@ __tty_theme() {
 __tty_theme_hard() {
         [ "${TERM}" = 'linux' ] || return # Only run in a TTY
 
-        # printf "\e]P0181425" # black         rgb(27, 26, 38)     #181425
+        printf "\e]P0181425" # black         rgb(27, 26, 38)     #181425
         # printf "\e]P17c183c" # red           rgb(255, 117, 127)  #7c183c
         # printf "\e]P2d53c6a" # green         rgb(158, 206, 106)  #d53c6a
         # printf "\e]P3d53c6a" # brown         rgb(225, 174, 103)  #d53c6a
@@ -44,7 +44,7 @@ __tty_theme_hard() {
         # printf "\e]PEd53c6a" # bold_cyan     rgb(124, 206, 255)  #d53c6a
         # printf "\e]PFffffff" # bold_white    rgb(192, 203, 245)  #ffffff
 
-        printf "\e]P000224D" # black         #00224D
+        # printf "\e]P000224D" # black         #00224D
         printf "\e]P15D0E41" # red           #5D0E41
         printf "\e]P2A0153E" # green         #A0153E
         printf "\e]P3A0153E" # brown         #A0153E
