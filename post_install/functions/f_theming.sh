@@ -74,8 +74,8 @@ create_themes() {
                 printf "\e]P41e66f5" # blue          rgb(30, 102, 245)   #1e66f5
                 printf "\e]P58839ef" # magenta       rgb(136, 57, 239)   #8839ef
                 printf "\e]P6179299" # cyan          rgb(23, 146, 153)   #179299
-                printf "\e]PF4c4f69" # light_gray    rgb(76, 79, 105)    #4c4f69
-                printf "\e]P86c6f85" # gray          rgb(108, 111, 133)  #6c6f85
+                printf "\e]P74c4f69" # light_gray    rgb(76, 79, 105)    #4c4f69
+                printf "\e]P84c4f69" # gray          rgb(76, 79, 105)    #4c4f69
                 printf "\e]P9e64553" # bold_red      rgb(230, 69, 83)    #e64553
                 printf "\e]PA40a02b" # bold_green    rgb(64, 160, 43)    #40a02b
                 printf "\e]PBdf8e1d" # bold_yellow   rgb(223, 142, 29)   #df8e1d
@@ -117,39 +117,12 @@ EOF
         __tty_theme
 EOF
 
-#         cat << EOF > "/etc/tty_themes.d/tty_red_impact.sh"
-#         __tty_theme() {
-#                 [ "\$TERM" = 'linux' ] || return # Only run in a TTY
-#
-#                 printf "\e]P0181425" # black         #181425
-#                 printf "\e]P17c183c" # red           #7c183c
-#                 printf "\e]P2d53c6a" # green         #d53c6a
-#                 printf "\e]P3d53c6a" # brown         #d53c6a
-#                 printf "\e]P4d53c6a" # blue          #d53c6a
-#                 printf "\e]P5d53c6a" # magenta       #d53c6a
-#                 printf "\e]P6d53c6a" # cyan          #d53c6a
-#                 printf "\e]P7ffffff" # light_gray    #ffffff
-#                 printf "\e]P8ffffff" # gray          #ffffff
-#                 printf "\e]P97c183c" # bold_red      #d53c6a
-#                 printf "\e]PAd53c6a" # bold_green    #d53c6a
-#                 printf "\e]PBd53c6a" # bold_yellow   #d53c6a
-#                 printf "\e]PCd53c6a" # bold_blue     #d53c6a
-#                 printf "\e]PDd53c6a" # bold_magenta  #d53c6a
-#                 printf "\e]PEd53c6a" # bold_cyan     #d53c6a
-#                 printf "\e]PFffffff" # bold_white    #ffffff
-#
-#                 clear
-#         }
-#
-#         __tty_theme
-# EOF
-
         cat << EOF > "/etc/tty_themes.d/tty_red_impact.sh"
         __tty_theme() {
                 [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 
-                printf "\e]P000224D" # black         #00224D
-                printf "\e]P15D0E41" # red           #5D0E41
+                printf "\e]P0181425" # black         #181425
+                printf "\e]P1FF204E" # red           #FF204E
                 printf "\e]P2A0153E" # green         #A0153E
                 printf "\e]P3A0153E" # brown         #A0153E
                 printf "\e]P4A0153E" # blue          #A0153E
@@ -170,7 +143,6 @@ EOF
 
         __tty_theme
 EOF
-
 
 }
 
