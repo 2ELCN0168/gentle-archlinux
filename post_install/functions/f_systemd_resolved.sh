@@ -3,7 +3,7 @@ systemd_resolved() {
         local ask_dns=0
         while true; do
                 
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure DNS manually? If not, DNS will be set to 1.1.1.1 and 9.9.9.9 [y/N] -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to configure DNS manually? If not, DNS will be set to ${C_YELLOW}1.1.1.1${NO_FORMAT} and ${C_YELLOW}9.9.9.9${NO_FORMAT} [y/N] -> ${NO_FORMAT}\c"
                 local ans_set_dns=""
                 read ans_set_dns
                 : "${ans_set_dns:=N}"
@@ -14,7 +14,7 @@ systemd_resolved() {
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Changing DNS to ${C_PINK}1.1.1.1 and 9.9.9.9${NO_FORMAT}."
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Changing DNS to ${C_YELLOW}1.1.1.1${NO_FORMAT} and ${C_YELLOW}9.9.9.9${NO_FORMAT}."
                                 echo "DNS=1.1.1.1#cloudflare-dns.com" >> "/etc/systemd/resolved.conf"
                                 echo "FallbackDNS=9.9.9.9#dns.quad9.net" >> "/etc/systemd/resolved.conf"
 
@@ -79,6 +79,6 @@ systemd_resolved() {
                 echo -e "${C_WHITE}> ${ERR} And error occured and systemd-resolved is ${C_RED}not enabled${NO_FORMAT}."
         fi
 
-        echo "Domains=${domain}"
+        echo "Domains=${domain}" >> "/etc/systemd/resolved.conf"
         echo
         }
