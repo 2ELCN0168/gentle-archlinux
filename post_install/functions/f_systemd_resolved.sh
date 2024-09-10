@@ -35,7 +35,7 @@ systemd_resolved() {
                 local ans_prim_dns=""
                 read ans_prim_dns
                 
-                echo -e "${C_WHITE}> ${NO_FORMAT}Primary DNS set to ${C_PINK}${ans_prim_dns}${NO_FORMAT}."
+                echo -e "${C_WHITE}> ${INFO} Primary DNS set to ${C_PINK}${ans_prim_dns}${NO_FORMAT}."
                 echo
                 echo "DNS=${ans_prim_dns}" >> "/etc/systemd/resolved.conf"
 
@@ -43,7 +43,7 @@ systemd_resolved() {
                 local ans_sec_dns=""
                 read ans_sec_dns
 
-                echo -e "${C_WHITE}> ${NO_FORMAT}Secondary DNS set to ${C_PINK}${ans_sec_dns}${NO_FORMAT}."
+                echo -e "${C_WHITE}> ${INFO} Secondary DNS set to ${C_PINK}${ans_sec_dns}${NO_FORMAT}."
                 echo
                 echo "FallbackDNS=${ans_sec_dns}" >> "/etc/systemd/resolved.conf"
 
@@ -56,7 +56,7 @@ systemd_resolved() {
                         case "${ans_dns_tls}" in
                                 [yY])
                                         echo "DNSOverTLS=yes" >> "/etc/systemd/resolved.conf"
-                                        echo -e "${C_WHITE}> ${NO_FORMAT}DNSoverTLS ${C_GREEN}enabled${NO_FORMAT}."
+                                        echo -e "${C_WHITE}> ${INFO} DNSoverTLS ${C_GREEN}enabled${NO_FORMAT}."
                                         echo
                                         break
                                         ;;
