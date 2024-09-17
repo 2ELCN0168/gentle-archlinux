@@ -1,6 +1,6 @@
 # Gentle Archlinux Installer
 
-![Gentle_Arch](Gentle_Arch.png)
+![Gentle_Arch](0_Gentle_Arch.png)
 
 This script is an automated installation of Archlinux.
 As I don't like that much the official "archinstall" script, I decided to do my own.
