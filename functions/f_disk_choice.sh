@@ -38,7 +38,7 @@ disk_choice() {
                                                 break
                                         else
                                                 if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                        if [[ "${lvm_disks[@]}" ~= "${ans_block_device}" ]]; then
+                                                        if [[ "${lvm_disks[@]}" =~ "${ans_block_device}" ]]; then
                                                                 echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!\n"
                                                         else
                                                                 lvm_disks+=("/dev/${ans_block_device}")
