@@ -22,7 +22,6 @@ disk_choice() {
                 local ans_use_lvm=""
                 read ans_use_lvm
                 : "${ans_use_lvm:=Y}"
-                echo "blblbl"
 
                 case "${ans_use_lvm}" in
                         [yY])
@@ -39,7 +38,7 @@ disk_choice() {
                                         else
                                                 if [[ -b "/dev/${ans_block_device}" ]]; then
                                                         if [[ "${lvm_disks[@]}" =~ "${ans_block_device}" ]]; then
-                                                                echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!\n"
+                                                                echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!"
                                                         else
                                                                 lvm_disks+=("/dev/${ans_block_device}")
                                                                 chosen_disks+=(${ans_block_device})
@@ -49,7 +48,7 @@ disk_choice() {
                                                 fi
                                         fi
                                 done
-                                echo -e "Selected disks are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}"
+                                echo -e "\n${C_WHITE}> ${INFO} The selected disks are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
                                 ;;
                         [nN])
                                 while true; do
@@ -67,6 +66,7 @@ disk_choice() {
                                         fi
                                 done
 
+                                disk="${ans_block_device}"
 
                                 if [[ "${disk}" =~ nvme... ]]; then 
                                         partitionType="p"
@@ -93,7 +93,7 @@ display_disks() {
                 exclude_pattern+="|${disk}"
         done
 
-        echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
+        echo -e "\n==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
         lsblk -d --output NAME | grep -vE "${exclude_pattern}"
         echo -e ""
