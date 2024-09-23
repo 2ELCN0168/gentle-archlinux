@@ -45,7 +45,7 @@ lvm_deletion() {
 
                 local ans_wipe_lvm=""
                 read ans_wipe_lvm
-                : "{$ans_wipe_lvm:=Y}"
+                : "${ans_wipe_lvm:=Y}"
                 echo ""
 
                 case "${ans_wipe_lvm}" in

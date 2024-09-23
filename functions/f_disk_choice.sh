@@ -26,6 +26,7 @@ disk_choice() {
                 local ans_use_lvm=""
                 read ans_use_lvm
                 : "${ans_use_lvm:=Y}"
+                echo "blblbl"
 
                 case "${ans_use_lvm}" in
                         [yY])
