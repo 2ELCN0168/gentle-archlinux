@@ -17,6 +17,7 @@ disk_choice() {
         # finalPartBoot="/dev/${diskToUse}${partitionType}1"
         # finalPartRoot="/dev/${diskToUse}${partitionType}2"
 
+
         while true; do
                 echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
