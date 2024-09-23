@@ -26,7 +26,7 @@ install_frw() {
         # Install sshguard (fail2ban like)
         echo -e "${C_WHITE}> ${INFO} Installing ${C_WHITE}sshguard.${NO_FORMAT}"
 
-        if ! systemctl is-enabled nftables #1> "/dev/null" 2>&1
+        if ! systemctl is-enabled sshguard #1> "/dev/null" 2>&1
                 then
                 if ! pacman -Qi sshguard # 1> "/dev/null" 2>&1; 
                 then
