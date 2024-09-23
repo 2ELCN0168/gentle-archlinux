@@ -26,9 +26,10 @@ disk_choice() {
 
                 case "${ans_use_lvm}" in
                         [yY])
-                                export lvm_disks
+                                export lvm_disks=()
+                                local chosen_disks=()
                                 while true; do
-                                        display_disks
+                                        display_disks ${chosen_disks}
 
                                         local ans_block_device
                                         read ans_block_device
@@ -37,6 +38,7 @@ disk_choice() {
                                                 break
                                         else
                                                 lvm_disks+=("/dev/${ans_block_device}")
+                                                chosen_disks+=(${ans_block_device})
                                         fi
                                 done
                                 echo -e "${lvm_disks[@]}"
@@ -80,7 +82,7 @@ display_disks() {
 
                 echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
-                lsblk -d --output NAME | grep -vE 'NAME|sr0|loop0'
+                lsblk -d --output NAME | grep -vE "NAME|sr0|loop0|${1}"
                 echo -e ""
 
                 echo -e "====================\n"
