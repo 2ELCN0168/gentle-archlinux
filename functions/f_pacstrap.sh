@@ -47,7 +47,7 @@ ask_packages() {
                                 break
                                 ;;
                         [4])
-                                # echo -e "${C_WHITE}> ${INFO} ${C_GREEN}No guest-agent${NO_FORMAT} will be installed.\n"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}No guest-agent${NO_FORMAT} will be installed.\n"
                                 break
                                 ;;
                         *)
@@ -114,7 +114,7 @@ ask_packages() {
                 case "${ans_monitoring_pack}" in
                         "y"|"Y")
                                 echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed.\n"
-                                additionalPackages="${additionalPackages} btop htop bmon"
+                                additionalPackages="${additionalPackages} btop htop bmon iotop"
                                 break
                                 ;;
                         "n"|"N")
