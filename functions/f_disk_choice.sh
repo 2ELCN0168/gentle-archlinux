@@ -13,10 +13,56 @@ disk_choice() {
         export boot_part="" # Former was finalPartBoot
         export root_part="" # Former was finalPartRoot
 
-        # finalDisk="/dev/${diskToUse}"
-        # finalPartBoot="/dev/${diskToUse}${partitionType}1"
-        # finalPartRoot="/dev/${diskToUse}${partitionType}2"
 
+
+        while true; do 
+
+                if [[ "${filesystem}" == 'BTRFS' ]]; then
+                        break
+                fi
+
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you plan to use LVM? [Y/n] -> ${NO_FORMAT}\c"
+                
+                local ans_use_lvm=""
+                read ans_use_lvm
+                : "${ans_use_lvm:=Y}"
+
+                case "${ans_use_lvm}" in
+                        [yY])
+                                export lvm_disks=()
+                                while true; do
+                                        local lvm_disk=$(ask_disk)
+
+                                        if [[ -z "${lvm_disk}" ]]; then
+                                                break
+                                        fi
+
+                                        lvm_disks+=("/dev/${lvm_disk}")
+                                done
+                                echo -e "${lvm_disks[@]}"
+                                break
+                                ;;
+                        [nN])
+                                disk=$(ask_disk "sda")
+                                if [[ "${disk}" =~ nvme... ]]; then 
+                                        partitionType="p"
+                                fi
+
+                                user_disk="/dev/${disk}" # Former was finalDisk
+                                boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
+                                root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
+
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+
+        done
+}
+
+ask_disk() {
 
         while true; do
                 echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
@@ -30,24 +76,19 @@ disk_choice() {
 
                 local ans_block_device=""
                 read ans_block_device
-                : "${ans_block_device:=sda}"
-                # echo ""
+                : "${ans_block_device:=${1}}"
+
+                if [[ -z "${ans_block_device}" ]]; then
+                        return
+                fi
 
                 if [[ -b "/dev/${ans_block_device}" ]]; then
-                        disk="${ans_block_device}"
-                        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${disk}${NO_FORMAT}\n"
-
-                        if [[ "${disk}" =~ nvme... ]]; then 
-                                partitionType="p"
-                        fi
-
-                        user_disk="/dev/${disk}" # Former was finalDisk
-                        boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
-                        root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
-
+                        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
                         break
                 else
                         invalid_answer
                 fi
         done
+
+        echo "${ans_block_device}"
 }
