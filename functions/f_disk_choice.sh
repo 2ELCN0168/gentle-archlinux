@@ -15,11 +15,7 @@ disk_choice() {
 
 
 
-        while true; do 
-
-                if [[ "${filesystem}" == 'BTRFS' ]]; then
-                        break
-                fi
+        if [[ "${filesystem}" != 'BTRFS' ]]; then
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Do you plan to use LVM? [Y/n] -> ${NO_FORMAT}\c"
                 
@@ -30,22 +26,38 @@ disk_choice() {
 
                 case "${ans_use_lvm}" in
                         [yY])
-                                export lvm_disks=()
+                                export lvm_disks
                                 while true; do
-                                        echo "fuwhfiwu"
-                                        local lvm_disk=$(ask_disk)
+                                        display_disks
 
-                                        if [[ -z "${lvm_disk}" ]]; then
+                                        local ans_block_device
+                                        read ans_block_device
+
+                                        if [[ -z "${ans_block_device}" ]]; then
                                                 break
+                                        else
+                                                lvm_disks+=("/dev/${ans_block_device}")
                                         fi
-
-                                        lvm_disks+=("/dev/${lvm_disk}")
                                 done
                                 echo -e "${lvm_disks[@]}"
-                                break
                                 ;;
                         [nN])
-                                disk=$(ask_disk "sda")
+                                while true; do
+                                        display_disks
+
+                                        local ans_block_device
+                                        read ans_block_device
+                                        : "${ans_block_device:=sda}"
+
+                                        if [[ -b "/dev/${ans_block_device}" ]]; then
+                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                                break
+                                        else
+                                                invalid_answer
+                                        fi
+                                done
+
+
                                 if [[ "${disk}" =~ nvme... ]]; then 
                                         partitionType="p"
                                 fi
@@ -60,13 +72,12 @@ disk_choice() {
                                 invalid_answer
                                 ;;
                 esac
+        fi
 
-        done
 }
 
-ask_disk() {
+display_disks() {
 
-        while true; do
                 echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
                 lsblk -d --output NAME | grep -vE 'NAME|sr0|loop0'
@@ -75,22 +86,4 @@ ask_disk() {
                 echo -e "====================\n"
 
                 echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT}\c"
-
-                local ans_block_device=""
-                read ans_block_device
-                : "${ans_block_device:=${1}}"
-
-                if [[ -z "${ans_block_device}" ]]; then
-                        return
-                fi
-
-                if [[ -b "/dev/${ans_block_device}" ]]; then
-                        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
-                        break
-                else
-                        invalid_answer
-                fi
-        done
-
-        echo "${ans_block_device}"
 }
