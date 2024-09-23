@@ -29,7 +29,7 @@ disk_choice() {
                                 export lvm_disks=()
                                 local chosen_disks=()
                                 while true; do
-                                        display_disks ${chosen_disks}
+                                        display_disks ${chosen_disks[@]}
 
                                         local ans_block_device
                                         read ans_block_device
@@ -80,12 +80,17 @@ disk_choice() {
 
 display_disks() {
 
-                echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
+        local exclude_pattern="NAME|sr0|loop0"
+        for disk in "${@}"; do
+                exclude_pattern+="|${disk}"
+        done
 
-                lsblk -d --output NAME | grep -vE "NAME|sr0|loop0|${1}"
-                echo -e ""
+        echo -e "==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
-                echo -e "====================\n"
+        lsblk -d --output NAME | grep -vE "${exclude_pattern}"
+        echo -e ""
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT}\c"
+        echo -e "====================\n"
+
+        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT}\c"
 }
