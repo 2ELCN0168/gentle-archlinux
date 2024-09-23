@@ -32,6 +32,7 @@ disk_choice() {
                         [yY])
                                 export lvm_disks=()
                                 while true; do
+                                        echo "fuwhfiwu"
                                         local lvm_disk=$(ask_disk)
 
                                         if [[ -z "${lvm_disk}" ]]; then
