@@ -5,7 +5,8 @@
 # EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
-# source ./functions/f_luks_handling.sh
+source "./functions/f_luks_handling.sh"
+source "./functions/f_btrfs.sh"
 
 format_partitions() {
 
@@ -25,7 +26,7 @@ format_partitions() {
 
         case "${filesystem}" in
                 "BTRFS")
-                        btrfs_handling
+                        btrfs
                         ;;
                 *)
                         lvm
