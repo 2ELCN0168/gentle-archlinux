@@ -52,7 +52,9 @@ lvm_deletion() {
                         [yY])
                                 lvremove -f -y "/dev/mapper/VG_Archlinux-*" 1> "/dev/null" 2>&1
                                 vgremove -f -y VG_Archlinux 1> "/dev/null" 2>&1
-                                pvremove -f -y $(pvscan | head -1 | awk '{ print $2 }') 1> "/dev/null" 2>&1
+                                for i in $(pvscan | head -1 | awk '{ print $2 }'); do
+                                        pvremove -f -y "${i}" 1> "/dev/null" 2>&1
+                                done
                                 echo -e "${C_WHITE}> ${SUC} ${C_PINK}LVM deleted.${NO_FORMAT}\n"
                                 break
                                 ;;
