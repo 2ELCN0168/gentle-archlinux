@@ -63,7 +63,7 @@ btrfs() {
                 local btrfs_subvols=("@", "@home", "@usr", "@tmp", "@var")
                 for i in "${btrfs_subvols[@]}"; do
                         echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
-                        btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1
+                        btrfs subvolume create "/mnt/${i}" # 1> "/dev/null" 2>&1
                 done
 
                 echo ""
