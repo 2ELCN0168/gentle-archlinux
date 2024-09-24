@@ -39,7 +39,7 @@ disk_choice() {
                                                 break
                                         else
                                                 if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                        if [[ "${lvm_disks[@]}" =~ "${ans_block_device}" ]]; then
+                                                        if [[ "${disks_array[@]}" =~ "${ans_block_device}" ]]; then
                                                                 echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!"
                                                         else
                                                                 disks_array+=("/dev/${ans_block_device}")
@@ -53,7 +53,23 @@ disk_choice() {
                                 echo -e "\n${C_WHITE}> ${INFO} The selected disks are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
                                 ;;
                         [nN])
+
                                 LVM=0
+                                while true; do
+                                        display_disks
+
+                                        local ans_block_device
+                                        read ans_block_device
+                                        : "${ans_block_device:=sda}"
+
+                                        if [[ -b "/dev/${ans_block_device}" ]]; then
+                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                                disks_array+=("/dev/${ans_block_device}")
+                                                break
+                                        else
+                                                invalid_answer
+                                        fi
+                                done
                                 break
                                 ;;
                         *)
@@ -61,7 +77,7 @@ disk_choice() {
                                 ;;
                 esac
 
-        elif [[ "${filesystem}" == 'BTRFS' && "${LVM}" -eq 0 ]]; then
+        elif [[ "${filesystem}" == 'BTRFS' ]]; then
 
                 while true; do
                         display_disks
@@ -87,7 +103,6 @@ disk_choice() {
         fi
 
         user_disk="${disks_array[0]}" # Former was finalDisk
-        echo "${user_disk}"
         boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
         root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 }
