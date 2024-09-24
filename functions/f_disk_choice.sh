@@ -8,7 +8,8 @@
 disk_choice() {
 
         export user_disk="" # Former was finalDisk
-        export disk=""
+        # export disk=""
+        export disks_array=()
         export partitionType=""
         export boot_part="" # Former was finalPartBoot
         export root_part="" # Former was finalPartRoot
@@ -25,7 +26,6 @@ disk_choice() {
 
                 case "${ans_use_lvm}" in
                         [yY])
-                                export lvm_disks=()
                                 local chosen_disks=()
                                 while true; do
                                         display_disks ${chosen_disks[@]}
@@ -40,7 +40,7 @@ disk_choice() {
                                                         if [[ "${lvm_disks[@]}" =~ "${ans_block_device}" ]]; then
                                                                 echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!"
                                                         else
-                                                                lvm_disks+=("/dev/${ans_block_device}")
+                                                                disks_array+=("/dev/${ans_block_device}")
                                                                 chosen_disks+=(${ans_block_device})
                                                         fi
                                                 else
@@ -60,6 +60,7 @@ disk_choice() {
 
                                         if [[ -b "/dev/${ans_block_device}" ]]; then
                                                 echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                                disks_array+=("/dev/${ans_block_device}")
                                                 break
                                         else
                                                 invalid_answer
@@ -72,7 +73,7 @@ disk_choice() {
                                         partitionType="p"
                                 fi
 
-                                user_disk="/dev/${disk}" # Former was finalDisk
+                                user_disk="${disks_array[0]}" # Former was finalDisk
                                 boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
                                 root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 
