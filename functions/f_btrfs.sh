@@ -60,10 +60,10 @@ btrfs() {
 
         if [[ "${btrfsSubvols}" -eq 1 ]]; then
                 mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1
-                local btrfs_subvols("@", "@home", "@usr", "@tmp", "@var")
+                local btrfs_subvols=("@", "@home", "@usr", "@tmp", "@var")
                 for i in "${btrfs_subvols[@]}"; do
-                        btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1
                         echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+                        btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1
                 done
 
                 echo ""
