@@ -13,6 +13,7 @@ disk_choice() {
         export partitionType=""
         export boot_part="" # Former was finalPartBoot
         export root_part="" # Former was finalPartRoot
+        export LVM=""
 
 
 
@@ -26,6 +27,7 @@ disk_choice() {
 
                 case "${ans_use_lvm}" in
                         [yY])
+                                LVM=1
                                 local chosen_disks=()
                                 while true; do
                                         display_disks ${chosen_disks[@]}
@@ -51,6 +53,7 @@ disk_choice() {
                                 echo -e "\n${C_WHITE}> ${INFO} The selected disks are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
                                 ;;
                         [nN])
+                                LVM=0
                                 while true; do
                                         display_disks
 
@@ -75,7 +78,7 @@ disk_choice() {
                                 ;;
                 esac
 
-                disk="${ans_block_device}"
+                local disk="${ans_block_device}"
 
                 if [[ "${disk}" =~ nvme... ]]; then 
                         partitionType="p"
