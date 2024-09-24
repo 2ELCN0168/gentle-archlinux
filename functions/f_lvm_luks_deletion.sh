@@ -10,13 +10,13 @@ lvm_luks_try() {
         local result=0
 
         if pvscan --cache | grep -q '/dev'; then
-                echo -e "${C_WHITE}> ${INFO} ${C_PINK} A LVM is detected.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_PINK}A LVM is detected.${NO_FORMAT}\n"
                 #result=$result+1
                 (( result += 1 ))
         fi
 
         if lsblk -f | grep -qi 'LUKS'; then
-                echo -e "${C_WHITE}> ${INFO} ${C_PINK} LUKS partition is detected.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_PINK}LUKS partition is detected.${NO_FORMAT}\n"
                 #result=$result+2
                 (( result += 2 ))
         fi
@@ -41,11 +41,11 @@ lvm_luks_try() {
 lvm_deletion() {
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [y/N] -> ${NO_FORMAT}\c"
 
                 local ans_wipe_lvm=""
                 read ans_wipe_lvm
-                : "${ans_wipe_lvm:=Y}"
+                : "${ans_wipe_lvm:=N}"
                 echo ""
 
                 case "${ans_wipe_lvm}" in
@@ -53,11 +53,11 @@ lvm_deletion() {
                                 lvremove -f -y "/dev/mapper/VG_Archlinux-*" 1> "/dev/null" 2>&1
                                 vgremove -f -y VG_Archlinux 1> "/dev/null" 2>&1
                                 pvremove -f -y $(pvscan | head -1 | awk '{ print $2 }') 1> "/dev/null" 2>&1
-                                echo -e "${C_WHITE}> ${SUC} ${C_PINK} LVM deleted.${NO_FORMAT}\n"
+                                echo -e "${C_WHITE}> ${SUC} ${C_PINK}LVM deleted.${NO_FORMAT}\n"
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_WHITE}> ${WARN} ${C_PINK} No LVM will be deleted.${NO_FORMAT}\n"
+                                echo -e "${C_WHITE}> ${WARN} ${C_PINK}No LVM will be deleted.${NO_FORMAT}\n"
                                 break
                                 ;;
                         *)
@@ -80,11 +80,11 @@ luks_deletion() {
                 case "${ans_close_luks}" in
                         "y"|"Y")
                                 cryptsetup close root 1> "/dev/null" 2>&1
-                                echo -e "${C_WHITE}> ${SUC} ${C_PINK} LUKS partition closed.${NO_FORMAT}\n"
+                                echo -e "${C_WHITE}> ${SUC} ${C_PINK}LUKS partition closed.${NO_FORMAT}\n"
                                 break
                                 ;;
                         "n"|"N")
-                                echo -e "${C_WHITE}> ${WARN} ${C_PINK} No LUKS parititon will be closed.${NO_FORMAT}\n"
+                                echo -e "${C_WHITE}> ${WARN} ${C_PINK}No LUKS parititon will be closed.${NO_FORMAT}\n"
                                 break
                                 ;;
                         *)
