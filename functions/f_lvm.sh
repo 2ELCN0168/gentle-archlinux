@@ -62,12 +62,13 @@ lvm() {
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created PV with ${C_CYAN}${i}${NO_FORMAT}"
                                 pv_array+=("${i}")
                         else
-                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the physical volume with ${C_YELLOW}${i}${NO_FORMAT}. We will not use it.\n"
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the physical volume with ${C_YELLOW}${i}${NO_FORMAT}. We will not use it."
                         fi
                 done
 
+                echo ""
 
-                vgcreate VG_Archlinux "${pv_array[@]}"
+                vgcreate VG_Archlinux "${pv_array[@]}" 1> "/dev/null" 2>&1
 
                 lvcreate -l 20%VG VG_Archlinux -n root
                 lvcreate -l 40%VG VG_Archlinux -n home
@@ -79,11 +80,11 @@ lvm() {
                         "XFS")
                                 #TODO: Make a loop for and complete names with vars
                                 
-                                yes | mkfs.xfs -f -L Arch_root "/dev/mapper/VG_Archlinux-root" 1> "/dev/null" 2>&1
-                                yes | mkfs.xfs -f -L Arch_home "/dev/mapper/VG_Archlinux-home" 1> "/dev/null" 2>&1
-                                yes | mkfs.xfs -f -L Arch_usr "/dev/mapper/VG_Archlinux-usr" 1> "/dev/null" 2>&1
-                                yes | mkfs.xfs -f -L Arch_var "/dev/mapper/VG_Archlinux-var" 1> "/dev/null" 2>&1
-                                yes | mkfs.xfs -f -L Arch_tmp "/dev/mapper/VG_Archlinux-tmp" 1> "/dev/null" 2>&1
+                                mkfs.xfs -f -L Arch_root "/dev/mapper/VG_Archlinux-root" 1> "/dev/null" 2>&1
+                                mkfs.xfs -f -L Arch_home "/dev/mapper/VG_Archlinux-home" 1> "/dev/null" 2>&1
+                                mkfs.xfs -f -L Arch_usr "/dev/mapper/VG_Archlinux-usr" 1> "/dev/null" 2>&1
+                                mkfs.xfs -f -L Arch_var "/dev/mapper/VG_Archlinux-var" 1> "/dev/null" 2>&1
+                                mkfs.xfs -f -L Arch_tmp "/dev/mapper/VG_Archlinux-tmp" 1> "/dev/null" 2>&1
                                 ;;
                         "EXT4")
                                 mkfs.ext4 -L Arch_root "/dev/mapper/VG_Archlinux-root" 1> "/dev/null" 2>&1

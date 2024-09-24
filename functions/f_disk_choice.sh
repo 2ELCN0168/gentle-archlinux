@@ -54,42 +54,42 @@ disk_choice() {
                                 ;;
                         [nN])
                                 LVM=0
-                                while true; do
-                                        display_disks
-
-                                        local ans_block_device
-                                        read ans_block_device
-                                        : "${ans_block_device:=sda}"
-
-                                        if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
-                                                disks_array+=("/dev/${ans_block_device}")
-                                                break
-                                        else
-                                                invalid_answer
-                                        fi
-                                done
-
-                                
-
+                                break
                                 ;;
                         *)
                                 invalid_answer
                                 ;;
                 esac
 
-                local disk="${ans_block_device}"
+        elif [[ "${filesystem}" == 'BTRFS' && "${LVM}" -eq 0 ]]; then
 
-                if [[ "${disk}" =~ nvme... ]]; then 
-                        partitionType="p"
-                fi
+                while true; do
+                        display_disks
 
-                user_disk="${disks_array[0]}" # Former was finalDisk
-                echo "${user_disk}"
-                boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
-                root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
+                        local ans_block_device
+                        read ans_block_device
+                        : "${ans_block_device:=sda}"
+
+                        if [[ -b "/dev/${ans_block_device}" ]]; then
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                disks_array+=("/dev/${ans_block_device}")
+                                break
+                        else
+                                invalid_answer
+                        fi
+                done
         fi
 
+        local disk="${ans_block_device}"
+
+        if [[ "${disk}" =~ nvme... ]]; then 
+                partitionType="p"
+        fi
+
+        user_disk="${disks_array[0]}" # Former was finalDisk
+        echo "${user_disk}"
+        boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
+        root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 }
 
 display_disks() {

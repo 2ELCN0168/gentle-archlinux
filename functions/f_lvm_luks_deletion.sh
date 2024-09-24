@@ -41,7 +41,7 @@ lvm_luks_try() {
 lvm_deletion() {
 
         while true; do
-                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [y/N] -> ${NO_FORMAT}\c"
+                echo -e "${B_CYAN} [?] - Do you want to wipe any present LVM? [y/N] -> ${NO_FORMAT} \c"
 
                 local ans_wipe_lvm=""
                 read ans_wipe_lvm
