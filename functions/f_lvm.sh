@@ -51,15 +51,19 @@ lvm() {
                 
 
                 # echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}You will use LVM.\n"
-                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Creating LVM to ${disks_array[@]} with ${filesystem}...${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with ${C_CYAN}${disks_array[@]}${NO_FORMAT} with ${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
                 disks_array[0]="${disks_array[0]}2"
                 pv_array=()
                 for i in "${disks_array[@]}"; do
                         sgdisk -Z "${i}" 1> "/dev/null" 2>&1
-                        pvcreate "${i}"
-                        echo "pvcreate ${i}"
-                        pv_array+=("${i}")
+                        pvcreate "${i}" 1> "/dev/null" 2>&1
+                        if [[ "${?}" -eq 0 ]]; then
+                                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created PV with ${C_CYAN}${i}${NO_FORMAT}"
+                                pv_array+=("${i}")
+                        else
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the physical volume with ${C_YELLOW}${i}${NO_FORMAT}. We will not use it.\n"
+                        fi
                 done
 
 
