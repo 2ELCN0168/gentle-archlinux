@@ -56,7 +56,7 @@ lvm() {
                 disks_array[0]="${disks_array[0]}2"
                 pv_array=()
                 for i in "${disks_array[@]}"; do
-                        sgdisk -Z "${i}"
+                        sgdisk -Z "${i}" 1> "/dev/null" 2>&1
                         pvcreate "${i}"
                         echo "pvcreate ${i}"
                         pv_array+=("${i}")
