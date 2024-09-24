@@ -51,7 +51,8 @@ lvm() {
         # echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}You will use LVM.\n"
         echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Creating LVM to ${disks_array[@]} with ${filesystem}...${NO_FORMAT}\n"
 
-        for i+1 in "${disks_array[@]}"; do
+        disks_array[0]="${disks_array[0]}2"
+        for i in "${disks_array[@]}"; do
                 pvcreate "${root_part}"
                 echo "pvcreate ${i}"
         done
