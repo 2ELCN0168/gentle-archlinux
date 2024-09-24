@@ -57,7 +57,7 @@ lvm() {
                 pv_array=()
                 for i in "${disks_array[@]}"; do
                         sgdisk -Z "${i}" 1> "/dev/null" 2>&1
-                        pvcreate "${i}" 1> "/dev/null" 2>&1
+                        pvcreate "${i}" #1> "/dev/null" 2>&1
                         if [[ "${?}" -eq 0 ]]; then
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created PV with ${C_CYAN}${i}${NO_FORMAT}"
                                 pv_array+=("${i}")
