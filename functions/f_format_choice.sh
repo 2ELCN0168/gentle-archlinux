@@ -28,7 +28,7 @@ format_partitions() {
                         btrfs_handling
                         ;;
                 *)
-                        ask_lvm
+                        lvm
                         ;;
         esac
 }
