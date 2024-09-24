@@ -74,6 +74,7 @@ disk_choice() {
                                 fi
 
                                 user_disk="${disks_array[0]}" # Former was finalDisk
+                                echo "${user_disk}"
                                 boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
                                 root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 
