@@ -76,7 +76,6 @@ disk_choice() {
                                 boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
                                 root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
 
-                                break
                                 ;;
                         *)
                                 invalid_answer

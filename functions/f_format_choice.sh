@@ -5,14 +5,14 @@
 # EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
 # ---
 
-source ./functions/f_luks_handling.sh
+# source ./functions/f_luks_handling.sh
 
 format_partitions() {
 
         # FORMATTING DONE
         echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${boot_part} to FAT32.${NO_FORMAT}"
 
-        if mkfs.fat -F 32 -n ESP "${boot_part}" &> /dev/null; then
+        if mkfs.fat -F 32 -n ESP "${boot_part}" 1> "/dev/null" 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully formatted ${boot_part} to FAT32.${NO_FORMAT}\n"
         else
                 echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during formatting ${boot_part} to FAT32.${NO_FORMAT}\n"
@@ -27,11 +27,8 @@ format_partitions() {
                 "BTRFS")
                         btrfs_handling
                         ;;
-                "XFS"|"EXT4")
-                        fs_handling
-                        ;;
                 *)
-                        exit 1
+                        ask_lvm
                         ;;
         esac
 }

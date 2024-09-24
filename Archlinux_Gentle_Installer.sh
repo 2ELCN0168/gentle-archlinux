@@ -16,7 +16,7 @@ source_files() {
     source "${f_path}/f_cpu_manufacturer.sh"
     source "${f_path}/f_bootloader_choice.sh"
     source "${f_path}/f_luks_choice.sh"
-    source "${f_path}/f_lvm_handling.sh"
+    source "${f_path}/f_lvm.sh"
     source "${f_path}/f_mount_default.sh"
     source "${f_path}/f_filesystem.sh"
     source "${f_path}/f_disk_choice.sh"
