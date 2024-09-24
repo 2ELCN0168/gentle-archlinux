@@ -52,11 +52,16 @@ lvm() {
         echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Creating LVM to ${disks_array[@]} with ${filesystem}...${NO_FORMAT}\n"
 
         disks_array[0]="${disks_array[0]}2"
+        pv_array=()
         for i in "${disks_array[@]}"; do
                 pvcreate "${root_part}"
                 echo "pvcreate ${i}"
+                pv_array+=("${i}")
         done
-        vgcreate VG_Archlinux "${root_part}"
+
+
+        vgcreate VG_Archlinux "${pv_array[@]}"
+
         lvcreate -l 20%VG VG_Archlinux -n root
         lvcreate -l 40%VG VG_Archlinux -n home
         lvcreate -l 20%VG VG_Archlinux -n usr
