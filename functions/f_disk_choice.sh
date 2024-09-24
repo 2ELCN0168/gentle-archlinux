@@ -67,22 +67,24 @@ disk_choice() {
                                         fi
                                 done
 
-                                disk="${ans_block_device}"
-
-                                if [[ "${disk}" =~ nvme... ]]; then 
-                                        partitionType="p"
-                                fi
-
-                                user_disk="${disks_array[0]}" # Former was finalDisk
-                                echo "${user_disk}"
-                                boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
-                                root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
+                                
 
                                 ;;
                         *)
                                 invalid_answer
                                 ;;
                 esac
+
+                disk="${ans_block_device}"
+
+                if [[ "${disk}" =~ nvme... ]]; then 
+                        partitionType="p"
+                fi
+
+                user_disk="${disks_array[0]}" # Former was finalDisk
+                echo "${user_disk}"
+                boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
+                root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
         fi
 
 }
