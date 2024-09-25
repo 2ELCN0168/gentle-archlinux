@@ -81,28 +81,33 @@ btrfs() {
         #         #         echo "Created subvolume ${i}"
         #         # fi
         done
-        
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[0]}"; then
-                echo -e "Error while creating the subvolumes. Exiting."
-                exit 1
-        fi
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[1]}"; then
-                echo -e "Error while creating the subvolumes. Exiting."
-                exit 1
-        fi
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[2]}"; then
-                echo -e "Error while creating the subvolumes. Exiting."
-                exit 1
-        fi
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[3]}"; then
-                echo -e "Error while creating the subvolumes. Exiting."
-                exit 1
-        fi
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[4]}"; then
-                echo -e "Error while creating the subvolumes. Exiting."
-                exit 1
-        fi
+        # 
+        # if ! btrfs subvolume create "/mnt/${btrfs_subvols[0]}"; then
+        #         echo -e "Error while creating the subvolumes. Exiting."
+        #         exit 1
+        # fi
+        # if ! btrfs subvolume create "/mnt/${btrfs_subvols[1]}"; then
+        #         echo -e "Error while creating the subvolumes. Exiting."
+        #         exit 1
+        # fi
+        # if ! btrfs subvolume create "/mnt/${btrfs_subvols[2]}"; then
+        #         echo -e "Error while creating the subvolumes. Exiting."
+        #         exit 1
+        # fi
+        # if ! btrfs subvolume create "/mnt/${btrfs_subvols[3]}"; then
+        #         echo -e "Error while creating the subvolumes. Exiting."
+        #         exit 1
+        # fi
+        # if ! btrfs subvolume create "/mnt/${btrfs_subvols[4]}"; then
+        #         echo -e "Error while creating the subvolumes. Exiting."
+        #         exit 1
+        # fi
 
+        btrfs subvolume create "/mnt/@"
+        btrfs subvolume create "/mnt/@home"
+        btrfs subvolume create "/mnt/@usr"
+        btrfs subvolume create "/mnt/@var"
+        btrfs subvolume create "/mnt/@tmp"
         echo ""
 
         umount -R "/mnt" 1> "/dev/null" 2>&1
