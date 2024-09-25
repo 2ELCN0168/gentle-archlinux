@@ -64,11 +64,11 @@ btrfs() {
         fi
 
         mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1
-        local btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
+        btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         echo "Hello there"
         rm -rf "/mnt/*"
-        for i in ${btrfs_subvols[@]}; do
+        for r in ${btrfs_subvols[@]}; do
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
                 btrfs subvolume create "/mnt/${i}" # 1> "/dev/null" 2>&1
                 # if [[ "${?}" -ne 0 ]]; then
