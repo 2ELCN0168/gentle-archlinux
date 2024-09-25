@@ -64,7 +64,6 @@ btrfs_mgmt() {
                 return
         fi
 
-        echo -e "root part is ${root_part}"
         if mountpoint -q "/mnt"; then
                 umount -R "/mnt"
                 if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
@@ -75,6 +74,7 @@ btrfs_mgmt() {
                 fi
         fi
 
+        sleep 5
         for i in "${btrfs_subvols[@]}"; do
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
                 if ! btrfs subvolume create "/mnt/${i}"; then # 1> "/dev/null" 2>&1
