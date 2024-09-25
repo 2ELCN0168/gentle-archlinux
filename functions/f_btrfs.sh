@@ -70,7 +70,7 @@ btrfs() {
         echo "Hello there"
         for r in "${btrfs_subvols[@]}"; do
                 # echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
-                if ! btrfs subvolume create "/mnt/${r}"; then # 1> "/dev/null" 2>&1
+                if ! btrfs subvolume create "/mnt/$r"; then # 1> "/dev/null" 2>&1
                         echo "Cannot create subvolume ${r}"
                 fi
                 # if [[ "${?}" -ne 0 ]]; then
