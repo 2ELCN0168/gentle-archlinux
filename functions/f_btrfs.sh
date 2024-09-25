@@ -63,20 +63,20 @@ btrfs() {
                 return
         fi
 
+        echo -e "root part is ${root_part}"
         mount "${root_part}" "/mnt" #1> "/dev/null" 2>&1
         btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         echo "Hello there"
         rm -rf "/mnt/*"
         for r in ${btrfs_subvols[@]}; do
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
+                # echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
                 btrfs subvolume create "/mnt/${r}" # 1> "/dev/null" 2>&1
                 # if [[ "${?}" -ne 0 ]]; then
                 #         echo "Something went wrong"
                 # else
                 #         echo "Created subvolume ${i}"
                 # fi
-
         done
 
         echo ""
