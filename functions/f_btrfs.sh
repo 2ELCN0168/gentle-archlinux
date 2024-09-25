@@ -4,6 +4,7 @@ btrfs() {
 
         export btrfsSubvols="0"
         local btrfsQuotas=""
+        btrfs_subvols=("@root" "@home" "@usr" "@tmp" "@var")
 
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT}\c"
@@ -64,15 +65,17 @@ btrfs() {
         fi
 
         echo -e "root part is ${root_part}"
-        mount "${root_part}" "/mnt" #1> "/dev/null" 2>&1
-        btrfs_subvols=("root" "home" "usr" "tmp" "var")
+        if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
+                echo -e "Cannot mount ${root_part} to /mnt"
+                exit 1
+        fi
 
         echo "Hello there"
         for r in "${btrfs_subvols[@]}"; do
-                # echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
-                if ! btrfs subvolume create "/mnt/$r"; then # 1> "/dev/null" 2>&1
-                        echo "Cannot create subvolume ${r}"
-                fi
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
+                # if ! btrfs subvolume create "/mnt/${r}"; then # 1> "/dev/null" 2>&1
+                #         echo "Cannot create subvolume ${r}"
+                # fi
                 # if [[ "${?}" -ne 0 ]]; then
                 #         echo "Something went wrong"
                 # else
