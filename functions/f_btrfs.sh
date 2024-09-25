@@ -75,17 +75,14 @@ btrfs_mgmt() {
                 fi
         fi
 
-        # for i in "${btrfs_subvols[@]}"; do
-                # echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
-        #         # if ! btrfs subvolume create "/mnt/${r}"; then # 1> "/dev/null" 2>&1
-        #         #         echo "Cannot create subvolume ${r}"
-        #         # fi
-        #         # if [[ "${?}" -ne 0 ]]; then
-        #         #         echo "Something went wrong"
-        #         # else
-        #         #         echo "Created subvolume ${i}"
-        #         # fi
-        # done
+        for i in "${btrfs_subvols[@]}"; do
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+                if ! btrfs subvolume create "/mnt/${i}"; then # 1> "/dev/null" 2>&1
+                        echo "Cannot create subvolume ${i}"
+                else 
+                        echo "Created subvolume ${i}"
+                fi
+        done
         # 
         # if ! btrfs subvolume create "/mnt/${btrfs_subvols[0]}"; then
         #         echo -e "Error while creating the subvolumes. Exiting."
@@ -108,11 +105,12 @@ btrfs_mgmt() {
         #         exit 1
         # fi
 
-        btrfs subvolume create /mnt/@
-        btrfs subvolume create /mnt/@home
-        btrfs subvolume create /mnt/@usr
-        btrfs subvolume create /mnt/@var
-        btrfs subvolume create /mnt/@tmp
+        # USELESS IF THE LOOP ABOVE WORKS
+        # btrfs subvolume create /mnt/@
+        # btrfs subvolume create /mnt/@home
+        # btrfs subvolume create /mnt/@usr
+        # btrfs subvolume create /mnt/@var
+        # btrfs subvolume create /mnt/@tmp
         echo ""
 
         umount -R "/mnt" 1> "/dev/null" 2>&1
