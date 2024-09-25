@@ -26,7 +26,7 @@ format_partitions() {
 
         case "${filesystem}" in
                 "BTRFS")
-                        btrfs
+                        btrfs_mgmt
                         ;;
                 *)
                         lvm

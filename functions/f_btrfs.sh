@@ -1,4 +1,4 @@
-btrfs() {
+btrfs_mgmt() {
 
         # FORMATTING DONE
 
