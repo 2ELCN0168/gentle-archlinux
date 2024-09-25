@@ -72,7 +72,7 @@ btrfs_mgmt() {
                 echo -e "Cannot mount ${root_part} to /mnt"
                 exit 1
         else
-                echo "mounted ${root_part} to /mnt"
+                echo "mounted ${root_part} to /mnt" 1> "/dev/null"
         fi
 
         for i in "${btrfs_subvols[@]}"; do
@@ -118,18 +118,18 @@ btrfs_mgmt() {
 
         echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
         mount --mkdir "${boot_part}" "/mnt/boot"
-        echo ""
 
+        echo ""
         lsblk -f
+        echo ""
 
         if [[ "${btrfsQuotas}" -eq 1 ]]; then
                 for i in "${btrfs_subvols[@]:3:2}"; do
                         local clean_i="${i//@/}"
                         echo -e "${C_WHITE}> ${INFO} Enabling quota for ${C_GREEN}@${clean_i}${NO_FORMAT}"
                         btrfs quota enable "/mnt/${clean_i}"
-                        btrfs quota rescan "/mnt/${clean_i}"
+                        btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
                         btrfs qgroup limit 5G "/mnt/${clean_i}"
                 done
-                echo ""
         fi
 }
