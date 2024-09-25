@@ -128,7 +128,7 @@ btrfs_mgmt() {
                         echo -e "${C_WHITE}> ${INFO} Enabling quota for ${C_GREEN}@${clean_i}${NO_FORMAT}"
                         btrfs quota enable "/mnt/${clean_i}"
                         btrfs quota rescan "/mnt/${clean_i}"
-                        btrfs quota limit 5G "/mnt/${clean_i}"
+                        btrfs qgroup limit 5G "/mnt/${clean_i}"
                 done
                 echo ""
         fi
