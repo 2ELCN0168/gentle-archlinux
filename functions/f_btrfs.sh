@@ -124,11 +124,11 @@ btrfs_mgmt() {
 
         if [[ "${btrfsQuotas}" -eq 1 ]]; then
                 for i in "${btrfs_subvols[@]:3:2}"; do
-                        i="${i//@/}"
-                        echo -e "${C_WHITE}> ${INFO} Enabling quota for ${C_GREEN}@${i}${NO_FORMAT}"
-                        btrfs quota enable "/mnt/${i}"
-                        btrfs quota rescan "/mnt/${i}"
-                        btrfs quota limit 5G "/mnt/${i}"
+                        local clean_i="${i//@/}"
+                        echo -e "${C_WHITE}> ${INFO} Enabling quota for ${C_GREEN}@${clean_i}${NO_FORMAT}"
+                        btrfs quota enable "/mnt/${clean_i}"
+                        btrfs quota rescan "/mnt/${clean_i}"
+                        btrfs quota limit 5G "/mnt/${clean_i}"
                 done
                 echo ""
         fi
