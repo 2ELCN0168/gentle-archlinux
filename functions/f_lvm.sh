@@ -220,6 +220,7 @@ lvm_mgmt() {
                                 echo -e "Error while creating LV ${i}"
                                 exit 1
                         fi
+                done
 
 
 
