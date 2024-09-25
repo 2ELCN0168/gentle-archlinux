@@ -60,6 +60,8 @@ greetings() {
 
         echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have ${C_RED}no LVM ${C_PINK}configured on your disk, or it will ${C_RED}mess up${C_PINK} the script. You must delete any LV, VG and PV before starting.${NO_FORMAT}\n"
 
+        echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks the user for any modification. No disk/volume will be touched without you making the selection. ${C_YELLOW}Just BE CAREFUL because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
+
         # This unmounting action ensure to have nothing actually mounted on /mnt before starting
         for i in /mnt/*; do
                 if mountpoint -q "${i}"; then
