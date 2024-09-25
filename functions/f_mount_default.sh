@@ -12,7 +12,7 @@ mount_default() {
         fi
 
         echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${boot_part}${NO_FORMAT} to /mnt/boot"
-        if mount --mkdir "${boot_part}" "/mnt/boot" 1> "/dev/null" 2>&1
+        if mount --mkdir "${boot_part}" "/mnt/boot" 1> "/dev/null" 2>&1; then
                 echo -e "${C_WHITE}> ${SUC} Mounted ${C_GREEN}${boot_part}${NO_FORMAT} to /mnt/boot\n"
         else
                 echo -e "${C_WHITE}> ${ERR} Error while mounting ${C_GREEN}${boot_part}${NO_FORMAT} to /mnt/boot\n"
