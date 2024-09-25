@@ -68,6 +68,8 @@ btrfs() {
         if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
                 echo -e "Cannot mount ${root_part} to /mnt"
                 exit 1
+        else
+                echo "mounted ${root_part} to /mnt"
         fi
 
         # for i in "${btrfs_subvols[@]}"; do
@@ -103,11 +105,11 @@ btrfs() {
         #         exit 1
         # fi
 
-        btrfs subvolume create "/mnt/@"
-        btrfs subvolume create "/mnt/@home"
-        btrfs subvolume create "/mnt/@usr"
-        btrfs subvolume create "/mnt/@var"
-        btrfs subvolume create "/mnt/@tmp"
+        btrfs subvolume create /mnt/@
+        btrfs subvolume create /mnt/@home
+        btrfs subvolume create /mnt/@usr
+        btrfs subvolume create /mnt/@var
+        btrfs subvolume create /mnt/@tmp
         echo ""
 
         umount -R "/mnt" 1> "/dev/null" 2>&1

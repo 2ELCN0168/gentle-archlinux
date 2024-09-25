@@ -26,7 +26,6 @@ format_partitions() {
 
         case "${filesystem}" in
                 "BTRFS")
-                        echo "blblblblbl format partitions"
                         btrfs
                         ;;
                 *)
