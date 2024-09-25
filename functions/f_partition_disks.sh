@@ -24,16 +24,15 @@ partition_disk() {
                 #         exit 1
                 # fi
                 
-                if parted -s "${user_disk}" mklabel gpt 1> "/dev/null" 2>&1; then
-                        sgdisk -n 1::+512M -t 1:ef00 "${user_disk}" 1> "/dev/null" 2>&1
-                        parted -s "${user_disk}" mkpart Archlinux 600Mib 100% 1> "/dev/null" 2>&1
-                        
-                        if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
-                                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}\n"
-                        else
-                                echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during partitionning ${user_disk} for UEFI mode (GPT).${NO_FORMAT\n}"
-                                exit 1
-                        fi
+                parted -s "${user_disk}" mklabel gpt 1> "/dev/null" 2>&1
+                sgdisk -n 1::+512M -t 1:ef00 "${user_disk}" 1> "/dev/null" 2>&1
+                parted -s "${user_disk}" mkpart Archlinux 600Mib 100% 1> "/dev/null" 2>&1
+                
+                if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
+                        echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Partitions created successfully for UEFI mode (GPT).${NO_FORMAT}\n"
+                else
+                        echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during partitionning ${user_disk} for UEFI mode (GPT).${NO_FORMAT\n}"
+                        exit 1
                 fi
                 
         elif [[ "${UEFI}" -eq 0 ]]; then
