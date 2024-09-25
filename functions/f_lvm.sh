@@ -152,7 +152,7 @@ get_vg_free_space() {
         vgs --noheadings -o vg_free --units G "${1}" | awk '{ print $1 }' | sed 's/G//'
 }
 
-lvm() {
+lvm_mgmt() {
 
         # FORMATTING DONE
 
