@@ -98,7 +98,7 @@ btrfs_mgmt() {
                         mountpoint="/mnt/${i//@/}"
                 fi
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}${NO_FORMAT} to ${C_WHITE}${mountpoint}${NO_FORMAT}"
-                mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol="@${i}" "${root_part}" "${mountpoint}"
+                mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol="${i}" "${root_part}" "${mountpoint}"
         done
                 
         # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to ${C_WHITE}/mnt${NO_FORMAT}"
