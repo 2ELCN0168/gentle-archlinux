@@ -64,21 +64,20 @@ btrfs_mgmt() {
                 return
         fi
 
-        if mountpoint -q "/mnt"; then
-                umount -R "/mnt"
+        if [[ mountpoint -q "/mnt" ]]; then
+                umount -R "/mnt" 1> "/dev/null" 2>&1
         fi
 
-        if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
+        if ! mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
                 echo -e "Cannot mount ${root_part} to /mnt"
                 exit 1
         else
                 echo "mounted ${root_part} to /mnt"
         fi
 
-        sleep 5
         for i in "${btrfs_subvols[@]}"; do
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
-                if ! btrfs subvolume create "/mnt/${i}"; then # 1> "/dev/null" 2>&1
+                if ! btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         echo "Cannot create subvolume ${i}"
                 else 
                         echo "Created subvolume ${i}"
