@@ -58,45 +58,46 @@ btrfs() {
         echo -e "${C_WHITE}> ${INFO} Formatting ${root_part} to ${filesystem}.${NO_FORMAT}\n"
         mkfs.btrfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
 
-        if [[ "${btrfsSubvols}" -eq 1 ]]; then
-                mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1
-                local btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
-
-                for i in "${btrfs_subvols[@]}"; do
-                        echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
-                        btrfs subvolume create "/mnt/${i}" # 1> "/dev/null" 2>&1
-                done
-
-                echo ""
-
-                umount -R "/mnt" 1> "/dev/null" 2>&1
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to ${C_WHITE}/mnt${NO_FORMAT}"
-                mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@ "${root_part}" "/mnt"
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@home${NO_FORMAT} to ${C_WHITE}/mnt/home${NO_FORMAT}"
-                mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@home "${root_part}" "/mnt/home"
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@usr${NO_FORMAT} to ${C_WHITE}/mnt/usr${NO_FORMAT}"
-                mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@usr "${root_part}" "/mnt/usr"
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@tmp${NO_FORMAT} to ${C_WHITE}/mnt/tmp${NO_FORMAT}"
-                mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@tmp "${root_part}" "/mnt/tmp"
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to ${C_WHITE}/mnt/var${NO_FORMAT}"
-                mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var "${root_part}" "/mnt/var"
-
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
-                mount --mkdir "${boot_part}" "/mnt/boot"
-                echo ""
-
-                lsblk -f
-        elif [[ "${btrfsSubvols}" -eq 0 ]]; then
+        if [[ "${btrfsSubvols}" -eq 0 ]]; then
                 mount_default
         fi
+        mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1
+        local btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
+
+        echo "Hello there"
+        for i in "${btrfs_subvols[@]}"; do
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+                btrfs subvolume create "/mnt/${i}" # 1> "/dev/null" 2>&1
+
+        done
+
+        echo ""
+
+        umount -R "/mnt" 1> "/dev/null" 2>&1
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to ${C_WHITE}/mnt${NO_FORMAT}"
+        mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@ "${root_part}" "/mnt"
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@home${NO_FORMAT} to ${C_WHITE}/mnt/home${NO_FORMAT}"
+        mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@home "${root_part}" "/mnt/home"
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@usr${NO_FORMAT} to ${C_WHITE}/mnt/usr${NO_FORMAT}"
+        mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@usr "${root_part}" "/mnt/usr"
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@tmp${NO_FORMAT} to ${C_WHITE}/mnt/tmp${NO_FORMAT}"
+        mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@tmp "${root_part}" "/mnt/tmp"
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to ${C_WHITE}/mnt/var${NO_FORMAT}"
+        mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var "${root_part}" "/mnt/var"
+
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
+        mount --mkdir "${boot_part}" "/mnt/boot"
+        echo ""
+
+        lsblk -f
 
 
-        if [[ "${btrfsSubvols}" -eq 1 && "${btrfsQuotas}" -eq 1 ]]; then
+        if [[ "${btrfsQuotas}" -eq 1 ]]; then
 
                 # MUST BE REFORMATTED
 
