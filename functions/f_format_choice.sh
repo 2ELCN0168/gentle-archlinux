@@ -7,6 +7,7 @@
 
 source "./functions/f_luks_handling.sh"
 source "./functions/f_btrfs.sh"
+source "./functions/f_lvm.sh"
 
 format_partitions() {
 
