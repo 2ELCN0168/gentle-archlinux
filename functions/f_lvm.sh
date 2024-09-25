@@ -217,7 +217,7 @@ lvm_mgmt() {
 
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${i}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
 
-                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${i}" # 1> "/dev/null" 2>&1
+                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${i}" -y # 1> "/dev/null" 2>&1
                         if [[ "${?}" -ne 0 ]]; then
                                 echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${i}${NO_FORMAT}. Exiting."
                                 exit 1
