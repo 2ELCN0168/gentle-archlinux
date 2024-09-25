@@ -73,7 +73,7 @@ greetings() {
                         fi
                 fi
         done
-        if mounpoint -q "/mnt"; then
+        if mountpoint -q "/mnt"; then
                 if umount -R "/mnt" 1> "/dev/null" 2>&1; then
                         echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
                 else
