@@ -66,12 +66,13 @@ btrfs_mgmt() {
 
         if mountpoint -q "/mnt"; then
                 umount -R "/mnt"
-                if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
-                        echo -e "Cannot mount ${root_part} to /mnt"
-                        exit 1
-                else
-                        echo "mounted ${root_part} to /mnt"
-                fi
+        fi
+
+        if ! mount "${root_part}" "/mnt"; then #1> "/dev/null" 2>&1
+                echo -e "Cannot mount ${root_part} to /mnt"
+                exit 1
+        else
+                echo "mounted ${root_part} to /mnt"
         fi
 
         sleep 5
