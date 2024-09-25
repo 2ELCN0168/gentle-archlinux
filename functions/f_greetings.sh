@@ -64,7 +64,7 @@ greetings() {
 
         # This unmounting action ensure to have nothing actually mounted on /mnt before starting
         systemctl daemon-reload 1> "/dev/null" 2>&1
-        local mountpoints=$(ls "/mnt")
+        local mountpoints=($(ls "/mnt"))
         for i in "${mountpoints[@]}"; do
                 if mountpoint -q "${i}"; then
                         if umount -R "${i}" 1> "/dev/null" 2>&1; then
