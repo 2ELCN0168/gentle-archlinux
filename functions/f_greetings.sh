@@ -66,8 +66,8 @@ greetings() {
         systemctl daemon-reload 1> "/dev/null" 2>&1
         local mountpoints=($(ls "/mnt"))
         for i in "${mountpoints[@]}"; do
-                if mountpoint -q "${i}"; then
-                        if umount -R "${i}" 1> "/dev/null" 2>&1; then
+                if mountpoint -q "/mnt/${i}"; then
+                        if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         
                                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
                         else
