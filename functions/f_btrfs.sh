@@ -65,7 +65,7 @@ btrfs() {
 
         echo -e "root part is ${root_part}"
         mount "${root_part}" "/mnt" #1> "/dev/null" 2>&1
-        btrfs_subvols=("\@" "\@home" "\@usr" "\@tmp" "\@var")
+        btrfs_subvols=("root" "home" "usr" "tmp" "var")
 
         echo "Hello there"
         for r in "${btrfs_subvols[@]}"; do
