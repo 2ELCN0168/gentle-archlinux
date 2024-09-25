@@ -55,7 +55,7 @@ greetings() {
         echo -e "████████████████████████████████████████████████████"
         echo -e "████████████████\n${NO_FORMAT}"
 
-        date
+        date | tee > "./installation_date.log"
         echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. ${C_CYAN}<${NO_FORMAT}\n"
 
         echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have ${C_RED}no LVM ${C_PINK}configured on your disk, or it will ${C_RED}mess up${C_PINK} the script. You must delete any LV, VG and PV before starting.${NO_FORMAT}\n"
@@ -73,9 +73,11 @@ greetings() {
                         fi
                 fi
         done
-        if umount -R "/mnt" 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
-        else
-                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
+        if mounpoint -q "/mnt"; then
+                if umount -R "/mnt" 1> "/dev/null" 2>&1; then
+                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
+                else
+                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
+                fi
         fi
 }
