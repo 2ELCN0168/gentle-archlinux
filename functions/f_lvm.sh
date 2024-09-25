@@ -31,7 +31,7 @@
 #         lvm
 # }
 
-# lvm() {
+# lvm_mgmt() {
 #
 #         # FORMATTING DONE
 #
@@ -148,20 +148,24 @@
 #         fi
 # }
 
-get_vg_free_space() {
-        vgs --noheadings -o vg_free --units G "${1}" | awk '{ print $1 }' | sed 's/G//'
-}
-
 lvm_mgmt() {
 
         # FORMATTING DONE
 
-        local logical_volumes=("root" "usr" "home" "var" "tmp")
-        local vg_name="VG_Archlinux"
-        declare -A lv_size
+        # local logical_volumes=("root" "usr" "home" "var" "tmp")
+        
+        declare -A logical_volumes
 
+        logical_volumes=(
+                ["root"]=20
+                ["home"]=40
+                ["usr"]=20
+                ["var"]=10
+                ["tmp"]=10
+        )
         
-        
+        local vg_name="VG_Archlinux"
+
         if [[ "${LVM}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part} to ${filesystem}.${NO_FORMAT}\n"
                 case "${filesystem}" in
@@ -175,9 +179,9 @@ lvm_mgmt() {
                 mount_default
 
         elif [[ "${LVM}" -eq 1 ]]; then
-                
 
                 # echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}You will use LVM.\n"
+                #INFO: Creating LVM and initialize PVs
                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with ${C_CYAN}${disks_array[@]}${NO_FORMAT} with ${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
                 disks_array[0]="${disks_array[0]}2"
@@ -195,36 +199,32 @@ lvm_mgmt() {
 
                 echo ""
 
+                #INFO: Creating Volume Group 
+
                 vgcreate "${vg_name}" "${pv_array[@]}" 1> "/dev/null" 2>&1
-                local vg_free_space=$(get_vg_free_space "${vg_name}")
 
-                echo -e "Espace libre : ${vg_free_space}"
+                #INFO: Creating Logical Volumes ###
 
-                for lv in "${logical_volumes[@]}"; do
-                        while true; do
-                                read -rp "Taille pour ${lv} ? Max ${vg_free_space} : "  ans_size_lv
+                local vg_free_space=$(vgs --noheadings -o vg_free --units G "${vg_name}" | awk '{ print int($1) }')
+                local ratio=""
+                local lv_size=""
+                for i in "${!logical_volumes[@]}"; do
+                        ratio="${logical_volumes[${i}]}"
+                        # Calculate size
+                        lv_size=$(echo "${vg_free_space} * ${ratio} / 100" | bc)
+                        # Round size
+                        lv_size=$(echo "${lv_size}" | awk '{printf "%d\n", $1}')
 
-                                if (( $(echo "${ans_lv_size} > ${vg_free_space}" | bc -l) )); then
-                                        echo -e "Error: Not enough size available"
-                                else
-                                        lv_size[${lv}]="${ans_size_lv}"
-                                        vg_free_space="$(echo "scale=2; ${vg_free_space} - ${ans_size_lv}" | bc -l)"
-                                        break
-                                fi
-                        done
+                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${lv}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
 
-                done
-
-                for i in "${!lv_size[@]}"; do
-                        lvcreate -L ${lv_size[${i}]}G "${vg_name}" -n ${i} 1> "/dev/null" 2>&1
+                        lvcreate -L "${lv_size}G" "${vg_name}" -n "${lv}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "Error while creating LV ${i}"
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${lv}${NO_FORMAT}. Exiting."
                                 exit 1
                         fi
                 done
 
-
-
+                #INFO: Formatting Logical Volumes
                 local fs=""
 
                 for i in "${logical_volumes[@]}"; do
@@ -237,16 +237,16 @@ lvm_mgmt() {
                                         fs=ext4
                                         ;;
                         esac
-                        mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${i}" 1> "/dev/null" 2>&1
-                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
+                        mkfs.${fs} -L Arch_${i} "/dev/mapper/VG_Archlinux-${i}" 1> "/dev/null" 2>&1
+                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-${i}${NO_FORMAT} to /mnt/${i}"
                         if [[ "${i}" == "root" ]]; then
-                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt"
+                                mount --mkdir "/dev/mapper/VG_Archlinux-${i}" "/mnt"
                         else 
-                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt/${i}"
+                                mount --mkdir "/dev/mapper/VG_Archlinux-${i}" "/mnt/${i}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
+                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}VG_Archlinux-${i}${NO_FORMAT} to /mnt/${i}"
                                 exit 1
                         fi
                 done
@@ -257,3 +257,5 @@ lvm_mgmt() {
                 root_part="/dev/mapper/VG_Archlinux-root"
         fi
 }
+
+ }
