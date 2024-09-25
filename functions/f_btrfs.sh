@@ -69,7 +69,7 @@ btrfs() {
         echo "Hello there"
         rm -rf "/mnt/*"
         for r in ${btrfs_subvols[@]}; do
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${r}${NO_FORMAT}"
                 btrfs subvolume create "/mnt/${r}" # 1> "/dev/null" 2>&1
                 # if [[ "${?}" -ne 0 ]]; then
                 #         echo "Something went wrong"
