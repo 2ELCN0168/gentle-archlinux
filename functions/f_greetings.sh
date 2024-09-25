@@ -63,8 +63,9 @@ greetings() {
         echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks the user for any modification. No disk/volume will be touched without you making the selection. ${C_YELLOW}Just BE CAREFUL because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
 
         # This unmounting action ensure to have nothing actually mounted on /mnt before starting
+        systemctl daemon-reload 1> "/dev/null" 2>&1
         for i in /mnt/*; do
-                if mountpoint -q "/mnt/${i}"; then
+                if mountpoint -q "${i}"; then
                         if umount -R "${i}" 1> "/dev/null" 2>&1; then
                         
                                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
