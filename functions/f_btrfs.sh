@@ -7,8 +7,16 @@ btrfs_mgmt() {
         btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT}\c"
 
+                echo -e "==${C_CYAN}SUBVOLUMES${NO_FORMAT}========\n"
+
+                echo -e "${C_WHITE}[0] - ${C_YELLOW}Make subvolumes!${NO_FORMAT} (default)"
+                echo -e "${C_WHITE}[1] - ${C_CYAN}No subvolumes this time${NO_FORMAT}"
+                
+                echo -e "\n====================\n"
+
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to use subvolumes? [0/1] -> ${NO_FORMAT}\c"
+                
                 local ans_btrfs_subvols=""
                 read ans_btrfs_subvols
                 : "${ans_btrfs_subvols:=0}"
@@ -97,26 +105,11 @@ btrfs_mgmt() {
                 else
                         mountpoint="/mnt/${i//@/}"
                 fi
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}${NO_FORMAT} to ${C_WHITE}${mountpoint}${NO_FORMAT}"
+                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}${NO_FORMAT} to ${C_PINK}${mountpoint}${NO_FORMAT}"
                 mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol="${i}" "${root_part}" "${mountpoint}"
         done
                 
-        # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@${NO_FORMAT} to ${C_WHITE}/mnt${NO_FORMAT}"
-        # mount -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@ "${root_part}" "/mnt"
-        #
-        # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@home${NO_FORMAT} to ${C_WHITE}/mnt/home${NO_FORMAT}"
-        # mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@home "${root_part}" "/mnt/home"
-        #
-        # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@usr${NO_FORMAT} to ${C_WHITE}/mnt/usr${NO_FORMAT}"
-        # mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@usr "${root_part}" "/mnt/usr"
-        #
-        # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@tmp${NO_FORMAT} to ${C_WHITE}/mnt/tmp${NO_FORMAT}"
-        # mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@tmp "${root_part}" "/mnt/tmp"
-        #
-        # echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}@var${NO_FORMAT} to ${C_WHITE}/mnt/var${NO_FORMAT}"
-        # mount --mkdir -t btrfs -o compress=zstd,discard=async,autodefrag,subvol=@var "${root_part}" "/mnt/var"
-
-        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_WHITE}/mnt/boot${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} to ${C_PINK}/mnt/boot${NO_FORMAT}\n"
         mount --mkdir "${boot_part}" "/mnt/boot"
 
         echo ""
