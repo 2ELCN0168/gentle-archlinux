@@ -14,12 +14,12 @@ btrfs() {
 
                 case "${ans_btrfs_subvols}" in
                         [0])
-                                btrfsSubvols="1"
+                                btrfsSubvols=1
                                 echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose to make subvolumes. Good choice.${NO_FORMAT}\n"
                                 break
                                 ;;
                         [1])
-                                btrfsSubvols="0"
+                                btrfsSubvols=0
                                 echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}No subvolume will be created.${NO_FORMAT}\n"
                                 break
                                 ;;
@@ -39,12 +39,12 @@ btrfs() {
 
                         case "${ans_btrfs_subvols_quotas}" in
                                 "y"|"Y")
-                                        btrfsQuotas="1"
+                                        btrfsQuotas=1
                                         echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose to enable quotas.${NO_FORMAT}\n"
                                         break
                                         ;;
                                 "n"|"N")
-                                        btrfsQuotas="0"
+                                        btrfsQuotas=0
                                         echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will be no quotas on your subvolumes.${NO_FORMAT}\n"
                                         break
                                         ;;
@@ -60,12 +60,14 @@ btrfs() {
 
         if [[ "${btrfsSubvols}" -eq 0 ]]; then
                 mount_default
+                return
         fi
+
         mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1
         local btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         echo "Hello there"
-        for i in "${btrfs_subvols[@]}"; do
+        for i in "${btrfs_subvols}"; do
                 echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
                 btrfs subvolume create "/mnt/${i}" # 1> "/dev/null" 2>&1
 
