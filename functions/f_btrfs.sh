@@ -82,7 +82,23 @@ btrfs() {
         #         # fi
         done
         
-        if ! btrfs subvolume create "/mnt/${btrfs_subvols[@]}"; then
+        if ! btrfs subvolume create "/mnt/${btrfs_subvols[0]}"; then
+                echo -e "Error while creating the subvolumes. Exiting."
+                exit 1
+        fi
+        if ! btrfs subvolume create "/mnt/${btrfs_subvols[1]}"; then
+                echo -e "Error while creating the subvolumes. Exiting."
+                exit 1
+        fi
+        if ! btrfs subvolume create "/mnt/${btrfs_subvols[2]}"; then
+                echo -e "Error while creating the subvolumes. Exiting."
+                exit 1
+        fi
+        if ! btrfs subvolume create "/mnt/${btrfs_subvols[3]}"; then
+                echo -e "Error while creating the subvolumes. Exiting."
+                exit 1
+        fi
+        if ! btrfs subvolume create "/mnt/${btrfs_subvols[4]}"; then
                 echo -e "Error while creating the subvolumes. Exiting."
                 exit 1
         fi
