@@ -200,17 +200,18 @@ lvm_mgmt() {
 
                 echo -e "Espace libre : ${vg_free_space}"
 
-                for lv in "root" "usr" "home" "var" "tmp"; do
+                for lv in "${logical_volumes[@]}"; do
                         while true; do
                                 read -rp "Taille pour ${lv} ? Max ${vg_free_space} : "  ans_size_lv
 
-                                if (( $(echo "${lv_size[${lv}]} > ${vg_free_space}" | bc -l) )); then
+                                if (( $(echo "${ans_lv_size} > ${vg_free_space}" | bc -l) )); then
                                         echo -e "Error: Not enough size available"
                                 else
+                                        lv_size[${lv}]="${ans_size_lv}"
+                                        vg_free_space="$(echo ${vg_free_space} - ${lv_size[${lv}]} | bc -l)"
                                         break
                                 fi
                         done
-                        vg_free_space="$(echo ${vg_free_space} - ${lv_size[${lv}]} | bc -l)"
 
                 done
 
@@ -249,43 +250,6 @@ lvm_mgmt() {
                                 exit 1
                         fi
                 done
-
-
-
-
-                # case "${filesystem}" in
-                #         "XFS")
-                #                 #TODO: Make a loop for and complete names with vars
-                #                 
-                #                 mkfs.xfs -f -L Arch_root "/dev/mapper/VG_Archlinux-root" 1> "/dev/null" 2>&1
-                #                 mkfs.xfs -f -L Arch_home "/dev/mapper/VG_Archlinux-home" 1> "/dev/null" 2>&1
-                #                 mkfs.xfs -f -L Arch_usr "/dev/mapper/VG_Archlinux-usr" 1> "/dev/null" 2>&1
-                #                 mkfs.xfs -f -L Arch_var "/dev/mapper/VG_Archlinux-var" 1> "/dev/null" 2>&1
-                #                 mkfs.xfs -f -L Arch_tmp "/dev/mapper/VG_Archlinux-tmp" 1> "/dev/null" 2>&1
-                #                 ;;
-                #         "EXT4")
-                #                 mkfs.ext4 -L Arch_root "/dev/mapper/VG_Archlinux-root" 1> "/dev/null" 2>&1
-                #                 mkfs.ext4 -L Arch_home "/dev/mapper/VG_Archlinux-home" 1> "/dev/null" 2>&1
-                #                 mkfs.ext4 -L Arch_usr "/dev/mapper/VG_Archlinux-usr" 1> "/dev/null" 2>&1
-                #                 mkfs.ext4 -L Arch_var "/dev/mapper/VG_Archlinux-var" 1> "/dev/null" 2>&1
-                #                 mkfs.ext4 -L Arch_tmp "/dev/mapper/VG_Archlinux-tmp" 1> "/dev/null" 2>&1
-                #                 ;;
-                # esac 
-
-                # echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-root${NO_FORMAT} to /mnt\n"
-                # mount "/dev/mapper/VG_Archlinux-root" "/mnt"
-                #
-                # echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-home${NO_FORMAT} to /mnt/home\n"
-                # mount --mkdir "/dev/mapper/VG_Archlinux-home" "/mnt/home"
-                #
-                # echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-usr${NO_FORMAT} to /mnt/usr\n"
-                # mount --mkdir "/dev/mapper/VG_Archlinux-usr" "/mnt/usr"
-                #
-                # echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-var${NO_FORMAT} to /mnt/var\n"
-                # mount --mkdir "/dev/mapper/VG_Archlinux-var" "/mnt/var"
-                #
-                # echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-tmp${NO_FORMAT} to /mnt/tmp\n"
-                # mount --mkdir "/dev/mapper/VG_Archlinux-tmp" "/mnt/tmp"
 
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${boot_part}${NO_FORMAT} to /mnt/boot\n"
                 mount --mkdir "${boot_part}" "/mnt/boot"
