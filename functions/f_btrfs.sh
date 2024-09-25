@@ -64,7 +64,7 @@ btrfs_mgmt() {
                 return
         fi
 
-        if [[ mountpoint -q "/mnt" ]]; then
+        if mountpoint -q "/mnt" 1> "/dev/null" 2>&1; then
                 umount -R "/mnt" 1> "/dev/null" 2>&1
         fi
 
