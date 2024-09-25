@@ -3,6 +3,7 @@ btrfs_mgmt() {
         # FORMATTING DONE
 
         export btrfsSubvols="0"
+        # Only add subvolumes after @tmp and @var
         btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         while true; do
@@ -70,8 +71,8 @@ btrfs_mgmt() {
         # Unmount /dev/sdX2 to free the mountpoint for @ subvolume
         umount -R "/mnt" 1> "/dev/null" 2>&1
 
+        # Creating subvolumes and mount them + mount boot partition
         local mountpoint=""
-
         for i in "${btrfs_subvols[@]}"; do
                 if [[ "${i}" == '@' ]]; then
                         mountpoint="/mnt"
@@ -89,6 +90,7 @@ btrfs_mgmt() {
         lsblk -f
         echo ""
 
+        # Enable quotas?
         if [[ "${btrfsSubvols}" -eq 1 ]]; then
                 while true; do
                         echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
