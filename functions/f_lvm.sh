@@ -216,7 +216,7 @@ lvm_mgmt() {
 
                 for i in "${!lv_size[@]}"; do
                         lvcreate -L ${lv_size[${i}]}G "${vg_name}" -n ${i} 1> "/dev/null" 2>&1
-                        if [[ "${?}" - ne 0 ]]; then
+                        if [[ "${?}" -ne 0 ]]; then
                                 echo -e "Error while creating LV ${i}"
                                 exit 1
                         fi
