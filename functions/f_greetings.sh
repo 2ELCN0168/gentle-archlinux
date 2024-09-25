@@ -81,7 +81,6 @@ greetings() {
                 else
                         echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
                 fi
-        fi
-        
         echo ""
+        fi
 }
