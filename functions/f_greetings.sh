@@ -64,7 +64,7 @@ greetings() {
 
         # This unmounting action ensure to have nothing actually mounted on /mnt before starting
         for i in /mnt/*; do
-                if mountpoint -q "${i}"; then
+                if mountpoint -q "/mnt/${i}"; then
                         if umount -R "${i}" 1> "/dev/null" 2>&1; then
                         
                                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
