@@ -14,7 +14,8 @@ format_partitions() {
         # FORMATTING DONE
         echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${boot_part} to FAT32.${NO_FORMAT}"
 
-        if mkfs.fat -F 32 -n ESP "${boot_part}" 1> "/dev/null" 2>&1; then
+        if mkfs.fat -F 32 -n ESP "${boot_part}" # 1> "/dev/null" 2>&1; 
+        then
                 echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully formatted ${boot_part} to FAT32.${NO_FORMAT}\n"
         else
                 echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during formatting ${boot_part} to FAT32.${NO_FORMAT}\n"
