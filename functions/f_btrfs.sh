@@ -3,7 +3,6 @@ btrfs_mgmt() {
         # FORMATTING DONE
 
         export btrfsSubvols="0"
-        local btrfsQuotas=""
         btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         while true; do
@@ -37,32 +36,6 @@ btrfs_mgmt() {
                                 ;;
                 esac
         done
-
-        if [[ "${btrfsSubvols}" -eq 1 ]]; then
-                while true; do
-                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
-
-                        local ans_btrfs_subvols_quotas=""
-                        read ans_btrfs_subvols_quotas
-                        : "${ans_btrfs_subvols_quotas:=Y}"
-
-                        case "${ans_btrfs_subvols_quotas}" in
-                                [yY])
-                                        btrfsQuotas=1
-                                        echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose to enable quotas.${NO_FORMAT}\n"
-                                        break
-                                        ;;
-                                [nN])
-                                        btrfsQuotas=0
-                                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will be no quotas on your subvolumes.${NO_FORMAT}\n"
-                                        break
-                                        ;;
-                                *)
-                                        invalid_answer
-                                        ;;
-                        esac
-                done
-        fi
 
         echo -e "${C_WHITE}> ${INFO} Formatting ${root_part} to ${filesystem}.${NO_FORMAT}\n"
         mkfs.btrfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
@@ -116,7 +89,29 @@ btrfs_mgmt() {
         lsblk -f
         echo ""
 
-        if [[ "${btrfsQuotas}" -eq 1 ]]; then
+        if [[ "${btrfsSubvols}" -eq 1 ]]; then
+                while true; do
+                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
+
+                        local ans_btrfs_subvols_quotas=""
+                        read ans_btrfs_subvols_quotas
+                        : "${ans_btrfs_subvols_quotas:=Y}"
+
+                        case "${ans_btrfs_subvols_quotas}" in
+                                [yY])
+                                        echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose to enable quotas.${NO_FORMAT}\n"
+                                        break
+                                        ;;
+                                [nN])
+                                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will be no quotas on your subvolumes.${NO_FORMAT}\n"
+                                        return
+                                        ;;
+                                *)
+                                        invalid_answer
+                                        ;;
+                        esac
+                done
+
                 for i in "${btrfs_subvols[@]:3:2}"; do
                         local clean_i="${i//@/}"
                         echo -e "${C_WHITE}> ${INFO} Enabling quota for ${C_GREEN}@${clean_i}${NO_FORMAT}"
