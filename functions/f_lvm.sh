@@ -208,7 +208,7 @@ lvm_mgmt() {
                                         echo -e "Error: Not enough size available"
                                 else
                                         lv_size[${lv}]="${ans_size_lv}"
-                                        vg_free_space="$(echo ${vg_free_space} - ${lv_size[${lv}]} | bc -l)"
+                                        vg_free_space="$(echo "scale=2; ${vg_free_space} - ${ans_size_lv}" | bc -l)"
                                         break
                                 fi
                         done
