@@ -4,7 +4,7 @@ btrfs_mgmt() {
 
         export btrfsSubvols="0"
         local btrfsQuotas=""
-        btrfs_subvols=("@root" "@home" "@usr" "@tmp" "@var")
+        btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
 
         while true; do
                 echo -e "${C_CYAN}:: ${C_WHITE}It seems that you've picked BTRFS, do you want a clean installation with subvolumes (0) or a regular one with only the filesystem (1)? (0=default) -> ${NO_FORMAT}\c"
@@ -80,7 +80,7 @@ btrfs_mgmt() {
                 if ! btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         echo "Cannot create subvolume ${i}"
                 else 
-                        echo "Created subvolume ${i}"
+                        echo "Created subvolume ${i}" > "/dev/null"
                 fi
         done
 
