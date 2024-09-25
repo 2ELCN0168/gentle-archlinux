@@ -17,7 +17,7 @@ First, you need an Internet connection. If you have a wired connection, it shoul
 pacman-key --init
 pacman-key --populate archlinux
 pacman -Sy git
-git clone https://github.com/2ELCN068/gentle-archlinux
+git clone https://github.com/2ELCN0168/gentle-archlinux
 cd gentle-archlinux
 ./Archlinux_Gentle_Installer.sh
 ```
