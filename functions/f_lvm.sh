@@ -217,9 +217,9 @@ lvm_mgmt() {
 
                         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${i}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
 
-                        lvcreate -L "${lv_size}G" "${vg_name}" -n "${i}" 1> "/dev/null" 2>&1
+                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${i}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${lv}${NO_FORMAT}. Exiting."
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${i}${NO_FORMAT}. Exiting."
                                 exit 1
                         fi
                 done
@@ -227,7 +227,7 @@ lvm_mgmt() {
                 #INFO: Formatting Logical Volumes
                 local fs=""
 
-                for i in "${logical_volumes[@]}"; do
+                for i in "${!logical_volumes[@]}"; do
                         # lvcreate -l ${logical_volumes} VG_Archlinux -n ${i} 1> "/dev/null" 2>&1
                         case "${filesystem}" in
                                 "XFS")
@@ -237,16 +237,16 @@ lvm_mgmt() {
                                         fs=ext4
                                         ;;
                         esac
-                        mkfs.${fs} -L Arch_${i} "/dev/mapper/VG_Archlinux-${i}" 1> "/dev/null" 2>&1
-                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}VG_Archlinux-${i}${NO_FORMAT} to /mnt/${i}"
+                        mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${i}" 1> "/dev/null" 2>&1
+                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
                         if [[ "${i}" == "root" ]]; then
-                                mount --mkdir "/dev/mapper/VG_Archlinux-${i}" "/mnt"
+                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt"
                         else 
-                                mount --mkdir "/dev/mapper/VG_Archlinux-${i}" "/mnt/${i}"
+                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt/${i}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}VG_Archlinux-${i}${NO_FORMAT} to /mnt/${i}"
+                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
                                 exit 1
                         fi
                 done
@@ -254,6 +254,6 @@ lvm_mgmt() {
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${boot_part}${NO_FORMAT} to /mnt/boot\n"
                 mount --mkdir "${boot_part}" "/mnt/boot"
 
-                root_part="/dev/mapper/VG_Archlinux-root"
+                root_part="/dev/mapper/${vg_name}-root"
         fi
 }
