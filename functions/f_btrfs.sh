@@ -70,8 +70,8 @@ btrfs() {
                 exit 1
         fi
 
-        for i in "${btrfs_subvols[@]}"; do
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+        # for i in "${btrfs_subvols[@]}"; do
+                # echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} ${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
         #         # if ! btrfs subvolume create "/mnt/${r}"; then # 1> "/dev/null" 2>&1
         #         #         echo "Cannot create subvolume ${r}"
         #         # fi
@@ -80,7 +80,7 @@ btrfs() {
         #         # else
         #         #         echo "Created subvolume ${i}"
         #         # fi
-        done
+        # done
         # 
         # if ! btrfs subvolume create "/mnt/${btrfs_subvols[0]}"; then
         #         echo -e "Error while creating the subvolumes. Exiting."
