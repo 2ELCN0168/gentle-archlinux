@@ -66,7 +66,7 @@ greetings() {
         #BUG: It cannot unmount everything at the first launch. We need to quit and restart the script.
         
         systemctl daemon-reload 1> "/dev/null" 2>&1
-        local mountpoints=($(ls "/mnt"))
+        local mountpoints=("home" "usr" "var" "tmp")
         echo "${mountpoint[@]}"
         for i in "${mountpoints[@]}"; do
                 while mountpoint -q "/mnt/${i}"; do 
