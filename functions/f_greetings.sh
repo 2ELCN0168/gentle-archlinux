@@ -67,6 +67,7 @@ greetings() {
         
         systemctl daemon-reload 1> "/dev/null" 2>&1
         local mountpoints=($(ls "/mnt"))
+        echo "${mountpoint[@]}"
         for i in "${mountpoints[@]}"; do
                 while mountpoint -q "/mnt/${i}"; do 
                         if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
