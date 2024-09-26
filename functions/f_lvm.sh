@@ -225,12 +225,11 @@ lvm_mgmt() {
                         fi
                 done
 
-                #INFO: Formatting Logical Volumes
+                #INFO: Formatting and mounting Logical Volumes
 
                 local fs=""
 
                 for i in "${!logical_volumes[@]}"; do
-                        # lvcreate -l ${logical_volumes} VG_Archlinux -n ${i} 1> "/dev/null" 2>&1
                         case "${filesystem}" in
                                 "XFS")
                                         fs="xfs"
