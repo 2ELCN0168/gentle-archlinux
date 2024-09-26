@@ -184,7 +184,12 @@ lvm_mgmt() {
                 #INFO: Creating LVM and initialize PVs
                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with ${C_CYAN}${disks_array[@]}${NO_FORMAT} with ${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
-                disks_array[0]="${disks_array[0]}2"
+                if [[ "${wantEncrypted}" -eq 1 ]]; then
+                        disks_array[0]="/dev/mapper/root"
+                else
+                        disks_array[0]="${disks_array[0]}2"
+                fi
+
                 pv_array=()
                 for i in "${disks_array[@]}"; do
                         sgdisk -Z "${i}" 1> "/dev/null" 2>&1
