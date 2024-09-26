@@ -193,7 +193,9 @@ lvm_mgmt() {
                 pv_array=()
                 for i in "${disks_array[@]}"; do
                         sgdisk -Z "${i}" 1> "/dev/null" 2>&1
-                        wipefs --all -q "${i}" # 1> "/dev/null" 2>&1
+                        if [[ "${i}" != "/dev/mapper/root" ]]; then
+                                wipefs --all -q "${i}" # 1> "/dev/null" 2>&1
+                        fi
                         pvcreate "${i}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -eq 0 ]]; then
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created PV with ${C_CYAN}${i}${NO_FORMAT}"
