@@ -48,10 +48,13 @@ lvm_deletion() {
                 : "${ans_wipe_lvm:=N}"
                 echo ""
 
+                local vg_name=($(vgs --noheadings | awk '{ print $1 }'))
                 case "${ans_wipe_lvm}" in
                         [yY])
-                                lvremove -f -y "/dev/mapper/VG_Archlinux-*" 1> "/dev/null" 2>&1
-                                vgremove -f -y VG_Archlinux 1> "/dev/null" 2>&1
+                                for i in "${vg_name}"; do
+                                        lvremove -f -y "/dev/mapper/${vg_name}-*" 1> "/dev/null" 2>&1
+                                        vgremove -f -y "${vg_name}" 1> "/dev/null" 2>&1
+                                done
                                 for i in $(pvs | tail -n +2 | awk '{ print $1 }'); do
                                         pvremove -f -y "${i}" 1> "/dev/null" 2>&1
                                 done
