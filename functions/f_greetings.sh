@@ -78,12 +78,12 @@ greetings() {
                         fi
                 done
         done
-        while mountpoint -q "/mnt"; do
-                if umount -R "/mnt" 1> "/dev/null" 2>&1; then
-                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
-                else
-                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
-                fi
-        echo ""
-        done
+        # while mountpoint -q "/mnt"; do
+        #         if umount -R "/mnt" 1> "/dev/null" 2>&1; then
+        #                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
+        #         else
+        #                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
+        #         fi
+        # echo ""
+        # done
 }
