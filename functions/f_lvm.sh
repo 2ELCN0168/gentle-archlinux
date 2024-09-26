@@ -248,7 +248,7 @@ lvm_mgmt() {
                         mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${i}" 1> "/dev/null" 2>&1
                         echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
                         if [[ "${i}" == "root" ]]; then
-                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt"
+                                mount "/dev/mapper/${vg_name}-${i}" "/mnt"
                         else 
                                 mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt/${i}"
                         fi
