@@ -70,6 +70,11 @@ greetings() {
 
         for i in "${mountpoints[@]}"; do
                 umount "/mnt/${i}"
+                if [[ "${?}" -eq 0 ]]; then
+                        echo -e "Unmounted ${i}"
+                else
+                        echo -e "Cannot unmount ${i}"
+                fi
         done
         umount "/mnt"
         # echo "${mountpoint[@]}"
