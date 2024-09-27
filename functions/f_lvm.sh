@@ -166,7 +166,7 @@ lvm_mgmt() {
 
         logical_volumes=(
                 "root;20" 
-                "home;40" 
+                "home;20" 
                 "usr;20" 
                 "var;10" 
                 "tmp;10"
