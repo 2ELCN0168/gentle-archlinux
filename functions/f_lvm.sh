@@ -154,14 +154,22 @@ lvm_mgmt() {
 
         # local logical_volumes=("root" "usr" "home" "var" "tmp")
         
-        declare -A logical_volumes
+        # declare -A logical_volumes
+        #
+        # logical_volumes=(
+        #         ["root"]=20
+        #         ["home"]=40
+        #         ["usr"]=20
+        #         ["var"]=10
+        #         ["tmp"]=10
+        # )
 
         logical_volumes=(
-                ["root"]=20
-                ["home"]=40
-                ["usr"]=20
-                ["var"]=10
-                ["tmp"]=10
+                "root;20" 
+                "home;40" 
+                "usr;20" 
+                "var;10" 
+                "tmp;10"
         )
         
         local vg_name="VG_Archlinux"
@@ -216,18 +224,20 @@ lvm_mgmt() {
                 local vg_free_space=$(vgs --noheadings -o vg_free --units G "${vg_name}" | awk '{ print int($1) }')
                 local ratio=""
                 local lv_size=""
-                for i in "${!logical_volumes[@]}"; do
-                        ratio="${logical_volumes[${i}]}"
+                for i in "${logical_volumes[@]}"; do
+                        # ratio="${logical_volumes[${i}]}"
+                        local ratio=$(${i} | cut -d ";" -f 2)
+                        local lv_name=$(${i} | cut -d ";" -f 1)
                         # Calculate size
-                        lv_size=$(echo "${vg_free_space} * ${ratio} / 100" | bc)
+                        local lv_size=$(echo "${vg_free_space} * ${ratio} / 100" | bc)
                         # Round size
-                        lv_size=$(echo "${lv_size}" | awk '{printf "%d\n", $1}')
+                        local lv_size=$(echo "${lv_size}" | awk '{printf "%d\n", $1}')
 
-                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${i}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
+                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${lv_name}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
 
-                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${i}" -y 1> "/dev/null" 2>&1
+                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${lv_name}" -y 1> "/dev/null" 2>&1
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${i}${NO_FORMAT}. Exiting."
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${lv_name}${NO_FORMAT}. Exiting."
                                 exit 1
                         fi
                 done
@@ -236,7 +246,8 @@ lvm_mgmt() {
 
                 local fs=""
 
-                for i in "${!logical_volumes[@]}"; do
+                for i in "${logical_volumes[@]}"; do
+                        local lv_name=$(${i} | cut -d ";" -f 1)
                         case "${filesystem}" in
                                 "XFS")
                                         fs="xfs"
@@ -245,16 +256,16 @@ lvm_mgmt() {
                                         fs=ext4
                                         ;;
                         esac
-                        mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${i}" 1> "/dev/null" 2>&1
-                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
-                        if [[ "${i}" == "root" ]]; then
-                                mount "/dev/mapper/${vg_name}-${i}" "/mnt"
+                        mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
+                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
+                        if [[ "${lv_name}" == "root" ]]; then
+                                mount "/dev/mapper/${vg_name}-${lv_name}" "/mnt"
                         else 
-                                mount --mkdir "/dev/mapper/${vg_name}-${i}" "/mnt/${i}"
+                                mount --mkdir "/dev/mapper/${vg_name}-${lv_name}" "/mnt/${lv_name}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}${vg_name}-${i}${NO_FORMAT} to /mnt/${i}"
+                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
                                 exit 1
                         fi
                 done
