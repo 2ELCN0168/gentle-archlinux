@@ -249,18 +249,15 @@ lvm_mgmt() {
                 for i in "${logical_volumes[@]}"; do
                         local lv_name=$(echo ${i} | cut -d ";" -f 1)
                         case "${filesystem}" in
-                                "XFS")
-                                        fs="xfs"
-                                        ;;
-                                "EXT4")
-                                        fs=ext4
-                                        ;;
+                                "XFS") fs="xfs" ;;
+                                "EXT4") fs=ext4 ;;
                         esac
                         mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
-                        echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
                         if [[ "${lv_name}" == "root" ]]; then
+                                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/"
                                 mount "/dev/mapper/${vg_name}-${lv_name}" "/mnt"
                         else 
+                                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
                                 mount --mkdir "/dev/mapper/${vg_name}-${lv_name}" "/mnt/${lv_name}"
                         fi
 
