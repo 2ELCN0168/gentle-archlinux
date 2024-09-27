@@ -68,32 +68,32 @@ greetings() {
         systemctl daemon-reload 1> "/dev/null" 2>&1
         local mountpoints=("home" "usr" "var" "tmp")
 
-        for i in "${mountpoints[@]}"; do
-                umount "/mnt/${i}"
-                if [[ "${?}" -eq 0 ]]; then
-                        echo -e "Unmounted ${i}"
-                else
-                        echo -e "Cannot unmount ${i}"
-                fi
-        done
-        umount "/mnt"
-        # echo "${mountpoint[@]}"
         # for i in "${mountpoints[@]}"; do
-        #         while mountpoint -q "/mnt/${i}"; do 
-        #                 if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
-        #                 
-        #                         echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
-        #                 else
-        #                         echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}${i}${C_WHITE}. You may want to unmount it manually before starting the installation."
-        #                 fi
-        #         done
-        # done
-        # while mountpoint -q "/mnt"; do
-        #         if umount -R "/mnt" 1> "/dev/null" 2>&1; then
-        #                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
+        #         umount "/mnt/${i}"
+        #         if [[ "${?}" -eq 0 ]]; then
+        #                 echo -e "Unmounted ${i}"
         #         else
-        #                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
+        #                 echo -e "Cannot unmount ${i}"
         #         fi
-        # echo ""
         # done
+        # umount "/mnt"
+        echo "${mountpoint[@]}"
+        for i in "${mountpoints[@]}"; do
+                while mountpoint -q "/mnt/${i}"; do 
+                        if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
+                        
+                                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
+                        else
+                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}${i}${C_WHITE}. You may want to unmount it manually before starting the installation."
+                        fi
+                done
+        done
+        while mountpoint -q "/mnt"; do
+                if umount -R "/mnt" 1> "/dev/null" 2>&1; then
+                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
+                else
+                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while unmounting ${C_CYAN}/mnt${C_WHITE}. You may want to unmount it manually before starting the installation."
+                fi
+        echo ""
+        done
 }
