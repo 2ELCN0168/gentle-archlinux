@@ -226,8 +226,8 @@ lvm_mgmt() {
                 local lv_size=""
                 for i in "${logical_volumes[@]}"; do
                         # ratio="${logical_volumes[${i}]}"
-                        local ratio=$(${i} | cut -d ";" -f 2)
-                        local lv_name=$(${i} | cut -d ";" -f 1)
+                        local ratio=$(echo ${i} | cut -d ";" -f 2)
+                        local lv_name=$(echo ${i} | cut -d ";" -f 1)
                         # Calculate size
                         local lv_size=$(echo "${vg_free_space} * ${ratio} / 100" | bc)
                         # Round size
@@ -247,7 +247,7 @@ lvm_mgmt() {
                 local fs=""
 
                 for i in "${logical_volumes[@]}"; do
-                        local lv_name=$(${i} | cut -d ";" -f 1)
+                        local lv_name=$(echo ${i} | cut -d ";" -f 1)
                         case "${filesystem}" in
                                 "XFS")
                                         fs="xfs"
