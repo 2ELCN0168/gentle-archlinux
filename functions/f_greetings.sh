@@ -62,22 +62,14 @@ greetings() {
 
         echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks the user for any modification. No disk/volume will be touched without you making the selection. ${C_YELLOW}Just BE CAREFUL because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
 
-        # This unmounting action ensure to have nothing actually mounted on /mnt before starting
-        #BUG: It cannot unmount everything at the first launch. We need to quit and restart the script.
+        #INFO: This unmounting action ensure to have nothing actually mounted on /mnt before starting
+        #BUG: 2027-09-28: It cannot unmount everything at the first launch. We need to quit and restart the script.
+        #PASSED: 2027-09-27: It seems to be working now.
         
         systemctl daemon-reload 1> "/dev/null" 2>&1
         local mountpoints=("home" "usr" "var" "tmp")
 
-        # for i in "${mountpoints[@]}"; do
-        #         umount "/mnt/${i}"
-        #         if [[ "${?}" -eq 0 ]]; then
-        #                 echo -e "Unmounted ${i}"
-        #         else
-        #                 echo -e "Cannot unmount ${i}"
-        #         fi
-        # done
-        # umount "/mnt"
-        echo "${mountpoint[@]}"
+                echo "${mountpoint[@]}"
         for i in "${mountpoints[@]}"; do
                 while mountpoint -q "/mnt/${i}"; do 
                         if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
