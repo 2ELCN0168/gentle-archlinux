@@ -110,8 +110,7 @@ lvm_mgmt() {
 
                 # INFO: 
                 # Fetch the Volume Group free space
-                local vg_free_space=$(vgs --noheadings -o vg_free --units G \
-                                      "${vg_name}" | awk '{ print int($1) }')
+                local vg_free_space=$(vgs --noheadings -o vg_free --units G "${vg_name}" | awk '{ print int($1) }')
                 local ratio=""
                 local lv_size=""
                 for i in "${logical_volumes[@]}"; do
@@ -152,14 +151,14 @@ lvm_mgmt() {
                                 "XFS") fs="xfs" ;;
                                 "EXT4") fs=ext4 ;;
                         esac
-                        mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
+                        mkfs.${fs} -L Arch_${lv_name} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
                         if [[ "${lv_name}" == "root" ]]; then
                                 echo -e "${C_WHITE}> ${INFO} Mounting" \
                                         "${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT}" \
                                         "to /mnt/"
                                 mount "/dev/mapper/${vg_name}-${lv_name}" "/mnt"
                         else 
-                                echo -e "${C_WHITE}> ${INFO} Mounting" \ 
+                                echo -e "${C_WHITE}> ${INFO} Mounting" \
                                         "${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT}" \
                                         "to /mnt/${lv_name}"
                                 mount --mkdir "/dev/mapper/${vg_name}-${lv_name}" "/mnt/${lv_name}"
