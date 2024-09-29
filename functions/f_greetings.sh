@@ -81,19 +81,19 @@ greetings() {
         # Keep a report of the date and time it was installed.
         
         date | tee > "./installation_date.log"
-        echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated \
-                 ${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer. \
-                 ${C_CYAN}<${NO_FORMAT}\n"
+        echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated" \
+                "${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer." \
+                "${C_CYAN}<${NO_FORMAT}\n"
 
-        echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have \
-                 ${C_RED}no LVM ${C_PINK}configured on your disk, or it will \
-                 ${C_RED}mess up${C_PINK} the script. You must delete any LV, \
-                 VG and PV before starting.${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have" \
+                "${C_RED}no LVM ${C_PINK}configured on your disk, or it will" \
+                "${C_RED}mess up${C_PINK} the script. You must delete any LV," \
+                "VG and PV before starting.${NO_FORMAT}\n"
 
-        echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks \
-                 the user for any modification. No disk/volume will be touched \
-                 without you making the selection. ${C_YELLOW}Just BE CAREFUL \
-                 because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks" \
+                "the user for any modification. No disk/volume will be touched" \
+                "without you making the selection. ${C_YELLOW}Just BE CAREFUL" \
+                "because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
 
         #INFO: This unmounting action ensure to have nothing actually mounted 
         #on /mnt before starting
@@ -110,10 +110,10 @@ greetings() {
                         if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
                                 echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
                         else
-                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error \
-                                         while unmounting ${C_CYAN}${i}${C_WHITE}. \
-                                         You may want to unmount it manually \
-                                         before starting the installation."
+                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error" \
+                                        "while unmounting ${C_CYAN}${i}${C_WHITE}." \
+                                        "You may want to unmount it manually" \
+                                        "before starting the installation."
                         fi
                 done
         done
@@ -121,10 +121,10 @@ greetings() {
                 if umount -R "/mnt" 1> "/dev/null" 2>&1; then
                         echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
                 else
-                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while \
-                                 unmounting ${C_CYAN}/mnt${C_WHITE}. You may \
-                                 want to unmount it manually before starting \
-                                 the installation.${NO_FORMAT}"
+                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while" \
+                                "unmounting ${C_CYAN}/mnt${C_WHITE}. You may" \
+                                "want to unmount it manually before starting" \
+                                "the installation.${NO_FORMAT}"
                 fi
         echo ""
         done
