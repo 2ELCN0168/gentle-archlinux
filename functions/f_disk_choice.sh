@@ -32,7 +32,7 @@ disk_choice() {
                                 while true; do
                                         display_disks ${chosen_disks[@]}
 
-                                        if [[ $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
+                                        if [[ -z $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
                                                 break
                                         fi
                                         
