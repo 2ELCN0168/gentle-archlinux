@@ -38,7 +38,7 @@ disk_choice() {
                                         
                                         local ans_block_device
                                         read ans_block_device
-                                        : "${ans_block_device:-sda}"
+                                        : "${ans_block_device:=sda}"
 
                                         if [[ "${ans_block_device}" =~ [qQ] ]]; then
                                                 break
