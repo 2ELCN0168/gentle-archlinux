@@ -48,7 +48,8 @@ lvm_mgmt() {
         # If LVM is not used, format the root partition with the previous
         # chosen filesystem
         if [[ "${LVM}" -eq 0 ]]; then
-                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part} to ${filesystem}.${NO_FORMAT}\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part} \
+                         to ${filesystem}.${NO_FORMAT}\n"
                 case "${filesystem}" in
                         "XFS")
                                 mkfs.xfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
@@ -66,7 +67,9 @@ lvm_mgmt() {
 
                 # INFO: 
                 # Creating LVM and initialize PVs
-                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with ${C_CYAN}${disks_array[@]}${NO_FORMAT} with ${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
+                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with \
+                         ${C_CYAN}${disks_array[@]}${NO_FORMAT} with \
+                         ${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
                 if [[ "${wantEncrypted}" -eq 1 ]]; then
                         disks_array[0]="/dev/mapper/root"
@@ -85,10 +88,13 @@ lvm_mgmt() {
                         fi
                         pvcreate "${i}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -eq 0 ]]; then
-                                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created PV with ${C_CYAN}${i}${NO_FORMAT}"
+                                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created \
+                                         PV with ${C_CYAN}${i}${NO_FORMAT}"
                                 pv_array+=("${i}")
                         else
-                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the physical volume with ${C_YELLOW}${i}${NO_FORMAT}. We will not use it."
+                                echo -e "${C_WHITE}> ${C_ERR} Error while creating \
+                                         the physical volume with ${C_YELLOW}${i}${NO_FORMAT}. \
+                                         We will not use it."
                         fi
                 done
 
@@ -104,7 +110,8 @@ lvm_mgmt() {
 
                 # INFO: 
                 # Fetch the Volume Group free space
-                local vg_free_space=$(vgs --noheadings -o vg_free --units G "${vg_name}" | awk '{ print int($1) }')
+                local vg_free_space=$(vgs --noheadings -o vg_free --units G \
+                                      "${vg_name}" | awk '{ print int($1) }')
                 local ratio=""
                 local lv_size=""
                 for i in "${logical_volumes[@]}"; do
@@ -121,11 +128,16 @@ lvm_mgmt() {
                         # Round size 
                         local lv_size=$(echo "${lv_size}" | awk '{printf "%d\n", $1}')
 
-                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV ${C_CYAN}${lv_name}${NO_FORMAT} with size ${C_YELLOW}${lv_size}G${NO_FORMAT}."
+                        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LV \
+                                 ${C_CYAN}${lv_name}${NO_FORMAT} with size \
+                                 ${C_YELLOW}${lv_size}G${NO_FORMAT}."
 
                         lvcreate -L "${lv_size}"G "${vg_name}" -n "${lv_name}" -y 1> "/dev/null" 2>&1
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${C_ERR} Error while creating the logical volume ${C_YELLOW}${lv_name}${NO_FORMAT}. Exiting."
+                                echo -e "${C_WHITE}> ${C_ERR} Error while \
+                                         creating the logical volume \
+                                         ${C_YELLOW}${lv_name}${NO_FORMAT}. \
+                                         Exiting."
                                 exit 1
                         fi
                 done
@@ -142,20 +154,27 @@ lvm_mgmt() {
                         esac
                         mkfs.${fs} -L Arch_${i} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
                         if [[ "${lv_name}" == "root" ]]; then
-                                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/"
+                                echo -e "${C_WHITE}> ${INFO} Mounting \
+                                         ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} \
+                                         to /mnt/"
                                 mount "/dev/mapper/${vg_name}-${lv_name}" "/mnt"
                         else 
-                                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
+                                echo -e "${C_WHITE}> ${INFO} Mounting \ 
+                                         ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} \
+                                         to /mnt/${lv_name}"
                                 mount --mkdir "/dev/mapper/${vg_name}-${lv_name}" "/mnt/${lv_name}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} Error mounting ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} to /mnt/${lv_name}"
+                                echo -e "${C_WHITE}> ${ERR} Error mounting \
+                                         ${C_CYAN}${vg_name}-${lv_name}${NO_FORMAT} \
+                                         to /mnt/${lv_name}"
                                 exit 1
                         fi
                 done
 
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${boot_part}${NO_FORMAT} to /mnt/boot\n"
+                echo -e "${C_WHITE}> ${INFO} Mounting ${C_CYAN}${boot_part}${NO_FORMAT} \
+                         to /mnt/boot\n"
                 mount --mkdir "${boot_part}" "/mnt/boot"
 
                 # INFO: 
