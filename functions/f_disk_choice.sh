@@ -32,10 +32,15 @@ disk_choice() {
                                 while true; do
                                         display_disks ${chosen_disks[@]}
 
+                                        if [[ $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
+                                                break
+                                        fi
+                                        
                                         local ans_block_device
                                         read ans_block_device
+                                        : "${ans_block_device:-sda}"
 
-                                        if [[ -z "${ans_block_device}" ]]; then
+                                        if [[ "${ans_block_device}" =~ [qQ] ]]; then
                                                 break
                                         else
                                                 if [[ -b "/dev/${ans_block_device}" ]]; then
@@ -43,7 +48,7 @@ disk_choice() {
                                                                 echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!"
                                                         else
                                                                 disks_array+=("/dev/${ans_block_device}")
-                                                                chosen_disks+=(${ans_block_device})
+                                                                chosen_disks+=("${ans_block_device}")
                                                         fi
                                                 else
                                                         invalid_answer
@@ -121,5 +126,6 @@ display_disks() {
 
         echo -e "====================\n"
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? Type it correctly (default=sda) -> ${NO_FORMAT}\c"
+        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? " \
+                "(default=sda) Type \"q\" to quit -> ${NO_FORMAT}\c"
 }
