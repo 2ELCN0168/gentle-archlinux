@@ -50,14 +50,12 @@ lvm_mgmt() {
         if [[ "${LVM}" -eq 0 ]]; then
                 echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part}" \
                         "to ${filesystem}.${NO_FORMAT}\n"
-                case "${filesystem}" in
-                        "XFS")
-                                mkfs.xfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
-                                ;;
-                        "EXT4")
-                                mkfs.ext4 -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
-                                ;;
-                esac 
+
+                [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \ 
+                "${root_part}" 1> "/dev/null" 2>&1
+                
+                [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \ 
+                "${root_part}" 1> "/dev/null" 2>&1
 
                 # INFO: 
                 # "mount_default()" is defined in "./f_mount_default.sh"
@@ -83,9 +81,10 @@ lvm_mgmt() {
                 pv_array=()
                 for i in "${disks_array[@]}"; do
                         sgdisk -Z "${i}" 1> "/dev/null" 2>&1
-                        if [[ "${i}" != "/dev/mapper/root" ]]; then
-                                wipefs --all -q "${i}" 1> "/dev/null" 2>&1
-                        fi
+                        
+                        [[ "${i}" != "/dev/mapper/root" ]] && wipefs --all -q \
+                        "${i}" 1> "/dev/null" 2>&1
+
                         pvcreate "${i}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -eq 0 ]]; then
                                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Created" \

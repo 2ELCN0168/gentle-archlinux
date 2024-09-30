@@ -1,18 +1,37 @@
-# FUNCTION(S)
-# ---
-# This function asks the user which disk they want to use.
-# It verifies if the input exists and asks again if it doesn't.
-# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
-# ---
+#
+### File: f_disk_choice.sh
+#
+### Description: 
+# Ask the user which disk(s) they want to use. It can be multiple disks if they
+# want to use LVM.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-09-29
+#
+### Dependencies:
+# - none.
+#
+### Usage:
+#
+# 1. Check conditions about FS (BTRFS) or LVM;
+# 2. Read the user input for selected disks.
+#
+# NOTE:
+# BTRFS should not be compatible with LVM because the subvolume management it is
+# capable of is the same thing as LVM.
+#
+# OPTIMIZE:
+# Even if this works well, I feel like the logic is not good. There are a lot of
+# imbricated blocks (if) and it's not well written in my opinion.
+#
 
 disk_choice() {
 
-        export user_disk="" # Former was finalDisk
-        # export disk=""
+        export user_disk=""
         export disks_array=()
         export partitionType=""
-        export boot_part="" # Former was finalPartBoot
-        export root_part="" # Former was finalPartRoot
+        export boot_part=""
+        export root_part=""
         export LVM=""
 
 
@@ -32,7 +51,8 @@ disk_choice() {
                                 while true; do
                                         display_disks ${chosen_disks[@]}
 
-                                        if [[ -z $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
+                                        if [[ -z $(lsblk -d --output NAME | \
+                                        grep -vE "${exclude_pattern}") ]]; then
                                                 break
                                         fi
                                         
@@ -55,7 +75,8 @@ disk_choice() {
                                                 fi
                                         fi
                                 done
-                                echo -e "\n${C_WHITE}> ${INFO} The selected disks are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
+                                echo -e "\n${C_WHITE}> ${INFO} The selected disks " \
+                                        "are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
                                 ;;
                         [nN])
 
@@ -68,7 +89,9 @@ disk_choice() {
                                         : "${ans_block_device:=sda}"
 
                                         if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}" \
+                                                        "The disk to use is ${C_GREEN}/dev/" \
+                                                        "${ans_block_device}${NO_FORMAT}\n"
                                                 disks_array+=("/dev/${ans_block_device}")
                                                 break
                                         else
@@ -92,7 +115,9 @@ disk_choice() {
                         : "${ans_block_device:=sda}"
 
                         if [[ -b "/dev/${ans_block_device}" ]]; then
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk to use is ${C_GREEN}/dev/${ans_block_device}${NO_FORMAT}\n"
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk "\
+                                        "to use is ${C_GREEN}/dev/${ans_block_device}" \
+                                        "${NO_FORMAT}\n"
                                 disks_array+=("/dev/${ans_block_device}")
                                 break
                         else
@@ -107,9 +132,9 @@ disk_choice() {
                 partitionType="p"
         fi
 
-        user_disk="${disks_array[0]}" # Former was finalDisk
-        boot_part="${user_disk}${partitionType}1" # Former was finalPartBoot
-        root_part="${user_disk}${partitionType}2" # Former was finalPartRoot
+        user_disk="${disks_array[0]}"
+        boot_part="${user_disk}${partitionType}1"
+        root_part="${user_disk}${partitionType}2"
 }
 
 display_disks() {
