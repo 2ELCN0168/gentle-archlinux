@@ -47,13 +47,13 @@ btrfs_mgmt() {
                 case "${ans_btrfs_subvols}" in
                         [0])
                                 btrfsSubvols=1
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose " \
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
                                         "to make subvolumes. Good choice.${NO_FORMAT}\n"
                                 break
                                 ;;
                         [1])
                                 btrfsSubvols=0
-                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}No subvolume " \
+                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}No subvolume" \
                                         "will be created.${NO_FORMAT}\n"
                                 break
                                 ;;
@@ -65,7 +65,7 @@ btrfs_mgmt() {
         
         # INFO:
         # Formatting the root partition before creating subvolumes.
-        echo -e "${C_WHITE}> ${INFO} Formatting ${root_part} " \
+        echo -e "${C_WHITE}> ${INFO} Formatting ${root_part}" \
                 "to ${filesystem}.${NO_FORMAT}\n"
         mkfs.btrfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
 
@@ -98,7 +98,7 @@ btrfs_mgmt() {
         # INFO:
         # Then, create the subvolumes defined above in the table.
         for i in "${btrfs_subvols[@]}"; do
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT} " \
+                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT}" \
                         "${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
                 if ! btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         echo "Cannot create subvolume ${i}"
@@ -135,7 +135,7 @@ btrfs_mgmt() {
                         "${mountpoint}"
         done
                 
-        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT} " \
+        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT}" \
                 "to ${C_PINK}/mnt/boot${NO_FORMAT}\n"
         mount --mkdir "${boot_part}" "/mnt/boot"
 
@@ -149,7 +149,7 @@ btrfs_mgmt() {
         # Enable quotas?
         if [[ "${btrfsSubvols}" -eq 1 ]]; then
                 while true; do
-                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable " \
+                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable" \
                                 "quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
 
                         local ans_btrfs_subvols_quotas=""
@@ -158,12 +158,12 @@ btrfs_mgmt() {
 
                         case "${ans_btrfs_subvols_quotas}" in
                                 [yY])
-                                        echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose " \
+                                        echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
                                                 "to enable quotas.${NO_FORMAT}\n"
                                         break
                                         ;;
                                 [nN])
-                                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will " \
+                                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will" \
                                                 "be no quotas on your subvolumes.${NO_FORMAT}\n"
                                         return
                                         ;;
@@ -175,7 +175,7 @@ btrfs_mgmt() {
 
                 for i in "${btrfs_subvols[@]:3:2}"; do
                         local clean_i="${i//@/}"
-                        echo -e "${C_WHITE}> ${INFO} Enabling quota for " \
+                        echo -e "${C_WHITE}> ${INFO} Enabling quota for" \
                                 "${C_GREEN}@${clean_i}${NO_FORMAT}"
                         btrfs quota enable "/mnt/${clean_i}"
                         btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
