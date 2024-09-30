@@ -21,7 +21,7 @@ source_files() {
     source "${f_path}/f_filesystem.sh"
     source "${f_path}/f_disk_choice.sh"
     source "${f_path}/f_partition_disks.sh"
-    source "${f_path}/f_format_choice.sh"
+    source "${f_path}/f_format_partitions.sh"
     source "${f_path}/f_network_manager_choice.sh"
     source "${f_path}/f_kernel_choice.sh"
     source "${f_path}/f_pacstrap.sh"
