@@ -43,7 +43,7 @@ ask_kernel() {
                 echo -e "\n====================\n"
 
 
-                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you"
+                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you" \
                         "want to install? -> ${NO_FORMAT}\c"
 
                 local ans_kernel=""
