@@ -1,16 +1,37 @@
+#
+### File: f_kernel_choice.sh
+#
+### Description: 
+# Ask the user for the kernel to use.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-09-30
+#
+### Dependencies:
+# - none.
+#
+### Usage:
+#
+# 1. Export some variables about kernel and initramfs;
+# 2. Select a default kernel if minimal install is chosen;
+# 3. Just ask.
+#
 
 ask_kernel() {
 
         export linux_kernel=""
         export kernel_initramfs=""
 
-        while true; do
+        [[ "${bootloader}" == "SYSTEMDBOOT" ]] \
+        && export kernel_name="vmlinuz-${linux_kernel}"
 
-                if [[ "${param_minimal}" -eq 1 ]]; then
-                        linux_kernel="linux"
-                        kernel_initramfs="initramfs-linux.img"
-                        break
-                fi
+        if [[ "${param_minimal}" -eq 1 ]]; then
+                linux_kernel="linux"
+                kernel_initramfs="initramfs-linux.img"
+                return 
+        fi        
+
+        while true; do
 
                 echo -e "==${C_CYAN}KERNEL${NO_FORMAT}============\n"
 
@@ -22,7 +43,8 @@ ask_kernel() {
                 echo -e "\n====================\n"
 
 
-                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you want to install? -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which kernel do you"
+                        "want to install? -> ${NO_FORMAT}\c"
 
                 local ans_kernel=""
                 read ans_kernel
@@ -30,25 +52,30 @@ ask_kernel() {
 
                 case "${ans_kernel}" in
                         0)
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose the standard linux kernel.\n"
+                                echo -e "${C_WHITE}> ${INFO} You chose the" \
+                                        "standard linux kernel.\n"
                                 linux_kernel="linux"
                                 kernel_initramfs="initramfs-linux.img"
                                 break
                                 ;;
                         1)
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose the LTS linux kernel. Useful for servers.\n"
+                                echo -e "${C_WHITE}> ${INFO} You chose the" \
+                                        "LTS linux kernel. Useful for servers.\n"
                                 linux_kernel="linux-lts"
                                 kernel_initramfs="initramfs-linux-lts.img"
                                 break
                                 ;;
                         2)
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose the hardened linux kernel. I see you're a paranoid, don't worry we're three.\n"
+                                echo -e "${C_WHITE}> ${INFO} You chose the" \
+                                        "hardened linux kernel. I see you're" \
+                                        "a paranoid, don't worry we're three.\n"
                                 linux_kernel="linux-hardened"
                                 kernel_initramfs="initramfs-linux-hardened.img"
                                 break
                                 ;;
                         3)
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose the zen linux kernel. That's your choice.\n"
+                                echo -e "${C_WHITE}> ${INFO} You chose the" \
+                                        "zen linux kernel. That's your choice.\n"
                                 linux_kernel="linux-zen"
                                 kernel_initramfs="initramfs-linux-zen.img"
                                 break
@@ -58,8 +85,4 @@ ask_kernel() {
                                 ;;
                 esac
         done
-
-        if [[ "${bootloader}" == "SYSTEMDBOOT" ]]; then
-                export kernel_name="vmlinuz-${linux_kernel}"
-        fi
 }
