@@ -124,7 +124,7 @@ btrfs_mgmt() {
                 fi
                 
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}" \
-                        "${NO_FORMAT} to ${C_PINK}${mountpoint}${NO_FORMAT}"
+                        "${NO_FORMAT}to ${C_PINK}${mountpoint}${NO_FORMAT}"
                 
                 mount --mkdir -t btrfs -o \
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
