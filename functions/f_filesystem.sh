@@ -61,9 +61,9 @@ filesystem_choice() {
                                 invalid_answer
                                 ;;
                 esac
-                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose" \
-                        "${C_WHITE}${filesystem}${NO_FORMAT}\n"
         done
+        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose" \
+                "${C_WHITE}${filesystem}${NO_FORMAT}\n"
 }
 
 
