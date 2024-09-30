@@ -69,7 +69,7 @@ lvm_mgmt() {
                         "${C_CYAN}${disks_array[@]}${NO_FORMAT} with" \
                         "${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
-                if [[ "${wantEncrypted}" -eq 1 ]]; then
+                [[ "${wantEncrypted}" -eq 1 ]]; then
                         disks_array[0]="/dev/mapper/root"
                 else
                         disks_array[0]="${disks_array[0]}2"

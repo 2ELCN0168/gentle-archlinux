@@ -51,10 +51,9 @@ disk_choice() {
                                 while true; do
                                         display_disks ${chosen_disks[@]}
 
-                                        if [[ -z $(lsblk -d --output NAME | \
-                                        grep -vE "${exclude_pattern}") ]]; then
-                                                break
-                                        fi
+                                        #if [[ -z $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
+                                        #        break
+                                        #fi
                                         
                                         local ans_block_device
                                         read ans_block_device
@@ -75,7 +74,7 @@ disk_choice() {
                                                 fi
                                         fi
                                 done
-                                echo -e "\n${C_WHITE}> ${INFO} The selected disks " \
+                                echo -e "\n${C_WHITE}> ${INFO} The selected disks" \
                                         "are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
                                 ;;
                         [nN])
@@ -115,7 +114,7 @@ disk_choice() {
                         : "${ans_block_device:=sda}"
 
                         if [[ -b "/dev/${ans_block_device}" ]]; then
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk "\
+                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk"\
                                         "to use is ${C_GREEN}/dev/${ans_block_device}" \
                                         "${NO_FORMAT}\n"
                                 disks_array+=("/dev/${ans_block_device}")
@@ -151,6 +150,6 @@ display_disks() {
 
         echo -e "====================\n"
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use? " \
+        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use?" \
                 "(default=sda) Type \"q\" to quit -> ${NO_FORMAT}\c"
 }
