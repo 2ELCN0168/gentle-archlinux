@@ -1,17 +1,37 @@
-# FUNCTION(S)
-# ---
-# This function, after getting the BIOS mode, asks the user which bootloader they want to use.
-# Choices are : rEFInd (default), GRUB2, systemd-boot.
-# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
-# ---
+#
+### File: f_bootloader_choice.sh
+#
+### Description: 
+# Ask the user which bootloader they want to use. More choices availables if
+# running in UEFI mode.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-09-30
+#
+### Dependencies:
+# - none.
+#
+### Usage:
+#
+# 1. Check if the file in ${efi_path} is not empty. (and it exists)
+# 2. If so, it's running in UEFI, else, in BIOS mode.
+#
+# NOTE:
+# This part of the script is important to determine which bootloader can be used
+# and how it should be installed.
+#
 
 bootloader_choice() {
 
-        # FORMATTING DONE
-
         export bootloader=""
 
-        if [[ "${UEFI}" -eq 1 && "${param_minimal}" -eq 0 ]]; then
+        # INFO:
+        # BIOS mode or minimal parameter used = GRUB
+
+        if [[ "${UEFI}" -eq 0 || "${param_minimal}" -eq 1 ]]; then
+                bootloader="GRUB"
+                return
+        else
                 while true; do
                         echo -e "==${C_CYAN}BOOTLOADER${NO_FORMAT}========\n"
 
@@ -29,18 +49,21 @@ bootloader_choice() {
                         # echo ""
 
                         case "${ans_bootloader}" in
-                                0)
-                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_CYAN}rEFInd${NO_FORMAT}\n"
+                                0) 
+                                        echo -e "${C_WHITE}> ${INFO} We will " \
+                                                "install ${C_CYAN}rEFInd${NO_FORMAT}\n"
                                         bootloader="REFIND"
                                         break
                                         ;;
                                 1)
-                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_YELLOW}GRUB2${NO_FORMAT}\n"
+                                        echo -e "${C_WHITE}> ${INFO} We will " \
+                                                "install ${C_YELLOW}GRUB2${NO_FORMAT}\n"
                                         bootloader="GRUB"
                                         break
                                         ;;
                                 2)
-                                        echo -e "${C_WHITE}> ${INFO} We will install ${C_RED}systemd-boot${NO_FORMAT}\n"
+                                        echo -e "${C_WHITE}> ${INFO} We will " \
+                                                "install ${C_RED}systemd-boot${NO_FORMAT}\n"
                                         bootloader="SYSTEMDBOOT"
                                         break
                                         ;;
@@ -49,7 +72,5 @@ bootloader_choice() {
                                         ;;
                         esac
                 done
-        elif [[ "${UEFI}" -eq 0 || "${param_minimal}" -eq 1 ]]; then
-                bootloader="GRUB"
         fi
 }
