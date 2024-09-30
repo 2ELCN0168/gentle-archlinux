@@ -27,7 +27,13 @@ btrfs_mgmt() {
         export btrfsSubvols="0"
         # WARNING:
         # Only add subvolumes after @tmp and @var! Don't change the order.
-        local btrfs_subvols=("@" "@home" "@usr" "@tmp" "@var")
+        local btrfs_subvols=(
+                "@" 
+                "@home" 
+                "@usr" 
+                "@tmp" 
+                "@var"
+        )
 
         while true; do
 
@@ -67,7 +73,7 @@ btrfs_mgmt() {
         # Formatting the root partition before creating subvolumes.
         echo -e "${C_WHITE}> ${INFO} Formatting ${root_part}" \
                 "to ${filesystem}.${NO_FORMAT}\n"
-        mkfs.btrfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
+        mkfs.btrfs --force --label "Archlinux" "${root_part}" 1> "/dev/null" 2>&1
 
         # INFO:
         # No need to pursuie if the user don't want subvolumes. The function
@@ -77,12 +83,12 @@ btrfs_mgmt() {
                 return
         fi
 
-        # COMMENT:
+        # TEST:
         # This part should not be used anymore. Unmounting actions are done in 
         # f_greetings.sh
         #
-        # if mountpoint -q "/mnt" 1> "/dev/null" 2>&1; then
-        #         umount -R "/mnt" 1> "/dev/null" 2>&1
+        # if mountpoint --quiet "/mnt" 1> "/dev/null" 2>&1; then
+        #         umount --recursive "/mnt" 1> "/dev/null" 2>&1
         # fi
 
         # INFO:
@@ -111,24 +117,24 @@ btrfs_mgmt() {
         
         # INFO:
         # Unmount /dev/sdX2 to free the mountpoint for @ subvolume
-        umount -R "/mnt" 1> "/dev/null" 2>&1
+        umount --recursive "/mnt" 1> "/dev/null" 2>&1
 
         # INFO:
         # Creating subvolumes and mount them + mount boot partition
-        local mountpoint=""
+        local _mountpoint=""
         for i in "${btrfs_subvols[@]}"; do
                 if [[ "${i}" == '@' ]]; then
-                        mountpoint="/mnt"
+                        _mountpoint="/mnt"
                 else
-                        mountpoint="/mnt/${i//@/}"
+                        _mountpoint="/mnt/${i//@/}"
                 fi
                 
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}" \
-                        "${NO_FORMAT}to ${C_PINK}${mountpoint}${NO_FORMAT}"
+                        "${NO_FORMAT}to ${C_PINK}${_mountpoint}${NO_FORMAT}"
                 
-                mount --mkdir -t btrfs -o \
+                mount --mkdir --types btrfs --options \
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
-                "${root_part}" "${mountpoint}"
+                "${root_part}" "${_mountpoint}"
         done
                 
         echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT}" \
@@ -138,44 +144,46 @@ btrfs_mgmt() {
         # INFO:
         # Display the result to the user
         echo ""
-        lsblk -f
+        lsblk --fs
         echo ""
 
         # INFO:
-        # Enable quotas?
-        if [[ "${btrfsSubvols}" -eq 1 ]]; then
-                while true; do
-                        echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable" \
-                                "quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
-
-                        local ans_btrfs_subvols_quotas=""
-                        read ans_btrfs_subvols_quotas
-                        : "${ans_btrfs_subvols_quotas:=Y}"
-
-                        case "${ans_btrfs_subvols_quotas}" in
-                                [yY])
-                                        echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
-                                                "to enable quotas.${NO_FORMAT}\n"
-                                        break
-                                        ;;
-                                [nN])
-                                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will" \
-                                                "be no quotas on your subvolumes.${NO_FORMAT}\n"
-                                        return
-                                        ;;
-                                *)
-                                        invalid_answer
-                                        ;;
-                        esac
-                done
-
-                for i in "${btrfs_subvols[@]:3:2}"; do
-                        local clean_i="${i//@/}"
-                        echo -e "${C_WHITE}> ${INFO} Enabling quota for" \
-                                "${C_GREEN}@${clean_i}${NO_FORMAT}"
-                        btrfs quota enable "/mnt/${clean_i}"
-                        btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
-                        btrfs qgroup limit 5G "/mnt/${clean_i}"
-                done
+        # Enable quotas? Quit the function if the user doesn't use subvolumes
+        if [[ "${btrfsSubvols}" -eq 0 ]]; then
+                return
         fi
+
+        while true; do
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable" \
+                        "quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
+
+                local ans_btrfs_subvols_quotas=""
+                read ans_btrfs_subvols_quotas
+                : "${ans_btrfs_subvols_quotas:=Y}"
+
+                case "${ans_btrfs_subvols_quotas}" in
+                        [yY])
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
+                                        "to enable quotas.${NO_FORMAT}\n"
+                                break
+                                ;;
+                        [nN])
+                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will" \
+                                        "be no quotas on your subvolumes.${NO_FORMAT}\n"
+                                return
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
+
+        for i in "${btrfs_subvols[@]:3:2}"; do
+                local clean_i="${i//@/}"
+                echo -e "${C_WHITE}> ${INFO} Enabling quota for" \
+                        "${C_GREEN}@${clean_i}${NO_FORMAT}"
+                btrfs quota enable "/mnt/${clean_i}"
+                btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
+                btrfs qgroup limit 5G "/mnt/${clean_i}"
+        done
 }
