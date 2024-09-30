@@ -15,13 +15,12 @@
 # 1. Grep to lscpu.
 #
 
-
 get_cpu_brand() {
 
         local vendor=""
         export cpuBrand=""
 
-        vendor="$(lscpu | grep -i "vendor" | awk '{ print $3 }' | head -1)"
+        vendor="$(lscpu | grep --ignore-case "vendor" | awk '{ print $3 }' | head -1)"
 
         case "${vendor}" in
                 "GenuineIntel")
