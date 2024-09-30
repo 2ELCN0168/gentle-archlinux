@@ -6,7 +6,7 @@
 # want to use LVM.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-29
+# Last updated: 2024-09-30
 #
 ### Dependencies:
 # - none.
@@ -145,7 +145,7 @@ display_disks() {
 
         echo -e "\n==${C_CYAN}DISK${NO_FORMAT}==============\n"
 
-        lsblk -d --output NAME | grep -vE "${exclude_pattern}"
+        lsblk --nodeps --output NAME | grep --invert-match --extended-regexp "${exclude_pattern}"
         echo -e ""
 
         echo -e "====================\n"
