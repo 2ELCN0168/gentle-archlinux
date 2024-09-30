@@ -126,13 +126,9 @@ btrfs_mgmt() {
                 echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}" \
                         "${NO_FORMAT} to ${C_PINK}${mountpoint}${NO_FORMAT}"
                 
-                mount --mkdir -t btrfs \
-                        -o compress=zstd,\
-                        discard=async,\
-                        autodefrag,\
-                        subvol="${i}" \
-                        "${root_part}" \
-                        "${mountpoint}"
+                mount --mkdir -t btrfs -o \
+                compress=zstd,discard=async,autodefrag,subvol="${i}" \
+                "${root_part}" "${mountpoint}"
         done
                 
         echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT}" \
