@@ -51,10 +51,10 @@ lvm_mgmt() {
                 echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part}" \
                         "to ${filesystem}.${NO_FORMAT}\n"
 
-                [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \ 
+                [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \
                 "${root_part}" 1> "/dev/null" 2>&1
                 
-                [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \ 
+                [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \
                 "${root_part}" 1> "/dev/null" 2>&1
 
                 # INFO: 
@@ -66,10 +66,10 @@ lvm_mgmt() {
                 # INFO: 
                 # Creating LVM and initialize PVs
                 echo -e "${C_WHITE}> ${INFO} ${C_WHITE}Creating LVM with" \
-                        "${C_CYAN}${disks_array[@]}${NO_FORMAT} with" \
+                        "${C_CYAN}${disks_array[*]}${NO_FORMAT} with" \
                         "${C_YELLOW}${filesystem}${NO_FORMAT}...\n"
 
-                [[ "${wantEncrypted}" -eq 1 ]]; then
+                if [[ "${wantEncrypted}" -eq 1 ]]; then
                         disks_array[0]="/dev/mapper/root"
                 else
                         disks_array[0]="${disks_array[0]}2"
