@@ -47,3 +47,4 @@ mmcblk devices are not supported actually.
 - [ ] - Add mmcblk disk type support ;
 - [ ] - Add support for swapfile/swap/zram ;
 - [ ] - Add hardening mode ;
+- [ ] - Adapt sudoers.d config, enable insults, change $SUDO_PROMPT ;
