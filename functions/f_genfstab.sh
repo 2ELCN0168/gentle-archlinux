@@ -5,7 +5,7 @@
 # This function just generates the fstab file. 
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - arch-install-scripts (included in archiso).
@@ -20,15 +20,16 @@
 
 gen_fstab() {
 
-        echo -e "${C_W}> ${INFO} ${N_F}Generating" \
-                "${C_P}/mnt/etc/fstab${N_F} file."
+        printf "${C_W}> ${INFO} ${N_F}Generating ${C_P}/mnt/etc/fstab${N_F} "
+        printf "file.\n"
+
         # COMMAND:
         # genfstab --uuid "/mnt"
         if genfstab -U "/mnt" >> "/mnt/etc/fstab"; then
-                echo -e "${C_W}> ${SUC} ${N_F}Generated" \
-                        "${C_P}/mnt/etc/fstab${N_F} file.\n"
+                printf "${C_W}> ${SUC} ${N_F}Generated ${C_P}/mnt/etc/fstab"
+                printf "${N_F} file.\n\n"
         else
-                echo -e "${C_W}> ${WARN} ${N_F}Failed to generate" \
-                        "${C_P}/mnt/etc/fstab${N_F} file.\n"
+                printf "${C_W}> ${WARN} ${N_F}Failed to generate "
+                printf "${C_P}/mnt/etc/fstab${N_F} file.\n\n"
         fi
 }

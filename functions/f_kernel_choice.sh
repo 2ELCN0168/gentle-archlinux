@@ -5,7 +5,7 @@
 # Ask the user for the kernel to use.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - none.
@@ -22,29 +22,26 @@ ask_kernel() {
         export linux_kernel=""
         export kernel_initramfs=""
 
-        [[ "${bootloader}" == "SYSTEMDBOOT" ]] \
-        && export kernel_name="vmlinuz-${linux_kernel}"
+        [[ "${bootloader}" == "SYSTEMDBOOT" ]] && \
+        export kernel_name="vmlinuz-${linux_kernel}"
 
-        if [[ "${param_minimal}" -eq 1 ]]; then
-                linux_kernel="linux"
-                kernel_initramfs="initramfs-linux.img"
-                return 
-        fi        
+        [[ "${param_minimal}" -eq 1 ]] && linux_kernel="linux" && \
+        kernel_initramfs="initramfs-linux.img" && return 
 
         while true; do
 
-                echo -e "==${C_C}KERNEL${N_F}============\n"
+                printf "==${C_C}KERNEL${N_F}============\n\n"
 
-                echo -e "${C_W}[0] - ${C_C}linux${N_F} (default)"
-                echo -e "${C_W}[1] - ${C_R}linux-lts${N_F}"
-                echo -e "${C_W}[2] - ${C_P}linux-hardened${N_F}"
-                echo -e "${C_W}[3] - ${C_Y}linux-zen${N_F}"
+                printf "${C_W}[0] - ${C_C}linux${N_F} (default)\n"
+                printf "${C_W}[1] - ${C_R}linux-lts${N_F}\n"
+                printf "${C_W}[2] - ${C_P}linux-hardened${N_F}\n"
+                printf "${C_W}[3] - ${C_Y}linux-zen${N_F}\n"
                 
-                echo -e "\n====================\n"
+                printf "\n====================\n\n"
 
 
-                echo -e "${C_C}${BOLD}:: ${C_W}Which kernel do you" \
-                        "want to install? -> ${N_F}\c"
+                printf "${C_C}${BOLD}:: ${C_W}Which kernel do you want to "
+                printf "install? -> ${N_F}"
 
                 local ans_kernel=""
                 read ans_kernel
@@ -52,30 +49,32 @@ ask_kernel() {
 
                 case "${ans_kernel}" in
                         0)
-                                echo -e "${C_W}> ${INFO} You chose the" \
-                                        "standard linux kernel.\n"
+                                printf "${C_W}> ${INFO} You chose the " 
+                                printf "standard linux kernel.\n\n"
                                 linux_kernel="linux"
                                 kernel_initramfs="initramfs-linux.img"
                                 break
                                 ;;
                         1)
-                                echo -e "${C_W}> ${INFO} You chose the" \
-                                        "LTS linux kernel. Useful for servers.\n"
+                                printf "${C_W}> ${INFO} You chose the LTS " 
+                                printf "linux kernel. Useful for servers.\n\n"
                                 linux_kernel="linux-lts"
                                 kernel_initramfs="initramfs-linux-lts.img"
                                 break
                                 ;;
                         2)
-                                echo -e "${C_W}> ${INFO} You chose the" \
-                                        "hardened linux kernel. I see you're" \
-                                        "a paranoid, don't worry we're three.\n"
+                                printf "${C_W}> ${INFO} You chose the "
+                                printf "hardened linux kernel. I see you're "
+                                printf "a paranoid, don't worry we're three."
+                                printf "\n\n"
                                 linux_kernel="linux-hardened"
                                 kernel_initramfs="initramfs-linux-hardened.img"
                                 break
                                 ;;
                         3)
-                                echo -e "${C_W}> ${INFO} You chose the" \
-                                        "zen linux kernel. That's your choice.\n"
+                                printf "${C_W}> ${INFO} You chose the "
+                                printf "zen linux kernel. That's your choice."
+                                printf "\n\n"
                                 linux_kernel="linux-zen"
                                 kernel_initramfs="initramfs-linux-zen.img"
                                 break

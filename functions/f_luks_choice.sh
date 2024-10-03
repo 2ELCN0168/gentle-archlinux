@@ -5,7 +5,7 @@
 # This function asks the user if they want to use LUKS to encrypt their filesystem.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - cryptsetup.
@@ -24,29 +24,25 @@ luks_choice() {
 
         while true; do
 
-                echo -e "${C_C}:: ${C_W}Do you want your system to be" \
-                        "encrypted with ${B_R} LUKS ${N_F} ? [y/N] -> \c"
+                printf "${C_C}:: ${C_W}Do you want your system to be "
+                printf "encrypted with ${B_R} LUKS ${N_F} ? [y/N] -> "
 
                 local ans_luks=""
                 read ans_luks
                 : "${ans_luks:=N}"
 
-                case "${ans_luks}" in
-                        [yY])
-                                echo -e "${C_W}> ${INFO} ${C_G}cryptsetup" \
-                                        "${N_F} will be installed.\n"
-                                wantEncrypted=1
-                                break
-                                ;;
-                        [nN])
-                                echo -e "${C_W}> ${INFO} ${C_R}cryptsetup" \
-                                        "${N_F} won't be installed.\n"
-                                wantEncrypted=0
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                if [[ "${ans_luks}" =~ [yY] ]]; then
+                        wantEncrypted=1
+                        printf "${C_W}> ${INFO} ${C_G}cryptsetup "
+                        printf "${N_F} will be installed.\n\n"
+                        break
+                elif [[ "${ans_luks}" =~ [nN] ]]; then
+                        wantEncrypted=0
+                        printf "${C_W}> ${INFO} ${C_R}cryptsetup "
+                        printf "${N_F} won't be installed.\n\n"
+                        break
+                else
+                        invalid_answer
+                fi
         done
 }

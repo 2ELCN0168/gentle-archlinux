@@ -6,7 +6,7 @@
 # depending on the filesystem the user chose. Works with LUKS.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - none.
@@ -27,17 +27,16 @@ source "./functions/f_lvm.sh"
 
 format_partitions() {
 
-        echo -e "${C_W}> ${INFO} ${C_C}Formatting" \
-                "${boot_part} to FAT32.${N_F}"
+        printf "${C_W}> ${INFO} ${C_C}Formatting ${boot_part} to FAT32.${N_F}\n"
 
         # COMMAND:
         # mkfs.fat --fat-size 32 --volume-name "ESP" "${boot_part}"
         if mkfs.fat -F 32 -n ESP "${boot_part}" 1> "/dev/null" 2>&1; then
-                echo -e "${C_W}> ${SUC} ${C_G}Successfully formatted" \
-                        "${boot_part} to FAT32.${N_F}\n"
+                printf "${C_W}> ${SUC} ${C_G}Successfully formatted "
+                printf "${boot_part} to FAT32.${N_F}\n\n"
         else
-                echo -e "${C_W}> ${ERR} ${C_R}Error during formatting" \
-                        "${boot_part} to FAT32.${N_F}\n"
+                printf "${C_W}> ${ERR} ${C_R}Error during formatting "
+                printf "${boot_part} to FAT32.${N_F}\n\n"
                 exit 1
         fi
 

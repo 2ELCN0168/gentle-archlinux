@@ -5,7 +5,7 @@
 # This function creates a LUKS format partition if the user answered "yes" to one of the first questions.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - cryptsetup.
@@ -17,23 +17,25 @@
 
 luks_handling() {
 
-        echo -e "${C_W}> ${INFO} Starting to encrypt your new system...\n"
+        printf "${C_W}> ${INFO} Starting to encrypt your new system...\n\n"
 
         if cryptsetup luksFormat "${root_part}"; then
-                echo -e "\n${C_W}> ${SUC} ${C_G}Successfully created" \
-                        "LUKS partition on ${root_part}.${N_F}\n"
+                printf "\n${C_W}> ${SUC} ${C_G}Successfully created "
+                printf "LUKS partition on ${root_part}.${N_F}\n\n"
         else
-                echo -e "\n${C_W}> ${ERR} ${C_R}Error during LUKS" \
-                        "partition creation on ${root_part}.${N_F}\n"
+                printf "\n${C_W}> ${ERR} ${C_R}Error during LUKS "
+                printf "partition creation on ${root_part}.${N_F}\n\n"
                 exit 1
         fi
 
-        echo -e "${C_W}> ${INFO} Opening the new encrypted volume.\n"
+        printf "${C_W}> ${INFO} Opening the new encrypted volume.\n\n"
 
-        cryptsetup open "${root_part}" "root" || exit 1
-
-        echo -e "\n${C_W}> ${INFO} Replacing ${root_part} by${C_P}" \
-                "/dev/mapper/root.${N_F}\n"
-
-        root_part="/dev/mapper/root"
+        if cryptsetup open "${root_part}" "root"; then
+                printf "\n${C_W}> ${INFO} Replacing ${root_part} by${C_P} "
+                printf "/dev/mapper/root.${N_F}\n\n"
+                root_part="/dev/mapper/root"
+                return
+        else
+                exit 1
+        fi
 }
