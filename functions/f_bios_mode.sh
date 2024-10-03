@@ -21,29 +21,6 @@
 # and how it should be installed.
 #
 
-# get_bios_mode() {
-#
-#         export UEFI=0
-#         local efi_path="/sys/firmware/efi/fw_platform_size"
-#
-#         if [[ ! -z "${efi_path}" ]]; then
-#                 echo -e "${C_W}> ${INFO} ${N_F}Running in" \
-#                         "${C_C}UEFI${N_F} mode."
-#                 echo -e "${C_C}You are using UEFI mode, you have the choice" \
-#                         "for the bootloader...${N_F}\n"
-#                 UEFI=1
-#         else
-#                 echo -e "${C_W}> ${INFO} ${N_F}Running in" \
-#                         "${C_R}BIOS${N_F} mode."
-#                 echo -e "${C_Y}No choice for you. You would have been" \
-#                         "better off using UEFI mode. We will install" \
-#                         "GRUB2.${N_F}\n"
-#                 UEFI=0
-#         fi
-# }
-
-
-
 get_bios_mode() {
 
         local C_W="${C_W}"
@@ -55,17 +32,18 @@ get_bios_mode() {
         export UEFI=0
         local efi_path="/sys/firmware/efi/fw_platform_size"
 
-        if [[ ! -z "${efi_path}" ]]; then
-                printf "${C_W}> ${INFO} ${N_F}Running in ${C_C} UEFI${N_F}
-                        mode.\n"
-                printf "${C_C}You are using UEFI mode, you have the choice for 
-                        the bootloader...${N_F}\n\n"
+        if [[ -f "${efi_path}" ]]; then
+                printf "${C_W}> ${INFO} ${N_F}Running in ${C_C}UEFI${N_F} "
+                printf "mode.\n"
+                printf "${C_C}You are using UEFI mode, you have the choice for "
+                printf "the bootloader...${N_F}\n\n"
                 UEFI=1
         else
-                printf "${C_W}> ${INFO} ${N_F}Running in ${C_R}BIOS ${N_F} 
-                        mode."
-                printf "${C_Y}No choice for you. You would have been better off
-                        using UEFI mode. We will install GRUB2.${N_F}\n\n"
+                printf "${C_W}> ${INFO} ${N_F}Running in ${C_R}BIOS${N_F} "
+                printf "mode."
+                printf "${C_Y}No choice for you. You would have been better "
+                printf "off using ${C_C}UEFI${N_F} mode. We will install "
+                printf "GRUB2.${N_F}\n\n"
                 UEFI=0
         fi
 }
