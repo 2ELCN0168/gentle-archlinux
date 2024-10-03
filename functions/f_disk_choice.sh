@@ -122,7 +122,7 @@ disk_choice() {
                         invalid_answer && continue
 
                         printf "${C_W}> ${INFO} ${N_F}The disk to use is "
-                        printf "${C_G}/dev/${ans_block_dev}${N_F}\n"
+                        printf "${C_G}/dev/${ans_block_dev}${N_F}\n\n"
                         disks_array+=("/dev/${ans_block_dev}")
                         break
                 done
@@ -150,7 +150,7 @@ display_disks() {
         lsblk --nodeps --output NAME |
         grep --invert-match --extended-regexp "${exclude_pattern}"
 
-        printf "\n\n====================\n\n"
+        printf "\n====================\n\n"
 
         printf "${C_C}:: ${C_W}Which block device do you want to use? " 
         printf "(default=sda) Type \"[q]\" to quit -> ${N_F}"
