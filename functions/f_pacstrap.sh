@@ -1,4 +1,22 @@
-# EDIT 1 : Modified variables declarations and tests in conditions + replaced by echo.
+#
+### File: f_pacstrap.sh
+#
+### Description: 
+# Ask the user which packages they want to install. There are predefined
+# groups of packages + basic packages that will be installed anyway.
+#
+# Guest-agent are also asked in case the system is installed inside a
+# hypervisor.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-10-03
+#
+### Dependencies:
+# - pacman (pactrap script) (included); 
+#
+### Usage:
+#
+# 1. It is simple questions/answers.
 
 ask_packages() {
 
@@ -24,54 +42,73 @@ ask_packages() {
                 case "${ans_guest_agent}" in
                         [0])
                                 guest_agent="QEMU"
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}qemu-guest-agent${NO_FORMAT} will be installed.\n"
-                                additionalPackages="${additionalPackages} qemu-guest-agent"
+                                echo -e "${C_WHITE}> ${INFO}" \
+                                        "${C_GREEN}qemu-guest-agent${NO_FORMAT}" \
+                                        "will be installed.\n"
+                                additionalPackages="${additionalPackages} \
+                                        qemu-guest-agent"
                                 break
                                 ;;
                         [1])
                                 guest_agent="VIRTUALBOX"
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}virtualbox-guest-utils${NO_FORMAT} will be installed.\n"
-                                additionalPackages="${additionalPackages} virtualbox-guest-utils"
+                                echo -e "${C_WHITE}> ${INFO}" \
+                                        "${C_GREEN}virtualbox-guest-utils${NO_FORMAT}" \
+                                        "will be installed.\n"
+                                additionalPackages="${additionalPackages} \
+                                        virtualbox-guest-utils"
                                 break
                                 ;;
                         [2])
                                 guest_agent="VMWARE"
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}open-vm-tools${NO_FORMAT} will be installed.\n"
-                                additionalPackages="${additionalPackages} open-vm-tools"
+                                echo -e "${C_WHITE}> ${INFO}" \
+                                        "${C_GREEN}open-vm-tools${NO_FORMAT}" \
+                                        "will be installed.\n"
+                                additionalPackages="${additionalPackages} \
+                                       open-vm-tools"
                                 break
                                 ;;
                         [3])
                                 guest_agent="HYPERV"
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}hyperv${NO_FORMAT} will be installed.\n"
-                                additionalPackages="${additionalPackages} hyperv"
+                                echo -e "${C_WHITE}> ${INFO}" \
+                                        "${C_GREEN}hyperv${NO_FORMAT} will be" \
+                                        "installed.\n"
+                                additionalPackages="${additionalPackages} \
+                                        hyperv"
                                 break
                                 ;;
                         [4])
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}No guest-agent${NO_FORMAT} will be installed.\n"
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}No" \
+                                        "guest-agent${NO_FORMAT} will be" \
+                                        "installed.\n"
                                 break
                                 ;;
                         *)
                                 invalid_answer
                                 ;;
                 esac
+                
+                # INFO:
                 # Check post_install/function/f_enable_guest_agents.sh for enabling guest agents services.
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add networking tools ${C_GREEN}(e.g., nload, nethogs, jnettop, iptraf-ng, tcpdump, nmap, bind-tools, ldns, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c" 
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add networking" \
+                        "tools ${C_GREEN}(e.g., nload, nethogs, jnettop," \
+                        "iptraf-ng, tcpdump, nmap, bind-tools, ldns," \
+                        "etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c" 
 
                 local ans_net_pack=""
                 read ans_net_pack
                 : "${ans_net_pack:=Y}"
-                # echo ""
 
                 case "${ans_net_pack}" in
-                        "y"|"Y")
-                                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Networking pack${NO_FORMAT} will be installed.\n"
+                        [yY])
+                                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Networking" \
+                                        "pack${NO_FORMAT} will be installed.\n"
                                 additionalPackages="${additionalPackages} bind-tools ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
                                 break
                                 ;;
-                        "n"|"N")
+                        [nN])
                                 break
                                 ;;
                         *)
@@ -81,7 +118,9 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add helping tools ${C_GREEN}(e.g., tealdeer, man, texinfo, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add helping" \
+                        "tools ${C_GREEN}(e.g., tealdeer, man, texinfo," \
+                        "etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
                 
                 local ans_help_pack=""
                 read ans_help_pack
@@ -89,12 +128,13 @@ ask_packages() {
                 # echo ""
 
                 case "${ans_help_pack}" in
-                        "y"|"Y")
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}Helping pack${NO_FORMAT} will be installed.\n"
+                        [yY])
+                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}Helping" \
+                                        "pack${NO_FORMAT} will be installed.\n"
                                 additionalPackages="${additionalPackages} texinfo tealdeer man man-pages"
                                 break
                                 ;;
-                        "n"|"N")
+                        [nN])
                                 break
                                 ;;
                         *)
@@ -104,7 +144,9 @@ ask_packages() {
         done
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add monitoring tools ${C_GREEN}(e.g., btop, htop, bmon, etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to add monitoring" \
+                        "tools ${C_GREEN}(e.g., btop, htop, bmon," \
+                        "etc.)${C_WHITE} [Y/n] -> ${NO_FORMAT}\c"
                 
                 local ans_monitoring_pack=""
                 read ans_monitoring_pack
@@ -112,12 +154,13 @@ ask_packages() {
                 # echo "" 
 
                 case "${ans_monitoring_pack}" in
-                        "y"|"Y")
-                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring pack${NO_FORMAT} will be installed.\n"
+                        [yY])
+                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}Monitoring" \
+                                        "pack${NO_FORMAT} will be installed.\n"
                                 additionalPackages="${additionalPackages} btop htop bmon iotop"
                                 break
                                 ;;
-                        "n"|"N")
+                        [nN])
                                 break
                                 ;;
                         *)
@@ -129,8 +172,9 @@ ask_packages() {
 
 pacstrap_install() {
 
-        # FORMATTING DONE
-        # List of additional packages depending on parameters specified by the user, avoiding installation of useless things
+        # INFO:
+        # List of additional packages depending on parameters specified by the
+        # user, avoiding installation of useless things
         additionalPackages=""
 
         case "${filesystem}" in
@@ -193,19 +237,27 @@ pacstrap_install() {
                         ;;
         esac
 
+        # INFO:
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
-        sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' /etc/pacman.conf
+        sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' "/etc/pacman.conf"
 
+        # INFO:
         # Ask for additional packages
         ask_packages
 
         # Display additional packages
-        echo -e "${C_WHITE}> ${INFO} Additional packages are${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
+        echo -e "${C_WHITE}> ${INFO} Additional packages are" \
+                "${C_CYAN}${additionalPackages}${NO_FORMAT}\n"
         sleep 4
 
+        # INFO:
         # Perform the installation of the customized system
-        pacstrap -K /mnt base{,-devel} git terminus-font openssh traceroute zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
-        systemctl-tui hdparm neovim vim vi dos2unix tree fastfetch dhclient tmux arch-audit ${additionalPackages}
-        echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted from the Arch repository, you will have to learn${NO_FORMAT} ${B_GREEN} Vim ${NO_FORMAT}.\n"
+        pacstrap -K /mnt base{,-devel} git terminus-font openssh traceroute \
+        zsh{,-{syntax-highlighting,autosuggestions,completions,history-substring-search}} \
+        systemctl-tui hdparm neovim vim vi dos2unix tree fastfetch dhclient \
+        tmux arch-audit ${additionalPackages}
+        echo -e "\n${C_WHITE}> ${INFO} ${C_RED}Sorry, nano has been deleted" \
+                "from the Arch repository, you will have to" \
+                "learn${NO_FORMAT} ${B_GREEN} Vim ${NO_FORMAT}.\n"
         sleep 2
 }
