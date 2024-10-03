@@ -36,10 +36,10 @@
 greetings() {
         clear
 
-        local mini="${C_PINK}Minimal installation mode.${NO_FORMAT}"
-        local complete="${C_GREEN}Complete installation mode.${NO_FORMAT}"
-        local hard="${C_RED}Hardened installation mode.${NO_FORMAT}"
-        local standard="${C_CYAN}Standard installation mode.${NO_FORMAT}"
+        local mini="${C_P}Minimal installation mode.${N_F}"
+        local complete="${C_G}Complete installation mode.${N_F}"
+        local hard="${C_R}Hardened installation mode.${N_F}"
+        local standard="${C_C}Standard installation mode.${N_F}"
 
         # INFO:
         # Empty variables when the corresponding parameter is not called.
@@ -53,37 +53,37 @@ greetings() {
         
 
         echo ""
-        echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
-        echo -e "${C_BLUE}      /#\      ${C_CYAN}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
-        echo -e "${C_BLUE}     ,###\     ${C_CYAN} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
-        echo -e "${C_BLUE}    /#####\    ${C_CYAN}| (_| | | | (__| | | | | | | | | |_| |>  <              "
-        echo -e "${C_BLUE}   /##;-;##\   ${C_CYAN} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\ ${C_GREEN}TM"
-        echo -e "${C_BLUE}  /##(   )##\`                                                                  "
-        echo -e "${C_BLUE} /#;--   --;#\  ${C_YELLOW}Gentle Installer. ${mini}${complete}${hard}${standard}"
-        echo -e "${C_BLUE}/\`           \`\                                                               "
-        echo -e "${NO_FORMAT}"
+        echo -e "${C_B}       ,       ${C_C}                _     _ _                               "
+        echo -e "${C_B}      /#\      ${C_C}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
+        echo -e "${C_B}     ,###\     ${C_C} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
+        echo -e "${C_B}    /#####\    ${C_C}| (_| | | | (__| | | | | | | | | |_| |>  <              "
+        echo -e "${C_B}   /##;-;##\   ${C_C} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\ ${C_G}TM"
+        echo -e "${C_B}  /##(   )##\`                                                                  "
+        echo -e "${C_B} /#;--   --;#\  ${C_Y}Gentle Installer. ${mini}${complete}${hard}${standard}"
+        echo -e "${C_B}/\`           \`\                                                               "
+        echo -e "${N_F}"
 
-        echo -e "\n${C_WHITE}██████████████████████████████████████████████████████████████████████████████████████"
+        echo -e "\n${C_W}██████████████████████████████████████████████████████████████████████████████████████"
         echo -e "████████████████████████████████████████████████████"
-        echo -e "████████████████\n${NO_FORMAT}"
+        echo -e "████████████████\n${N_F}"
 
         # INFO:
         # Keep a report of the date and time it was installed.
         
         date | tee > "./installation_date.log"
-        echo -e "${C_CYAN}> ${C_WHITE}Welcome to this gently automated" \
-                "${C_CYAN}Arch/\Linux${NO_FORMAT} ${C_WHITE}installer." \
-                "${C_CYAN}<${NO_FORMAT}\n"
+        echo -e "${C_C}> ${C_W}Welcome to this gently automated" \
+                "${C_C}Arch/\Linux${N_F} ${C_W}installer." \
+                "${C_C}<${N_F}\n"
 
-        echo -e "${C_WHITE}> ${C_PINK}Before starting, make sure you have" \
-                "${C_RED}no LVM ${C_PINK}configured on your disk, or it will" \
-                "${C_RED}mess up${C_PINK} the script. You must delete any LV," \
-                "VG and PV before starting.${NO_FORMAT}\n"
+        echo -e "${C_W}> ${C_P}Before starting, make sure you have" \
+                "${C_R}no LVM ${C_P}configured on your disk, or it will" \
+                "${C_R}mess up${C_P} the script. You must delete any LV," \
+                "VG and PV before starting.${N_F}\n"
 
-        echo -e "${C_WHITE}> ${C_GREEN}This script is safe to use as it asks" \
+        echo -e "${C_W}> ${C_G}This script is safe to use as it asks" \
                 "the user for any modification. No disk/volume will be touched" \
-                "without you making the selection. ${C_YELLOW}Just BE CAREFUL" \
-                "because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
+                "without you making the selection. ${C_Y}Just BE CAREFUL" \
+                "because actions on disks are ${C_R}IRREVERSIBLE!${N_F}\n"
 
         # INFO: This unmounting action ensure to have nothing actually mounted 
         # on /mnt before starting
@@ -97,11 +97,11 @@ greetings() {
         for i in "${mountpoints[@]}"; do
                 while mountpoint --quiet "/mnt/${i}"; do 
                         if umount --recursive "/mnt/${i}" 1> "/dev/null" 2>&1; then
-                                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted" \
-                                        "${C_CYAN}${i}${NO_FORMAT}."
+                                echo -e "${C_W}> ${SUC} ${C_W}Unmounted" \
+                                        "${C_C}${i}${N_F}."
                         else
-                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error" \
-                                        "while unmounting ${C_CYAN}${i}${C_WHITE}." \
+                                echo -e "${C_W}> ${ERR} ${C_W}Error" \
+                                        "while unmounting ${C_C}${i}${C_W}." \
                                         "You may want to unmount it manually" \
                                         "before starting the installation."
                         fi
@@ -109,13 +109,13 @@ greetings() {
         done
         while mountpoint --quiet "/mnt"; do
                 if umount --recursive "/mnt" 1> "/dev/null" 2>&1; then
-                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted" \
-                                "${C_CYAN}/mnt${NO_FORMAT}."
+                        echo -e "${C_W}> ${SUC} ${C_W}Unmounted" \
+                                "${C_C}/mnt${N_F}."
                 else
-                        echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while" \
-                                "unmounting ${C_CYAN}/mnt${C_WHITE}. You may" \
+                        echo -e "${C_W}> ${ERR} ${C_W}Error while" \
+                                "unmounting ${C_C}/mnt${C_W}. You may" \
                                 "want to unmount it manually before starting" \
-                                "the installation.${NO_FORMAT}"
+                                "the installation.${N_F}"
                 fi
         echo ""
         done

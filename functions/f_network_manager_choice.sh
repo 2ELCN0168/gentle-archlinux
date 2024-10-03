@@ -35,14 +35,14 @@ net_manager() {
                 
                 case "${ans_net_manager}" in
                         [0])
-                                echo -e "${C_WHITE}> ${INFO} You chose" \
-                                        "${C_GREEN}systemd-networkd${NO_FORMAT}.\n"
+                                echo -e "${C_W}> ${INFO} You chose" \
+                                        "${C_G}systemd-networkd${N_F}.\n"
                                 net_manager="systemd-networkd"
                                 break
                                 ;;
                         [1])
-                                echo -e "${C_WHITE}> ${INFO} You chose" \
-                                        "${C_CYAN}NetworkManager${NO_FORMAT}.\n"
+                                echo -e "${C_W}> ${INFO} You chose" \
+                                        "${C_C}NetworkManager${N_F}.\n"
                                 net_manager="networkmanager" 
                                 break
                                 ;;
@@ -54,13 +54,13 @@ net_manager() {
 }
 
 net_menu() {
-        echo -e "\n==${C_CYAN}NETWORK MANAGER${NO_FORMAT}===\n"
+        echo -e "\n==${C_C}NETWORK MANAGER${N_F}===\n"
 
-        echo -e "${C_WHITE}[0] - ${C_GREEN}systemd-networkd${NO_FORMAT} [default]"
-        echo -e "${C_WHITE}[1] - ${C_CYAN}NetworkManager${NO_FORMAT}"
+        echo -e "${C_W}[0] - ${C_G}systemd-networkd${N_F} [default]"
+        echo -e "${C_W}[1] - ${C_C}NetworkManager${N_F}"
 
         echo -e "\n====================\n"
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Which network manager do you want" \
-                "to use? -> ${NO_FORMAT}\c"
+        echo -e "${C_C}:: ${C_W}Which network manager do you want" \
+                "to use? -> ${N_F}\c"
 }

@@ -24,19 +24,19 @@ get_cpu_brand() {
 
         case "${vendor}" in
                 "GenuineIntel")
-                        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}INTEL CPU" \
-                                "${NO_FORMAT} detected.\n"
+                        echo -e "${C_W}> ${INFO} ${C_C}INTEL CPU" \
+                                "${N_F} detected.\n"
                         cpuBrand="INTEL"
                         ;;
                 "AuthenticAMD")
-                        echo -e "${C_WHITE}> ${INFO} ${C_RED}AMD CPU" \
-                                "${NO_FORMAT} detected.\n"
+                        echo -e "${C_W}> ${INFO} ${C_R}AMD CPU" \
+                                "${N_F} detected.\n"
                         cpuBrand="AMD"
                         ;;
                 *)  
-                        echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}Could " \
+                        echo -e "${C_W}> ${INFO} ${C_Y}Could " \
                                 "not detect your CPU vendor. No microcode will " \
-                                "be installed.${NO_FORMAT}\n"
+                                "be installed.${N_F}\n"
                         cpuBrand="UNKNOWN"
                         ;;
         esac

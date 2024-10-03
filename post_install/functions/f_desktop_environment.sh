@@ -3,20 +3,20 @@ desktop_env() {
         local desktop_env=""
 
         while true; do
-                echo -e "==${C_CYAN}DESKTOP ENV.${NO_FORMAT}======\n"
+                echo -e "==${C_C}DESKTOP ENV.${N_F}======\n"
 
-                echo -e "${C_WHITE}[0] - ${C_CYAN}GNOME${NO_FORMAT}"
-                echo -e "${C_WHITE}[1] - ${C_CYAN}KDE Plasma${NO_FORMAT}"
-                echo -e "${C_WHITE}[2] - ${C_CYAN}MATE${NO_FORMAT}"
-                echo -e "${C_WHITE}[3] - ${C_CYAN}Cinnamon${NO_FORMAT}"
-                echo -e "${C_WHITE}[4] - ${C_CYAN}LXDE${NO_FORMAT}"
-                echo -e "${C_WHITE}[5] - ${C_CYAN}MATE${NO_FORMAT}"
-                echo -e "${C_WHITE}[6] - ${C_CYAN}Xfce${NO_FORMAT}"
-                echo -e "${C_WHITE}[7] - ${C_YELLOW}None${NO_FORMAT} (default)"
+                echo -e "${C_W}[0] - ${C_C}GNOME${N_F}"
+                echo -e "${C_W}[1] - ${C_C}KDE Plasma${N_F}"
+                echo -e "${C_W}[2] - ${C_C}MATE${N_F}"
+                echo -e "${C_W}[3] - ${C_C}Cinnamon${N_F}"
+                echo -e "${C_W}[4] - ${C_C}LXDE${N_F}"
+                echo -e "${C_W}[5] - ${C_C}MATE${N_F}"
+                echo -e "${C_W}[6] - ${C_C}Xfce${N_F}"
+                echo -e "${C_W}[7] - ${C_Y}None${N_F} (default)"
 
                 echo -e "\n====================\n"
                 
-                echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which one do you prefer? [0-7] -> ${NO_FORMAT}\c"
+                echo -e "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0-7] -> ${N_F}\c"
 
                 local ans_gui=""
                 read ans_gui
@@ -60,14 +60,14 @@ desktop_env() {
                 esac
         done
 
-        echo -e "${C_WHITE}> ${INFO} Installing ${C_GREEN}${desktop_env}${NO_FORMAT}."
+        echo -e "${C_W}> ${INFO} Installing ${C_G}${desktop_env}${N_F}."
         sleep 2
         pacman -S --noconfirm "${desktop_env}"
 
         if [[ "${?}" -ne 0 ]]; then
-                echo -e "\n${C_WHITE}> ${ERR} Cannot install ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
+                echo -e "\n${C_W}> ${ERR} Cannot install ${C_G}${desktop_env}${N_F}.\n"
         else
-                echo -e "\n${C_WHITE}> ${SUC} Installed ${C_GREEN}${desktop_env}${NO_FORMAT}.\n"
+                echo -e "\n${C_W}> ${SUC} Installed ${C_G}${desktop_env}${N_F}.\n"
         fi
 
         sleep 2
@@ -75,11 +75,11 @@ desktop_env() {
         case "${desktop_env}" in
                 "cinnamon"|"plasma"|"mate"|"xfce4"|"gnome")
                         pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg alacritty
-                        echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} sddm.service .${NO_FORMAT}\n"
+                        echo -e "\n${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} sddm.service .${N_F}\n"
                         systemctl enable sddm.service 1> "/dev/null" 2>&1
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Cannot enable ${C_YELLOW}sddm.service${NO_FORMAT}.\n"
+                                echo -e "${C_W}> ${ERR} ${C_W}Cannot enable ${C_Y}sddm.service${N_F}.\n"
                         fi
                         git clone "https://github.com/keyitdev/sddm-astronaut-theme.git" "/usr/share/sddm/themes/sddm-astronaut-theme"
                         cp -a "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" "/usr/share/fonts/" 1> "/dev/null" 2>&1
@@ -87,11 +87,11 @@ desktop_env() {
                         echo "Current=sddm-astronaut-theme" >> "/etc/sddm.conf"
                         ;;
                 # "gnome")
-                #         echo -e "\n${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} gdm.service .${NO_FORMAT}\n"
+                #         echo -e "\n${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} gdm.service .${N_F}\n"
                 #         systemctl enable gdm.service 1> "/dev/null" 2>&1
                 #
                 #         if [[ "${?}" -ne 0 ]]; then
-                #                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Cannot enable ${C_YELLOW}gdm.service${NO_FORMAT}.\n"
+                #                 echo -e "${C_W}> ${ERR} ${C_W}Cannot enable ${C_Y}gdm.service${N_F}.\n"
                 #         fi
                 #         ;;
         esac

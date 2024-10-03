@@ -1,39 +1,39 @@
 set_time() {
 
-        echo -e "${C_WHITE}> ${INFO} Setting system clock to UTC."
+        echo -e "${C_W}> ${INFO} Setting system clock to UTC."
 
         if hwclock --systohc 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up system clock to UTC.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} ${C_G}Successfully set up system clock to UTC.${N_F}\n"
         else
-                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting system clock to UTC.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${WARN} ${C_Y}Failed to setting system clock to UTC.${N_F}\n"
         fi
 
-        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-timesyncd.${NO_FORMAT}"
+        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} systemd-timesyncd.${N_F}"
         
         if systemctl enable systemd-timesyncd 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully set up NTP.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} ${C_G}Successfully set up NTP.${N_F}\n"
         else
-                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to setting up NTP.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${WARN} ${C_Y}Failed to setting up NTP.${N_F}\n"
         fi
 
         nKorea=0
         local country=""
 
         while true; do
-                echo -e "==${C_CYAN}TIME${NO_FORMAT}==============\n"
+                echo -e "==${C_C}TIME${N_F}==============\n"
 
-                echo -e "${C_WHITE}[0] - ${C_CYAN}France${NO_FORMAT} [default]"
-                echo -e "${C_WHITE}[1] - ${C_WHITE}England${NO_FORMAT}"
-                echo -e "${C_WHITE}[2] - ${C_WHITE}US (New-York)${NO_FORMAT}"
-                echo -e "${C_WHITE}[3] - ${C_RED}Japan${NO_FORMAT}"
-                echo -e "${C_WHITE}[4] - ${C_CYAN}South Korea (Seoul)${NO_FORMAT}"
-                echo -e "${C_WHITE}[5] - ${C_RED}Russia (Moscow)${NO_FORMAT}"
-                echo -e "${C_WHITE}[6] - ${C_RED}China (CST - Shanghai)${NO_FORMAT}"
-                echo -e "${C_WHITE}[7] - ${C_RED}North Korea (Pyongyang)${NO_FORMAT}"
+                echo -e "${C_W}[0] - ${C_C}France${N_F} [default]"
+                echo -e "${C_W}[1] - ${C_W}England${N_F}"
+                echo -e "${C_W}[2] - ${C_W}US (New-York)${N_F}"
+                echo -e "${C_W}[3] - ${C_R}Japan${N_F}"
+                echo -e "${C_W}[4] - ${C_C}South Korea (Seoul)${N_F}"
+                echo -e "${C_W}[5] - ${C_R}Russia (Moscow)${N_F}"
+                echo -e "${C_W}[6] - ${C_R}China (CST - Shanghai)${N_F}"
+                echo -e "${C_W}[7] - ${C_R}North Korea (Pyongyang)${N_F}"
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Where do you live? -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Where do you live? -> ${N_F}\c"
 
                 local ans_localtime=""
                 read ans_localtime
@@ -88,21 +88,21 @@ set_time() {
                 esac
         done
 
-        echo -e "${C_WHITE}> ${INFO} You live in ${C_YELLOW}${country}${NO_FORMAT}.\n"
+        echo -e "${C_W}> ${INFO} You live in ${C_Y}${country}${N_F}.\n"
 }
 
 locales_gen() {
 
         # Uncomment #en_US.UTF-8 UTF-8 in /mnt/etc/locale.gen
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_CYAN}en_US.UTF-8 UTF-8${NO_FORMAT} in ${C_PINK}/etc/locale.gen${NO_FORMAT}...\n"
+        echo -e "${C_W}> ${INFO} ${N_F}Uncommenting ${C_C}en_US.UTF-8 UTF-8${N_F} in ${C_P}/etc/locale.gen${N_F}...\n"
         sed -i '/^\s*#\(en_US.UTF-8 UTF-8\)/ s/^#//' "/etc/locale.gen"
 
-        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Generating locales...${NO_FORMAT}"
+        echo -e "${C_W}> ${INFO} ${C_C}Generating locales...${N_F}"
 
         if locale-gen 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Locales generated successfully.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} ${C_G}Locales generated successfully.${N_F}\n"
         else
-                echo -e "${C_WHITE}> ${WARN} ${C_YELLOW}Failed to generate locales.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${WARN} ${C_Y}Failed to generate locales.${N_F}\n"
         fi
 }
 
@@ -110,15 +110,15 @@ set_hostname() {
 
         # Setting up /etc/hostname
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Enter your hostname without domain."
-        echo -e "${C_CYAN}:: ${C_WHITE}Recommended hostname length: 15 chars. Default is 'localhost' -> ${NO_FORMAT}\c"
+        echo -e "${C_C}:: ${C_W}Enter your hostname without domain."
+        echo -e "${C_C}:: ${C_W}Recommended hostname length: 15 chars. Default is 'localhost' -> ${N_F}\c"
 
         local ans_hostname=""
         read ans_hostname
         : "${ans_hostname:=localhost}"
         echo ""
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${NO_FORMAT}\c."
+        echo -e "${C_C}:: ${C_W}Enter your domain name. Default is 'home.arpa' (RFC 8375) -> ${N_F}\c."
 
         local ans_domain_name=""
         read ans_domain_name
@@ -128,14 +128,14 @@ set_hostname() {
         export hostname="${ans_hostname}"
 
         echo -e "${hostname}.${domain}" > "/etc/hostname"
-        echo -e "\n${C_WHITE}> ${INFO} ${NO_FORMAT}Your hostname will be ${C_CYAN}${hostname}.${domain}${NO_FORMAT} (FQDN).\n"
+        echo -e "\n${C_W}> ${INFO} ${N_F}Your hostname will be ${C_C}${hostname}.${domain}${N_F} (FQDN).\n"
 }
 
 set_hosts() {
 
         # Setting up /mnt/etc/hosts
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Setting up ${C_PINK}/etc/hosts${NO_FORMAT}"
-        echo -e "> ${C_GREEN}Here is the file:${NO_FORMAT}\n"
+        echo -e "${C_W}> ${INFO} ${N_F}Setting up ${C_P}/etc/hosts${N_F}"
+        echo -e "> ${C_G}Here is the file:${N_F}\n"
 
         echo -e "127.0.0.1      localhost.localdomain           localhost                       localhost-ipv4" > "/etc/hosts"
         echo -e "::1            localhost.localdomain           localhost                       localhost-ipv6" >> "/etc/hosts"
@@ -156,20 +156,20 @@ set_hosts() {
 set_vconsole() {
 
         # Creating /mnt/etc/vconsole.conf
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Creating the file ${C_PINK}/etc/vconsole.conf${NO_FORMAT}."
+        echo -e "${C_W}> ${INFO} ${N_F}Creating the file ${C_P}/etc/vconsole.conf${N_F}."
 
         local keymap=""
 
         while true; do
-                echo -e "\n==${C_CYAN}KEYMAP${NO_FORMAT}============\n"
+                echo -e "\n==${C_C}KEYMAP${N_F}============\n"
 
-                echo -e "${C_WHITE}[0] - ${C_WHITE}US INTL. - QWERTY${NO_FORMAT} [default]"
-                echo -e "${C_WHITE}[1] - ${C_WHITE}US - QWERTY${NO_FORMAT}"
-                echo -e "${C_WHITE}[2] - ${C_WHITE}FR - AZERTY${NO_FORMAT}"
+                echo -e "${C_W}[0] - ${C_W}US INTL. - QWERTY${N_F} [default]"
+                echo -e "${C_W}[1] - ${C_W}US - QWERTY${N_F}"
+                echo -e "${C_W}[2] - ${C_W}FR - AZERTY${N_F}"
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Select your keymap -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Select your keymap -> ${N_F}\c"
 
                 local ans_keymap=""
                 read ans_keymap
@@ -195,7 +195,7 @@ set_vconsole() {
                 esac
         done
 
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose ${C_PINK}${keymap}${NO_FORMAT}.\n"
+        echo -e "${C_W}> ${INFO} ${N_F}You chose ${C_P}${keymap}${N_F}.\n"
         echo "KEYMAP=${keymap}" > "/etc/vconsole.conf"
         echo "FONT=ter-116b" >> "/etc/vconsole.conf"
 }
@@ -203,7 +203,7 @@ set_vconsole() {
 set_pacman() {
 
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf AGAIIIIN
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Uncommenting ${C_WHITE}'Color'${NO_FORMAT} and ${C_WHITE}'ParallelDownloads 5'${NO_FORMAT} in ${C_PINK}/mnt/etc/pacman.conf${NO_FORMAT} AGAIIIIN.\n"
+        echo -e "${C_W}> ${INFO} ${N_F}Uncommenting ${C_W}'Color'${N_F} and ${C_W}'ParallelDownloads 5'${N_F} in ${C_P}/mnt/etc/pacman.conf${N_F} AGAIIIIN.\n"
 
         #sed -i '/^\s*#\(Color\|ParallelDownloads\)/ s/^#//' /etc/pacman.conf
         sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' "/etc/pacman.conf"
@@ -216,7 +216,7 @@ set_pacman() {
 set_mkinitcpio() {
 
         # Making a clean backup of /mnt/etc/mkinitcpio.conf
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Making a backup of ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT}..."
+        echo -e "${C_W}> ${INFO} ${N_F}Making a backup of ${C_P}/etc/mkinitcpio.conf${N_F}..."
 
         if [[ ! -e "/etc/mkinitcpio.conf.d" ]]; then
                 mkdir "/etc/mkinitcpio.conf.d"
@@ -240,7 +240,7 @@ set_mkinitcpio() {
                 isLVM="lvm2 "
         fi
 
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Updating ${C_PINK}/etc/mkinitcpio.conf${NO_FORMAT} with custom parameters...\n"
+        echo -e "${C_W}> ${INFO} ${N_F}Updating ${C_P}/etc/mkinitcpio.conf${N_F} with custom parameters...\n"
 
         local mkcpioHOOKS="HOOKS=(base systemd ${isBTRFS}autodetect modconf kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
 
@@ -252,7 +252,7 @@ set_mkinitcpio() {
 
 set_root_passwd() {
 
-        echo -e "\n${C_WHITE}> ${INFO} ${C_CYAN}Changing root password...${NO_FORMAT}\n"
+        echo -e "\n${C_W}> ${INFO} ${C_C}Changing root password...${N_F}\n"
         while true; do
                 if passwd; then
                         break
@@ -289,10 +289,10 @@ EOF
 enable_net_manager() {
 
         if [[ "${net_manager}" == "networkmanager" ]]; then
-                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} NetworkManager.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} NetworkManager.${N_F}\n"
                 systemctl enable NetworkManager 1> "/dev/null" 2>&1
         elif [[ "${net_manager}" == "systemd-networkd" ]]; then
-                echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-networkd.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} systemd-networkd.${N_F}\n"
                 systemctl enable systemd-networkd 1> "/dev/null" 2>&1
         fi
 }

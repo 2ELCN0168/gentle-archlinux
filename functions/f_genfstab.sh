@@ -20,15 +20,15 @@
 
 gen_fstab() {
 
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Generating" \
-                "${C_PINK}/mnt/etc/fstab${NO_FORMAT} file."
+        echo -e "${C_W}> ${INFO} ${N_F}Generating" \
+                "${C_P}/mnt/etc/fstab${N_F} file."
         # COMMAND:
         # genfstab --uuid "/mnt"
         if genfstab -U "/mnt" >> "/mnt/etc/fstab"; then
-                echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}Generated" \
-                        "${C_PINK}/mnt/etc/fstab${NO_FORMAT} file.\n"
+                echo -e "${C_W}> ${SUC} ${N_F}Generated" \
+                        "${C_P}/mnt/etc/fstab${N_F} file.\n"
         else
-                echo -e "${C_WHITE}> ${WARN} ${NO_FORMAT}Failed to generate" \
-                        "${C_PINK}/mnt/etc/fstab${NO_FORMAT} file.\n"
+                echo -e "${C_W}> ${WARN} ${N_F}Failed to generate" \
+                        "${C_P}/mnt/etc/fstab${N_F} file.\n"
         fi
 }

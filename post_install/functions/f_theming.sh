@@ -3,16 +3,16 @@ create_themes() {
         export theme_color=""
 
         while true; do
-                echo -e "\n==${C_CYAN}THEMES${NO_FORMAT}============\n"
+                echo -e "\n==${C_C}THEMES${N_F}============\n"
 
-                echo -e "${C_WHITE}[0] - ${C_WHITE}Catppuccin latte (light)${NO_FORMAT}"
-                echo -e "${C_WHITE}[1] - ${C_CYAN}Tokyonight storm (dark)${NO_FORMAT} [default]"
-                echo -e "${C_WHITE}[2] - ${C_RED}Red impact (dark)${NO_FORMAT}"
-                echo -e "${C_WHITE}[3] - ${NO_FORMAT}Keep default TTY colors"
+                echo -e "${C_W}[0] - ${C_W}Catppuccin latte (light)${N_F}"
+                echo -e "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} [default]"
+                echo -e "${C_W}[2] - ${C_R}Red impact (dark)${N_F}"
+                echo -e "${C_W}[3] - ${N_F}Keep default TTY colors"
 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Which theme do you prefer for your TTY? Each one will be created anyway. -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Which theme do you prefer for your TTY? Each one will be created anyway. -> ${N_F}\c"
 
                 local tty_theme=""
                 local ans_tty_theme=""
@@ -59,7 +59,7 @@ create_themes() {
                 esac
         done
         
-        echo -e "${C_WHITE}> ${INFO} ${C_WHITE}TTY theme has been set to ${C_CYAN}${tty_theme}${NO_FORMAT}.\n"
+        echo -e "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}${tty_theme}${N_F}.\n"
 
         mkdir "/etc/tty_themes.d"
 

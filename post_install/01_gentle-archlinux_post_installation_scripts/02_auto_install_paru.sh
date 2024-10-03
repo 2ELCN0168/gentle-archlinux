@@ -1,24 +1,24 @@
 #! /bin/bash
 
-declare C_RED="\033[91m"
-declare C_GREEN="\033[92m"
-declare C_CYAN="\033[96m"
-declare C_YELLOW="\033[93m"
-declare C_WHITE="\033[97m"
+declare C_R="\033[91m"
+declare C_G="\033[92m"
+declare C_C="\033[96m"
+declare C_Y="\033[93m"
+declare C_W="\033[97m"
 
 # End of the color sequence
-declare NO_FORMAT="\033[0m"
+declare N_F="\033[0m"
 
 main() {
 
         if [[ "${EUID}" -eq 0 ]]; then
-                echo -e "${C_WHITE}:: ${C_RED}This script must be executed as a non-privileged user. Exiting.${C_WHITE} ::${NO_FORMAT}"
+                echo -e "${C_W}:: ${C_R}This script must be executed as a non-privileged user. Exiting.${C_W} ::${N_F}"
                 exit 1
         fi
 
         declare ans_paru=""
         while true; do
-                echo -e "${C_WHITE}Do you want to install ${C_CYAN}paru${C_WHITE}? It's an AUR helper and a pacman wrapper. [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_W}Do you want to install ${C_C}paru${C_W}? It's an AUR helper and a pacman wrapper. [Y/n] -> ${N_F}\c"
 
                 read ans_paru
                 : "${ans_paru:=Y}"
@@ -29,11 +29,11 @@ main() {
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_YELLOW}Nothing has been done${NO_FORMAT}\n"
+                                echo -e "${C_Y}Nothing has been done${N_F}\n"
                                 exit 0
                                 ;;
                         *)
-                                echo -e "${C_YELLOW}Not a valid answer.${NO_FORMAT}\n"
+                                echo -e "${C_Y}Not a valid answer.${N_F}\n"
                                 ;;
                 esac
         done
@@ -45,9 +45,9 @@ main() {
         paru --version
         
         if [[ "${?}" -eq 0 ]]; then
-                echo -e "${C_GREEN}Paru has been installed.${NO_FORMAT}"
+                echo -e "${C_G}Paru has been installed.${N_F}"
         else
-                echo -e "${C_RED}An error occured during the installation.${NO_FORMAT}"
+                echo -e "${C_R}An error occured during the installation.${N_F}"
         fi
         
         return 0

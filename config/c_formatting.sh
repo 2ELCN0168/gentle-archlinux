@@ -1,3 +1,3 @@
 invalid_answer() {
-        echo -e "${C_WHITE}> ${WARN} ${C_RED}Not a valid answer.${NO_FORMAT}\n"
+        echo -e "${C_W}> ${WARN} ${C_R}Not a valid answer.${N_F}\n"
 }

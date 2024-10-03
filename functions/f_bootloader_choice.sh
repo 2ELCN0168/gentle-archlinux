@@ -33,15 +33,15 @@ bootloader_choice() {
                 return
         else
                 while true; do
-                        echo -e "==${C_CYAN}BOOTLOADER${NO_FORMAT}========\n"
+                        echo -e "==${C_C}BOOTLOADER${N_F}========\n"
 
-                        echo -e "${C_WHITE}[0] - ${C_CYAN}rEFInd${NO_FORMAT} (default)"
-                        echo -e "${C_WHITE}[1] - ${C_YELLOW}GRUB2${NO_FORMAT}"
-                        echo -e "${C_WHITE}[2] - ${C_RED}systemd-boot${NO_FORMAT}"
+                        echo -e "${C_W}[0] - ${C_C}rEFInd${N_F} (default)"
+                        echo -e "${C_W}[1] - ${C_Y}GRUB2${N_F}"
+                        echo -e "${C_W}[2] - ${C_R}systemd-boot${N_F}"
 
                         echo -e "\n====================\n"
                         
-                        echo -e "${C_CYAN}${BOLD}:: ${C_WHITE}Which one do you prefer? [0/1/2] -> ${NO_FORMAT}\c"
+                        echo -e "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0/1/2] -> ${N_F}\c"
 
                         local ans_bootloader=""
                         read ans_bootloader
@@ -49,20 +49,20 @@ bootloader_choice() {
 
                         case "${ans_bootloader}" in
                                 0) 
-                                        echo -e "${C_WHITE}> ${INFO} We will" \
-                                                "install ${C_CYAN}rEFInd${NO_FORMAT}\n"
+                                        echo -e "${C_W}> ${INFO} We will" \
+                                                "install ${C_C}rEFInd${N_F}\n"
                                         bootloader="REFIND"
                                         break
                                         ;;
                                 1)
-                                        echo -e "${C_WHITE}> ${INFO} We will" \
-                                                "install ${C_YELLOW}GRUB2${NO_FORMAT}\n"
+                                        echo -e "${C_W}> ${INFO} We will" \
+                                                "install ${C_Y}GRUB2${N_F}\n"
                                         bootloader="GRUB"
                                         break
                                         ;;
                                 2)
-                                        echo -e "${C_WHITE}> ${INFO} We will" \
-                                                "install ${C_RED}systemd-boot${NO_FORMAT}\n"
+                                        echo -e "${C_W}> ${INFO} We will" \
+                                                "install ${C_R}systemd-boot${N_F}\n"
                                         bootloader="SYSTEMDBOOT"
                                         break
                                         ;;

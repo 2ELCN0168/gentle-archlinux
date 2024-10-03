@@ -25,14 +25,14 @@ test_internet() {
 
         while (( "${attempt}" > 0 )); do
                 if ping -c 1 1.1.1.1 1> "/dev/null" 2>&1; then
-                        echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Internet" \
-                                "connection detected.${NO_FORMAT}\n"
+                        echo -e "${C_W}> ${SUC} ${C_G}Internet" \
+                                "connection detected.${N_F}\n"
                         return
                 fi
                 (( attempt-- ))
         done
 
-        echo -e "${C_WHITE}> ${WARN} ${C_RED}No Internet connection detected." \
-                "Exiting...${NO_FORMAT}\n"
+        echo -e "${C_W}> ${WARN} ${C_R}No Internet connection detected." \
+                "Exiting...${N_F}\n"
         exit 1
 }

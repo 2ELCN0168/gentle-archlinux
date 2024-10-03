@@ -27,7 +27,7 @@ declare_bootloader_vars() {
 refind_as_fallback() {
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Should we install rEFInd? [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Should we install rEFInd? [Y/n] -> ${N_F}\c"
 
                 local ans_install_refind=""
                 read ans_install_refind
@@ -41,7 +41,7 @@ refind_as_fallback() {
                                 break
                                 ;;
                         "n"|"N")
-                                echo -e "${C_WHITE}> ${WARN} Fine, I guess you know what you're doing.\n"
+                                echo -e "${C_W}> ${WARN} Fine, I guess you know what you're doing.\n"
                                 break
                                 ;;
                         *)
@@ -91,40 +91,40 @@ install_refind() {
                 uuid=$(blkid -o value -s UUID "${root_part}")
         fi
 
-        echo -e "${C_WHITE}> ${INFO} Installing rEFInd.${NO_FORMAT}"
+        echo -e "${C_W}> ${INFO} Installing rEFInd.${N_F}"
         refind-install 1> "/dev/null" 2>&1
 
         if [[ "${?}" -eq 0 ]]; then
-                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}rEFInd configuration created successfully.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} ${C_W}rEFInd configuration created successfully.${N_F}\n"
                 # This is interesting, it generates the proper refind_linux.conf file with custom parameters, e.g., filesystem and microcode
-                echo -e "${C_WHITE}> ${INFO} ${C_PINK}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${NO_FORMAT} to ${C_WHITE}/boot/refind_linux.conf.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${INFO} ${C_P}\"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\"${N_F} to ${C_W}/boot/refind_linux.conf.${N_F}\n"
                 echo -e \"Arch Linux\" \"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\" > "/boot/refind_linux.conf"
         else
-                echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Something went wrong, rEFInd has not been installed, you may want to launch manually \"refind-install\" at the end of the installation. But make sure the file \"/boot/refind_linux.conf\" is correctly set up."
+                echo -e "${C_W}> ${ERR} ${C_W}Something went wrong, rEFInd has not been installed, you may want to launch manually \"refind-install\" at the end of the installation. But make sure the file \"/boot/refind_linux.conf\" is correctly set up."
         fi
 }
 
 install_grub() {
 
         if [[ "${UEFI}" -eq 1 ]]; then
-                echo -e "${C_WHITE}> ${INFO} Installing grub for EFI to /boot.\n"
+                echo -e "${C_W}> ${INFO} Installing grub for EFI to /boot.\n"
 
                 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB 1> "/dev/null" 2>&1
 
                 if [[ ! "${?}" -eq 0 ]]; then
-                        echo -e "${C_WHITE}> ${ERR} GRUB installation failed, trying another method...\n"
+                        echo -e "${C_W}> ${ERR} GRUB installation failed, trying another method...\n"
 
                         grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable --force 1> "/dev/null" 2>&1
 
                         if [[ ! "${?}" -eq 0 ]]; then
-                                echo -e "${C_WHITE}> ${ERR} ${C_RED}GRUB installation failed even with different parameters, you will have to install and configure a bootloader manually. Good luck.${NO_FORMAT}"
+                                echo -e "${C_W}> ${ERR} ${C_R}GRUB installation failed even with different parameters, you will have to install and configure a bootloader manually. Good luck.${N_F}"
                                 refind_as_fallback
                                 
                         fi
                 fi
 
         elif [[ "${UEFI}" -eq 0 ]]; then
-                echo -e "${C_WHITE}> ${INFO} Installing grub for BIOS to /boot.\n"
+                echo -e "${C_W}> ${INFO} Installing grub for BIOS to /boot.\n"
                 grub-install --target=i386-pc /dev/$disk 1> "/dev/null" 2>&1
         fi
 
@@ -164,7 +164,7 @@ install_grub() {
         fi
 
         grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
-        echo -e "${C_WHITE}> ${INFO} Inserting ${C_PINK}${grubKernelParameters}${NO_FORMAT} to /etc/default/grub."
+        echo -e "${C_W}> ${INFO} Inserting ${C_P}${grubKernelParameters}${N_F} to /etc/default/grub."
 
         # VERY IMPORTANT LINE, SO ANNOYING TO GET IT WORKING, DO NOT DELETE!
         # If it doesn't work anymore, remove brackets to ${grubKernelParameters}
@@ -204,7 +204,7 @@ install_systemdboot() {
         fi
 
 
-        echo -e "${C_WHITE}> ${INFO} Installing ${C_RED}systemd-boot.${NO_FORMAT}\n"
+        echo -e "${C_W}> ${INFO} Installing ${C_R}systemd-boot.${N_F}\n"
 
 
         bootctl install --esp-path=/boot 1> "/dev/null" 2>&1
@@ -218,10 +218,10 @@ install_systemdboot() {
                 fi
                 echo -e "options ${rootLine}${isEncrypt}${uuid}${isEncryptEnding} rw ${isBTRFS}" >> "/boot/loader/entries/arch.conf"
 
-                echo -e "${C_WHITE}> ${SUC} Installed ${C_RED}systemd-boot.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} Installed ${C_R}systemd-boot.${N_F}\n"
 
                 #if ! ls /etc/pacman.d/hooks; then
-                echo -e "${C_WHITE}> ${INFO} Creating a pacman hook for ${C_RED}systemd-boot.${NO_FORMAT}"
+                echo -e "${C_W}> ${INFO} Creating a pacman hook for ${C_R}systemd-boot.${N_F}"
 
                 if [[ ! -e "/etc/pacman.d/hooks" ]]; then
                         mkdir -p "/etc/pacman.d/hooks"
@@ -239,7 +239,7 @@ install_systemdboot() {
 EOF
                 #fi
         else
-                echo -e "${C_WHITE}> ${ERR} Error during installation of ${C_RED}systemd-boot.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${ERR} Error during installation of ${C_R}systemd-boot.${N_F}\n"
 
                 refind_as_fallback
        fi

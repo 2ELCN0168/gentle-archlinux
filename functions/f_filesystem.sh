@@ -30,15 +30,15 @@ filesystem_choice() {
         while true; do
                 
                 
-                echo -e "==${C_CYAN}FILESYSTEM${NO_FORMAT}========\n"
+                echo -e "==${C_C}FILESYSTEM${N_F}========\n"
 
-                echo -e "${C_WHITE}[0] - ${C_YELLOW}BTRFS${NO_FORMAT} (default)"
-                echo -e "${C_WHITE}[1] - ${C_CYAN}XFS${NO_FORMAT}"
-                echo -e "${C_WHITE}[2] - ${C_RED}EXT4${NO_FORMAT}"
+                echo -e "${C_W}[0] - ${C_Y}BTRFS${N_F} (default)"
+                echo -e "${C_W}[1] - ${C_C}XFS${N_F}"
+                echo -e "${C_W}[2] - ${C_R}EXT4${N_F}"
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Which filesystem do you want to use? [0/1/2] -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Which filesystem do you want to use? [0/1/2] -> ${N_F}\c"
                 
                 local ans_filesystem=""
                 read ans_filesystem
@@ -62,8 +62,8 @@ filesystem_choice() {
                                 ;;
                 esac
         done
-        echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}You chose" \
-                "${C_WHITE}${filesystem}${NO_FORMAT}\n"
+        echo -e "${C_W}> ${INFO} ${N_F}You chose" \
+                "${C_W}${filesystem}${N_F}\n"
 }
 
 

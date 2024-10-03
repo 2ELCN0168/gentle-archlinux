@@ -38,7 +38,7 @@ disk_choice() {
 
         if [[ "${filesystem}" != 'BTRFS' ]]; then
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you plan to use LVM? [Y/n] -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Do you plan to use LVM? [Y/n] -> ${N_F}\c"
                 
                 local ans_use_lvm=""
                 read ans_use_lvm
@@ -64,7 +64,7 @@ disk_choice() {
                                         else
                                                 if [[ -b "/dev/${ans_block_device}" ]]; then
                                                         if [[ "${disks_array[@]}" =~ "${ans_block_device}" ]]; then
-                                                                echo -e "${C_WHITE}> ${WARN} The chosen disk is already in the list!"
+                                                                echo -e "${C_W}> ${WARN} The chosen disk is already in the list!"
                                                         else
                                                                 disks_array+=("/dev/${ans_block_device}")
                                                                 chosen_disks+=("${ans_block_device}")
@@ -74,8 +74,8 @@ disk_choice() {
                                                 fi
                                         fi
                                 done
-                                echo -e "\n${C_WHITE}> ${INFO} The selected disks" \
-                                        "are ${C_GREEN}${chosen_disks[@]}${NO_FORMAT}\n"
+                                echo -e "\n${C_W}> ${INFO} The selected disks" \
+                                        "are ${C_G}${chosen_disks[@]}${N_F}\n"
                                 ;;
                         [nN])
 
@@ -88,9 +88,9 @@ disk_choice() {
                                         : "${ans_block_device:=sda}"
 
                                         if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}" \
-                                                        "The disk to use is ${C_GREEN}/dev/" \
-                                                        "${ans_block_device}${NO_FORMAT}\n"
+                                                echo -e "${C_W}> ${INFO} ${N_F}" \
+                                                        "The disk to use is ${C_G}/dev/" \
+                                                        "${ans_block_device}${N_F}\n"
                                                 disks_array+=("/dev/${ans_block_device}")
                                                 break
                                         else
@@ -113,9 +113,9 @@ disk_choice() {
                         : "${ans_block_device:=sda}"
 
                         if [[ -b "/dev/${ans_block_device}" ]]; then
-                                echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}The disk"\
-                                        "to use is ${C_GREEN}/dev/${ans_block_device}" \
-                                        "${NO_FORMAT}\n"
+                                echo -e "${C_W}> ${INFO} ${N_F}The disk"\
+                                        "to use is ${C_G}/dev/${ans_block_device}" \
+                                        "${N_F}\n"
                                 disks_array+=("/dev/${ans_block_device}")
                                 break
                         else
@@ -140,13 +140,13 @@ display_disks() {
                 exclude_pattern+="|${disk}"
         done
 
-        echo -e "\n==${C_CYAN}DISK${NO_FORMAT}==============\n"
+        echo -e "\n==${C_C}DISK${N_F}==============\n"
 
         lsblk --nodeps --output NAME | grep --invert-match --extended-regexp "${exclude_pattern}"
         echo -e ""
 
         echo -e "====================\n"
 
-        echo -e "${C_CYAN}:: ${C_WHITE}Which block device do you want to use?" \
-                "(default=sda) Type \"q\" to quit -> ${NO_FORMAT}\c"
+        echo -e "${C_C}:: ${C_W}Which block device do you want to use?" \
+                "(default=sda) Type \"q\" to quit -> ${N_F}\c"
 }

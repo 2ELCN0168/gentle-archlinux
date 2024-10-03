@@ -26,7 +26,7 @@ source_files() {
 
 main() {
         
-        trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, installation aborted. Exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
+        trap 'echo -e "\n\n${C_B}:: ${C_R}Program interrupted, installation aborted. Exiting with code 1.${C_B} ::\n" ; exit 1' INT
 
         # SOURCE FILES
         source_files

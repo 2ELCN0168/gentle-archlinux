@@ -24,8 +24,8 @@ luks_choice() {
 
         while true; do
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want your system to be" \
-                        "encrypted with ${B_RED} LUKS ${NO_FORMAT} ? [y/N] -> \c"
+                echo -e "${C_C}:: ${C_W}Do you want your system to be" \
+                        "encrypted with ${B_R} LUKS ${N_F} ? [y/N] -> \c"
 
                 local ans_luks=""
                 read ans_luks
@@ -33,14 +33,14 @@ luks_choice() {
 
                 case "${ans_luks}" in
                         [yY])
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}cryptsetup" \
-                                        "${NO_FORMAT} will be installed.\n"
+                                echo -e "${C_W}> ${INFO} ${C_G}cryptsetup" \
+                                        "${N_F} will be installed.\n"
                                 wantEncrypted=1
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_WHITE}> ${INFO} ${C_RED}cryptsetup" \
-                                        "${NO_FORMAT} won't be installed.\n"
+                                echo -e "${C_W}> ${INFO} ${C_R}cryptsetup" \
+                                        "${N_F} won't be installed.\n"
                                 wantEncrypted=0
                                 break
                                 ;;

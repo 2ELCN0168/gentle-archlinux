@@ -16,8 +16,8 @@
 #
 
 opt_h_help() {
-        echo -e "\n${C_WHITE}Welcome to this automated ${C_CYAN}Archlinux" \
-                "${C_WHITE}installer!${NO_FORMAT}\n"
+        echo -e "\n${C_W}Welcome to this automated ${C_C}Archlinux" \
+                "${C_W}installer!${N_F}\n"
         echo -e "This script aims to automate in a better way than the" \
                 "archinstall script, the Archlinux installation."
         echo -e "There are a lot of options to discover and the script is" \
@@ -26,14 +26,14 @@ opt_h_help() {
                 "machine.\n"
         echo -e "To install a Graphical User Interface (Desktop" \
                 "Environment only), use the -c parameter.\n"
-        echo -e "${C_CYAN}Options:${NO_FORMAT}\n"
-        echo -e "${C_BLUE}  -h${C_WHITE}   Display this help.${NO_FORMAT}"
-        echo -e "${C_BLUE}  -e${C_WHITE}   Enable hardening mode" \
-                "(Enhanced security).${NO_FORMAT}"
-        echo -e "${C_BLUE}  -m${C_WHITE}   Minimal installation (Fast" \
-                "with default options).${NO_FORMAT}"
-        echo -e "${C_BLUE}  -c${C_WHITE}   Full detailed installation" \
-                "(Complete customization).${NO_FORMAT}"
+        echo -e "${C_C}Options:${N_F}\n"
+        echo -e "${C_B}  -h${C_W}   Display this help.${N_F}"
+        echo -e "${C_B}  -e${C_W}   Enable hardening mode" \
+                "(Enhanced security).${N_F}"
+        echo -e "${C_B}  -m${C_W}   Minimal installation (Fast" \
+                "with default options).${N_F}"
+        echo -e "${C_B}  -c${C_W}   Full detailed installation" \
+                "(Complete customization).${N_F}"
         echo -e "\n"
         exit 0
 }

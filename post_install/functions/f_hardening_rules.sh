@@ -1,6 +1,6 @@
 hardening_rules() {
 
-        echo -e "${C_RED}> ${INFO} ${C_RED}== THE SYSTEM IS BEING HARDENED ==.${NO_FORMAT}"
+        echo -e "${C_R}> ${INFO} ${C_R}== THE SYSTEM IS BEING HARDENED ==.${N_F}"
 
         ### DISABLE CORE DUMPS ###
         #
@@ -39,24 +39,24 @@ hardening_rules() {
 
         ### INSTALL cracklib AND libpwquality
         #
-        echo -e "${C_RED}> ${INFO} ${C_RED}Installing ${C_WHITE}cracklib${C_RED} and ${C_WHITE}libpwquality${C_RED}.${NO_FORMAT}"
+        echo -e "${C_R}> ${INFO} ${C_R}Installing ${C_W}cracklib${C_R} and ${C_W}libpwquality${C_R}.${N_F}"
         pacman -S --noconfirm cracklib libpwquality 1> "/dev/null" 2>&1
 
         if [[ "${?}" -ne 0 ]]; then
-                echo -e "${C_RED}> ${ERR} ${C_RED}Error during installation of ${C_WHITE}cracklib${C_RED} and ${C_WHITE}libpwquality${C_RED}.${NO_FORMAT}"
+                echo -e "${C_R}> ${ERR} ${C_R}Error during installation of ${C_W}cracklib${C_R} and ${C_W}libpwquality${C_R}.${N_F}"
         else
-                echo -e "${C_RED}> ${SUC} ${C_RED}Installed ${C_WHITE}cracklib${C_RED} and ${C_WHITE}libpwquality${C_RED}.${NO_FORMAT}"
+                echo -e "${C_R}> ${SUC} ${C_R}Installed ${C_W}cracklib${C_R} and ${C_W}libpwquality${C_R}.${N_F}"
         fi
 
         ### ENABLE auditd.service ###
         #
 
-        echo -e "${C_RED}> ${INFO} ${C_RED} systemctl enable ${C_BLUE}auditd.service${C_RED}.${NO_FORMAT}"
+        echo -e "${C_R}> ${INFO} ${C_R} systemctl enable ${C_B}auditd.service${C_R}.${N_F}"
 
         systemctl enable auditd.service 1> "/dev/null" 2>&1
         if [[ "${?}" -ne 0 ]]; then
-                echo -e "${C_RED}> ${ERR} Cannot enable ${C_WHITE}auditd.service.${NO_FORMAT}\n"
+                echo -e "${C_R}> ${ERR} Cannot enable ${C_W}auditd.service.${N_F}\n"
         fi
 
-        echo -e "${C_RED}> ${SUC} ${C_RED}== THE SYSTEM HAS BEEN HARDENED ==.${NO_FORMAT}"
+        echo -e "${C_R}> ${SUC} ${C_R}== THE SYSTEM HAS BEEN HARDENED ==.${N_F}"
 }       

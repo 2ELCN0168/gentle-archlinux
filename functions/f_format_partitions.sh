@@ -27,17 +27,17 @@ source "./functions/f_lvm.sh"
 
 format_partitions() {
 
-        echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting" \
-                "${boot_part} to FAT32.${NO_FORMAT}"
+        echo -e "${C_W}> ${INFO} ${C_C}Formatting" \
+                "${boot_part} to FAT32.${N_F}"
 
         # COMMAND:
         # mkfs.fat --fat-size 32 --volume-name "ESP" "${boot_part}"
         if mkfs.fat -F 32 -n ESP "${boot_part}" 1> "/dev/null" 2>&1; then
-                echo -e "${C_WHITE}> ${SUC} ${C_GREEN}Successfully formatted" \
-                        "${boot_part} to FAT32.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${SUC} ${C_G}Successfully formatted" \
+                        "${boot_part} to FAT32.${N_F}\n"
         else
-                echo -e "${C_WHITE}> ${ERR} ${C_RED}Error during formatting" \
-                        "${boot_part} to FAT32.${NO_FORMAT}\n"
+                echo -e "${C_W}> ${ERR} ${C_R}Error during formatting" \
+                        "${boot_part} to FAT32.${N_F}\n"
                 exit 1
         fi
 

@@ -37,14 +37,14 @@ btrfs_mgmt() {
 
         while true; do
 
-                echo -e "==${C_CYAN}SUBVOLUMES${NO_FORMAT}========\n"
+                echo -e "==${C_C}SUBVOLUMES${N_F}========\n"
 
-                echo -e "${C_WHITE}[0] - ${C_YELLOW}Make subvolumes!${NO_FORMAT} (default)"
-                echo -e "${C_WHITE}[1] - ${C_CYAN}No subvolumes this time${NO_FORMAT}"
+                echo -e "${C_W}[0] - ${C_Y}Make subvolumes!${N_F} (default)"
+                echo -e "${C_W}[1] - ${C_C}No subvolumes this time${N_F}"
                 
                 echo -e "\n====================\n"
 
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to use subvolumes? [0/1] -> ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Do you want to use subvolumes? [0/1] -> ${N_F}\c"
                 
                 local ans_btrfs_subvols=""
                 read ans_btrfs_subvols
@@ -53,14 +53,14 @@ btrfs_mgmt() {
                 case "${ans_btrfs_subvols}" in
                         [0])
                                 btrfsSubvols=1
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
-                                        "to make subvolumes. Good choice.${NO_FORMAT}\n"
+                                echo -e "${C_W}> ${INFO} ${C_G}You chose" \
+                                        "to make subvolumes. Good choice.${N_F}\n"
                                 break
                                 ;;
                         [1])
                                 btrfsSubvols=0
-                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}No subvolume" \
-                                        "will be created.${NO_FORMAT}\n"
+                                echo -e "${C_W}> ${INFO} ${C_Y}No subvolume" \
+                                        "will be created.${N_F}\n"
                                 break
                                 ;;
                         *)
@@ -71,8 +71,8 @@ btrfs_mgmt() {
         
         # INFO:
         # Formatting the root partition before creating subvolumes.
-        echo -e "${C_WHITE}> ${INFO} Formatting ${root_part}" \
-                "to ${filesystem}.${NO_FORMAT}\n"
+        echo -e "${C_W}> ${INFO} Formatting ${root_part}" \
+                "to ${filesystem}.${N_F}\n"
         mkfs.btrfs --force --label "Archlinux" "${root_part}" 1> "/dev/null" 2>&1
 
         # INFO:
@@ -104,8 +104,8 @@ btrfs_mgmt() {
         # INFO:
         # Then, create the subvolumes defined above in the table.
         for i in "${btrfs_subvols[@]}"; do
-                echo -e "${C_WHITE}> ${INFO} Creating${NO_FORMAT}" \
-                        "${C_YELLOW}subvolume ${C_GREEN}${i}${NO_FORMAT}"
+                echo -e "${C_W}> ${INFO} Creating${N_F}" \
+                        "${C_Y}subvolume ${C_G}${i}${N_F}"
                 if ! btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         echo "Cannot create subvolume ${i}"
                 else 
@@ -129,16 +129,16 @@ btrfs_mgmt() {
                         _mountpoint="/mnt/${i//@/}"
                 fi
                 
-                echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}${i}" \
-                        "${NO_FORMAT}to ${C_PINK}${_mountpoint}${NO_FORMAT}"
+                echo -e "${C_W}> ${INFO} Mounting ${C_G}${i}" \
+                        "${N_F}to ${C_P}${_mountpoint}${N_F}"
                 
                 mount --mkdir --types btrfs --options \
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
                 "${root_part}" "${_mountpoint}"
         done
                 
-        echo -e "${C_WHITE}> ${INFO} Mounting ${C_GREEN}/dev/sda1${NO_FORMAT}" \
-                "to ${C_PINK}/mnt/boot${NO_FORMAT}\n"
+        echo -e "${C_W}> ${INFO} Mounting ${C_G}/dev/sda1${N_F}" \
+                "to ${C_P}/mnt/boot${N_F}\n"
         mount --mkdir "${boot_part}" "/mnt/boot"
 
         # INFO:
@@ -154,8 +154,8 @@ btrfs_mgmt() {
         fi
 
         while true; do
-                echo -e "${C_CYAN}:: ${C_WHITE}Do you want to enable" \
-                        "quotas on your subvolumes? [Y/n] ${NO_FORMAT}\c"
+                echo -e "${C_C}:: ${C_W}Do you want to enable" \
+                        "quotas on your subvolumes? [Y/n] ${N_F}\c"
 
                 local ans_btrfs_subvols_quotas=""
                 read ans_btrfs_subvols_quotas
@@ -163,13 +163,13 @@ btrfs_mgmt() {
 
                 case "${ans_btrfs_subvols_quotas}" in
                         [yY])
-                                echo -e "${C_WHITE}> ${INFO} ${C_GREEN}You chose" \
-                                        "to enable quotas.${NO_FORMAT}\n"
+                                echo -e "${C_W}> ${INFO} ${C_G}You chose" \
+                                        "to enable quotas.${N_F}\n"
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_WHITE}> ${INFO} ${C_YELLOW}There will" \
-                                        "be no quotas on your subvolumes.${NO_FORMAT}\n"
+                                echo -e "${C_W}> ${INFO} ${C_Y}There will" \
+                                        "be no quotas on your subvolumes.${N_F}\n"
                                 return
                                 ;;
                         *)
@@ -180,8 +180,8 @@ btrfs_mgmt() {
 
         for i in "${btrfs_subvols[@]:3:2}"; do
                 local clean_i="${i//@/}"
-                echo -e "${C_WHITE}> ${INFO} Enabling quota for" \
-                        "${C_GREEN}@${clean_i}${NO_FORMAT}"
+                echo -e "${C_W}> ${INFO} Enabling quota for" \
+                        "${C_G}@${clean_i}${N_F}"
                 btrfs quota enable "/mnt/${clean_i}"
                 btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
                 btrfs qgroup limit 5G "/mnt/${clean_i}"

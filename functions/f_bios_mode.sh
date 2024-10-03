@@ -27,17 +27,17 @@
 #         local efi_path="/sys/firmware/efi/fw_platform_size"
 #
 #         if [[ ! -z "${efi_path}" ]]; then
-#                 echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Running in" \
-#                         "${C_CYAN}UEFI${NO_FORMAT} mode."
-#                 echo -e "${C_CYAN}You are using UEFI mode, you have the choice" \
-#                         "for the bootloader...${NO_FORMAT}\n"
+#                 echo -e "${C_W}> ${INFO} ${N_F}Running in" \
+#                         "${C_C}UEFI${N_F} mode."
+#                 echo -e "${C_C}You are using UEFI mode, you have the choice" \
+#                         "for the bootloader...${N_F}\n"
 #                 UEFI=1
 #         else
-#                 echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Running in" \
-#                         "${C_RED}BIOS${NO_FORMAT} mode."
-#                 echo -e "${C_YELLOW}No choice for you. You would have been" \
+#                 echo -e "${C_W}> ${INFO} ${N_F}Running in" \
+#                         "${C_R}BIOS${N_F} mode."
+#                 echo -e "${C_Y}No choice for you. You would have been" \
 #                         "better off using UEFI mode. We will install" \
-#                         "GRUB2.${NO_FORMAT}\n"
+#                         "GRUB2.${N_F}\n"
 #                 UEFI=0
 #         fi
 # }
@@ -46,11 +46,11 @@
 
 get_bios_mode() {
 
-        local C_W="${C_WHITE}"
-        local C_C="${C_CYAN}"
-        local C_R="${C_RED}"
-        local C_Y="${C_YELLOW}"
-        local N_F="${NO_FORMAT}"
+        local C_W="${C_W}"
+        local C_C="${C_C}"
+        local C_R="${C_R}"
+        local C_Y="${C_Y}"
+        local N_F="${N_F}"
 
         export UEFI=0
         local efi_path="/sys/firmware/efi/fw_platform_size"

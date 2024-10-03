@@ -30,7 +30,7 @@ source_files() {
 
 main() {
         
-        trap 'echo -e "\n\n${C_BLUE}:: ${C_RED}Program interrupted, exiting with code 1.${C_BLUE} ::\n" ; exit 1' INT
+        trap 'echo -e "\n\n${C_B}:: ${C_R}Program interrupted, exiting with code 1.${C_B} ::\n" ; exit 1' INT
         
         # INIT
         greetings
