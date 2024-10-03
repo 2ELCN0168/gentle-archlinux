@@ -20,10 +20,6 @@
 # BTRFS should not be compatible with LVM because the subvolume management it is
 # capable of is the same thing as LVM.
 #
-# OPTIMIZE:
-# Even if this works well, I feel like the logic is not good. There are a lot of
-# imbricated blocks (if) and it's not well written in my opinion.
-#
 
 disk_choice() {
 
@@ -44,71 +40,58 @@ disk_choice() {
                 read ans_use_lvm
                 : "${ans_use_lvm:=Y}"
 
-                case "${ans_use_lvm}" in
-                        [yY])
-                                LVM=1
-                                local chosen_disks=()
-                                while true; do
-                                        display_disks ${chosen_disks[@]}
+                if [[ "${ans_use_lvm}" =~ [yY] ]]; then
+                        LVM=1
+                        local chosen_disks=()
+                        while true; do
+                                display_disks ${chosen_disks[@]}
 
-                                        #if [[ -z $(lsblk -d --output NAME | 
-                                        #grep -vE "${exclude_pattern}") ]]; then
-                                        #        break
-                                        #fi
-                                        
-                                        local ans_block_dev
-                                        read ans_block_dev
-                                        : "${ans_block_dev:=sda}"
+                                #if [[ -z $(lsblk -d --output NAME | 
+                                #grep -vE "${exclude_pattern}") ]]; then
+                                #        break
+                                #fi
 
-                                        [[ "${ans_block_dev}" =~ [qQ] ]] && \
-                                        break
-                                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
-                                        invalid_answer && continue
+                                local ans_block_dev
+                                read ans_block_dev
+                                : "${ans_block_dev:=sda}"
 
-                                        if [[ "${disks_array[@]}" \
-                                        =~ "${ans_block_dev}" ]]; then
-                                                printf "${C_W}> ${WARN} The "
-                                                printf "chosen disk is already "
-                                                printf "in the list!\n"
-                                        else
-                                                disks_array+=(
-                                                        "/dev/${ans_block_dev}"
-                                                )
-                                                chosen_disks+=(
-                                                        "${ans_block_dev}"
-                                                )
-                                        fi
-                                done
-                                printf "\n${C_W}> ${INFO} The selected disks "
-                                printf "are ${C_G}${chosen_disks[@]}${N_F}\n\n"
-                                ;;
-                        [nN])
+                                [[ "${ans_block_dev}" =~ [qQ] ]] && break
 
-                                LVM=0
-                                while true; do
-                                        display_disks
+                                [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                                invalid_answer && continue
 
-                                        local ans_block_dev
-                                        read ans_block_dev
-                                        : "${ans_block_dev:=sda}"
-
-                                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
-                                        invalid_answer && continue
-
-                                        printf "${C_W}> ${INFO} ${N_F} The "
-                                        printf "disk to use is ${C_G}/dev/"
-                                        printf "${ans_block_dev}${N_F}\n\n"
+                                if [[ "${disks_array[@]}" \
+                                =~ "${ans_block_dev}" ]]; then
+                                        printf "${C_W}> ${WARN} The chosen "
+                                        printf "disk is already in the list!\n"
+                                else
                                         disks_array+=("/dev/${ans_block_dev}")
-                                        break
-                                done
+                                        chosen_disks+=("${ans_block_dev}")
+                                fi
+                        done
+                        printf "\n${C_W}> ${INFO} The selected disks "
+                        printf "are ${C_G}${chosen_disks[@]}${N_F}\n\n"
+                elif [[ "${ans_use_lvm}" =~ [nN] ]]; then
+                        LVM=0
+                        while true; do
+                                display_disks
 
+                                local ans_block_dev
+                                read ans_block_dev
+                                : "${ans_block_dev:=sda}"
 
-  
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                                [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                                invalid_answer && continue
+
+                                printf "${C_W}> ${INFO} ${N_F} The disk to use "
+                                printf "is ${C_G}/dev/${ans_block_dev}"
+                                printf "${N_F}\n\n"
+                                disks_array+=("/dev/${ans_block_dev}")
+                                break
+                        done
+                else
+                        invalid_answer
+                fi
 
         elif [[ "${filesystem}" == 'BTRFS' ]]; then
                 while true; do
