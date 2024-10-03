@@ -98,7 +98,7 @@ btrfs_mgmt() {
         printf "${C_W}> ${INFO} Mounting ${C_G}${root_part}${N_F} to ${C_P}"
         printf "${C_P}/mnt${N_F}\n"
         if mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
-                printf "${C_W}> ${INFO} Mounted ${C_C}${root_part}${N_F} to "
+                printf "${C_W}> ${SUC} Mounted ${C_C}${root_part}${N_F} to "
                 printf "${C_P}/mnt${N_F}\n"
         else
                 printf "${C_W}> ${ERR} Cannot mount ${C_C}${root_part} to "
@@ -112,8 +112,8 @@ btrfs_mgmt() {
                 printf "${C_W}> ${INFO} Creating ${C_Y}subvolume "
                 printf "${C_G}${i}${N_F}\n"
                 if btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
-                        printf "${C_W}> ${SUC} Created subvolume ${C_Y}${i}"
-                        printf "${N_F}\n"
+                        printf "${C_W}> ${SUC} Created ${C_G}subvolume ${C_Y}"
+                        printf "${i}${N_F}\n"
                 else 
                         printf "${C_W}> ${ERR} Cannot create subvolume ${C_Y}"
                         printf "${i}${N_F}\n\n"
