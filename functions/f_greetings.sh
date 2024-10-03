@@ -16,7 +16,7 @@
 # /`           `\                                                
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-29
+# Last updated: 2024-10-02
 #
 ### Dependencies:
 # - none;
@@ -39,28 +39,18 @@ greetings() {
         local mini="${C_PINK}Minimal installation mode.${NO_FORMAT}"
         local complete="${C_GREEN}Complete installation mode.${NO_FORMAT}"
         local hard="${C_RED}Hardened installation mode.${NO_FORMAT}"
-        local standard=""
+        local standard="${C_CYAN}Standard installation mode.${NO_FORMAT}"
 
         # INFO:
         # Empty variables when the corresponding parameter is not called.
         # It's just used to display the text in the ASCII art below.
         
-        if [[ "${param_minimal}" -eq 0 ]]; then
-                mini=""
-        fi
-
-        if [[ "${param_full}" -eq 0 ]]; then
-                complete=""
-        fi
-
-        if [[ "${param_hardening}" -eq 0 ]]; then
-                hard=""
-        fi
-
-        if [[ "${param_standard}" -eq 1 ]]; then
-                standard="${C_CYAN}Standard installation mode.${NO_FORMAT}"
+        [[ "${param_minimal}" -eq 0 ]] && mini=""
+        [[ "${param_full}" -eq 0 ]] && complete=""
+        [[ "${param_hardening}" -eq 0 ]] && hard=""
+        [[ "${param_standard}" -eq 0 ]] && standard=""
         
-        fi
+        
 
         echo ""
         echo -e "${C_BLUE}       ,       ${C_CYAN}                _     _ _                               "
@@ -95,20 +85,20 @@ greetings() {
                 "without you making the selection. ${C_YELLOW}Just BE CAREFUL" \
                 "because actions on disks are ${C_RED}IRREVERSIBLE!${NO_FORMAT}\n"
 
-        #INFO: This unmounting action ensure to have nothing actually mounted 
-        #on /mnt before starting
-        #BUG: 2027-09-28: It cannot unmount everything at the first launch. 
-        #We need to quit and restart the script.
-        #PASSED: 2027-09-27: It seems to be working now.
+        # INFO: This unmounting action ensure to have nothing actually mounted 
+        # on /mnt before starting
+        # BUG: 2027-09-28: It cannot unmount everything at the first launch. 
+        # We need to quit and restart the script.
+        # PASSED: 2027-09-27: It seems to be working now.
         
         systemctl daemon-reload 1> "/dev/null" 2>&1
         local mountpoints=("home" "usr" "var" "tmp")
 
-        # echo "${mountpoint[@]}"
         for i in "${mountpoints[@]}"; do
-                while mountpoint -q "/mnt/${i}"; do 
-                        if umount -R "/mnt/${i}" 1> "/dev/null" 2>&1; then
-                                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}${i}${NO_FORMAT}."
+                while mountpoint --quiet "/mnt/${i}"; do 
+                        if umount --recursive "/mnt/${i}" 1> "/dev/null" 2>&1; then
+                                echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted" \
+                                        "${C_CYAN}${i}${NO_FORMAT}."
                         else
                                 echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error" \
                                         "while unmounting ${C_CYAN}${i}${C_WHITE}." \
@@ -117,9 +107,10 @@ greetings() {
                         fi
                 done
         done
-        while mountpoint -q "/mnt"; do
-                if umount -R "/mnt" 1> "/dev/null" 2>&1; then
-                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted ${C_CYAN}/mnt${NO_FORMAT}."
+        while mountpoint --quiet "/mnt"; do
+                if umount --recursive "/mnt" 1> "/dev/null" 2>&1; then
+                        echo -e "${C_WHITE}> ${SUC} ${C_WHITE}Unmounted" \
+                                "${C_CYAN}/mnt${NO_FORMAT}."
                 else
                         echo -e "${C_WHITE}> ${ERR} ${C_WHITE}Error while" \
                                 "unmounting ${C_CYAN}/mnt${C_WHITE}. You may" \
