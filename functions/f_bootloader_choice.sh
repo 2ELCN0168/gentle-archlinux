@@ -6,7 +6,7 @@
 # running in UEFI mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - none.
@@ -31,45 +31,45 @@ bootloader_choice() {
         if [[ "${UEFI}" -eq 0 || "${param_minimal}" -eq 1 ]]; then
                 bootloader="GRUB"
                 return
-        else
-                while true; do
-                        echo -e "==${C_C}BOOTLOADER${N_F}========\n"
-
-                        echo -e "${C_W}[0] - ${C_C}rEFInd${N_F} (default)"
-                        echo -e "${C_W}[1] - ${C_Y}GRUB2${N_F}"
-                        echo -e "${C_W}[2] - ${C_R}systemd-boot${N_F}"
-
-                        echo -e "\n====================\n"
-                        
-                        echo -e "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0/1/2] -> ${N_F}\c"
-
-                        local ans_bootloader=""
-                        read ans_bootloader
-                        : "${ans_bootloader:=0}"
-
-                        case "${ans_bootloader}" in
-                                0) 
-                                        echo -e "${C_W}> ${INFO} We will" \
-                                                "install ${C_C}rEFInd${N_F}\n"
-                                        bootloader="REFIND"
-                                        break
-                                        ;;
-                                1)
-                                        echo -e "${C_W}> ${INFO} We will" \
-                                                "install ${C_Y}GRUB2${N_F}\n"
-                                        bootloader="GRUB"
-                                        break
-                                        ;;
-                                2)
-                                        echo -e "${C_W}> ${INFO} We will" \
-                                                "install ${C_R}systemd-boot${N_F}\n"
-                                        bootloader="SYSTEMDBOOT"
-                                        break
-                                        ;;
-                                *)
-                                        invalid_answer
-                                        ;;
-                        esac
-                done
         fi
+        while true; do
+                printf "==${C_C}BOOTLOADER${N_F}========\n\n"
+
+                printf "${C_W}[0] - ${C_C}rEFInd${N_F} (default)\n"
+                printf "${C_W}[1] - ${C_Y}GRUB2${N_F}\n"
+                printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n"
+
+                printf "\n\n====================\n\n"
+                
+                printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
+                printf "[0/1/2] -> ${N_F}"
+
+                local ans_bootloader=""
+                read ans_bootloader
+                : "${ans_bootloader:=0}"
+
+                case "${ans_bootloader}" in
+                        0) 
+                                printf "${C_W}> ${INFO} We will "
+                                printf "install ${C_C}rEFInd${N_F}\n\n"
+                                bootloader="REFIND"
+                                break
+                                ;;
+                        1)
+                                printf "${C_W}> ${INFO} We will "
+                                printf "install ${C_Y}GRUB2${N_F}\n\n"
+                                bootloader="GRUB"
+                                break
+                                ;;
+                        2)
+                                printf "${C_W}> ${INFO} We will "
+                                printf "install ${C_R}systemd-boot${N_F}\n\n"
+                                bootloader="SYSTEMDBOOT"
+                                break
+                                ;;
+                        *)
+                                invalid_answer
+                                ;;
+                esac
+        done
 }

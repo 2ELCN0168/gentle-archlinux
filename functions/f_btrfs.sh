@@ -2,11 +2,11 @@
 ### File: f_btrfs.sh
 #
 ### Description: 
-# Handle all the BTRFS filesystem if the user chose to use it. It is not intended
-# to be used with LVM at the moment.
+# Handle all the BTRFS filesystem if the user chose to use it. It is not 
+# intended to be used with LVM at the moment.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - btrfs-progs.
@@ -37,14 +37,15 @@ btrfs_mgmt() {
 
         while true; do
 
-                echo -e "==${C_C}SUBVOLUMES${N_F}========\n"
+                printf "==${C_C}SUBVOLUMES${N_F}========\n\n"
 
-                echo -e "${C_W}[0] - ${C_Y}Make subvolumes!${N_F} (default)"
-                echo -e "${C_W}[1] - ${C_C}No subvolumes this time${N_F}"
+                printf "${C_W}[0] - ${C_Y}Make subvolumes!${N_F} (default)\n"
+                printf "${C_W}[1] - ${C_C}No subvolumes this time${N_F}\n"
                 
-                echo -e "\n====================\n"
+                printf "\n\n====================\n\n"
 
-                echo -e "${C_C}:: ${C_W}Do you want to use subvolumes? [0/1] -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}Do you want to use subvolumes? "
+                printf "[0/1] -> ${N_F}"
                 
                 local ans_btrfs_subvols=""
                 read ans_btrfs_subvols
@@ -53,14 +54,14 @@ btrfs_mgmt() {
                 case "${ans_btrfs_subvols}" in
                         [0])
                                 btrfsSubvols=1
-                                echo -e "${C_W}> ${INFO} ${C_G}You chose" \
-                                        "to make subvolumes. Good choice.${N_F}\n"
+                                printf "${C_W}> ${INFO} ${C_G}You chose to "
+                                printf "make subvolumes. Good choice.${N_F}\n\n"
                                 break
                                 ;;
                         [1])
                                 btrfsSubvols=0
-                                echo -e "${C_W}> ${INFO} ${C_Y}No subvolume" \
-                                        "will be created.${N_F}\n"
+                                printf "${C_W}> ${INFO} ${C_Y}No subvolume "
+                                printf "will be created.${N_F}\n\n"
                                 break
                                 ;;
                         *)
@@ -71,17 +72,17 @@ btrfs_mgmt() {
         
         # INFO:
         # Formatting the root partition before creating subvolumes.
-        echo -e "${C_W}> ${INFO} Formatting ${root_part}" \
-                "to ${filesystem}.${N_F}\n"
-        mkfs.btrfs --force --label "Archlinux" "${root_part}" 1> "/dev/null" 2>&1
+        printf "${C_W}> ${INFO} Formatting ${root_part} to "
+        printf "${filesystem}.${N_F}\n\n"
+
+        mkfs.btrfs --force --label "Archlinux" "${root_part}" \
+        1> "/dev/null" 2>&1
 
         # INFO:
         # No need to pursuie if the user don't want subvolumes. The function
         # "mount_default" achieves this part.
-        if [[ "${btrfsSubvols}" -eq 0 ]]; then
-                mount_default
-                return
-        fi
+
+        [[ "${btrfsSubvols}" -eq 0 ]] && mount_default && return
 
         # TEST:
         # This part should not be used anymore. Unmounting actions are done in 
@@ -94,22 +95,26 @@ btrfs_mgmt() {
         # INFO:
         # For BTRFS subvolumes, we first need to mount the root partition before
         # being able to create the subvolumes.
-        if ! mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
-                echo -e "Cannot mount ${root_part} to /mnt"
-                exit 1
+        if mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
+                printf "${C_W}> ${INFO} Mounted ${C_C}${root_part}${N_F} to "
+                printf "${C_P}/mnt${N_F}\n"
         else
-                echo "mounted ${root_part} to /mnt" 1> "/dev/null"
+                printf "${C_W}> ${ERR} Cannot mount ${C_C}${root_part} to "
+                printf "${C_P}/mnt${N_F}\n"
+                exit 1
         fi
 
         # INFO:
         # Then, create the subvolumes defined above in the table.
         for i in "${btrfs_subvols[@]}"; do
-                echo -e "${C_W}> ${INFO} Creating${N_F}" \
-                        "${C_Y}subvolume ${C_G}${i}${N_F}"
-                if ! btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
-                        echo "Cannot create subvolume ${i}"
+                printf "${C_W}> ${INFO} Creating ${C_Y}subvolume "
+                printf "${C_G}${i}${N_F}"
+                if btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
+                        printf "${C_W}> ${SUC} Created subvolume ${C_Y}${i}"
+                        printf "${N_F}\n"
                 else 
-                        echo "Created subvolume ${i}" > "/dev/null"
+                        printf "${C_W}> ${ERR} Cannot create subvolume ${C_Y}"
+                        printf "${i}${N_F}\n"
                 fi
         done
 
@@ -129,33 +134,32 @@ btrfs_mgmt() {
                         _mountpoint="/mnt/${i//@/}"
                 fi
                 
-                echo -e "${C_W}> ${INFO} Mounting ${C_G}${i}" \
-                        "${N_F}to ${C_P}${_mountpoint}${N_F}"
+                printf "${C_W}> ${INFO} Mounting ${C_G}${i}${N_F} to ${C_P}"
+                printf "${_mountpoint}${N_F}\n"
                 
                 mount --mkdir --types btrfs --options \
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
                 "${root_part}" "${_mountpoint}"
         done
                 
-        echo -e "${C_W}> ${INFO} Mounting ${C_G}/dev/sda1${N_F}" \
-                "to ${C_P}/mnt/boot${N_F}\n"
+        printf "${C_W}> ${INFO} Mounting ${C_G}/dev/sda1${N_F} to "
+        printf "${C_P}/mnt/boot${N_F}\n\n"
+
         mount --mkdir "${boot_part}" "/mnt/boot"
 
         # INFO:
         # Display the result to the user
-        echo ""
+        printf "\n\n"
         lsblk --fs
-        echo ""
+        printf "\n\n"
 
         # INFO:
         # Enable quotas? Quit the function if the user doesn't use subvolumes
-        if [[ "${btrfsSubvols}" -eq 0 ]]; then
-                return
-        fi
+        [[ "${btrfsSubvols}" -eq 0 ]] && return
 
         while true; do
-                echo -e "${C_C}:: ${C_W}Do you want to enable" \
-                        "quotas on your subvolumes? [Y/n] ${N_F}\c"
+                printf "${C_C}:: ${C_W}Do you want to enable quotas on your "
+                printf "subvolumes? [Y/n] ${N_F}"
 
                 local ans_btrfs_subvols_quotas=""
                 read ans_btrfs_subvols_quotas
@@ -163,13 +167,13 @@ btrfs_mgmt() {
 
                 case "${ans_btrfs_subvols_quotas}" in
                         [yY])
-                                echo -e "${C_W}> ${INFO} ${C_G}You chose" \
-                                        "to enable quotas.${N_F}\n"
+                                printf "${C_W}> ${INFO} ${C_G}You chose to "
+                                printf "enable quotas.${N_F}\n\n"
                                 break
                                 ;;
                         [nN])
-                                echo -e "${C_W}> ${INFO} ${C_Y}There will" \
-                                        "be no quotas on your subvolumes.${N_F}\n"
+                                printf "${C_W}> ${INFO} ${C_Y}There will be no "
+                                printf "quotas on your subvolumes.${N_F}\n\n"
                                 return
                                 ;;
                         *)
@@ -180,8 +184,8 @@ btrfs_mgmt() {
 
         for i in "${btrfs_subvols[@]:3:2}"; do
                 local clean_i="${i//@/}"
-                echo -e "${C_W}> ${INFO} Enabling quota for" \
-                        "${C_G}@${clean_i}${N_F}"
+                printf "${C_W}> ${INFO} Enabling quota for ${C_G}@"
+                printf "${clean_i}${N_F}"
                 btrfs quota enable "/mnt/${clean_i}"
                 btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
                 btrfs qgroup limit 5G "/mnt/${clean_i}"

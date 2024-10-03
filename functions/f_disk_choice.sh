@@ -38,7 +38,7 @@ disk_choice() {
 
         if [[ "${filesystem}" != 'BTRFS' ]]; then
 
-                echo -e "${C_C}:: ${C_W}Do you plan to use LVM? [Y/n] -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}Do you plan to use LVM? [Y/n] -> ${N_F}"
                 
                 local ans_use_lvm=""
                 read ans_use_lvm
@@ -51,31 +51,36 @@ disk_choice() {
                                 while true; do
                                         display_disks ${chosen_disks[@]}
 
-                                        #if [[ -z $(lsblk -d --output NAME | grep -vE "${exclude_pattern}") ]]; then
+                                        #if [[ -z $(lsblk -d --output NAME | 
+                                        #grep -vE "${exclude_pattern}") ]]; then
                                         #        break
                                         #fi
                                         
-                                        local ans_block_device
-                                        read ans_block_device
-                                        : "${ans_block_device:=sda}"
+                                        local ans_block_dev
+                                        read ans_block_dev
+                                        : "${ans_block_dev:=sda}"
 
-                                        if [[ "${ans_block_device}" =~ [qQ] ]]; then
-                                                break
+                                        [[ "${ans_block_dev}" =~ [qQ] ]] && \
+                                        break
+                                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                                        invalid_answer && continue
+
+                                        if [[ "${disks_array[@]}" \
+                                        =~ "${ans_block_dev}" ]]; then
+                                                printf "${C_W}> ${WARN} The "
+                                                printf "chosen disk is already "
+                                                printf "in the list!\n"
                                         else
-                                                if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                        if [[ "${disks_array[@]}" =~ "${ans_block_device}" ]]; then
-                                                                echo -e "${C_W}> ${WARN} The chosen disk is already in the list!"
-                                                        else
-                                                                disks_array+=("/dev/${ans_block_device}")
-                                                                chosen_disks+=("${ans_block_device}")
-                                                        fi
-                                                else
-                                                        invalid_answer
-                                                fi
+                                                disks_array+=(
+                                                        "/dev/${ans_block_dev}"
+                                                )
+                                                chosen_disks+=(
+                                                        "${ans_block_dev}"
+                                                )
                                         fi
                                 done
-                                echo -e "\n${C_W}> ${INFO} The selected disks" \
-                                        "are ${C_G}${chosen_disks[@]}${N_F}\n"
+                                printf "\n${C_W}> ${INFO} The selected disks "
+                                printf "are ${C_G}${chosen_disks[@]}${N_F}\n\n"
                                 ;;
                         [nN])
 
@@ -83,20 +88,22 @@ disk_choice() {
                                 while true; do
                                         display_disks
 
-                                        local ans_block_device
-                                        read ans_block_device
-                                        : "${ans_block_device:=sda}"
+                                        local ans_block_dev
+                                        read ans_block_dev
+                                        : "${ans_block_dev:=sda}"
 
-                                        if [[ -b "/dev/${ans_block_device}" ]]; then
-                                                echo -e "${C_W}> ${INFO} ${N_F}" \
-                                                        "The disk to use is ${C_G}/dev/" \
-                                                        "${ans_block_device}${N_F}\n"
-                                                disks_array+=("/dev/${ans_block_device}")
-                                                break
-                                        else
-                                                invalid_answer
-                                        fi
+                                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                                        invalid_answer && continue
+
+                                        printf "${C_W}> ${INFO} ${N_F} The "
+                                        printf "disk to use is ${C_G}/dev/"
+                                        printf "${ans_block_dev}${N_F}\n\n"
+                                        disks_array+=("/dev/${ans_block_dev}")
+                                        break
                                 done
+
+
+  
                                 ;;
                         *)
                                 invalid_answer
@@ -104,27 +111,24 @@ disk_choice() {
                 esac
 
         elif [[ "${filesystem}" == 'BTRFS' ]]; then
-
                 while true; do
                         display_disks
 
-                        local ans_block_device
-                        read ans_block_device
-                        : "${ans_block_device:=sda}"
+                        local ans_block_dev
+                        read ans_block_dev
+                        : "${ans_block_dev:=sda}"
 
-                        if [[ -b "/dev/${ans_block_device}" ]]; then
-                                echo -e "${C_W}> ${INFO} ${N_F}The disk"\
-                                        "to use is ${C_G}/dev/${ans_block_device}" \
-                                        "${N_F}\n"
-                                disks_array+=("/dev/${ans_block_device}")
-                                break
-                        else
-                                invalid_answer
-                        fi
+                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                        invalid_answer && continue
+
+                        printf "${C_W}> ${INFO} ${N_F}The disk to use is "
+                        printf "${C_G}/dev/${ans_block_dev}${N_F}\n"
+                        disks_array+=("/dev/${ans_block_dev}")
+                        break
                 done
         fi
 
-        local disk="${ans_block_device}"
+        local disk="${ans_block_dev}"
 
         [[ "${disk}" =~ nvme... ]] && partitionType="p"
 
@@ -136,17 +140,18 @@ disk_choice() {
 display_disks() {
 
         local exclude_pattern="NAME|sr0|loop0"
+
         for disk in "${@}"; do
                 exclude_pattern+="|${disk}"
         done
 
-        echo -e "\n==${C_C}DISK${N_F}==============\n"
+        printf "\n\n==${C_C}DISK${N_F}==============\n\n"
 
-        lsblk --nodeps --output NAME | grep --invert-match --extended-regexp "${exclude_pattern}"
-        echo -e ""
+        lsblk --nodeps --output NAME |
+        grep --invert-match --extended-regexp "${exclude_pattern}"
 
-        echo -e "====================\n"
+        printf "\n\n====================\n\n"
 
-        echo -e "${C_C}:: ${C_W}Which block device do you want to use?" \
-                "(default=sda) Type \"q\" to quit -> ${N_F}\c"
+        printf "${C_C}:: ${C_W}Which block device do you want to use? " 
+        printf "(default=sda) Type \"[q]\" to quit -> ${N_F}"
 }
