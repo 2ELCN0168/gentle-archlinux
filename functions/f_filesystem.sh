@@ -41,9 +41,9 @@ filesystem_choice() {
                 read ans_filesystem
                 : "${ans_filesystem:=0}"
 
-                [[ "${filesystem}" -eq 0 ]] && filesystem="BTRFS" && break
-                [[ "${filesystem}" -eq 1 ]] && filesystem="XFS" && break
-                [[ "${filesystem}" -eq 2 ]] && filesystem="EXT4" && break
+                [[ "${ans_filesystem}" -eq 0 ]] && filesystem="BTRFS" && break
+                [[ "${ans_filesystem}" -eq 1 ]] && filesystem="XFS" && break
+                [[ "${ans_filesystem}" -eq 2 ]] && filesystem="EXT4" && break
                 invalid_answer
         done
         printf "${C_W}> ${INFO} ${N_F}You chose ${C_W}${filesystem}${N_F}\n\n"
