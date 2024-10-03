@@ -97,7 +97,6 @@ disk_choice() {
                                                 invalid_answer
                                         fi
                                 done
-                                break
                                 ;;
                         *)
                                 invalid_answer
