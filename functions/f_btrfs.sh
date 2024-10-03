@@ -42,7 +42,7 @@ btrfs_mgmt() {
                 printf "${C_W}[0] - ${C_Y}Make subvolumes!${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_C}No subvolumes this time${N_F}\n"
                 
-                printf "\n\n====================\n\n"
+                printf "\n====================\n\n"
 
                 printf "${C_C}:: ${C_W}Do you want to use subvolumes? "
                 printf "[0/1] -> ${N_F}"
@@ -108,13 +108,14 @@ btrfs_mgmt() {
         # Then, create the subvolumes defined above in the table.
         for i in "${btrfs_subvols[@]}"; do
                 printf "${C_W}> ${INFO} Creating ${C_Y}subvolume "
-                printf "${C_G}${i}${N_F}"
+                printf "${C_G}${i}${N_F}\n"
                 if btrfs subvolume create "/mnt/${i}" 1> "/dev/null" 2>&1; then
                         printf "${C_W}> ${SUC} Created subvolume ${C_Y}${i}"
-                        printf "${N_F}\n"
+                        printf "${N_F}\n\n"
                 else 
                         printf "${C_W}> ${ERR} Cannot create subvolume ${C_Y}"
-                        printf "${i}${N_F}\n"
+                        printf "${i}${N_F}\n\n"
+                        exit 1
                 fi
         done
 
@@ -137,9 +138,16 @@ btrfs_mgmt() {
                 printf "${C_W}> ${INFO} Mounting ${C_G}${i}${N_F} to ${C_P}"
                 printf "${_mountpoint}${N_F}\n"
                 
-                mount --mkdir --types btrfs --options \
+                if mount --mkdir --types btrfs --options \
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
-                "${root_part}" "${_mountpoint}"
+                "${root_part}" "${_mountpoint}"; then
+                        printf "${C_W}> ${SUC} Mounted ${C_Y}${i} to "
+                        printf "${C_G}${_mountpoint}${N_F}"
+                else
+                        printf "${C_W}> ${ERR} Cannot Mount ${C_Y}${i} to "
+                        printf "${C_R}${_mountpoint}${N_F}"
+                        exit 1
+                fi
         done
                 
         printf "${C_W}> ${INFO} Mounting ${C_G}/dev/sda1${N_F} to "
