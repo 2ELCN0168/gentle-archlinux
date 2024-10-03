@@ -45,8 +45,7 @@ ask_packages() {
                                 echo -e "${C_WHITE}> ${INFO}" \
                                         "${C_GREEN}qemu-guest-agent${NO_FORMAT}" \
                                         "will be installed.\n"
-                                additionalPackages="${additionalPackages} \
-                                        qemu-guest-agent"
+                                additionalPackages="${additionalPackages} qemu-guest-agent"
                                 break
                                 ;;
                         [1])
@@ -54,8 +53,7 @@ ask_packages() {
                                 echo -e "${C_WHITE}> ${INFO}" \
                                         "${C_GREEN}virtualbox-guest-utils${NO_FORMAT}" \
                                         "will be installed.\n"
-                                additionalPackages="${additionalPackages} \
-                                        virtualbox-guest-utils"
+                                additionalPackages="${additionalPackages} virtualbox-guest-utils"
                                 break
                                 ;;
                         [2])
@@ -63,8 +61,7 @@ ask_packages() {
                                 echo -e "${C_WHITE}> ${INFO}" \
                                         "${C_GREEN}open-vm-tools${NO_FORMAT}" \
                                         "will be installed.\n"
-                                additionalPackages="${additionalPackages} \
-                                       open-vm-tools"
+                                additionalPackages="${additionalPackages} open-vm-tools"
                                 break
                                 ;;
                         [3])
@@ -72,8 +69,7 @@ ask_packages() {
                                 echo -e "${C_WHITE}> ${INFO}" \
                                         "${C_GREEN}hyperv${NO_FORMAT} will be" \
                                         "installed.\n"
-                                additionalPackages="${additionalPackages} \
-                                        hyperv"
+                                additionalPackages="${additionalPackages} hyperv"
                                 break
                                 ;;
                         [4])
