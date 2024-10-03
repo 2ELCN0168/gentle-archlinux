@@ -72,8 +72,8 @@ btrfs_mgmt() {
         
         # INFO:
         # Formatting the root partition before creating subvolumes.
-        printf "${C_W}> ${INFO} Formatting ${root_part} to "
-        printf "${filesystem}.${N_F}\n\n"
+        printf "${C_W}> ${INFO} Formatting ${C_C}${root_part}${N_F} to "
+        printf "${C_Y}BTRFS.${N_F}\n\n"
 
         mkfs.btrfs --force --label "Archlinux" "${root_part}" \
         1> "/dev/null" 2>&1
@@ -95,12 +95,14 @@ btrfs_mgmt() {
         # INFO:
         # For BTRFS subvolumes, we first need to mount the root partition before
         # being able to create the subvolumes.
+        printf "${C_W}> ${INFO} Mounting ${C_G}${root_part}${N_F} to ${C_P}"
+        printf "${C_P}/mnt${N_F}\n"
         if mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
                 printf "${C_W}> ${INFO} Mounted ${C_C}${root_part}${N_F} to "
-                printf "${C_P}/mnt${N_F}\n"
+                printf "${C_P}/mnt${N_F}\n\n"
         else
                 printf "${C_W}> ${ERR} Cannot mount ${C_C}${root_part} to "
-                printf "${C_P}/mnt${N_F}\n"
+                printf "${C_P}/mnt${N_F}\n\n"
                 exit 1
         fi
 
@@ -142,10 +144,10 @@ btrfs_mgmt() {
                 compress=zstd,discard=async,autodefrag,subvol="${i}" \
                 "${root_part}" "${_mountpoint}"; then
                         printf "${C_W}> ${SUC} Mounted ${C_Y}${i} to "
-                        printf "${C_G}${_mountpoint}${N_F}"
+                        printf "${C_G}${_mountpoint}${N_F}\n\n"
                 else
                         printf "${C_W}> ${ERR} Cannot Mount ${C_Y}${i} to "
-                        printf "${C_R}${_mountpoint}${N_F}"
+                        printf "${C_R}${_mountpoint}${N_F}\n\n"
                         exit 1
                 fi
         done
