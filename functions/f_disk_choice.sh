@@ -6,7 +6,7 @@
 # want to use LVM.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-30
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - none.
@@ -126,9 +126,7 @@ disk_choice() {
 
         local disk="${ans_block_device}"
 
-        if [[ "${disk}" =~ nvme... ]]; then 
-                partitionType="p"
-        fi
+        [[ "${disk}" =~ nvme... ]] && partitionType="p"
 
         user_disk="${disks_array[0]}"
         boot_part="${user_disk}${partitionType}1"
