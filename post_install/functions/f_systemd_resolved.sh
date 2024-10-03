@@ -57,10 +57,10 @@ systemd_resolved() {
                                 [yY])
                                         echo "DNSOverTLS=yes" >> "/etc/systemd/resolved.conf"
                                         echo -e "${C_WHITE}> ${INFO} DNSoverTLS ${C_GREEN}enabled${NO_FORMAT}."
-                                        echo
                                         break
                                         ;;
                                 [nN])
+                                        echo -e "${C_WHITE}> ${INFO} DNSoverTLS ${C_YELLOW}won't be enabled${NO_FORMAT}."
                                         break
                                         ;;
                                 *)
@@ -68,9 +68,9 @@ systemd_resolved() {
                                         ;;
                         esac
                 done
-
         fi
 
+        echo
         echo -e "${C_WHITE}> ${INFO} ${C_WHITE}systemctl ${C_GREEN}enable${C_WHITE} systemd-resolved.service.${NO_FORMAT}"
         systemctl enable systemd-resolved 1> "/dev/null" 2>&1
         if [[ "${?}" -eq 0 ]]; then
