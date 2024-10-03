@@ -6,7 +6,7 @@
 # It can be used on several disks at the same time.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-09-29
+# Last updated: 2024-10-03
 #
 ### Dependencies:
 # - sgdisk;
@@ -28,6 +28,21 @@
 # Actually, only the first disk will be encrypted, which is not very useful...
 #
 
+
+default_formatting() {
+        echo -e "${C_WHITE}> ${INFO} Formatting ${C_CYAN}${root_part}" \
+                "${NO_FORMAT}to ${C_CYAN}${filesystem}${NO_FORMAT}.\n"
+
+        [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \
+        "${root_part}" 1> "/dev/null" 2>&1
+        
+        [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \
+        "${root_part}" 1> "/dev/null" 2>&1
+
+        # INFO: 
+        # "mount_default()" is defined in "./f_mount_default.sh"
+        mount_default
+}
 lvm_mgmt() {
 
         # INFO: 
@@ -48,19 +63,7 @@ lvm_mgmt() {
         # If LVM is not used, format the root partition with the previous
         # chosen filesystem
         if [[ "${LVM}" -eq 0 ]]; then
-                echo -e "${C_WHITE}> ${INFO} ${C_CYAN}Formatting ${root_part}" \
-                        "to ${filesystem}.${NO_FORMAT}\n"
-
-                [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \
-                "${root_part}" 1> "/dev/null" 2>&1
-                
-                [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \
-                "${root_part}" 1> "/dev/null" 2>&1
-
-                # INFO: 
-                # "mount_default()" is defined in "./f_mount_default.sh"
-                mount_default
-
+                default_formatting
         elif [[ "${LVM}" -eq 1 ]]; then
 
                 # INFO: 
