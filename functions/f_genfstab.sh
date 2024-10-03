@@ -23,7 +23,7 @@ gen_fstab() {
         echo -e "${C_WHITE}> ${INFO} ${NO_FORMAT}Generating" \
                 "${C_PINK}/mnt/etc/fstab${NO_FORMAT} file."
         # COMMAND:
-        # genftab --uuid "/mnt"
+        # genfstab --uuid "/mnt"
         if genfstab -U "/mnt" >> "/mnt/etc/fstab"; then
                 echo -e "${C_WHITE}> ${SUC} ${NO_FORMAT}Generated" \
                         "${C_PINK}/mnt/etc/fstab${NO_FORMAT} file.\n"
