@@ -243,8 +243,8 @@ pacstrap_install() {
         # INFO:
         # Perform the installation of the customized system
         pacstrap -K "/mnt" "base{,-devel} git terminus-font openssh traceroute \
-        ${zsh_packages[@]} systemctl-tui hdparm neovim vim vi dos2unix tree \
-        fastfetch dhclient tmux arch-audit ${additionalPackages[@]}"
+        ${zsh_packages[*]} systemctl-tui hdparm neovim vim vi dos2unix tree \
+        fastfetch dhclient tmux arch-audit ${additionalPackages[*]}"
 
         [[ "${?}" -ne 0 ]] && exit 1
 
