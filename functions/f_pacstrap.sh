@@ -162,6 +162,8 @@ pacstrap_install() {
         # user, avoiding installation of useless things
         additionalPackages=()
 
+        local base_packages=()
+
         local zsh_packages=(
                 "zsh" 
                 "zsh-syntax-highlighting" 
@@ -247,9 +249,8 @@ pacstrap_install() {
         "traceroute" "systemctl-tui" "hdparm" "neovim" "vim" "vi" "dos2unix"
         "tree" "fastfetch" "dhclient" "tmux" "arch-audit")
 
-        pacstrap -K "/mnt" "${base_packages[@]} ${zsh_packages[@]} ${additionalPackages[@]}"
-
-        [[ "${?}" -ne 0 ]] && exit 1
+        pacstrap -K "/mnt" "${base_packages[@]} ${zsh_packages[@]} \
+        ${additionalPackages[@]}" || exit 1
 
         printf "\n${C_W}> ${INFO} ${C_R}Sorry, nano has been deleted from the "
         printf "Arch repository, you will have to learn${N_F} ${B_G} Vim ${N_F}"
