@@ -165,7 +165,7 @@ pacstrap_install() {
         # INFO:
         # List of additional packages depending on parameters specified by the
         # user, avoiding installation of useless things
-        additionalPackages=""
+        additionalPackages=("")
 
         local zsh_packages=(
                 "zsh" 
@@ -176,59 +176,112 @@ pacstrap_install() {
         )
 
         [[ "${filesystem}" == 'BTRFS' ]] && \
-        additionalPackages="${additionalPackages} btrfs-progs"
+        additionalPackages=(
+                "${additionalPackages}"
+                "btrfs-progs"
+        )
 
         [[ "${filesystem}" == 'XFS' ]] && \
-        additionalPackages="${additionalPackages} xfsprogs"
+        additionalPackages=(
+                "${additionalPackages}"
+                "xfsprogs"
+        )
 
         [[ "${filesystem}" == 'EXT4' ]] && \
-        additionalPackages="${additionalPackages} e2fsprogs"
+        additionalPackages=(
+                "${additionalPackages}"
+                "e2fsprogs"
+        )
 
         [[ "${disk}" =~ "nvme" ]] && \
-        additionalPackages="${additionalPackages} nvme-cli libnvme"
+        additionalPackages=(
+                "${additionalPackages}"
+                "nvme-cli"
+                "libnvme"
+        )
 
         
         [[ "${LVM}" -eq 1 ]] && \
-        additionalPackages="${additionalPackages} lvm2"
+        additionalPackages=(
+                "${additionalPackages}"
+                "lvm2"
+        )
 
 
         [[ "${wantEncrypted}" -eq 1 ]] && \
-        additionalPackages="${additionalPackages} cryptsetup"
+        additionalPackages=(
+                "${additionalPackages}" 
+                "cryptsetup"
+        )
         
 
         [[ "${bootloader}" == 'REFIND' ]] && \
-        additionalPackages="${additionalPackages} refind"
+        additionalPackages=(
+                "${additionalPackages}"
+                "refind"
+        )
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 1 ]] && \
-        additionalPackages="${additionalPackages} grub efibootmgr"
+        additionalPackages=(
+                "${additionalPackages}"
+                "grub"
+                "efibootmgr"
+        )
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 0 ]] && \
-        additionalPackages="${additionalPackages} grub"
+        additionalPackages=(
+                "${additionalPackages}"
+                "grub"
+        )
         
 
         [[ "${cpuBrand}" == 'INTEL' ]] && \
-        additionalPackages="${additionalPackages} intel-ucode"
+        additionalPackages=(
+                "${additionalPackages}"
+                "intel-ucode"
+        )
 
         [[ "${cpuBrand}" == 'AMD' ]] && \
-        additionalPackages="${additionalPackages} amd-ucode"
+        additionalPackages=(
+                "${additionalPackages}"
+                "amd-ucode"
+        )
 
         
         [[ "${net_manager}" == 'networkmanager' ]] && \
-        additionalPackages="${additionalPackages} networkmanager"
+        additionalPackages=(
+                "${additionalPackages}"
+                "networkmanager"
+        )
 
 
         [[ "${linux_kernel}" == "linux" ]] && \
-        additionalPackages="${additionalPackages} linux linux-headers"
+        additionalPackages=(
+                "${additionalPackages}"
+                "linux"
+                "linux-headers"
+        )
 
         [[ "${linux_kernel}" == "linux-lts" ]] && \
-        additionalPackages="${additionalPackages} linux-lts linux-lts-headers"
+        additionalPackages=(
+                "${additionalPackages}"
+                "linux-lts"
+                "linux-lts-headers"
+        )
 
         [[ "${linux_kernel}" == "linux-hardened" ]] && \
-        additionalPackages="${additionalPackages} linux-hardened \
-        linux-hardened-headers"
+        additionalPackages=(
+                "${additionalPackages}"
+                "linux-hardened"
+                "linux-hardened-headers"
+        )
 
         [[ "${linux_kernel}" == "linux-hardened" ]] && \
-        additionalPackages="${additionalPackages} linux-zen linux-zen-headers"
+        additionalPackages=(
+                "${additionalPackages}"
+                "linux-zen"
+                "linux-zen-headers"
+        )
 
         # INFO:
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
@@ -247,7 +300,9 @@ pacstrap_install() {
         # Perform the installation of the customized system
         pacstrap -K "/mnt" "base{,-devel} git terminus-font openssh traceroute \
         ${zsh_packages[*]} systemctl-tui hdparm neovim vim vi dos2unix tree \
-        fastfetch dhclient tmux arch-audit ${additionalPackages}"
+        fastfetch dhclient tmux arch-audit ${additionalPackages[*]}"
+
+        [[ "${?}" -ne 0 ]] && exit 1
 
         printf "\n${C_W}> ${INFO} ${C_R}Sorry, nano has been deleted from the "
         printf "Arch repository, you will have to learn${N_F} ${B_G} Vim ${N_F}"
