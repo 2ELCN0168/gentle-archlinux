@@ -177,25 +177,25 @@ pacstrap_install() {
 
         [[ "${filesystem}" == 'BTRFS' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "btrfs-progs"
         )
 
         [[ "${filesystem}" == 'XFS' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "xfsprogs"
         )
 
         [[ "${filesystem}" == 'EXT4' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "e2fsprogs"
         )
 
         [[ "${disk}" =~ "nvme" ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "nvme-cli"
                 "libnvme"
         )
@@ -203,82 +203,82 @@ pacstrap_install() {
         
         [[ "${LVM}" -eq 1 ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "lvm2"
         )
 
 
         [[ "${wantEncrypted}" -eq 1 ]] && \
         additionalPackages=(
-                "${additionalPackages}" 
+                "${additionalPackages[@]}" 
                 "cryptsetup"
         )
         
 
         [[ "${bootloader}" == 'REFIND' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "refind"
         )
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 1 ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "grub"
                 "efibootmgr"
         )
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 0 ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "grub"
         )
         
 
         [[ "${cpuBrand}" == 'INTEL' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "intel-ucode"
         )
 
         [[ "${cpuBrand}" == 'AMD' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "amd-ucode"
         )
 
         
         [[ "${net_manager}" == 'networkmanager' ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "networkmanager"
         )
 
 
         [[ "${linux_kernel}" == "linux" ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "linux"
                 "linux-headers"
         )
 
         [[ "${linux_kernel}" == "linux-lts" ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "linux-lts"
                 "linux-lts-headers"
         )
 
         [[ "${linux_kernel}" == "linux-hardened" ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "linux-hardened"
                 "linux-hardened-headers"
         )
 
         [[ "${linux_kernel}" == "linux-hardened" ]] && \
         additionalPackages=(
-                "${additionalPackages}"
+                "${additionalPackages[@]}"
                 "linux-zen"
                 "linux-zen-headers"
         )
@@ -299,8 +299,8 @@ pacstrap_install() {
         # INFO:
         # Perform the installation of the customized system
         pacstrap -K "/mnt" "base{,-devel} git terminus-font openssh traceroute \
-        ${zsh_packages[*]} systemctl-tui hdparm neovim vim vi dos2unix tree \
-        fastfetch dhclient tmux arch-audit ${additionalPackages[*]}"
+        ${zsh_packages[@]} systemctl-tui hdparm neovim vim vi dos2unix tree \
+        fastfetch dhclient tmux arch-audit ${additionalPackages[@]}"
 
         [[ "${?}" -ne 0 ]] && exit 1
 
