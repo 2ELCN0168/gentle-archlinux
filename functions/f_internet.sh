@@ -21,18 +21,19 @@
 
 test_internet() {
 
-        export attempt=3
+        # export attempt=3
+        local attempt=3
 
         while (( "${attempt}" > 0 )); do
                 if ping -c 1 1.1.1.1 1> "/dev/null" 2>&1; then
-                        echo -e "${C_W}> ${SUC} ${C_G}Internet" \
-                                "connection detected.${N_F}\n"
+                        printf "${C_W}> ${SUC} ${C_G}Internet connection "
+                        printf "detected.${N_F}\n\n"
                         return
                 fi
                 (( attempt-- ))
         done
 
-        echo -e "${C_W}> ${WARN} ${C_R}No Internet connection detected." \
-                "Exiting...${N_F}\n"
+        printf "${C_W}> ${WARN} ${C_R}No Internet connection detected. "
+        printf "Exiting...${N_F}\n\n"
         exit 1
 }

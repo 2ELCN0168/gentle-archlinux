@@ -6,7 +6,7 @@
 # It can be used on several disks at the same time.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-10-04
 #
 ### Dependencies:
 # - sgdisk;
@@ -24,14 +24,16 @@
 # This part of the script is actually working with EXT4 and XFS.
 #
 # OPTIMIZE:
-# It must be rearranged to be used with LUKS and multiple disks at the same time.
-# Actually, only the first disk will be encrypted, which is not very useful...
+# It must be rearranged to be used with LUKS and multiple disks at the same 
+# time. Actually, only the first disk will be encrypted, which is not very 
+# useful...
 #
 
 
 default_formatting() {
-        echo -e "${C_W}> ${INFO} Formatting ${C_C}${root_part}" \
-                "${N_F}to ${C_C}${filesystem}${N_F}.\n"
+
+        printf "${C_W}> ${INFO} Formatting ${C_C}${root_part}${N_F} to "
+        printf "${C_C}${filesystem}${N_F}.\n\n"
 
         [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \
         "${root_part}" 1> "/dev/null" 2>&1
@@ -43,6 +45,7 @@ default_formatting() {
         # "mount_default()" is defined in "./f_mount_default.sh"
         mount_default
 }
+
 lvm_mgmt() {
 
         # INFO: 
@@ -62,21 +65,21 @@ lvm_mgmt() {
         # INFO: 
         # If LVM is not used, format the root partition with the previous
         # chosen filesystem
-        if [[ "${LVM}" -eq 0 ]]; then
-                default_formatting
-        elif [[ "${LVM}" -eq 1 ]]; then
+        [[ "${LVM}" -eq 0 ]] && default_formatting
+
+        if [[ "${LVM}" -eq 1 ]]; then
 
                 # INFO: 
                 # Creating LVM and initialize PVs
-                echo -e "${C_W}> ${INFO} ${C_W}Creating LVM with" \
-                        "${C_C}${disks_array[*]}${N_F} with" \
-                        "${C_Y}${filesystem}${N_F}...\n"
+                printf "${C_W}> ${INFO} ${C_W}Creating LVM with "
+                printf "${C_C}${disks_array[*]}${N_F} with "
+                printf "${C_Y}${filesystem}${N_F}...\n\n"
 
-                if [[ "${wantEncrypted}" -eq 1 ]]; then
-                        disks_array[0]="/dev/mapper/root"
-                else
-                        disks_array[0]="${disks_array[0]}2"
-                fi
+                [[ "${wantEncrypted}" -eq 1 ]] && \
+                disks_array[0]="/dev/mapper/root"
+
+                [[ "${wantEncrypted}" -eq 0 ]] && \
+                disks_array[0]="${disks_array[0]}2"
 
                 # INFO: 
                 # Loop on each disk to initialize the partition table and
@@ -90,13 +93,13 @@ lvm_mgmt() {
 
                         pvcreate "${i}" 1> "/dev/null" 2>&1
                         if [[ "${?}" -eq 0 ]]; then
-                                echo -e "${C_W}> ${INFO} ${C_W}Created" \
-                                        "PV with ${C_C}${i}${N_F}"
+                                printf "${C_W}> ${INFO} ${C_W}Created PV with "
+                                printf "${C_C}${i}${N_F}.\n"
                                 pv_array+=("${i}")
                         else
-                                echo -e "${C_W}> ${C_ERR} Error while creating" \
-                                        "the physical volume with ${C_Y}${i}${N_F}." \
-                                        "We will not use it."
+                                printf "${C_W}> ${C_ERR} Error while creating "
+                                printf "the physical volume with ${C_Y}${i}"
+                                printf "${N_F}. We will not use it.\n"
                         fi
                 done
 
@@ -112,33 +115,42 @@ lvm_mgmt() {
 
                 # INFO: 
                 # Fetch the Volume Group free space
-                local vg_free_space=$(vgs --noheadings -o vg_free --units G "${vg_name}" | awk '{ print int($1) }')
+                local vg_free_space=$(vgs --noheadings -o vg_free \
+                --units G "${vg_name}" | awk '{ print int($1) }')
                 local ratio=""
                 local lv_size=""
+
                 for i in "${logical_volumes[@]}"; do
                         # INFO: 
-                        # Get the second part for each index in ${logical_volumes[@]}
+                        # Get the second part for each index
+                        # in ${logical_volumes[@]}
                         local ratio=$(echo ${i} | cut -d ";" -f 2)
+
                         # INFO: 
                         # And then the first part: the name
                         local lv_name=$(echo ${i} | cut -d ";" -f 1)
+
                         # INFO: 
                         # Calculate size
-                        local lv_size=$(echo "${vg_free_space} * ${ratio} / 100" | bc)
+                        local lv_size=$(echo "${vg_free_space} * \
+                        ${ratio} / 100" | bc)
+
                         # INFO: 
                         # Round size 
-                        local lv_size=$(echo "${lv_size}" | awk '{printf "%d\n", $1}')
+                        local lv_size=$(echo "${lv_size}" | 
+                        awk '{printf "%d\n", $1}')
 
-                        echo -e "${C_W}> ${INFO} ${C_W}Creating LV" \
-                                "${C_C}${lv_name}${N_F} with size" \
-                                "${C_Y}${lv_size}G${N_F}."
+                        printf "${C_W}> ${INFO} ${C_W}Creating LV "
+                        printf "${C_C}${lv_name}${N_F} with size "
+                        printf "${C_Y}${lv_size}G${N_F}.\n"
 
-                        lvcreate -L "${lv_size}"G "${vg_name}" -n "${lv_name}" -y 1> "/dev/null" 2>&1
+                        lvcreate -L "${lv_size}"G "${vg_name}" \
+                        -n "${lv_name}" -y 1> "/dev/null" 2>&1
+
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_W}> ${C_ERR} Error while" \
-                                        "creating the logical volume" \
-                                        "${C_Y}${lv_name}${N_F}." \
-                                        "Exiting."
+                                printf "${C_W}> ${C_ERR} Error while "
+                                printf "creating the logical volume "
+                                printf "${C_Y}${lv_name}${N_F}. Exiting.\n"
                                 exit 1
                         fi
                 done
@@ -148,38 +160,43 @@ lvm_mgmt() {
                 local fs=""
 
                 for i in "${logical_volumes[@]}"; do
-                        local lv_name=$(echo ${i} | cut -d ";" -f 1)
-                        case "${filesystem}" in
-                                "XFS") fs="xfs" ;;
-                                "EXT4") fs=ext4 ;;
-                        esac
-                        mkfs.${fs} -L Arch_${lv_name} "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
+                        local lv_name=$(echo "${i}" | cut -d ';' -f 1)
+
+                        [[ "${filesystem}" == "XFS" ]] && fs="xfs"
+                        [[ "${filesystem}" == "EXT4" ]] && fs="ext4"
+
+                        
+                        mkfs."${fs}" -L Arch_${lv_name} \
+                        "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1
+
                         if [[ "${lv_name}" == "root" ]]; then
-                                echo -e "${C_W}> ${INFO} Mounting" \
-                                        "${C_C}${vg_name}-${lv_name}${N_F}" \
-                                        "to /mnt/"
+                                printf "${C_W}> ${INFO} Mounting "
+                                printf "${C_C}${vg_name}-${lv_name}${N_F} "
+                                printf "to /mnt \n"
                                 mount "/dev/mapper/${vg_name}-${lv_name}" "/mnt"
                         else 
-                                echo -e "${C_W}> ${INFO} Mounting" \
-                                        "${C_C}${vg_name}-${lv_name}${N_F}" \
-                                        "to /mnt/${lv_name}"
-                                mount --mkdir "/dev/mapper/${vg_name}-${lv_name}" "/mnt/${lv_name}"
+                                printf "${C_W}> ${INFO} Mounting "
+                                printf "${C_C}${vg_name}-${lv_name}${N_F} "
+                                printf "to /mnt/${lv_name}\n"
+                                mount --mkdir "/dev/mapper/
+                                ${vg_name}-${lv_name}" "/mnt/${lv_name}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_W}> ${ERR} Error mounting" \
-                                        "${C_C}${vg_name}-${lv_name}${N_F}" \
-                                        "to /mnt/${lv_name}"
+                                printf "${C_W}> ${ERR} Error while mounting "
+                                printf "${C_C}${vg_name}-${lv_name}${N_F} "
+                                printf "to /mnt/${lv_name}\n"
                                 exit 1
                         fi
                 done
 
-                echo -e "${C_W}> ${INFO} Mounting ${C_C}${boot_part}${N_F}" \
-                        "to /mnt/boot\n"
+                printf "${C_W}> ${INFO} Mounting ${C_C}${boot_part}${N_F} "
+                printf "to /mnt/boot\n\n"
                 mount --mkdir "${boot_part}" "/mnt/boot"
 
                 # INFO: 
-                # Replace ${root_part} with the new LVM root volume located in "/dev/mapper"
+                # Replace ${root_part} with the new LVM root volume 
+                # located in "/dev/mapper"
                 root_part="/dev/mapper/${vg_name}-root"
         fi
 }
