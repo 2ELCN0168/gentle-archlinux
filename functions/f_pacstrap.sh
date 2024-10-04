@@ -49,32 +49,28 @@ ask_packages() {
                                 guest_agent="QEMU"
                                 printf "${C_W}> ${INFO} ${C_G}qemu-guest-agent" 
                                 printf "${N_F} will be installed.\n\n" 
-                                additionalPackages="${additionalPackages} \
-                                qemu-guest-agent"
+                                additionalPackages+=("qemu-guest-agent")
                                 break
                                 ;;
                         [1])
                                 guest_agent="VIRTUALBOX"
                                 printf "${C_W}> ${INFO} ${C_G}virtualbox-guest" 
                                 printf "-utils${N_F} will be installed.\n\n"
-                                additionalPackages="${additionalPackages} \
-                                virtualbox-guest-utils"
+                                additionalPackages+=("virtualbox-guest-utils")
                                 break
                                 ;;
                         [2])
                                 guest_agent="VMWARE"
                                 printf "${C_W}> ${INFO} ${C_G}open-vm-tools"
                                 printf "${N_F} will be installed.\n\n"
-                                additionalPackages="${additionalPackages} \
-                                open-vm-tools"
+                                additionalPackages+=("open-vm-tools")
                                 break
                                 ;;
                         [3])
                                 guest_agent="HYPERV"
                                 printf "${C_W}> ${INFO} ${C_G}hyperv${N_F} "
                                 printf "will be installed.\n\n"
-                                additionalPackages="${additionalPackages} \
-                                hyperv"
+                                additionalPackages+=("hyperv")
                                 break
                                 ;;
                         [4])
@@ -105,8 +101,8 @@ ask_packages() {
                 if [[ "${ans_net_pack}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} ${C_C}Networking "
                         printf "pack${N_F} will be installed.\n\n"
-                        additionalPackages="${additionalPackages} bind-tools \
-                        ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
+                        additionalPackages+=("bind-tools" "ldns" "nmon" "nload"
+                        "nethogs" "jnettop" "iptraf-ng" "tcpdump" "nmap")
                         break
                 elif [[ "${ans_net_pack}" =~ [nN] ]]; then
                         break
@@ -127,8 +123,8 @@ ask_packages() {
                 if [[ "${ans_help_pack}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} ${C_G}Helping pack${N_F} will "
                         printf "be installed.\n\n"
-                        additionalPackages="${additionalPackages} texinfo \
-                        tealdeer man man-pages"
+                        additionalPackages+=("texinfo" "tealdeer" "man" 
+                        "man-pages")
                         break
                 elif [[ "${ans_help_pack}" =~ [nN] ]]; then
                         break
@@ -149,8 +145,7 @@ ask_packages() {
                 if [[ "${ans_monitoring_pack}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} ${C_Y}Monitoring pack"
                         printf "${N_F} will be installed.\n\n"
-                        additionalPackages="${additionalPackages} btop htop \
-                        bmon iotop"
+                        additionalPackages+=("btop" "htop" "bmon" "iotop")
                         break
                 elif [[ "${ans_monitoring_pack}" =~ [nN] ]]; then
                         break
@@ -176,112 +171,61 @@ pacstrap_install() {
         )
 
         [[ "${filesystem}" == 'BTRFS' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "btrfs-progs"
-        )
+        additionalPackages+=("btrfs-progs")
 
         [[ "${filesystem}" == 'XFS' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "xfsprogs"
-        )
+        additionalPackages+=("xfsprogs")
 
         [[ "${filesystem}" == 'EXT4' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "e2fsprogs"
-        )
+        additionalPackages+=("e2fsprogs")
 
         [[ "${disk}" =~ "nvme" ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "nvme-cli"
-                "libnvme"
-        )
+        additionalPackages+=("nvme-cli" "libnvme")
 
         
         [[ "${LVM}" -eq 1 ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "lvm2"
-        )
+        additionalPackages+=("lvm2")
 
 
         [[ "${wantEncrypted}" -eq 1 ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}" 
-                "cryptsetup"
-        )
+        additionalPackages+=("cryptsetup")
         
 
         [[ "${bootloader}" == 'REFIND' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "refind"
-        )
+        additionalPackages+=("refind")
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 1 ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "grub"
-                "efibootmgr"
-        )
+        additionalPackages+=("grub" "efibootmgr")
 
         [[ "${bootloader}" == 'GRUB' && "${UEFI}" -eq 0 ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "grub"
-        )
+        additionalPackages+=("grub")
         
 
         [[ "${cpuBrand}" == 'INTEL' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "intel-ucode"
-        )
+        additionalPackages+=("intel-ucode")
 
         [[ "${cpuBrand}" == 'AMD' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "amd-ucode"
-        )
+        additionalPackages+=("amd-ucode")
 
         
         [[ "${net_manager}" == 'networkmanager' ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "networkmanager"
-        )
+        additionalPackages+=("networkmanager")
 
 
         [[ "${linux_kernel}" == "linux" ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "linux"
-                "linux-headers"
-        )
+        additionalPackages+=("linux" "linux-headers")
 
         [[ "${linux_kernel}" == "linux-lts" ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "linux-lts"
-                "linux-lts-headers"
-        )
+        additionalPackages+=("linux-lts" "linux-lts-headers")
 
         [[ "${linux_kernel}" == "linux-hardened" ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
+        additionalPackages+=(
                 "linux-hardened"
                 "linux-hardened-headers"
         )
 
-        [[ "${linux_kernel}" == "linux-hardened" ]] && \
-        additionalPackages=(
-                "${additionalPackages[@]}"
-                "linux-zen"
-                "linux-zen-headers"
-        )
+        [[ "${linux_kernel}" == "linux-zen" ]] && \
+        additionalPackages+=("linux-zen" "linux-zen-headers")
 
         # INFO:
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
@@ -293,7 +237,7 @@ pacstrap_install() {
 
         # Display additional packages
         printf "${C_W}> ${INFO} Additional packages are "
-        printf "${C_C}${additionalPackages}${N_F}\n"
+        printf "${C_C}${additionalPackages[*]}${N_F}\n"
         sleep 4
 
         # INFO:
