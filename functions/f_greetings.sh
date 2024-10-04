@@ -16,7 +16,7 @@
 # /`           `\                                                
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-02
+# Last updated: 2024-10-04
 #
 ### Dependencies:
 # - none;
@@ -50,40 +50,37 @@ greetings() {
         [[ "${param_hardening}" -eq 0 ]] && hard=""
         [[ "${param_standard}" -eq 0 ]] && standard=""
         
-        
+        printf "\n"
+        printf "${C_B}       ,       ${C_C}                _     _ _                               \n"
+        printf "${C_B}      /#\      ${C_C}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             \n"
+        printf "${C_B}     ,###\     ${C_C} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            \n"
+        printf "${C_B}    /#####\    ${C_C}| (_| | | | (__| | | | | | | | | |_| |>  <              \n"
+        printf "${C_B}   /##;-;##\   ${C_C} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\ ${C_G}TM    \n"
+        printf "${C_B}  /##(   )##\`                                                               \n"
+        printf "${C_B} /#;--   --;#\  ${C_Y}Gentle Installer. ${mini}${complete}${hard}${standard} \n"
+        printf "${C_B}/\`           \`\                                                            \n"
+        printf "${N_F}\n"
 
-        echo ""
-        echo -e "${C_B}       ,       ${C_C}                _     _ _                               "
-        echo -e "${C_B}      /#\      ${C_C}  __ _ _ __ ___| |__ | (_)_ __  _   ___  __             "
-        echo -e "${C_B}     ,###\     ${C_C} / _\` | '__/ __| '_ \| | | '_ \| | | \ \/ /            "
-        echo -e "${C_B}    /#####\    ${C_C}| (_| | | | (__| | | | | | | | | |_| |>  <              "
-        echo -e "${C_B}   /##;-;##\   ${C_C} \__,_|_|  \___|_| |_|_|_|_| |_|\__,_/_/\_\ ${C_G}TM"
-        echo -e "${C_B}  /##(   )##\`                                                                  "
-        echo -e "${C_B} /#;--   --;#\  ${C_Y}Gentle Installer. ${mini}${complete}${hard}${standard}"
-        echo -e "${C_B}/\`           \`\                                                               "
-        echo -e "${N_F}"
-
-        echo -e "\n${C_W}██████████████████████████████████████████████████████████████████████████████████████"
-        echo -e "████████████████████████████████████████████████████"
-        echo -e "████████████████\n${N_F}"
+        printf "\n${C_W}██████████████████████████████████████████████████████████████████████████████████████"
+        printf "████████████████████████████████████████████████████"
+        printf "████████████████\n\n${N_F}"
 
         # INFO:
         # Keep a report of the date and time it was installed.
         
         date | tee > "./installation_date.log"
-        echo -e "${C_C}> ${C_W}Welcome to this gently automated" \
-                "${C_C}Arch/\Linux${N_F} ${C_W}installer." \
-                "${C_C}<${N_F}\n"
+        printf "${C_C}> ${C_W}Welcome to this gently automated"
+        printf "${C_C}Arch/\Linux${N_F} ${C_W}installer. ${C_C}<${N_F}\n\n"
 
-        echo -e "${C_W}> ${C_P}Before starting, make sure you have" \
-                "${C_R}no LVM ${C_P}configured on your disk, or it will" \
-                "${C_R}mess up${C_P} the script. You must delete any LV," \
-                "VG and PV before starting.${N_F}\n"
+        printf "${C_W}> ${C_P}Before starting, make sure you have ${C_R}no LVM "
+        printf "${C_P}configured on your disk, or it will ${C_R}mess up${C_P} "
+        printf "the script. You must delete any LV, VG and PV before starting."
+        printf "${N_F}\n\n"
 
-        echo -e "${C_W}> ${C_G}This script is safe to use as it asks" \
-                "the user for any modification. No disk/volume will be touched" \
-                "without you making the selection. ${C_Y}Just BE CAREFUL" \
-                "because actions on disks are ${C_R}IRREVERSIBLE!${N_F}\n"
+        printf "${C_W}> ${C_G}This script is safe to use as it asks the user "
+        printf "for any modification. No disk/volume will be touched without "
+        printf "you making the selection. ${C_Y}Just BE CAREFUL because "
+        printf "actions on disks are ${C_R}IRREVERSIBLE!${N_F}\n\n"
 
         # INFO: This unmounting action ensure to have nothing actually mounted 
         # on /mnt before starting
@@ -96,27 +93,29 @@ greetings() {
 
         for i in "${mountpoints[@]}"; do
                 while mountpoint --quiet "/mnt/${i}"; do 
-                        if umount --recursive "/mnt/${i}" 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} ${C_W}Unmounted" \
-                                        "${C_C}${i}${N_F}."
+                        if umount --recursive "/mnt/${i}" \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} ${C_W}Unmounted "
+                                printf  "${C_C}${i}${N_F}.\n"
                         else
-                                echo -e "${C_W}> ${ERR} ${C_W}Error" \
-                                        "while unmounting ${C_C}${i}${C_W}." \
-                                        "You may want to unmount it manually" \
-                                        "before starting the installation."
+                                printf "${C_W}> ${ERR} ${C_W}Error while "
+                                printf  "unmounting ${C_C}${i}${C_W}.\n"
+
+                                printf  "You may want to unmount it manually"
+                                printf  "before starting the installation.\n"
                         fi
                 done
         done
         while mountpoint --quiet "/mnt"; do
                 if umount --recursive "/mnt" 1> "/dev/null" 2>&1; then
-                        echo -e "${C_W}> ${SUC} ${C_W}Unmounted" \
-                                "${C_C}/mnt${N_F}."
+                        printf "${C_W}> ${SUC} ${C_W}Unmounted ${C_C}/mnt"
+                        printf  "${N_F}.\n"
                 else
-                        echo -e "${C_W}> ${ERR} ${C_W}Error while" \
-                                "unmounting ${C_C}/mnt${C_W}. You may" \
-                                "want to unmount it manually before starting" \
-                                "the installation.${N_F}"
+                        printf "${C_W}> ${ERR} ${C_W}Error while unmounting "
+                        printf  "${C_C}/mnt${C_W}. You may want to unmount it "
+                        printf  "manually before starting the installation."
+                        printf  "${N_F}\n"
                 fi
-        echo ""
+        printf "\n"
         done
 }

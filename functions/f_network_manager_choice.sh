@@ -5,7 +5,7 @@
 # Ask the user which network manager they want to use.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-02
+# Last updated: 2024-10-04
 #
 ### Dependencies:
 # - network-manager (indirectly); 
@@ -22,45 +22,39 @@ net_manager() {
 
         while true; do
 
-                if [[ "${param_minimal}" -eq 1 ]]; then
-                        net_manager="networkmanager"
-                        break
-                fi
+                [[ "${param_minimal}" -eq 1 ]] && \
+                net_manager="networkmanager" && break
 
                 net_menu                             
 
                 local ans_net_manager=""
                 read ans_net_manager
                 : "${ans_net_manager:=0}"
-                
-                case "${ans_net_manager}" in
-                        [0])
-                                echo -e "${C_W}> ${INFO} You chose" \
-                                        "${C_G}systemd-networkd${N_F}.\n"
-                                net_manager="systemd-networkd"
-                                break
-                                ;;
-                        [1])
-                                echo -e "${C_W}> ${INFO} You chose" \
-                                        "${C_C}NetworkManager${N_F}.\n"
-                                net_manager="networkmanager" 
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+
+                if [[ "${ans_net_manager}" -eq 0 ]]; then
+                        printf "${C_W}> ${INFO} You chose "
+                        printf "${C_G}systemd-networkd${N_F}.\n\n"
+                        net_manager="systemd-networkd"
+                        break
+                elif [[ "${ans_net_manager}" -eq 1 ]]; then
+                        printf "${C_W}> ${INFO} You chose "
+                        printf "${C_C}NetworkManager${N_F}.\n\n"
+                        net_manager="networkmanager" 
+                        break
+                else
+                        invalid_answer
+                fi
         done
 }
 
 net_menu() {
-        echo -e "\n==${C_C}NETWORK MANAGER${N_F}===\n"
+        printf "\n==${C_C}NETWORK MANAGER${N_F}===\n\n"
 
-        echo -e "${C_W}[0] - ${C_G}systemd-networkd${N_F} [default]"
-        echo -e "${C_W}[1] - ${C_C}NetworkManager${N_F}"
+        printf "${C_W}[0] - ${C_G}systemd-networkd${N_F} [default]\n"
+        printf "${C_W}[1] - ${C_C}NetworkManager${N_F}\n"
 
-        echo -e "\n====================\n"
+        printf "\n====================\n\n"
 
-        echo -e "${C_C}:: ${C_W}Which network manager do you want" \
-                "to use? -> ${N_F}\c"
+        printf "${C_C}:: ${C_W}Which network manager do you want to use? "
+        printf "-> ${N_F}"
 }
