@@ -55,6 +55,6 @@ net_menu() {
 
         printf "\n====================\n\n"
 
-        printf "${C_C}:: ${C_W}Which network manager do you want to use? "
-        printf "-> ${N_F}"
+        printf "${C_C}:: ${C_W}Which network manager do you want to use? -> "
+        printf "${N_F}"
 }

@@ -55,8 +55,8 @@ ask_packages() {
                                 ;;
                         [1])
                                 guest_agent="VIRTUALBOX"
-                                printf "${C_W}> ${INFO} ${C_G}virtualbox-guest-" 
-                                printf "utils${N_F} will be installed.\n\n"
+                                printf "${C_W}> ${INFO} ${C_G}virtualbox-guest" 
+                                printf "-utils${N_F} will be installed.\n\n"
                                 additionalPackages="${additionalPackages} \
                                 virtualbox-guest-utils"
                                 break
@@ -107,6 +107,7 @@ ask_packages() {
                         printf "pack${N_F} will be installed.\n\n"
                         additionalPackages="${additionalPackages} bind-tools \
                         ldns nmon nload nethogs jnettop iptraf-ng tcpdump nmap"
+                        break
                 elif [[ "${ans_net_pack}" =~ [nN] ]]; then
                         break
                 else
@@ -129,7 +130,7 @@ ask_packages() {
                         additionalPackages="${additionalPackages} texinfo \
                         tealdeer man man-pages"
                         break
-                elif [[ "${ans_help_pack}" =~ [yY] ]]; then
+                elif [[ "${ans_help_pack}" =~ [nN] ]]; then
                         break
                 else
                         invalid_answer
@@ -150,6 +151,7 @@ ask_packages() {
                         printf "${N_F} will be installed.\n\n"
                         additionalPackages="${additionalPackages} btop htop \
                         bmon iotop"
+                        break
                 elif [[ "${ans_monitoring_pack}" =~ [nN] ]]; then
                         break
                 else
