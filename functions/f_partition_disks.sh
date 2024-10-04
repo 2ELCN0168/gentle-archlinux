@@ -51,13 +51,13 @@ partition_disk() {
                 # fi
                 
                 if parted -s "${user_disk}" mklabel msdos 1> "/dev/null" 2>&1; then
-                        parted -s "${user_disk}" mkpart primary EST fat32 1Mib 512Mib 1> "/dev/null" 2>&1
-                        parted -s "${user_disk}" mkpart primary Archlinux 512Mib 100% 1> "/dev/null" 2>&1
+                        parted -s "${user_disk}" mkpart primary fat32 1Mib 512Mib 1> "/dev/null" 2>&1
+                        parted -s "${user_disk}" mkpart primary 512Mib 100% 1> "/dev/null" 2>&1
                         
                         if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
-                                echo -e "${C_W}> ${SUC} ${C_G}Partitions created successfully for UEFI mode (GPT).${N_F}\n"
+                                echo -e "${C_W}> ${SUC} ${C_G}Partitions created successfully for BIOS mode (MBR).${N_F}\n"
                         else
-                                echo -e "${C_W}> ${ERR} ${C_R}Error during partitionning ${user_disk} for UEFI mode (GPT).${N_F\n}"
+                                echo -e "${C_W}> ${ERR} ${C_R}Error during partitionning ${user_disk} for BIOS mode (MBR).${N_F}\n"
                                 exit 1
                         fi
                 fi
