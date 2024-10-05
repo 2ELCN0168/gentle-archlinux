@@ -21,9 +21,9 @@
 # Long parameters for "mkfs.fat" don't exist.
 #
 
-source "./functions/f_luks_handling.sh"
-source "./functions/f_btrfs.sh"
-source "./functions/f_lvm.sh"
+source "./functions/lvm_luks/f_luks_handling.sh"
+source "./functions/lvm_luks/f_lvm.sh"
+source "./functions/disks_filesystems/f_btrfs.sh"
 
 format_partitions() {
 
