@@ -32,8 +32,9 @@ set_hostname() {
         # Hostname
 
         printf "${C_C}:: ${C_W}Enter your hostname without domain.\n"
-        printf "${C_C}:: ${C_W}Recommended hostname length: 15 chars [a-z][A-Z]"
-        printf "[0-9]. Default is 'localhost' -> ${N_F}"
+        printf "${C_C}:: ${C_W}Recommended hostname length: ${C_P}15 chars "
+        printf "${C_Y}[a-z][A-Z][0-9].${N_F} "
+        printf "Default is ${C_B}'localhost'${N_F} -> "
 
         local ans_hostname=""
 
@@ -42,13 +43,14 @@ set_hostname() {
                 : "${ans_hostname:=localhost}"
                 printf "\n"
 
-                if [[ "${ans_hostname}" =~ "${hostname_regex}" ]]; then
+                if [[ "${ans_hostname}" =~ ${hostname_regex} ]]; then
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid hostname.${N_F} "
-                        printf "Hostname must be 1-63 characters long, "
-                        printf "containing only letters, digits, and hyphens "
-                        printf ", and cannot start or end with a hyphen.\n\n"
+                        printf "Hostname must be ${C_P}1-63 characters long "
+                        printf "${N_F}, containing only letters, digits, and "
+                        printf "hyphens, and cannot start or end with a hyphen."
+                        printf "\n\n"
 
                         printf "${C_C}:: ${C_W}Please re-enter a valid "
                         printf "hostname -> ${N_F}"
@@ -60,9 +62,10 @@ set_hostname() {
         # INFO: ============================================================
         # Domain name
 
-        printf "${C_C}:: ${C_W}Enter your domain name ([a-z][A-Z][0-9][.-]).\n"
+        printf "${C_C}:: ${C_W}Enter your domain name (${C_G}[a-z][A-Z][0-9]"
+        printf "[.-]${N_F}).\n"
         printf "${C_C}:: ${C_W}It must not begin or end with a dot or a hyphen."
-        printf "\nDefault is 'home.arpa' (RFC 8375) -> ${N_F}"
+        printf "\nDefault is ${C_B}'home.arpa'${N_F} (RFC 8375) -> "
 
         local ans_domain_name=""
         
@@ -71,14 +74,14 @@ set_hostname() {
                 : "${ans_domain_name:=home.arpa}"
                 printf "\n"
 
-                if [[ "${ans_domain_name}" =~ "${hostname_regex}" ]]; then
+                if [[ "${ans_domain_name}" =~ ${domain_regex} ]]; then
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid domain name. "
-                        printf "${N_F}Domain must be in the format "
-                        printf "'example.com' or similar, containing letters, "
-                        printf "digits, hyphens, and periods, and not starting "
-                        printf "or ending with a hyphen or period.\n\n"
+                        printf "${N_F}Domain must be in the format ${C_Y}"
+                        printf "'example.com'${N_F} or similar, containing "
+                        printf "letters, digits, hyphens, and periods, and not "
+                        printf "starting or ending with a hyphen or period.\n\n"
 
                         printf "${C_C}:: ${C_W}Please re-enter a valid "
                         printf "domain name -> ${N_F}"
