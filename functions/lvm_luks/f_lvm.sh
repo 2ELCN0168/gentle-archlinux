@@ -199,4 +199,8 @@ lvm_mgmt() {
                 # located in "/dev/mapper"
                 root_part="/dev/mapper/${vg_name}-root"
         fi
+        
+        # INFO:
+        # Display the result to the user
+        printf "\n${C_Y}$(lsblk --fs)\n\n${N_F}"
 }

@@ -153,15 +153,13 @@ btrfs_mgmt() {
         done
                 
         printf "${C_W}> ${INFO} Mounting ${C_G}/dev/sda1${N_F} to "
-        printf "${C_P}/mnt/boot${N_F}\n\n"
+        printf "${C_P}/mnt/boot${N_F}\n"
 
         mount --mkdir "${boot_part}" "/mnt/boot"
 
         # INFO:
         # Display the result to the user
-        printf "\n\n${C_Y}"
-        lsblk --fs
-        printf "\n\n${N_F}"
+        printf "\n${C_Y}$(lsblk --fs)\n\n${N_F}"
 
         # INFO:
         # Enable quotas? Quit the function if the user doesn't use subvolumes
