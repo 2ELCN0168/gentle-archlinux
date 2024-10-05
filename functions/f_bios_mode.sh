@@ -40,7 +40,7 @@ get_bios_mode() {
                 UEFI=1
         else
                 printf "${C_W}> ${INFO} ${N_F}Running in ${C_R}BIOS${N_F} "
-                printf "mode."
+                printf "mode. "
                 printf "${C_Y}No choice for you. You would have been better "
                 printf "off using ${C_C}UEFI${N_F} mode. We will install "
                 printf "GRUB2.${N_F}\n\n"
