@@ -34,4 +34,6 @@ locales_gen() {
                 printf "${C_W}> ${WARN} ${C_Y}Failed to generate locales."
                 printf "${N_F}\n"
         fi
+
+        printf "\n"
 }
