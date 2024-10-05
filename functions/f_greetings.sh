@@ -69,7 +69,7 @@ greetings() {
         # Keep a report of the date and time it was installed.
         
         date | tee > "./installation_date.log"
-        printf "${C_C}> ${C_W}Welcome to this gently automated"
+        printf "${C_C}> ${C_W}Welcome to this gently automated "
         printf "${C_C}Arch/\Linux${N_F} ${C_W}installer. ${C_C}<${N_F}\n\n"
 
         printf "${C_W}> ${C_P}Before starting, make sure you have ${C_R}no LVM "
