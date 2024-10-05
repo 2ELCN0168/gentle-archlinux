@@ -45,7 +45,7 @@ set_hostname() {
 
                 if [[ "${ans_hostname}" =~ ${hostname_regex} ]]; then
                         printf "${C_W}> ${INFO} Hostname : "
-                        printf "${C_P}${ans_hostname}${N_F}\n"
+                        printf "${C_P}${ans_hostname}${N_F}\n\n"
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid hostname.${N_F} "
@@ -78,7 +78,7 @@ set_hostname() {
 
                 if [[ "${ans_domain_name}" =~ ${domain_regex} ]]; then
                         printf "${C_W}> ${INFO} Domain name : "
-                        printf "${C_P}${ans_hostname}${N_F}\n"
+                        printf "${C_P}${ans_domain_name}${N_F}\n\n"
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid domain name. "
