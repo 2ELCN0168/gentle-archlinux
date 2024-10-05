@@ -33,7 +33,7 @@ set_hostname() {
 
         printf "${C_C}:: ${C_W}Enter your hostname without domain.\n"
         printf "${C_C}:: ${C_W}Recommended hostname length: ${C_P}15 chars "
-        printf "${C_Y}[a-z][A-Z][0-9].${N_F} "
+        printf "${C_Y}[a-z][A-Z][0-9].${N_F}\n"
         printf "Default is ${C_B}'localhost'${N_F} -> "
 
         local ans_hostname=""
@@ -44,6 +44,8 @@ set_hostname() {
                 printf "\n"
 
                 if [[ "${ans_hostname}" =~ ${hostname_regex} ]]; then
+                        printf "${C_W}> ${INFO} Hostname : "
+                        printf "${C_P}${ans_hostname}${N_F}\n"
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid hostname.${N_F} "
@@ -75,6 +77,8 @@ set_hostname() {
                 printf "\n"
 
                 if [[ "${ans_domain_name}" =~ ${domain_regex} ]]; then
+                        printf "${C_W}> ${INFO} Domain name : "
+                        printf "${C_P}${ans_hostname}${N_F}\n"
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid domain name. "
@@ -94,6 +98,6 @@ set_hostname() {
         # Ending
         
         printf "${hostname}.${domain}" > "/etc/hostname"
-        printf "\n${C_W}> ${INFO} ${N_F}Your hostname will be ${C_C}"
+        printf "${C_W}> ${INFO} ${N_F}Your hostname will be ${C_C}"
         printf "${hostname}.${domain}${N_F} (FQDN).\n\n"
 }
