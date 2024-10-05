@@ -46,7 +46,7 @@ filesystem_choice() {
                 [[ "${ans_filesystem}" -eq 2 ]] && filesystem="EXT4" && break
                 invalid_answer
         done
-        printf "${C_W}> ${INFO} ${N_F}You chose ${C_W}${filesystem}${N_F}\n\n"
+        printf "${C_W}> ${INFO} ${N_F}You chose ${C_W}${filesystem}${N_F}\n"
 }
 
 

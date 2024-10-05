@@ -128,7 +128,7 @@ display_disks() {
                 exclude_pattern+="|${disk}"
         done
 
-        printf "\n\n==${C_C}DISK${N_F}==============\n\n"
+        printf "\n==${C_C}DISK${N_F}==============\n\n"
 
         lsblk --nodeps --output NAME |
         grep --invert-match --extended-regexp "${exclude_pattern}"
