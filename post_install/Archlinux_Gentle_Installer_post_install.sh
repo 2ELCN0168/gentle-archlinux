@@ -6,8 +6,15 @@ source_files() {
 
     source "/post_install/config/c_config.sh"
     source "/post_install/config/c_formatting.sh"
-    source "${f_path}/f_greetings_pi.sh"
+    
+    source "${f_path}/configurations/f_set_time.sh"
+    source "${f_path}/configurations/f_locales_gen.sh"
+    source "${f_path}/configurations/f_set_hostname.sh"
+    source "${f_path}/configurations/f_set_hosts.sh"
+    source "${f_path}/configurations/f_set_vconsole.sh"
+
     source "${f_path}/f_configs.sh"
+    source "${f_path}/f_greetings_pi.sh"
     source "${f_path}/f_hardening_rules.sh"
     source "${f_path}/f_messages.sh"
     source "${f_path}/f_set_shellrc.sh"
@@ -35,7 +42,6 @@ main() {
         greetings_pi
 
         # CHANGE MULTIPLE CONFIG FILES
-        # make_config
         set_time
         locales_gen
         set_hostname
