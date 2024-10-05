@@ -32,7 +32,7 @@ source_files() {
 
 main() {
         
-        trap 'echo -e "\n\n${C_B}:: ${C_R}Program interrupted, exiting with code 1.${C_B} ::\n" ; exit 1' INT
+        trap 'printf "\n\n${C_B}:: ${C_R}Program interrupted, exiting with code 0.${C_B} ::\n\n" ; exit 0' INT
         
         # INIT
         greetings
