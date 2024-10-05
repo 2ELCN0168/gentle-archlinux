@@ -75,25 +75,25 @@ systemd_networkd() {
         # sed -i 's#^\(Address=\).*#\1${address}#' "/etc/systemd/network/05-${network_interface}.network"
         
         cat << EOF > "/etc/systemd/network/05-${network_interface}.network"
-        [Match]
-        Name=${network_interface}
+[Match]
+Name=${network_interface}
 
-        [Network]
+[Network]
 EOF
 
         if [[ "${ans_dhcp}" == [nN] ]]; then
                 # sed -i 's/^\(DHCP=\).*/\1yes/' "/etc/systemd/network/05-${network_interface}.network" 
                 cat << EOF > "/etc/systemd/network/05-${network_interface}.network"
-                DHCP=yes
-                Domains=${domain}
+DHCP=yes
+Domains=${domain}
 EOF
         else
                 cat << EOF > "/etc/systemd/network/05-${network_interface}.network"
-                DHCP=no
-                Domains=${domain}
+DHCP=no
+Domains=${domain}
 
-                Address=${address}
-                Gateway=${gateway}
+Address=${address}
+Gateway=${gateway}
 EOF
         fi
 }
