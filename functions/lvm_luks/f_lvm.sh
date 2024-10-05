@@ -202,5 +202,5 @@ lvm_mgmt() {
         
         # INFO:
         # Display the result to the user
-        printf "\n${C_Y}$(lsblk --fs)\n\n${N_F}"
+        printf "\n${C_Y}%s\n\n${N_F}" "$(lsblk --fs)"
 }
