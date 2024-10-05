@@ -255,6 +255,6 @@ pacstrap_install() {
 
         printf "\n${C_W}> ${INFO} ${C_R}Sorry, nano has been deleted from the "
         printf "Arch repository, you will have to learn${N_F} ${B_G} Vim ${N_F}"
-        printf ".\n"
+        printf ".\n\n"
         sleep 2
 }
