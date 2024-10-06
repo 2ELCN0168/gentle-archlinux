@@ -1,59 +1,112 @@
+#
+### File: f_enable_guest_agents.sh
+#
+### Description: 
+# If the user installed guest agent, enable it.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-10-06
+# 
+### Dependencies:
+# - the guest agents listed in the case.
+#
+### Usage:
+#
+# 1. Enabling the services.
+#
+# WARN:
+# HYPERV doesn't work (Don't worry it's a Microsoft habit).
+
 enable_guest_agents() {
 
         if [[ -z "${guest_agent}" ]]; then
-                return
+                return 0
         fi
 
         case "${guest_agent}" in
                 "QEMU")
-                        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} qemu-guest-agent.service.${N_F}"
+                        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        printf "${C_W} qemu-guest-agent.service.${N_F}\n"
 
-                        if systemctl enable qemu-guest-agent 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}qemu-guest-agent.service.${N_F}"
+                        if systemctl enable qemu-guest-agent \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} Successfully enabled "
+                                printf "${C_G}qemu-guest-agent.service.${N_F}"
                         else
-                                echo -e "${C_W}> ${ERR} Error while enabling ${C_R}qemu-guest-agent.service.${N_F}"
+                                printf "${C_W}> ${ERR} Error while enabling "
+                                printf "${C_R}qemu-guest-agent.service.${N_F}"
                         fi
                         ;;
                 "VIRTUALBOX")
-                        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} vboxservice.service.${N_F}"
+                        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        printf "${C_W} vboxservice.service.${N_F}\n"
 
-                        if systemctl enable vboxservice 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}vboxservice.service.${N_F}"
+                        if systemctl enable vboxservice \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} Successfully enabled "
+                                printf "${C_G}vboxservice.service.${N_F}"
                         else
-                                echo -e "${C_W}> ${ERR} Error while enabling ${C_R}vboxservice.service.${N_F}"
+                                printf "${C_W}> ${ERR} Error while enabling "
+                                printf "${C_R}vboxservice.service.${N_F}"
                         fi
                         ;;
                 "VMWARE")
-                        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} vmtoolsd.service.${N_F}"
+                        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        printf "${C_W} vmtoolsd.service.${N_F}\n"
 
                         if systemctl enable vmtoolsd 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}vmtoolsd.service.${N_F}"
+                                printf "${C_W}> ${SUC} Successfully enabled "
+                                printf "${C_G}vmtoolsd.service.${N_F}"
                         else
-                                echo -e "${C_W}> ${ERR} Error while enabling ${C_R}vmtoolsd.service.${N_F}"
+                                printf "${C_W}> ${ERR} Error while enabling "
+                                printf "${C_R}vmtoolsd.service.${N_F}"
                         fi
                         ;;
                 "HYPERV")
-                        # echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} hv_fcopy_uio_daemon.service.${N_F}"
-                        # if systemctl enable hv_fcopy_uio_daemon 1> /dev/null 2>&1; then
-                        #         echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}hv_fcopy_uio_daemon.service.${N_F}"
+
+                        # WARN: 
+                        # HYPERV guest agent is not working!
+                        #
+                        # printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        # printf "${C_W} hv_fcopy_uio_daemon.service.${N_F}"
+                        # if systemctl enable hv_fcopy_uio_daemon \
+                        # 1> /dev/null 2>&1; then
+                        #         printf "${C_W}> ${SUC} Successfully enabled "
+                        #         printf "${C_G}hv_fcopy_uio_daemon.service."
+                        #         printf "${N_F}"
                         # else
-                        #         echo -e "${C_W}> ${ERR} Error while enabling ${C_R}hv_fcopy_uio_daemon.service.${N_F}"
+                        #         printf "${C_W}> ${ERR} Error while enabling "
+                        #         printf "${C_R}hv_fcopy_uio_daemon.service."
+                        #         printf "${N_F}"
                         # fi
 
-                        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} hv_kvp_daemon.service.${N_F}"
-                        if systemctl enable hv_kvp_daemon 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}hv_kvp_daemon.service.${N_F}"
+                        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        printf "${C_W} hv_kvp_daemon.service.${N_F}\n"
+
+                        if systemctl enable hv_kvp_daemon \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} Successfully enabled "
+                                printf "${C_G}hv_kvp_daemon.service.${N_F}"
                         else
-                                echo -e "${C_W}> ${ERR} Error while enabling ${C_R}hv_kvp_daemon.service.${N_F}"
+                                printf "${C_W}> ${ERR} Error while enabling "
+                                printf "${C_R}hv_kvp_daemon.service.${N_F}"
                         fi
 
-                        echo -e "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} hv_vss_daemon.service.${N_F}"
-                        if systemctl enable hv_vss_daemon 1> "/dev/null" 2>&1; then
-                                echo -e "${C_W}> ${SUC} Successfully enabled ${C_G}hv_vss_daemon.service.${N_F}"
+                        printf "\n\n"
+
+                        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                        printf "${C_W} hv_vss_daemon.service.${N_F}\n"
+
+                        if systemctl enable hv_vss_daemon \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} Successfully enabled "
+                                printf "${C_G}hv_vss_daemon.service.${N_F}"
                         else
-                                echo -e "${C_W}> ${ERR} Error while enabling ${C_R}hv_vss_daemon.service.${N_F}"
+                                printf "${C_W}> ${ERR} Error while enabling "
+                                printf "${C_R}hv_vss_daemon.service.${N_F}"
                         fi
                         ;;
         esac
-        echo ""
+
+        printf "\n\n"
 }

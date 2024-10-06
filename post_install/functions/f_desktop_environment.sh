@@ -1,22 +1,43 @@
+#
+### File: f_desktop_environment.sh
+#
+### Description: 
+# Install a desktop environment.
+# No window manager included.
+#
+### Author: 2ELCN0168
+# Last updated: 2024-10-06
+# 
+### Dependencies:
+# - pacman;
+# - git.
+#
+### Usage:
+#
+# 1. Download a window manager;
+# 2. Installing a theme for sddm.
+#
+
 desktop_env() {
 
         local desktop_env=""
 
         while true; do
-                echo -e "==${C_C}DESKTOP ENV.${N_F}======\n"
+                printf "==${C_C}DESKTOP ENV.${N_F}======\n\n"
 
-                echo -e "${C_W}[0] - ${C_C}GNOME${N_F}"
-                echo -e "${C_W}[1] - ${C_C}KDE Plasma${N_F}"
-                echo -e "${C_W}[2] - ${C_C}MATE${N_F}"
-                echo -e "${C_W}[3] - ${C_C}Cinnamon${N_F}"
-                echo -e "${C_W}[4] - ${C_C}LXDE${N_F}"
-                echo -e "${C_W}[5] - ${C_C}MATE${N_F}"
-                echo -e "${C_W}[6] - ${C_C}Xfce${N_F}"
-                echo -e "${C_W}[7] - ${C_Y}None${N_F} (default)"
+                printf "${C_W}[0] - ${C_C}GNOME${N_F}\n"
+                printf "${C_W}[1] - ${C_C}KDE Plasma${N_F}\n"
+                printf "${C_W}[2] - ${C_C}MATE${N_F}\n"
+                printf "${C_W}[3] - ${C_C}Cinnamon${N_F}\n"
+                printf "${C_W}[4] - ${C_C}LXDE${N_F}\n"
+                printf "${C_W}[5] - ${C_C}MATE${N_F}\n"
+                printf "${C_W}[6] - ${C_C}Xfce${N_F}\n"
+                printf "${C_W}[7] - ${C_Y}None${N_F} (default)\n"
 
-                echo -e "\n====================\n"
+                printf "\n====================\n\n"
                 
-                echo -e "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0-7] -> ${N_F}\c"
+                printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0-7] "
+                printf "-> ${N_F}"
 
                 local ans_gui=""
                 read ans_gui
@@ -60,41 +81,48 @@ desktop_env() {
                 esac
         done
 
-        echo -e "${C_W}> ${INFO} Installing ${C_G}${desktop_env}${N_F}."
+        printf "${C_W}> ${INFO} Installing ${C_G}${desktop_env}${N_F}.\n"
         sleep 2
-        pacman -S --noconfirm "${desktop_env}"
 
-        if [[ "${?}" -ne 0 ]]; then
-                echo -e "\n${C_W}> ${ERR} Cannot install ${C_G}${desktop_env}${N_F}.\n"
+        if pacman -S --noconfirm "${desktop_env}"; then
+                printf "\n${C_W}> ${SUC} Installed ${C_G}${desktop_env}"
+                printf "${N_F}.\n"
         else
-                echo -e "\n${C_W}> ${SUC} Installed ${C_G}${desktop_env}${N_F}.\n"
+                printf "\n${C_W}> ${WARN} Cannot install ${C_G}${desktop_env}"
+                printf "${N_F}.\n"
+                return 1
         fi
 
         sleep 2
 
-        case "${desktop_env}" in
-                "cinnamon"|"plasma"|"mate"|"xfce4"|"gnome")
-                        pacman -S --noconfirm sddm qt6-5compat qt6-declarative qt6-svg alacritty
-                        echo -e "\n${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} sddm.service .${N_F}\n"
-                        systemctl enable sddm.service 1> "/dev/null" 2>&1
+        printf "${C_W}> ${INFO} Installing ${C_C}sddm${N_F}.\n"
+        if pacman -S --noconfirm sddm qt6-5compat qt6-declarative \
+        qt6-svg alacritty; then
+                printf "\n${C_W}> ${SUC} Installed ${C_G}sddm${N_F}.\n"
 
-                        if [[ "${?}" -ne 0 ]]; then
-                                echo -e "${C_W}> ${ERR} ${C_W}Cannot enable ${C_Y}sddm.service${N_F}.\n"
-                        fi
-                        git clone "https://github.com/keyitdev/sddm-astronaut-theme.git" "/usr/share/sddm/themes/sddm-astronaut-theme"
-                        cp -a "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" "/usr/share/fonts/" 1> "/dev/null" 2>&1
-                        echo "[Theme]" >> "/etc/sddm.conf"
-                        echo "Current=sddm-astronaut-theme" >> "/etc/sddm.conf"
-                        ;;
-                # "gnome")
-                #         echo -e "\n${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} gdm.service .${N_F}\n"
-                #         systemctl enable gdm.service 1> "/dev/null" 2>&1
-                #
-                #         if [[ "${?}" -ne 0 ]]; then
-                #                 echo -e "${C_W}> ${ERR} ${C_W}Cannot enable ${C_Y}gdm.service${N_F}.\n"
-                #         fi
-                #         ;;
-        esac
+                printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                printf "${C_W} sddm.service .${N_F}\n"
 
-        echo ""
+                if systemctl enable "sddm.service" 1> "/dev/null" 2>&1; then
+                        printf "${C_W}> ${SUC} ${C_G}Enabled "
+                        printf "${C_Y}sddm.service${N_F}.\n\n"
+                else
+                        printf "${C_W}> ${WARN} ${C_R}Cannot enable "
+                        printf "${C_Y}sddm.service${N_F}.\n\n"
+                fi
+        else
+                printf "\n${C_W}> ${WARN} Cannot install ${C_G}sddm.${N_F}\n"
+                return 1
+        fi
+
+        git clone "https://github.com/keyitdev/sddm-astronaut-theme.git" \
+        "/usr/share/sddm/themes/sddm-astronaut-theme"
+
+        cp -a "/usr/share/sddm/themes/sddm-astronaut-theme/Fonts/*" \
+        "/usr/share/fonts/" 1> "/dev/null" 2>&1
+
+        printf "[Theme]\n" > "/etc/sddm.conf"
+        printf "Current=sddm-astronaut-theme\n" >> "/etc/sddm.conf"
+        
+        printf "\n"
 }
