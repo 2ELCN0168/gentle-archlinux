@@ -32,7 +32,12 @@ source_files() {
 
 main() {
         
-        trap 'printf "\n\n${C_B}:: ${C_R}Program interrupted, exiting with code 0.${C_B} ::\n\n" ; exit 0' INT
+        trap '
+                printf "\n\n${C_B}:: ${C_R}Program interrupted, installation "
+                printf "aborted. Exiting with code 0.${C_B} ::\n\n"
+                exit 0
+        ' INT
+
         
         # INIT
         greetings
@@ -83,7 +88,8 @@ main() {
         cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
         cp -a "post_install" "/mnt"
         chmod +x "/mnt/post_install/Archlinux_Gentle_Installer_post_install.sh"
-        arch-chroot "/mnt" "/post_install/Archlinux_Gentle_Installer_post_install.sh"
+        arch-chroot "/mnt" \
+        "/post_install/Archlinux_Gentle_Installer_post_install.sh"
 }
 
 # SOURCE FILES

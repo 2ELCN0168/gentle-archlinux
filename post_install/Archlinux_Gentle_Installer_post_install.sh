@@ -7,13 +7,17 @@ source_files() {
     source "/post_install/config/c_config.sh"
     source "/post_install/config/c_formatting.sh"
     
-    source "${f_path}/configurations/f_set_time.sh"
+    source "${f_path}/configurations/f_enable_network_manager.sh"
     source "${f_path}/configurations/f_locales_gen.sh"
     source "${f_path}/configurations/f_set_hostname.sh"
     source "${f_path}/configurations/f_set_hosts.sh"
+    source "${f_path}/configurations/f_set_mkinitcpio.sh"
+    source "${f_path}/configurations/f_set_pacman.sh"
+    source "${f_path}/configurations/f_set_root_account.sh"
+    source "${f_path}/configurations/f_set_time.sh"
     source "${f_path}/configurations/f_set_vconsole.sh"
+    source "${f_path}/configurations/f_set_vim_nvim.sh"
 
-    source "${f_path}/f_configs.sh"
     source "${f_path}/f_greetings_pi.sh"
     source "${f_path}/f_hardening_rules.sh"
     source "${f_path}/f_messages.sh"
@@ -32,8 +36,13 @@ source_files() {
 }
 
 main() {
-        
-        trap 'echo -e "\n\n${C_B}:: ${C_R}Program interrupted, installation aborted. Exiting with code 1.${C_B} ::\n" ; exit 1' INT
+
+        trap '
+                printf "\n\n${C_B}:: ${C_R}Program interrupted, installation "
+                printf "aborted. Exiting with code 1.${C_B} ::\n\n"
+                exit 1
+        ' INT
+
 
         # SOURCE FILES
         source_files
@@ -52,7 +61,7 @@ main() {
                 hardening_rules
         fi
         set_mkinitcpio
-        set_root_passwd
+        set_root_account
         set_vim_nvim
         enable_net_manager
 
