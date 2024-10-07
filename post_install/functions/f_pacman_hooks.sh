@@ -2,9 +2,8 @@
 
 create_pacman_hooks() {
 
-        if [[ ! -e "/etc/pacman.d/hooks" ]]; then
-                mkdir -p "/etc/pacman.d/hooks" 1> "/dev/null" 2>&1
-        fi
+        [[ ! -e "/etc/pacman.d/hooks" ]] && \
+        mkdir -p "/etc/pacman.d/hooks" 1> "/dev/null" 2>&1
 
         refind_hook
         bash_zsh_hook
@@ -14,13 +13,12 @@ refind_hook() {
 
         # This hook launches refind-install after a package update.
 
-        if [[ "$bootloader" != 'REFIND' ]]; then
-                return 1;
-        fi
+        [[ "$bootloader" != 'REFIND' ]] && return 1
 
-        echo -e "${C_W}> ${INFO} Creating a pacman hook for ${C_W}rEFInd.${N_F}"
+        printf "${C_W}> ${INFO} Creating a pacman hook for "
+        printf "${C_W}rEFInd.${N_F}\n"
 
-        cat << EOF > "/etc/pacman.d/hooks/refind.hook"
+        cat <<-EOF 1> "/etc/pacman.d/hooks/refind.hook"
         [Trigger]
         Operation=Upgrade
         Type=Package
@@ -33,9 +31,11 @@ refind_hook() {
 EOF
 
         if [[ -e "/etc/pacman.d/hooks/refind.hook" ]]; then
-                echo -e "${C_W}> ${SUC} Created a pacman hook for ${C_W}rEFInd.${N_F}\n"
+                printf "${C_W}> ${SUC} Created a pacman hook for ${C_W}rEFInd."
+                printf "${N_F}\n\n"
         else
-                echo -e "${C_W}> ${ERR} While creating a pacman hook for ${C_W}rEFInd${N_F}\n"
+                printf "${C_W}> ${ERR} While creating a pacman hook for "
+                printf "${C_W}rEFInd${N_F}\n\n"
         fi
 }
 
@@ -43,9 +43,10 @@ bash_zsh_hook() {
 
         # This hook avoids bash to be uninstalled.
 
-        echo -e "${C_W}> ${INFO} Creating a pacman hook for ${C_W}Bash and Zsh.${N_F}"
+        printf "${C_W}> ${INFO} Creating a pacman hook for ${C_W}Bash "
+        printf "and Zsh.${N_F}\n"
 
-        cat << EOF > "/etc/pacman.d/hooks/bash_zsh_no_remove.hook"
+        cat <<-EOF 1> "/etc/pacman.d/hooks/bash_zsh_no_remove.hook"
         [Trigger]
         Operation=Remove
         Type=Package
@@ -59,8 +60,10 @@ bash_zsh_hook() {
         AbortOnFail
 EOF
         if [[ -e "/etc/pacman.d/hooks/bash_zsh_no_remove.hook" ]]; then
-                echo -e "${C_W}> ${SUC} Created a pacman hook for ${C_W}Bash and Zsh.${N_F}\n"
+                printf "${C_W}> ${SUC} Created a pacman hook for ${C_W}Bash "
+                printf "and Zsh.${N_F}\n\n"
         else
-                echo -e "${C_W}> ${ERR} While creating a pacman hook for ${C_W}Bash and Zsh.${N_F}\n"
+                printf "${C_W}> ${ERR} While creating a pacman hook for "
+                printf "${C_W}Bash and Zsh.${N_F}\n\n"
         fi
 }

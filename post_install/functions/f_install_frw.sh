@@ -1,8 +1,9 @@
 install_frw() {
 
+        # NOTE:
         # Install nftables, but it should already be there
         
-        echo -e "${C_W}> ${INFO} Installing ${C_W}nftables.${N_F}"
+        printf "${C_W}> ${INFO} Installing ${C_W}nftables.${N_F}\n"
 
         if ! systemctl is-enabled nftables 1> "/dev/null" 2>&1; then
                 if ! pacman -Qi nftables 1> "/dev/null" 2>&1; then

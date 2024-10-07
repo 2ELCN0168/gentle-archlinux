@@ -3,30 +3,30 @@ create_themes() {
         export theme_color=""
 
         while true; do
-                echo -e "\n==${C_C}THEMES${N_F}============\n"
+                printf "\n==${C_C}THEMES${N_F}============\n\n"
 
-                echo -e "${C_W}[0] - ${C_W}Catppuccin latte (light)${N_F}"
-                echo -e "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} [default]"
-                echo -e "${C_W}[2] - ${C_R}Red impact (dark)${N_F}"
-                echo -e "${C_W}[3] - ${N_F}Keep default TTY colors"
+                printf "${C_W}[0] - ${C_W}Catppuccin latte (light)${N_F}\n"
+                printf "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} "
+                printf "[default]\n"
+                printf "${C_W}[2] - ${C_R}Red impact (dark)${N_F}\n"
+                printf "${C_W}[3] - ${N_F}Keep default TTY colors\n"
 
-                echo -e "\n====================\n"
+                printf "\n====================\n\n"
 
-                echo -e "${C_C}:: ${C_W}Which theme do you prefer for your TTY? Each one will be created anyway. -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}Which theme do you prefer for your TTY? "
+                printf "Each one will be created anyway. -> ${N_F}"
 
                 local tty_theme=""
                 local ans_tty_theme=""
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
-                # echo ""
 
                 case "${ans_tty_theme}" in
                         [0])
                                 tty_theme="Catppuccin latte"
-                                echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/etc/skel/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/etc/skel/.zshrc"
-                                echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/root/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_catppuccin_latte.sh" >> "/root/.zshrc"
+                                printf "source /etc/tty_themes.d/tty_catppuccin_latte.sh" \
+                                1>> "/etc/skel/"{.bashrc,.zshrc} \
+                                1>> "/root/"{.bashrc,.zshrc}
                                 theme_color=0
                                 break
                                 ;;
@@ -59,11 +59,12 @@ create_themes() {
                 esac
         done
         
-        echo -e "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}${tty_theme}${N_F}.\n"
+        printf "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}"
+        printf "${tty_theme}${N_F}.\n\n"
 
         mkdir "/etc/tty_themes.d"
 
-        cat << EOF > "/etc/tty_themes.d/tty_catppuccin_latte.sh"
+        cat <<-EOF 1> "/etc/tty_themes.d/tty_catppuccin_latte.sh"
         __tty_theme() {
                 [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 
@@ -90,7 +91,7 @@ create_themes() {
         __tty_theme
 EOF
    
-        cat << EOF > "/etc/tty_themes.d/tty_tokyonight_storm.sh"
+        cat <<-EOF 1> "/etc/tty_themes.d/tty_tokyonight_storm.sh"
         __tty_theme() {
                 [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 
@@ -117,7 +118,7 @@ EOF
         __tty_theme
 EOF
 
-        cat << EOF > "/etc/tty_themes.d/tty_red_impact.sh"
+        cat <<-EOF 1> "/etc/tty_themes.d/tty_red_impact.sh"
         __tty_theme() {
                 [ "\$TERM" = 'linux' ] || return # Only run in a TTY
 
