@@ -18,13 +18,15 @@ create_themes() {
 
                 local tty_theme=""
                 local ans_tty_theme=""
+                local path=""
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
 
                 case "${ans_tty_theme}" in
                         [0])
                                 tty_theme="Catppuccin latte"
-                                printf "source /etc/tty_themes.d/tty_catppuccin_latte.sh" \
+                                path="/etc/tty_themes.d/tty_catppuccin_latte.sh"
+                                printf "\nsource ${path}" \
                                 1>> "/etc/skel/"{.bashrc,.zshrc} \
                                 1>> "/root/"{.bashrc,.zshrc}
                                 theme_color=0
@@ -32,19 +34,19 @@ create_themes() {
                                 ;;
                         [1])
                                 tty_theme="Tokyonight Storm"
-                                echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/etc/skel/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/etc/skel/.zshrc"
-                                echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/root/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_tokyonight_storm.sh" >> "/root/.zshrc"
+                                path="/etc/tty_themes.d/tty_tokyonight_storm.sh"
+                                printf "\nsource ${path}" \
+                                1>> "/etc/skel/"{.bashrc,.zshrc} \
+                                1>> "/root/"{.bashrc,.zshrc}
                                 theme_color=1
                                 break
                                 ;;
                         [2])
                                 tty_theme="Red impact"
-                                echo "source /etc/tty_themes.d/tty_red_impact.sh" >> "/etc/skel/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_red_impact.sh" >> "/etc/skel/.zshrc"
-                                echo "source /etc/tty_themes.d/tty_red_impact.sh" >> "/root/.bashrc"
-                                echo "source /etc/tty_themes.d/tty_red_impact.sh" >> "/root/.zshrc"
+                                path="/etc/tty_themes.d/tty_red_impact.sh"
+                                printf "\nsource ${path}" \
+                                1>> "/etc/skel/"{.bashrc,.zshrc} \
+                                1>> "/root/"{.bashrc,.zshrc}
                                 theme_color=1
                                 break
                                 ;;

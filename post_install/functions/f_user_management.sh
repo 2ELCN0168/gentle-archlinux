@@ -3,25 +3,23 @@ ask_newuser() {
         createUser=""
 
         while true; do
-                echo -e "${C_C}:: ${C_W}Would you like to create a user? [y/N] -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}Would you like to create a user? [y/N] "
+                printf "-> ${N_F}"
+
                 read createUser
                 : "${createUser:=N}"
-                # echo ""
+                printf "\n"
 
-                case "${createUser}" in
-                        "y"|"Y")
-                                create_user
-                                #createUser="Y"
-                                break
-                                ;;
-                        "n"|"N")
-                                echo -e "${C_W}> ${INFO} ${N_F}No user will be created.\n"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                if [[ "${createUser}" =~ [yY] ]]; then
+                        create_user
+                        break
+                elif [[ "${createUser}" =~ [nN] ]]; then
+                        printf "${C_W}> ${INFO} ${N_F}No user will be created."
+                        printf "\n\n"
+                        break
+                else
+                        invalid_answer
+                fi
         done
 }
 
@@ -31,46 +29,46 @@ create_user() {
         local sudo=""
         local ans_username=""
         local ans_sudoer=""
-        echo ""
+        printf "\n"
 
         while [[ -z "${username}" ]]; do
-                echo -e "${C_C}:: ${C_W}What will be the name of the new user? -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}What will be the name of the new user? "
+                printf "-> ${N_F}"
                 read ans_username
                 username="${ans_username}"
-                echo ""
+                printf "\n"
         done
 
         while true; do
-                echo -e "${C_C}:: ${C_W}Will this user be sudoer? [Y/n] -> ${N_F}\c"
+                printf "${C_C}:: ${C_W}Will this user be sudoer? [Y/n] "
+                printf "-> ${N_F}"
 
                 read ans_sudoer
                 : "${ans_sudoer:=Y}"
-                echo -e ""
+                printf "\n"
 
-                case "${ans_sudoer}" in
-                        "y"|"Y")
-                                echo "${username} ALL=(ALL:ALL) ALL" > "/etc/sudoers.d/${username}"
-                                break
-                                ;;
-                        "n"|"N")
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                if [[ "${ans_sudoer}" =~ [yY] ]]; then
+                        printf "${username} ALL=(ALL:ALL) ALL" \
+                        1> "/etc/sudoers.d/${username}"
+                        break
+                elif [[ "${ans_sudoer}" =~ [nN] ]]; then
+                        break
+                else
+                        invalid_answer
+                fi
         done
 
-        echo -e "${C_W}> ${INFO} ${N_F}Creating a new user named ${C_Y}${username}${N_F}."
+        printf "${C_W}> ${INFO} ${N_F}Creating a new user named "
+        printf "${C_Y}${username}${N_F}.\n"
 
 
-        useradd -m -U -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1
-        if [[ "${?}" -eq 0 ]]; then
-                echo -e "${C_W}> ${SUC} ${N_F}New user ${C_Y}${username}${N_F} created.\n"
+        if useradd -m -U -s "/bin/zsh" "${username}" 1> "/dev/null" 2>&1; then
+                printf "${C_W}> ${SUC} ${N_F}New user ${C_Y}${username}${N_F} "
+                printf "created.\n\n"
                 passwd "${username}"
-                echo ""
+                printf "\n"
         else
-                echo -e "${C_W}> ${ERR} ${N_F}New user ${C_Y}${username}${N_F} cannot be created.\n"
-                echo ""
+                printf "${C_W}> ${ERR} ${N_F}New user ${C_Y}${username}${N_F} "
+                printf "cannot be created.\n\n"
         fi
 }
