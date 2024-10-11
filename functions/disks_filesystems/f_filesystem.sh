@@ -40,6 +40,7 @@ filesystem_choice() {
                 local ans_filesystem=""
                 read ans_filesystem
                 : "${ans_filesystem:=0}"
+                printf "\n"
 
                 [[ "${ans_filesystem}" -eq 0 ]] && filesystem="BTRFS" && break
                 [[ "${ans_filesystem}" -eq 1 ]] && filesystem="XFS" && break

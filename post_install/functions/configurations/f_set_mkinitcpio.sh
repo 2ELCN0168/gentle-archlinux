@@ -28,9 +28,8 @@ set_mkinitcpio() {
                 mkdir "/etc/mkinitcpio.conf.d"
         fi
 
-        if ! cp -a "/etc/mkinitcpio.conf" \
-        "/etc/mkinitcpio.conf.d/$(date +%Y%m%d)-mkinitcpio.conf.bak"; then
-                
+        cp -a "/etc/mkinitcpio.conf" \
+        "/etc/mkinitcpio.conf.d/$(date +%Y%m%d)-mkinitcpio.conf.bak"      
 
         # INFO:
         # Setting up /etc/mkinitcpio.conf
@@ -59,5 +58,9 @@ set_mkinitcpio() {
         ' "/etc/mkinitcpio.conf" 1> tmpfile && mv tmpfile "/etc/mkinitcpio.conf"
 
         # Generate initramfs
-        mkinitcpio -P
+        if ! mkinitcpio -P; then
+                printf "${C_R}> ${ERROR} Failed to generate initramfs with "
+                printf "mkinitcpio. Exiting.\n\n"
+                exit 1
+        fi
 }

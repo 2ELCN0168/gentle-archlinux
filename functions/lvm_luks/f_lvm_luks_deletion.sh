@@ -48,7 +48,7 @@ lvm_deletion() {
 
         while true; do
                 printf "${B_C} [?] - Do you want to wipe any present LVM? "
-                printf "[y/N] -> ${N_F}"
+                printf "[y/N] -> ${N_F} "
 
                 local ans_wipe_lvm=""
                 read ans_wipe_lvm

@@ -178,8 +178,9 @@ lvm_mgmt() {
                                 printf "${C_W}> ${INFO} Mounting "
                                 printf "${C_C}${vg_name}-${lv_name}${N_F} "
                                 printf "to /mnt/${lv_name}\n"
-                                mount --mkdir "/dev/mapper/
-                                ${vg_name}-${lv_name}" "/mnt/${lv_name}"
+                                mount --mkdir \
+                                "/dev/mapper/${vg_name}-${lv_name}" \
+                                "/mnt/${lv_name}"
                         fi
 
                         if [[ "${?}" -ne 0 ]]; then

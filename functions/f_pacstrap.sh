@@ -240,7 +240,7 @@ pacstrap_install() {
 
         # Display additional packages
         printf "${C_W}> ${INFO} Additional packages are "
-        printf "${C_C}${additionalPackages[*]}${N_F}\n"
+        printf "${C_C}${additionalPackages[*]}${N_F}\n\n"
         sleep 4
 
         # INFO:

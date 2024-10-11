@@ -57,15 +57,11 @@ main() {
         set_hosts
         set_vconsole
         set_pacman
-        if [[ "${param_hardening}" -eq 1 ]]; then
-                hardening_rules
-        fi
+        [[ "${param_hardening}" -eq 1 ]] && hardening_rules
         set_mkinitcpio
         set_root_account
         set_vim_nvim
         enable_net_manager
-
-        
 
         # INSTALL BOOTLOADER
         install_bootloader
@@ -77,9 +73,7 @@ main() {
         install_frw
 
         if [[ "${param_minimal}" -ne 1 ]]; then
-                # SET SHELLS .RCs
-                set_bashrc
-                set_zshrc
+                set_term_env
 
                 # THEMING
                 create_themes
@@ -90,10 +84,8 @@ main() {
                 set_motd
         fi
 
-        if [[ "${param_full}" -eq 1 ]]; then
-                # INSTALL DESKTOP ENVIRONMENT
-                desktop_env
-        fi
+        # INSTALL DESKTOP ENVIRONMENT
+        [[ "${param_full}" -eq 1 ]] && desktop_env
         
         # CREATE USER
         ask_newuser
