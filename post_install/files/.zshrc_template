@@ -7,20 +7,6 @@ bindkey -e
 
 # PLUGINS #
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 PROMPT="%F{red}[%f%B%F{white}%n%f%b%F{red}@%f%F{white}%m%f%F{red}:%f%B%~%b%F{red}]%f(%F{red}%*%f)%F{red}%#%f "
-
-# ALIASES #
-
-alias diff='diff --color=auto'
-alias ll='command ls -lh --color=auto'
-alias ls='command ls --color=auto'
-alias ip='command ip -color=auto'
-alias grep='grep --color=auto'
-
-# ENV #
-
-export LESS='-R --use-color -Dd+r$Du+b$'
-export MANPAGER="less -R --use-color -Dd+r -Du+b"
-export MANROFFOPT="-P -c"
