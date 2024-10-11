@@ -26,7 +26,7 @@ set_issue() {
 
 set_motd() {
         
-        echo -e "${C_C}:: ${C_W}Would you like to setup a /etc/motd file "
+        printf "${C_C}:: ${C_W}Would you like to setup a /etc/motd file "
         printf "[Y/n] -> ${N_F}"
 
         local ans_motd=""
