@@ -27,8 +27,10 @@ create_themes() {
                                 tty_theme="Catppuccin latte"
                                 path="/etc/tty_themes.d/tty_catppuccin_latte.sh"
                                 printf "\nsource ${path}" \
-                                1>> "/etc/skel/"{.bashrc,.zshrc} \
-                                1>> "/root/"{.bashrc,.zshrc}
+                                1>> "/etc/skel/.bashrc" \
+                                1>> "/etc/skel/.zshrc" \
+                                1>> "/root/.bashrc" \
+                                1>> "/root/.zshrc"
                                 theme_color=0
                                 break
                                 ;;
@@ -36,8 +38,10 @@ create_themes() {
                                 tty_theme="Tokyonight Storm"
                                 path="/etc/tty_themes.d/tty_tokyonight_storm.sh"
                                 printf "\nsource ${path}" \
-                                1>> "/etc/skel/"{.bashrc,.zshrc} \
-                                1>> "/root/"{.bashrc,.zshrc}
+                                1>> "/etc/skel/.bashrc" \
+                                1>> "/etc/skel/.zshrc" \
+                                1>> "/root/.bashrc" \
+                                1>> "/root/.zshrc"
                                 theme_color=1
                                 break
                                 ;;
@@ -46,6 +50,8 @@ create_themes() {
                                 path="/etc/tty_themes.d/tty_red_impact.sh"
                                 printf "\nsource ${path}" \
                                 1>> "/etc/skel/"{.bashrc,.zshrc} \
+                                1>> "/etc/skel/"{.bashrc,.zshrc} \
+                                1>> "/root/"{.bashrc,.zshrc} \
                                 1>> "/root/"{.bashrc,.zshrc}
                                 theme_color=1
                                 break

@@ -49,7 +49,7 @@ set_hostname() {
                         break
                 else
                         printf "${C_W}> ${WARN} ${C_R}Invalid hostname.${N_F} "
-                        printf "Hostname must be ${C_P}1-63 characters long "
+                        printf "Hostname must be ${C_P}1-63 characters long"
                         printf "${N_F}, containing only letters, digits, and "
                         printf "hyphens, and cannot start or end with a hyphen."
                         printf "\n\n"

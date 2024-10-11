@@ -22,7 +22,7 @@ set_root_account() {
         local isFailed=""
 
         while true; do
-                printf "${C_C}:: ${C_W}Do you want to authorize log-in as "
+                printf "\n${C_C}:: ${C_W}Do you want to authorize log-in as "
                 printf "${C_R}root${N_F}? [y/N] -> "
                 
                 read -r ans_lock_root
@@ -51,7 +51,7 @@ set_root_account() {
                         fi
                 elif [[ "${ans_lock_root}" =~ ^[yY]$ ||
                         "${isFailed}" -eq 1 ]]; then
-                        printf "\n${C_W}> ${INFO} ${C_C}Changing "
+                        printf "${C_W}> ${INFO} ${C_C}Changing "
                         printf "${C_R}root${N_F} password...${N_F}\n\n"
                         while true; do
                                 if passwd; then
