@@ -52,7 +52,7 @@ set_root_account() {
                         fi
                 elif [[ "${ans_lock_root}" =~ ^[yY]$ ||
                         "${isFailed}" -eq 1 ]]; then
-                        printf "${C_W}> ${INFO} ${C_C}Changing "
+                        printf "${C_W}> ${INFO} Changing "
                         printf "${C_R}root${N_F} password...${N_F}\n\n"
                         while true; do
                                 if passwd; then
