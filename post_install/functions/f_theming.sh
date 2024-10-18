@@ -3,7 +3,7 @@ create_themes() {
         export theme_color=""
 
         while true; do
-                printf "\n==${C_C}THEMES${N_F}============\n\n"
+                printf "==${C_C}THEMES${N_F}============\n\n"
 
                 printf "${C_W}[0] - ${C_W}Catppuccin latte (light)${N_F}\n"
                 printf "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} "
