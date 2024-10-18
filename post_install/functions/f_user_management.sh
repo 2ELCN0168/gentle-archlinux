@@ -4,7 +4,8 @@ ask_newuser() {
 
         while true; do
                 printf "${C_C}:: ${C_W}Would you like to create a user? [y/N] "
-                printf "\-> ${N_F}"
+                printf '->' 
+                printf "${N_F}"
 
                 read createUser
                 : "${createUser:=N}"
@@ -33,7 +34,8 @@ create_user() {
 
         while [[ -z "${username}" ]]; do
                 printf "${C_C}:: ${C_W}What will be the name of the new user? "
-                printf "\-> ${N_F}"
+                printf '->' 
+                printf "${N_F}"
                 read ans_username
                 username="${ans_username}"
                 printf "\n"
@@ -41,7 +43,8 @@ create_user() {
 
         while true; do
                 printf "${C_C}:: ${C_W}Will this user be sudoer? [Y/n] "
-                printf "\-> ${N_F}"
+                printf '->' 
+                printf "${N_F}"
 
                 read ans_sudoer
                 : "${ans_sudoer:=Y}"

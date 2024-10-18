@@ -41,6 +41,7 @@ set_root_account() {
                                 printf "create a privileged user, otherwise, "
                                 printf "the ${C_R}root${N_F} account will be "
                                 printf "unlocked.\n\n"
+                                sleep 2
                                 return 
                         else
                                 isFailed=1

@@ -80,6 +80,7 @@ systemd_resolved() {
                                 break
                         else
                                 invalid_answer
+                        fi
                 done
         fi
 
