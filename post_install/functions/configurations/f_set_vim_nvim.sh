@@ -79,6 +79,9 @@ set_vim_nvim() {
         set directory=~/.vim/swap//
         set undodir=~/.vim/undo//
 EOF
+        # INFO:
+        # Remove spaces caused by heredocs >:(
+        sed -i 's/^[ \t]*//' "/etc/skel/.vimrc"
 
         cp "/etc/skel/.vimrc" "/root"
 
@@ -157,6 +160,10 @@ EOF
         -- AUTO FORMAT COMMENTS
         vim.o.formatoptions = vim.o.formatoptions .. 'cro'
 EOF
+
+        # INFO:
+        # Remove spaces caused by heredocs >:(
+        sed -i 's/^[ \t]*//' "/etc/skel/.config/nvim/init.lua"
 
         cp -r "/etc/skel/.config" "/root"
 
