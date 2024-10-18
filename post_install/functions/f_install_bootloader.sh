@@ -256,6 +256,10 @@ install_systemdboot() {
                 When = PostTransaction
                 Exec = /usr/bin/systemctl restart systemd-boot-update.service
 EOF
+                # INFO:
+                # Remove spaces caused by heredocs >:(
+                sed -i 's/^[ \t]*//' "/etc/pacman.d/hooks/95-systemd-boot.hook"
+
         else
                 printf "${C_W}> ${ERR} Error during installation of "
                 printf "${C_R}systemd-boot.${N_F}\n\n"
