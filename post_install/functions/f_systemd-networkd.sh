@@ -67,36 +67,27 @@ systemd_networkd() {
                 elif [[ "${ans_dhcp}" =~ [nN] ]]; then
                        printf "${C_W}> ${INFO} DHCP will be ${C_G}enabled"
                        printf "${N_F}.\n\n"
-                       # sed -i "s/DHCP=/DHCP=yes/g" \
-                       # "/etc/systemd/network/05-${network_interface}.network"
                        break
                 else
                         invalid_answer
                 fi
         done
         
-        local net_file_path="/etc/systemd/network/05-${network_interface}\
-        .network"
+        local if_path="/etc/systemd/network/05-${network_interface}.network"
 
-        cat <<-EOF > "${net_file_path}"
-        [Match]
-        Name=${network_interface}
+        printf "[Match]\n" 1> "${if_path}"
+        printf "Name=${network_interface}\n\n" 1>> "${if_path}"
 
-        [Network]
-EOF
+        printf "[Network]\n" 1>> "${if_path}"
 
         if [[ "${ans_dhcp}" == [nN] ]]; then
-                cat <<-EOF >> "${net_file_path}"
-                DHCP=yes
-                Domains=${domain}
-EOF
+                printf "DHCP=yes\n" 1>> "${if_path}"
+                printf "Domains=${domain}\n" 1>> "${if_path}"
         else
-                cat <<-EOF >> "${net_file_path}"
-                DHCP=no
-                Domains=${domain}
+                printf "DHCP=no\n" 1>> "${if_path}"
+                printf "Domains=${domain}\n\n" 1>> "${if_path}"
 
-                Address=${address}
-                Gateway=${gateway}
-EOF
+                printf "Address=${address}\n" 1>> "${if_path}"
+                printf "Gateway=${gateway}\n" 1>> "${if_path}"
         fi
 }
