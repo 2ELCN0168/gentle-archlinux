@@ -33,9 +33,6 @@ systemd_networkd() {
                 fi
         done
 
-        cp "/post_install/files/systemd-networkd-template.conf" \
-        "/etc/systemd/network/05-${network_interface}.network"
-
         while true; do
                 printf "${C_C}:: ${C_W}Do you want to configure your interface "
                 printf "manually? If no, the DHCP option will be set. "
