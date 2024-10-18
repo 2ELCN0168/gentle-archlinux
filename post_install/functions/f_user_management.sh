@@ -40,7 +40,7 @@ create_user() {
         done
 
         while true; do
-                printf "${C_C}:: ${C_W}Will this user be sudoer? "
+                printf "${C_C}:: ${C_W}Will this user be administrator? "
                 printf "[Y/n] -> ${N_F}" 
 
                 read ans_sudoer
