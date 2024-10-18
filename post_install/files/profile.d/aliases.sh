@@ -22,13 +22,15 @@ alias mv='mv -i'
 
 # CUSTOM OUTPUTS
 lsblk() {
+        # BRIGHT CYAN
         printf "\033[96m"
         lsblk "${@}"
         printf "\033[0m"
         printf "\n"
 }
 
-blkid() {
+blkid() 
+        # BRIGHT BLUE
         printf "\033[94m"
         blkid "${@}"
         printf "\033[0m"
@@ -36,12 +38,14 @@ blkid() {
 }
 
 ss() {
+        # BRIGHT GREEN
         printf "\033[92m"
         ss "${@}"
         printf "\033[0m"
 }
 
 uptime() {
+        # BRIGHT RED
         printf "\033[91m"
         uptime "${@}"
         printf "\033[0m"
@@ -49,6 +53,7 @@ uptime() {
 }
 
 ps() {
+        # BRIGHT YELLOW
         printf "\033[93m"
         ps "${@}"
         printf "\033[0m"
@@ -56,6 +61,7 @@ ps() {
 }
 
 free() {
+        # BRIGHT YELLOW
         printf "\033[93m"
         free "${@}"
         printf "\033[0m"
@@ -63,6 +69,7 @@ free() {
 }
 
 ping() {
+        # BRIGHT BLUE
         printf "\033[94m"
         command ping "${@}"
         printf "\033[0m"
@@ -70,6 +77,7 @@ ping() {
 }
 
 traceroute() {
+        # BRIGHT BLUE
         printf "\033[94m"
         command traceroute "${@}"
         printf "\033[0m"

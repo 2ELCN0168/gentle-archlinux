@@ -49,10 +49,10 @@ create_themes() {
                                 tty_theme="Red impact"
                                 path="/etc/tty_themes.d/tty_red_impact.sh"
                                 printf "\nsource ${path}" \
-                                1>> "/etc/skel/"{.bashrc,.zshrc} \
-                                1>> "/etc/skel/"{.bashrc,.zshrc} \
-                                1>> "/root/"{.bashrc,.zshrc} \
-                                1>> "/root/"{.bashrc,.zshrc}
+                                1>> "/etc/skel/.bashrc" \
+                                1>> "/etc/skel/.zshrc" \
+                                1>> "/root/.bashrc" \
+                                1>> "/root/.zshrc"
                                 theme_color=1
                                 break
                                 ;;

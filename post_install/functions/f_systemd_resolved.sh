@@ -98,4 +98,4 @@ systemd_resolved() {
         printf "\nDomains=${domain}" 1>> "/etc/systemd/resolved.conf"
         
         printf "\n"
-        }
+}

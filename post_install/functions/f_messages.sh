@@ -10,7 +10,8 @@ set_issue() {
 
                 if [[ "${ans_issue}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} If you want to change it, edit "
-                        printf "the file /etc/issue after reboot.\n\n"
+                        printf "the file ${C_P}/etc/issue${N_F} after reboot."
+                        printf "\n\n"
                         cp -a "/post_install/files/issue" "/etc/issue" \
                         1> "/dev/null" 2>&1
                         break
@@ -36,7 +37,8 @@ set_motd() {
         while true; do
                 if [[ "${ans_motd}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} If you want to change it, edit "
-                        printf "the file /etc/motd after reboot.\n\n"
+                        printf "the file ${C_P}/etc/motd${N_F} after reboot."
+                        printf "\n\n"
                         cp -a "/post_install/files/motd" "/etc/motd" \
                         1> "/dev/null" 2>&1
                         break

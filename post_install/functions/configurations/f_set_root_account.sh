@@ -40,13 +40,13 @@ set_root_account() {
                                 printf "${C_W}> ${WARN} You will have to "
                                 printf "create a privileged user, otherwise, "
                                 printf "the ${C_R}root${N_F} account will be "
-                                printf "unlocked.\n"
+                                printf "unlocked.\n\n"
                                 return 
                         else
                                 isFailed=1
                                 printf "${C_W}> ${WARN} An error occured, "
                                 printf "we couldn't lock the ${C_R}root${N_F} "
-                                printf "account.\n"
+                                printf "account.\n\n"
                                 break
                         fi
                 elif [[ "${ans_lock_root}" =~ ^[yY]$ ||
