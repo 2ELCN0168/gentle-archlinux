@@ -5,7 +5,7 @@
 # Set the /etc/hosts file and format it.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-10-18
 # 
 ### Dependencies:
 # - column.
@@ -15,6 +15,7 @@
 # 1. Set the hosts file with ip and hostname (FQDN);
 # 2. The file is modified later if the IP address is set to static.
 #
+
 set_hosts() {
 
         printf "${C_W}> ${INFO} ${N_F}Setting up ${C_P}/etc/hosts${N_F}\n"
