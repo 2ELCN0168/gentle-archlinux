@@ -49,13 +49,14 @@ set_mkinitcpio() {
         local initcpio_hooks="HOOKS=(base systemd ${isBTRFS}autodetect modconf \
         kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
 
+        local tempfile=$(mktemp)
         awk -v newLine="$initcpio_hooks" '
         !/^#/ && /HOOKS/ { 
                 print newLine; 
                 next 
         } 
         1
-        ' "/etc/mkinitcpio.conf" 1> tmpfile && mv tmpfile "/etc/mkinitcpio.conf"
+        ' "/etc/mkinitcpio.conf" 1> "${tempfile}" && mv "${tempfile}" "/etc/mkinitcpio.conf"
 
         # Generate initramfs
         if ! mkinitcpio -P; then

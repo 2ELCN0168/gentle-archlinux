@@ -18,6 +18,8 @@
 
 set_hosts() {
 
+        local tempfile=$(mktemp)
+
         printf "${C_W}> ${INFO} ${N_F}Setting up ${C_P}/etc/hosts${N_F}\n"
         printf "> ${C_G}Here is the file:${N_F}\n\n"
 
@@ -30,8 +32,8 @@ set_hosts() {
         ${hostname}.${domain}-ipv6
 EOF
 
-        column -t "/etc/hosts" 1> "/tmp/hosts"
-        [[ -s "/tmp/hosts" ]] && mv "/tmp/hosts" "/etc/hosts"
+        column -t "/etc/hosts" 1> "${tempfile}"
+        [[ -s "${tempfile}" ]] && mv "${tempfile}" "/etc/hosts"
 
         printf ":::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"
 
