@@ -18,7 +18,7 @@ install_frw() {
                 fi
 
                 printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable${C_W} "
-                printf "nftables.${N_F}"
+                printf "nftables.${N_F}\n"
 
                 if systemctl enable nftables 1> "/dev/null" 2>&1; then
                         printf "${C_W}> ${SUC} nftables is ${C_G}enabled."
