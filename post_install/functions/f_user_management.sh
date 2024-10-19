@@ -50,7 +50,7 @@ create_user() {
                 "magical-teapot"
         )
 
-        local default_username=$(shuf -n 3 -e "${usernames[@]}")
+        local default_username=$(shuf -n 1 -e "${usernames[@]}")
 
         # REGEX:
         # Must start with a lowercase character or an underscore,
@@ -58,13 +58,13 @@ create_user() {
         # Total length must not exceed 32 characters.
         local username_regex="^[a-z_][a-z0-9_-]{0,31}$"
 
-        printf "${C_C}:: ${C_W}Enter your username.\n "
+        printf "${C_C}:: ${C_W}Enter your username.\n"
         printf "${C_C}:: ${C_W}Usernames must not exceed ${C_P}32 chars "
         printf "and they must only contain lowercase letters, digits, hyphens "
         printf "and underscores.\n"
-        printf "${C_C}:: ${C_W}The first letter must be a letter or an "
+        printf "${C_C}:: ${C_W}The first character must be a letter or an "
         printf "underscore.\n"
-        printf "Default is ${C_B}\'${default_username}\'${N_F} -> "
+        printf "Default is ${C_B}'${default_username}'${N_F} -> "
 
         while true; do
                 read ans_username
