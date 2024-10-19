@@ -59,9 +59,12 @@ main() {
         set_pacman
         [[ "${param_hardening}" -eq 1 ]] && hardening_rules
         set_mkinitcpio
-        set_root_account
         set_vim_nvim
         enable_net_manager
+        set_root_account
+        
+        # CREATE USER
+        ask_newuser
 
         # INSTALL BOOTLOADER
         install_bootloader
@@ -87,9 +90,6 @@ main() {
         # INSTALL DESKTOP ENVIRONMENT
         [[ "${param_full}" -eq 1 ]] && desktop_env
         
-        # CREATE USER
-        ask_newuser
-
         # ENABLE GUEST AGENTS
         enable_guest_agents
 
