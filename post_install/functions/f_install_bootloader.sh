@@ -265,5 +265,5 @@ EOF
                 printf "${C_R}systemd-boot.${N_F}\n\n"
 
                 refind_as_fallback
-       fi
+        fi
 }
