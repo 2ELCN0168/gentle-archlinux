@@ -36,6 +36,21 @@ create_user() {
         local sudo=""
         local ans_username=""
         local ans_sudoer=""
+        local usernames=(
+                "anamorphic-whale"
+                "outrageous-firefox"
+                "fluffy-pancake"
+                "vilain-giraffa"
+                "metal-slime"
+                "sweety-givrefoux"
+                "theodoran-ax"
+                "unstoppable-camera"
+                "barking-windogs"
+                "amazing-penguin"
+                "magical-teapot"
+        )
+
+        local default_username=$(shuf -n 3 -e "${usernames[@]}")
 
         # REGEX:
         # Must start with a lowercase character or an underscore,
@@ -43,12 +58,17 @@ create_user() {
         # Total length must not exceed 32 characters.
         local username_regex="^[a-z_][a-z0-9_-]{0,31}$"
 
-        printf "${C_C}:: ${C_W}What will be the name of the new "
-        printf "user? -> ${N_F}" 
+        printf "${C_C}:: ${C_W}Enter your username.\n "
+        printf "${C_C}:: ${C_W}Usernames must not exceed ${C_P}32 chars "
+        printf "and they must only contain lowercase letters, digits, hyphens "
+        printf "and underscores.\n"
+        printf "${C_C}:: ${C_W}The first letter must be a letter or an "
+        printf "underscore.\n"
+        printf "Default is ${C_B}\'${default_username}\'${N_F} -> "
 
-        while [[ -z "${username}" ]]; do
+        while true; do
                 read ans_username
-                username="${ans_username}"
+                username="${ans_username:=${default_username}}"
                 printf "\n"
 
                 if [[ "${ans_username}" =~ ${username_regex} ]]; then
