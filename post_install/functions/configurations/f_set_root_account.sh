@@ -5,7 +5,7 @@
 # Management for the root account.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-18
+# Last updated: 2024-10-19
 # 
 ### Dependencies:
 # - none.
@@ -20,6 +20,7 @@ set_root_account() {
 
         local ans_lock_root=""
         local isFailed=""
+        export root_state=1
 
         while true; do
                 printf "\n${C_C}:: ${C_W}Do you want to authorize log-in as "
@@ -38,9 +39,8 @@ set_root_account() {
                                 printf "account.\n\n"
 
                                 printf "${C_W}> ${WARN} You will have to "
-                                printf "create a privileged user, otherwise, "
-                                printf "the ${C_R}root${N_F} account will be "
-                                printf "unlocked.\n\n"
+                                printf "create a privileged user.\n\n"
+                                root_state=0
                                 sleep 2
                                 return 
                         else
