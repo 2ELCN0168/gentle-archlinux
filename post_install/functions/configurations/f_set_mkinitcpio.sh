@@ -5,7 +5,7 @@
 # Modify the mkinitcpio configuration.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-06
+# Last updated: 2024-10-18
 # 
 ### Dependencies:
 # - mkinitcpio (default).
