@@ -36,8 +36,8 @@ desktop_env() {
 
                 printf "\n====================\n\n"
                 
-                printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? [0-7] "
-                printf "-> ${N_F}"
+                printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
+                printf "[0-7] -> ${N_F}"
 
                 local ans_gui=""
                 read ans_gui
