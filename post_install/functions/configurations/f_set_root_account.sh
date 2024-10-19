@@ -23,7 +23,7 @@ set_root_account() {
         export root_state=1
 
         while true; do
-                printf "\n${C_C}:: ${C_W}Do you want to authorize log-in as "
+                printf "${C_C}:: ${C_W}Do you want to authorize log-in as "
                 printf "${C_R}root${N_F}? [y/N] -> "
                 
                 read -r ans_lock_root
