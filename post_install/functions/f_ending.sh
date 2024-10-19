@@ -48,8 +48,8 @@ ending() {
         printf "has been transferred to your home. You should see what's "
         printf "inside.${N_F}\n\n"
 
-        printf "${C_W}Executing the DNS script is mandatory for it to work as "
-        printf "it cannot be done during the system installation.\n\n" 
+        printf "${C_R}Executing the DNS script is mandatory for it to work as "
+        printf "it cannot be done during the system installation.${N_F}\n\n" 
 
         local sep="============================================"
 
