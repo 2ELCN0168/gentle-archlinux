@@ -6,7 +6,7 @@
 # No window manager included.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-06
+# Last updated: 2024-10-19
 # 
 ### Dependencies:
 # - pacman;
@@ -94,6 +94,24 @@ desktop_env() {
         fi
 
         sleep 2
+
+        if [[ "${desktop_env}" != "gnome" ]]; then
+                install_sddm
+        else
+                printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+                printf "${C_W} gdm.service .${N_F}\n"
+
+                if systemctl enable "gdm.service" 1> "/dev/null" 2>&1; then
+                        printf "${C_W}> ${SUC} ${C_G}Enabled "
+                        printf "${C_Y}gdm.service${N_F}.\n\n"
+                else
+                        printf "${C_W}> ${WARN} ${C_R}Cannot enable "
+                        printf "${C_Y}gdm.service${N_F}.\n\n"
+                fi
+        fi
+}
+
+install_sddm() {
 
         printf "${C_W}> ${INFO} Installing ${C_C}sddm${N_F}.\n"
         if pacman -S --noconfirm sddm qt6-5compat qt6-declarative \
