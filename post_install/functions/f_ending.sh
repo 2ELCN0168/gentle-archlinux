@@ -25,11 +25,8 @@ ending() {
         printf "installed.${N_F}\n\n"
 
         if fastfetch --version 1> "/dev/null" 2>&1; then
-                if [[ "${nKorea}" -eq 1 ]]; then
-                        fastfetch --logo redstar
-                else
-                        fastfetch
-                fi
+                [[ "${nKorea}" -eq 1 ]] && fastfetch --logo redstar ||
+                fastfetch
         fi
 
         if [[ "${createUser}" =~ [yY] ]]; then
