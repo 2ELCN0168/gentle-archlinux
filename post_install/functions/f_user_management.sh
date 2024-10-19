@@ -3,6 +3,12 @@ ask_newuser() {
         createUser=""
 
         while true; do
+
+                # INFO:
+                # If the root account is disabled, create a user account
+                # without asking the user.
+                [[ "${root_state}" -eq 0 ]] && break
+
                 printf "${C_C}:: ${C_W}Would you like to create a user? "
                 printf "[Y/n] -> ${N_F}" 
 
@@ -11,16 +17,17 @@ ask_newuser() {
                 printf "\n"
 
                 if [[ "${createUser}" =~ [yY] ]]; then
-                        create_user
                         break
                 elif [[ "${createUser}" =~ [nN] ]]; then
                         printf "${C_W}> ${INFO} ${N_F}No user will be created."
                         printf "\n\n"
-                        break
+                        return
                 else
                         invalid_answer
                 fi
         done
+
+        create_user
 }
 
 create_user() {
@@ -29,7 +36,6 @@ create_user() {
         local sudo=""
         local ans_username=""
         local ans_sudoer=""
-        printf "\n"
 
         while [[ -z "${username}" ]]; do
                 printf "${C_C}:: ${C_W}What will be the name of the new "
