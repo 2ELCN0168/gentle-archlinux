@@ -64,4 +64,6 @@ set_mkinitcpio() {
                 printf "mkinitcpio. Exiting.\n\n"
                 exit 1
         fi
+
+        printf "\n"
 }
