@@ -37,12 +37,35 @@ create_user() {
         local ans_username=""
         local ans_sudoer=""
 
+        # REGEX:
+        # Must start with a lowercase character or an underscore,
+        # Hyphens and numbers are allowed after the first character.
+        # Total length must not exceed 32 characters.
+        local username_regex="^[a-z_][a-z0-9_-]{0,31}$"
+
+        printf "${C_C}:: ${C_W}What will be the name of the new "
+        printf "user? -> ${N_F}" 
+
         while [[ -z "${username}" ]]; do
-                printf "${C_C}:: ${C_W}What will be the name of the new "
-                printf "user? -> ${N_F}" 
                 read ans_username
                 username="${ans_username}"
                 printf "\n"
+
+                if [[ "${ans_username}" =~ ${username_regex} ]]; then
+                        printf "${C_W}> ${INFO} Username : "
+                        printf "${C_P}${ans_username}${N_F}\n\n"
+                        break
+                else
+                        printf "${C_W}> ${WARN} ${C_R} Invalid username.${N_F} "
+                        printf "Usernames must be ${C_P} 1-32 characters long"
+                        printf "${N_F}, containing only lowercase letters, "
+                        printf "digits, hyphens or underscores.\n"
+                        printf "The first character must be a lowercase letter."
+                        printf "\n\n"
+
+                        printf "${C_C}:: ${C_W}Please re-enter a valid "
+                        printf "username -> ${N_F}"
+                fi
         done
 
         while true; do
