@@ -5,7 +5,7 @@
 # Install different bootloaders with rEFInd as fallback if UEFI mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-07
+# Last updated: 2024-10-20
 # 
 ### Dependencies:
 # - rEFInd (optionnal);
@@ -63,7 +63,6 @@ refind_as_fallback() {
 install_refind() {
 
         declare_bootloader_vars
-
         
         [[ "${cpuBrand}" == "INTEL" ]] && isMicrocode=" initrd=intel-ucode.img"
         [[ "${cpuBrand}" == "AMD" ]] && isMicrocode=" initrd=amd-ucode.img"
@@ -92,14 +91,21 @@ install_refind() {
                 # INFO:
                 # This is interesting, it generates the proper refind_linux.conf
                 # file with custom parameters, e.g., filesystem and microcode
-                printf "${C_W}> ${INFO} ${C_P}\"Arch Linux\" \"${rootLine}"
+                printf "${C_W}> ${INFO} ${C_P}\"Archlinux\" \"${rootLine}"
                 printf "${isEncrypt}${uuid}${isEncryptEnding} rw "
                 printf "initrd=${kernel_initramfs}${isBTRFS}${isMicrocode}\""
                 printf "${N_F} to ${C_W}/boot/refind_linux.conf.${N_F}\n\n"
 
-                local boot_string="\"Arch Linux\" \"${rootLine}${isEncrypt}\
-                ${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}\
-                ${isBTRFS}${isMicrocode}\""
+                # local boot_string="\"Arch Linux\" \"${rootLine}${isEncrypt}\
+                # ${uuid}${isEncryptEnding} rw initrd=${kernel_initramfs}\
+                # ${isBTRFS}${isMicrocode}\""
+
+                local boot_string=$(
+                printf "\"Archlinux\" \"%s%s%s%s rw initrd=%s%s%s\"" \
+                "${rootLine}" "${isEncrypt}" "${uuid}" "${isEncryptEnding}" \
+                "${kernel_initramfs}" "${isBTRFS}" "${isMicrocode}"
+                )
+
 
                 printf "${boot_string}" > "/boot/refind_linux.conf"
         else
@@ -218,7 +224,7 @@ install_systemdboot() {
 
         if bootctl install --esp-path="/boot" 1> "/dev/null" 2>&1; then
 
-                printf "title   Arch Linux\n" \
+                printf "title   Archlinux\n" \
                 1> "/boot/loader/entries/arch.conf"
 
                 printf "linux   /${kernel_name}\n" \
