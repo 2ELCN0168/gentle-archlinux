@@ -63,6 +63,8 @@ main() {
         enable_net_manager
         set_root_account
         
+        [[ "${param_minimal}" -ne 1 ]] && set_term_env
+
         # CREATE USER
         ask_newuser
 
@@ -76,7 +78,6 @@ main() {
         install_frw
 
         if [[ "${param_minimal}" -ne 1 ]]; then
-                set_term_env
 
                 # THEMING
                 create_themes
