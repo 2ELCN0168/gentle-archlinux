@@ -1,7 +1,13 @@
 set_term_env() {
 
-        cp "/post_install/files/.bashrc_template" "/etc/skel/.bashrc"
-        cp "/post_install/files/.zshrc_template" "/etc/skel/.zshrc"
+        local xxxrc=(
+                ".bashrc"
+                ".zshrc"
+        )
+
+        for i in "${xxxrc[@]}"; do
+                cp "/post_install/files/${i}" "/etc/skel/${i}"
+        done
 
         local files=(
                 ".bashrc"
@@ -9,7 +15,7 @@ set_term_env() {
                 ".zshrc"
         )
 
-        for i in "${files}"; do
+        for i in "${files[@]}"; do
                 cp "/etc/skel/${i}" "/root"
         done
 
