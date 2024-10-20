@@ -2,6 +2,14 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias conf="cd ${HOME}/.config"
+alias pics="cd ${HOME}/Pictures"
+alias vids="cd ${HOME}/Videos"
+alias docs="cd ${HOME}/Documents"
+alias music="cd ${HOME}/Music"
+alias desk="cd ${HOME}/Desktop"
+alias downs="cd ${HOME}/Downloads"
+alias public="cd ${HOME}/Public"
 
 # NETWORK
 alias ipb='printf "\033[92m"; curl -s ifconfig.me; printf "\033[0m"'
