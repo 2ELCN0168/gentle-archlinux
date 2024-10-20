@@ -10,3 +10,11 @@ bindkey -e
 source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 PROMPT="%F{red}[%f%B%F{white}%n%f%b%F{red}@%f%F{white}%m%f%F{red}:%f%B%~%b%F{red}]%f(%F{red}%*%f)%F{red}%#%f "
+
+# LINKED CONFIGURATIONS 
+
+# INFO:
+# Source every shell/env configuration file in "/etc/shell_conf.d"
+for i in /etc/shell_conf.d/*.sh; do
+        [[ -r "${i}" ]] && source "${i}"
+done
