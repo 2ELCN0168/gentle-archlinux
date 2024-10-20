@@ -1,6 +1,6 @@
 ask_newuser() {
 
-        createUser=""
+        export createUser=""
 
         while true; do
 
