@@ -32,7 +32,7 @@ alias mv='mv -i'
 lsblk() {
         # BRIGHT CYAN
         printf "\033[96m"
-        lsblk "${@}"
+        command lsblk "${@}"
         printf "\033[0m"
         printf "\n"
 }
@@ -40,7 +40,7 @@ lsblk() {
 blkid() {
         # BRIGHT BLUE
         printf "\033[94m"
-        blkid "${@}"
+        command blkid "${@}"
         printf "\033[0m"
         printf "\n"
 }
@@ -48,14 +48,14 @@ blkid() {
 ss() {
         # BRIGHT GREEN
         printf "\033[92m"
-        ss "${@}"
+        command ss "${@}"
         printf "\033[0m"
 }
 
 uptime() {
         # BRIGHT RED
         printf "\033[91m"
-        uptime "${@}"
+        command uptime "${@}"
         printf "\033[0m"
         printf "\n"
 }
@@ -63,7 +63,7 @@ uptime() {
 ps() {
         # BRIGHT YELLOW
         printf "\033[93m"
-        ps "${@}"
+        command ps "${@}"
         printf "\033[0m"
         printf "\n"
 }
@@ -71,7 +71,7 @@ ps() {
 free() {
         # BRIGHT YELLOW
         printf "\033[93m"
-        free "${@}"
+        command free "${@}"
         printf "\033[0m"
         printf "\n"
 }
