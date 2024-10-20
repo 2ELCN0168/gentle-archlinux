@@ -37,7 +37,7 @@ lsblk() {
         printf "\n"
 }
 
-blkid() 
+blkid() {
         # BRIGHT BLUE
         printf "\033[94m"
         blkid "${@}"
