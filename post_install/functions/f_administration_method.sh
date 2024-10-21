@@ -70,6 +70,7 @@ admin_method() {
                         "adm-filesystem"
                         "adm-kernel"
                         "adm-systemd"
+                        "adm-elevate"
                         )
 
                         for i in "${adm_groups}"; do 
@@ -160,6 +161,8 @@ EOF
                 break
                 elif [[ "${ans_method}" -eq 1 ]]; then
                         usermod -aG wheel "${username}"
+                        printf "${C_W}> ${SUC} Added ${C_Y}${username}${N_F} "
+                        printf "to ${C_C}wheel${N_F} group.\n\n"
                         echo -e "%wheel ALL=(ALL:ALL) ALL" 1>> "/etc/sudoers"
                         break
                 fi
