@@ -1,6 +1,6 @@
 # Gentle Archlinux Installer
 
-![Gentle_Arch](0_Gentle_Arch.png)
+![Gentle_Arch](assets/0_Gentle_Arch.png)
 
 This script is an automated installation of Archlinux.
 As I don't like that much the official "archinstall" script, I decided to do my own.
@@ -42,10 +42,11 @@ mmcblk devices are not supported actually.
 - [ ] - pacdiff ;
 - [x] - motd et issue.net ;
 - [ ] - Conditions LVM ;
-- [ ] - Repair f_partition_disks.sh ;
-- [ ] - Remake the formatting and LVM part to eliminate duplicate or non-pratical code ;
+- [x] - Repair f_partition_disks.sh ;
+- [x] - Remake the formatting and LVM part to eliminate duplicate or non-pratical code ;
 - [ ] - Add mmcblk disk type support ;
 - [ ] - Add support for swapfile/swap/zram ;
 - [ ] - Add hardening mode ;
 - [ ] - Adapt sudoers.d config, enable insults, change $SUDO_PROMPT ;
-- [ ] - Regex to check username/hostname validity ;
+- [x] - Regex to check username/hostname validity ;
+
