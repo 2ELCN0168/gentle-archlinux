@@ -29,6 +29,7 @@ source_files() {
     source "${f_path}/f_install_frw.sh"
     source "${f_path}/f_desktop_environment.sh"
     source "${f_path}/f_user_management.sh"
+    source "${f_path}/f_administration_method.sh"
     source "${f_path}/f_enable_guest_agents.sh"
     source "${f_path}/f_systemd-networkd.sh"
     source "${f_path}/f_systemd_resolved.sh"
@@ -67,6 +68,9 @@ main() {
 
         # CREATE USER
         ask_newuser
+
+        # ADMINISTRATION
+        admin_method
 
         # INSTALL BOOTLOADER
         install_bootloader
