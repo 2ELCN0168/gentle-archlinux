@@ -49,6 +49,7 @@ create_user() {
                 "amazing-penguin"
                 "magical-teapot"
                 "isometric-owl"
+                "weird-canary"
         )
 
         local default_username=$(shuf -n 1 -e "${usernames[@]}")
@@ -86,28 +87,6 @@ create_user() {
 
                         printf "${C_C}:: ${C_W}Please re-enter a valid "
                         printf "username -> ${N_F}"
-                fi
-        done
-
-        while true; do
-                printf "${C_C}:: ${C_W}Will this user be administrator? \n"
-                printf "${C_C}:: ${C_Y}Warning, if you answer 'No' "
-                printf "while having deactivated the root account, "
-                printf "you won't be able to perform administrative tasks "
-                printf "at all! ${C_W}[Y/n] -> ${N_F}"
-
-                read ans_sudoer
-                : "${ans_sudoer:=Y}"
-                printf "\n"
-
-                if [[ "${ans_sudoer}" =~ [yY] ]]; then
-                        printf "${username} ALL=(ALL:ALL) ALL" \
-                        1> "/etc/sudoers.d/${username}"
-                        break
-                elif [[ "${ans_sudoer}" =~ [nN] ]]; then
-                        break
-                else
-                        invalid_answer
                 fi
         done
 
