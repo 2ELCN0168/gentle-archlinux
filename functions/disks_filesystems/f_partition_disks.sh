@@ -28,7 +28,7 @@ partition_disk() {
                 parted -s "${user_disk}" mkpart Archlinux 600Mib 100% \
                 1> "/dev/null" 2>&1
                 
-                if [[ -b "${user_disk}1" && -b "${user_disk}2" ]]; then
+                if [[ -b "${boot_part}" && -b "${root_part}" ]]; then
                         printf "${C_W}> ${SUC} ${C_G}Partitions created "
                         printf "successfully for UEFI mode (GPT).${N_F}\n\n"
                 else
