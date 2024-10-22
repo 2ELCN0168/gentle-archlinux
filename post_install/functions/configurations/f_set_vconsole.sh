@@ -47,7 +47,6 @@ set_vconsole() {
 
         printf "${C_W}> ${INFO} ${N_F}You chose ${C_P}${keymap}${N_F}.\n\n"
 
-        printf "KEYMAP=${keymap}" 1> "/etc/vconsole.conf"
-        printf "\n" 1> "/etc/vconsole.conf"
-        printf "FONT=ter-116b" 1>> "/etc/vconsole.conf"
+        echo "KEYMAP=${keymap}" 1> "/etc/vconsole.conf"
+        echo "FONT=ter-116b" 1>> "/etc/vconsole.conf"
 }
