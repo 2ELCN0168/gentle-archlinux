@@ -76,6 +76,14 @@ free() {
         printf "\n"
 }
 
+df() {
+        # BRIGHT YELLOW
+        printf "\033[93m"
+        command df "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
 ping() {
         # BRIGHT BLUE
         printf "\033[94m"
