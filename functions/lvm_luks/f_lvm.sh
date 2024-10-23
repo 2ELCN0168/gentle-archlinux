@@ -82,7 +82,9 @@ lvm_mgmt() {
                 if [[ "${wantEncrypted}" -eq 1 ]]; then
                         disks_array[0]="/dev/mapper/root"
                 elif [[ "${wantEncrypted}" -eq 0 ]]; then 
-                        disks_array[0]="${disks_array[0]}2"
+                        # disks_array[0]="${disks_array[0]}2"
+                        # NVME FIX
+                        disks_array[0]="${root_part}"
                 fi
 
                 # INFO: 
