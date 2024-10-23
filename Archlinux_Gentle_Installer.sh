@@ -84,8 +84,16 @@ main() {
         # GENERATE FSTAB
         gen_fstab
 
-        cp -a "./config/c_config.sh" "post_install/config/c_config.sh"
-        cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
+        # INFO:
+        # Transfer post_install directory to "/mnt" and launch the second phase
+        # script after chrooting.
+        [[ -d "./post_install/config" ]] && mkdir "./post_install/config"
+
+        for i in "./config"; do
+                cp -a "${i}" "./post_install/config"
+        done
+        # cp -a "./config/c_config.sh" "post_install/config/c_config.sh"
+        # cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
         cp -a "post_install" "/mnt"
         chmod +x "/mnt/post_install/Archlinux_Gentle_Installer_post_install.sh"
         arch-chroot "/mnt" \
