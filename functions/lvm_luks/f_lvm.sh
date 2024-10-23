@@ -28,6 +28,10 @@
 # time. Actually, only the first disk will be encrypted, which is not very 
 # useful...
 #
+# VAR:
+# ${disks_array} is defined in "f_disk_choice". It's a table that contains
+# path to chosen and valid disks, for e.g., : "/dev/sda" "/dev/sdb".
+# If LVM is set to "no", it is used but only contains one disk.
 
 
 default_formatting() {
@@ -65,9 +69,9 @@ lvm_mgmt() {
         # INFO: 
         # If LVM is not used, format the root partition with the previous
         # chosen filesystem
-        [[ "${LVM}" -eq 0 ]] && default_formatting
-
-        if [[ "${LVM}" -eq 1 ]]; then
+        if [[ "${LVM}" -eq 0 ]]; then
+                default_formatting
+        elif [[ "${LVM}" -eq 1 ]]; then
 
                 # INFO: 
                 # Creating LVM and initialize PVs
@@ -75,11 +79,11 @@ lvm_mgmt() {
                 printf "${C_C}${disks_array[*]}${N_F} with "
                 printf "${C_Y}${filesystem}${N_F}...\n\n"
 
-                [[ "${wantEncrypted}" -eq 1 ]] && \
-                disks_array[0]="/dev/mapper/root"
-
-                [[ "${wantEncrypted}" -eq 0 ]] && \
-                disks_array[0]="${disks_array[0]}2"
+                if [[ "${wantEncrypted}" -eq 1 ]]; then
+                        disks_array[0]="/dev/mapper/root"
+                elif [[ "${wantEncrypted}" -eq 0 ]]; then 
+                        disks_array[0]="${disks_array[0]}2"
+                fi
 
                 # INFO: 
                 # Loop on each disk to initialize the partition table and
