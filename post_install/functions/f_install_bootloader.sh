@@ -177,10 +177,17 @@ install_grub() {
         uuid=$(blkid -o value -s UUID "${user_disk}2") ||
         uuid=$(blkid -o value -s UUID "${root_part}")
 
-        grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}\
-        ${isEncryptEnding} rw initrd=${kernel_initramfs}\
-        ${isBTRFS}${isMicrocode}\""
+        # grubKernelParameters="\"${rootLine}${isEncrypt}${uuid}\
+        # ${isEncryptEnding} rw initrd=${kernel_initramfs}\
+        # ${isBTRFS}${isMicrocode}\""
+
+        grubKernelParameters=$(
+        printf "\"%s%s%s%s rw initrd=%s%s%s\"" \
+        "${rootLine}" "${isEncrypt}" "${uuid}" "${isEncryptEnding}" \
+        "${kernel_initramfs}" "${isBTRFS}" "${isMicrocode}"
+        )
         
+
         printf "${C_W}> ${INFO} Inserting ${C_P}${grubKernelParameters}${N_F} "
         printf "to /etc/default/grub.\n"
 
@@ -237,8 +244,10 @@ install_systemdboot() {
                 printf "initrd  /${isMicrocode}" \
                 1>> "/boot/loader/entries/arch.conf"
                 
-                local bootctl_options="options ${rootLine}${isEncrypt}${uuid}\
-                ${isEncryptEnding} rw ${isBTRFS}"
+                local bootctl_options=$(
+                printf "options %s%s%s%s rw %s" "${rootLine}" "${isEncrypt}" \
+                "${uuid}" "${isEncryptEnding}" "${isBTRFS}"
+                )
 
                 printf "\n${bootctl_options}" \
                 1>> "/boot/loader/entries/arch.conf"
