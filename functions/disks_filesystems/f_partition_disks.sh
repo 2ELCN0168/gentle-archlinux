@@ -5,7 +5,7 @@
 # This function initiates the partitioning depending on the BIOS mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-04
+# Last updated: 2024-10-23
 #
 ### Dependencies:
 # - parted (included); 
@@ -19,7 +19,10 @@
 
 partition_disk() {
 
-        # NVME FIX
+        export partitionType=""
+        export boot_part=""
+        export root_part=""
+
         is_nvme() {
                 [[ "${user_disk}" =~ ^/dev/nvme[0-9]n[0-9]$ ]]
         }

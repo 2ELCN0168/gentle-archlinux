@@ -6,7 +6,7 @@
 # want to use LVM.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-10-23
 #
 ### Dependencies:
 # - none.
@@ -25,12 +25,7 @@ disk_choice() {
 
         export user_disk=""
         export disks_array=()
-        export partitionType=""
-        export boot_part=""
-        export root_part=""
         export LVM=""
-
-
 
         if [[ "${filesystem}" != 'BTRFS' ]]; then
 
@@ -113,12 +108,7 @@ disk_choice() {
 
         local disk="${ans_block_dev}"
 
-        # NVME FIX
-        # [[ "${disk}" =~ nvme... ]] && partitionType="p"
-
         user_disk="${disks_array[0]}"
-        # boot_part="${user_disk}${partitionType}1"
-        # root_part="${user_disk}${partitionType}2"
 }
 
 display_disks() {
