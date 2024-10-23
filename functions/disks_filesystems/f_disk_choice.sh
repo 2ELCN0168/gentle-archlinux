@@ -113,11 +113,12 @@ disk_choice() {
 
         local disk="${ans_block_dev}"
 
-        [[ "${disk}" =~ nvme... ]] && partitionType="p"
+        # NVME FIX
+        # [[ "${disk}" =~ nvme... ]] && partitionType="p"
 
         user_disk="${disks_array[0]}"
-        boot_part="${user_disk}${partitionType}1"
-        root_part="${user_disk}${partitionType}2"
+        # boot_part="${user_disk}${partitionType}1"
+        # root_part="${user_disk}${partitionType}2"
 }
 
 display_disks() {

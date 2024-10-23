@@ -19,6 +19,20 @@
 
 partition_disk() {
 
+        # NVME FIX
+        is_nvme() {
+                [[ "${user_disk}" =~ ^/dev/nvme[0-9]n[0-9]$ ]]
+        }
+
+        if is_nvme; then
+                partitionType="p"
+        else
+                partitionType=""
+        fi
+        
+        boot_part="${user_disk}${partitionType}1"
+        root_part="${user_disk}${partitionType}2"
+
         if [[ "${UEFI}" -eq 1 ]]; then
                 printf "${C_W}> ${INFO} Creating two partitions for "
                 printf "${C_C}GPT${N_F} disk.\n"
