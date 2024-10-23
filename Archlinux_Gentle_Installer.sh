@@ -89,9 +89,7 @@ main() {
         # script after chrooting.
         [[ -d "./post_install/config" ]] && mkdir "./post_install/config"
 
-        for i in "./config"; do
-                cp -a "${i}" "./post_install/config"
-        done
+        cp -a "./config/"* "./post_install/config"
         # cp -a "./config/c_config.sh" "post_install/config/c_config.sh"
         # cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
         cp -a "post_install" "/mnt"
