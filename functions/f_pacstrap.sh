@@ -246,7 +246,8 @@ pacstrap_install() {
         # INFO:
         # Perform the installation of the customized system
 
-        local base_packages=("base" "base-devel" "git" "terminus-font" "openssh"
+        local base_packages=("base" "base-devel" "linux-firmware" 
+        "git" "terminus-font" "openssh"
         "traceroute" "systemctl-tui" "hdparm" "neovim" "vim" "vi" "dos2unix"
         "tree" "fastfetch" "dhclient" "tmux" "arch-audit")
 
