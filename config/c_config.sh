@@ -23,7 +23,12 @@ export N_F="\033[0m"
 
 ### MESSAGE TYPES
 
-export INFO="${C_W}[${C_C}INFO${C_W}]${N_F}"
-export WARN="${C_W}[${C_Y}WARNING${C_W}]${N_F}"
-export ERR="${C_W}[${C_R}ERROR${C_W}]${N_F}"
-export SUC="${C_W}[${C_G}SUCCESS${C_W}]${N_F}"
+# export INFO="${C_W}[${C_C}INFO${C_W}]${N_F}"
+# export WARN="${C_W}[${C_Y}WARNING${C_W}]${N_F}"
+# export ERR="${C_W}[${C_R}ERROR${C_W}]${N_F}"
+# export SUC="${C_W}[${C_G}SUCCESS${C_W}]${N_F}"
+
+export INFO="${C_C}[>]${N_F}"
+export WARN="${C_Y}[@]${N_F}"
+export ERR="${C_R}[!]${N_F}"
+export SUC="${C_G}[*]${N_F}"
