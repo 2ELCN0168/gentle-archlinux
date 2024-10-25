@@ -5,7 +5,7 @@
 # Modify the mkinitcpio configuration.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-18
+# Last updated: 2024-10-25
 # 
 ### Dependencies:
 # - mkinitcpio (default).
@@ -47,7 +47,7 @@ set_mkinitcpio() {
         printf "${N_F}with custom parameters...\n\n"
 
         local initcpio_hooks="HOOKS=(base systemd ${isBTRFS}autodetect modconf \
-        kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
+kms keyboard sd-vconsole ${isLUKS}block ${isLVM}filesystems fsck)"
 
         local tempfile=$(mktemp)
         awk -v newLine="$initcpio_hooks" '
@@ -56,7 +56,8 @@ set_mkinitcpio() {
                 next 
         } 
         1
-        ' "/etc/mkinitcpio.conf" 1> "${tempfile}" && mv "${tempfile}" "/etc/mkinitcpio.conf"
+        ' "/etc/mkinitcpio.conf" 1> "${tempfile}" \
+        && mv "${tempfile}" "/etc/mkinitcpio.conf"
 
         # Generate initramfs
         if ! mkinitcpio -P; then
