@@ -78,6 +78,8 @@ install_refind() {
         [[ "${filesystem}" == "BTRFS" && "${btrfsSubvols}" -eq 1 ]] && \
         isBTRFS=" rootflags=subvol=@"
 
+        # BUG:
+        # I think there  is a bug here.
         [[ "${wantEncrypted}" -eq 1 ]] && \
         uuid=$(blkid -o value -s UUID "${user_disk}2") ||
         uuid=$(blkid -o value -s UUID "${root_part}")
