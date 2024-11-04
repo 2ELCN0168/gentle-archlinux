@@ -9,7 +9,7 @@
 # hypervisor.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-04
+# Last updated: 2024-11-04
 #
 ### Dependencies:
 # - pacman (pactrap script) (included); 
@@ -246,10 +246,11 @@ pacstrap_install() {
         # INFO:
         # Perform the installation of the customized system
 
-        local base_packages=("base" "base-devel" "linux-firmware" 
-        "git" "terminus-font" "openssh"
+        local base_packages=("base" "base-devel" "linux-firmware" "eza" "rust"
+        "git" "terminus-font" "openssh" "gparted" "wget" "gdisk" "ntfs-3g"
         "traceroute" "systemctl-tui" "hdparm" "neovim" "vim" "vi" "dos2unix"
-        "tree" "fastfetch" "dhclient" "tmux" "arch-audit")
+        "tree" "fastfetch" "dhclient" "tmux" "arch-audit"
+        "arch-install-scripts")
 
         pacstrap -K "/mnt" "${base_packages[@]}" "${zsh_packages[@]}" \
         "${additionalPackages[@]}" || exit 1
