@@ -41,6 +41,8 @@ net_manager() {
                         printf "${C_C}NetworkManager${N_F}.\n\n"
                         net_manager="networkmanager" 
                         break
+                elif [[ "${ans_net_manager}" == "+" ]]; then
+                        return
                 else
                         invalid_answer
                 fi
@@ -52,6 +54,7 @@ net_menu() {
 
         printf "${C_W}[0] - ${C_G}systemd-networkd${N_F} [default]\n"
         printf "${C_W}[1] - ${C_C}NetworkManager${N_F}\n"
+        printf "${C_Y}[+] - Skip ->${N_F}\n"
 
         printf "\n====================\n\n"
 
