@@ -70,7 +70,12 @@ install_refind() {
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
                 isEncrypt="rd.luks.name="
-                isEncryptEnding="=root root=/dev/mapper/root"
+                if [[ "${LVM}" -eq 0 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/root"
+                elif [[ "${LVM}" -eq 1 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/${vg_name}-root"
+                fi
+
         elif [[ "${wantEncrypted}" -eq 0 ]]; then
                 rootLine="root=UUID="
         fi
@@ -165,7 +170,11 @@ install_grub() {
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
                 isEncrypt="rd.luks.name="
-                isEncryptEnding="=root root=/dev/mapper/root"
+                if [[ "${LVM}" -eq 0 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/root"
+                elif [[ "${LVM}" -eq 1 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/${vg_name}-root"
+                fi
                 sed -i '/^\s*#\(GRUB_ENABLE_CRYPTODISK\)/ s/^#//' \
                 "/etc/default/grub"
         elif [[ "${wantEncrypted}" -eq 0 ]]; then
@@ -217,7 +226,11 @@ install_systemdboot() {
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
                 isEncrypt="rd.luks.name="
-                isEncryptEnding="=root root=/dev/mapper/root"
+                if [[ "${LVM}" -eq 0 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/root"
+                elif [[ "${LVM}" -eq 1 ]]; then
+                        isEncryptEnding="=root root=/dev/mapper/${vg_name}-root"
+                fi
         elif [[ "${wantEncrypted}" -eq 0 ]]; then
                 rootLine="root=UUID="
         fi

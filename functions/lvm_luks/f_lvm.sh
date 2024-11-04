@@ -6,7 +6,7 @@
 # It can be used on several disks at the same time.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-04
+# Last updated: 2024-11-04
 #
 ### Dependencies:
 # - sgdisk;
@@ -64,7 +64,7 @@ lvm_mgmt() {
         
         # INFO: 
         # Volume Group name for LVM
-        local vg_name="VG_Archlinux"
+        export vg_name="VG_Archlinux"
 
         # INFO: 
         # If LVM is not used, format the root partition with the previous
