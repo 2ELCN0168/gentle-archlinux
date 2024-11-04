@@ -68,7 +68,7 @@ ps() {
         printf "\n"
 }
 
-free() {
+_free() {
         # BRIGHT YELLOW
         printf "\033[93m"
         command free "${@}"
@@ -76,10 +76,18 @@ free() {
         printf "\n"
 }
 
-df() {
+_df() {
         # BRIGHT YELLOW
         printf "\033[93m"
         command df "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
+_du() {
+        # BRIGHT YELLOW
+        printf "\033[93m"
+        command du "${@}"
         printf "\033[0m"
         printf "\n"
 }
@@ -106,9 +114,9 @@ alias sstcp='ss -eant'
 alias ssudp='ss -eanu'
 
 # READABILITY
-alias du='du -h'
-alias df='df -h'
-alias free='free -h'
+alias du='_du -h'
+alias df='_df -h'
+alias free='_free -h'
 
 # REPLACEMENTS
 if hash eza 2> "/dev/null"; then
