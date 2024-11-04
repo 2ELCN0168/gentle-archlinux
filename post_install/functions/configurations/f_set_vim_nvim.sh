@@ -74,10 +74,10 @@ set_vim_nvim() {
         set cursorcolumn
 
         " SAFE SAVE
-        set backup
-        set backupdir=~/.vim/backup//
-        set directory=~/.vim/swap//
-        set undodir=~/.vim/undo//
+        "set backup
+        "set backupdir=~/.vim/backup//
+        "set directory=~/.vim/swap//
+        "set undodir=~/.vim/undo//
 EOF
         # INFO:
         # Remove spaces caused by heredocs >:(
@@ -141,11 +141,11 @@ EOF
         vim.wo.colorcolumn = "80"
 
         -- SAVE
-        vim.o.backup = true
-        vim.o.backupdir = "~/.config/nvim/backup//"
-        vim.o.directory = "~/.config/nvim/swap//"
-        vim.o.undofile = true
-        vim.o.undodir = "~/.config/nvim/undo//"
+        -- vim.o.backup = true
+        -- vim.o.backupdir = "~/.config/nvim/backup//"
+        -- vim.o.directory = "~/.config/nvim/swap//"
+        -- vim.o.undofile = true
+        -- vim.o.undodir = "~/.config/nvim/undo//"
 
         -- COMMAND HISTORY
         vim.o.history = 1000
