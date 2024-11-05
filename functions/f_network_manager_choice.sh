@@ -28,7 +28,7 @@ net_manager() {
                 net_menu                             
 
                 local ans_net_manager=""
-                read ans_net_manager
+                read -p ans_net_manager
                 : "${ans_net_manager:=0}"
 
                 if [[ "${ans_net_manager}" -eq 0 ]]; then
