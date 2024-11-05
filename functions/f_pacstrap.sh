@@ -55,8 +55,8 @@ ask_packages() {
                                 ;;
                         [1])
                                 guest_agent="VIRTUALBOX"
-                                printf "${C_W}> ${INFO} ${C_G}virtualbox-guest" 
-                                printf "-utils${N_F} will be installed.\n\n"
+                                printf "${C_W}> ${INFO} ${C_G}virtualbox-gues" 
+                                printf "t-utils${N_F} will be installed.\n\n"
                                 additionalPackages+=("virtualbox-guest-utils")
                                 break
                                 ;;
