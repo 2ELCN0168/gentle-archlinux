@@ -5,7 +5,7 @@
 # This function asks the user if they want to use LUKS to encrypt their filesystem.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - cryptsetup.
@@ -25,7 +25,7 @@ luks_choice() {
         while true; do
 
                 printf "${C_C}:: ${C_W}Do you want your system to be "
-                printf "encrypted with ${B_R} LUKS ${N_F} ? [y/N] -> "
+                printf "encrypted with ${C_R}LUKS${N_F} ? [y/N] -> "
 
                 local ans_luks=""
                 read ans_luks
