@@ -34,6 +34,7 @@
 #
 
 greetings() {
+        setfont
         clear
 
         local mini="${C_P}Minimal installation mode.${N_F}"
