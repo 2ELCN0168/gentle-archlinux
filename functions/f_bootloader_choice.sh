@@ -40,7 +40,7 @@ bootloader_choice() {
                 printf "${C_W}[1] - ${C_Y}GRUB2${N_F}\n"
                 printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n\n"
 
-                printf "\n=========================\n\n"
+                printf "\n╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍\n\n"
                 # printf "────────────────────────────────\n\n"
                 
                 printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
