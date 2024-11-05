@@ -33,48 +33,35 @@ export WARN="${C_Y}[@]${N_F}"
 export ERR="${C_R}[!]${N_F}"
 export SUC="${C_G}[*]${N_F}"
 
-# print_box() {
-#
-#     local text="${1}"
-#     local color="${2}"
-#     local reset="\033[0m"
-#
-#     # NOTE:
-#     # 4 is equal to default spaces number if nothing is provided at argument 3
-#     local padding="${3:-4}"
-#     local width=$(( ${#text} + padding * 2 ))
-#     
-#     local colored_text="${color}$(printf ' %.0s' $(seq 1 $padding))${text}$(printf ' %.0s' $(seq 1 $padding))${reset}"
-#
-#     local border_top="┌$(printf '─%.0s' $(seq 1 $((width + 2))))┐"
-#     local border_bottom="└$(printf '─%.0s' $(seq 1 $((width + 2))))┘"
-#
-#     printf "\n%s\n" "${border_top}"
-#     printf "│%b│\n" "${colored_text}"
-#     printf "%s\n\n" "${border_bottom}"
-# }
-
 print_box() {
-    local text="${1}"
-    local color="${2}"
-    local reset="\033[0m"
-    local padding="${3:-2}"  # Par défaut, 2 espaces de chaque côté
-    local text_length=${#text}
-    local total_length=$((text_length + padding * 2))
-    
-    # Génération des espaces de chaque côté
-    local padding_left=$(printf ' %.0s' $(seq 1 $padding))
-    local padding_right=$(printf ' %.0s' $(seq 1 $((total_length - text_length - padding))))
 
-    # Génération du texte coloré avec padding
-    local colored_text="${color}${padding_left}${text}${padding_right}${reset}"
+        # USAGE:
+        # print_box "Some text" [<"${C_C}"> [<40>]]
 
-    # Génération des bordures
-    local border_top="┌$(printf '─%.0s' $(seq 1 $((total_length + 2))))┐"
-    local border_bottom="└$(printf '─%.0s' $(seq 1 $((total_length + 2))))┘"
+        local text="${1}"
+        local color="${2:-\033[0m}"
+        local reset="\033[0m"
 
-    # Affichage de la boîte
-    printf "\n%s\n" "${border_top}"
-    printf "│%b│\n" "${colored_text}"
-    printf "%s\n\n" "${border_bottom}"
+        # NOTE:
+        # 30 the default total length of the box if nothing is provided 
+        # as argument 3
+        local total_width="${3:-30}"
+        local text_length=${#text}
+
+        local inner_width=$((total_width - 2))
+        local padding=$(( (inner_width - text_length) / 2 ))
+
+        local spaces_L=$(printf '%*s' "$padding" '')
+        local spaces_R=$(
+        printf '%*s' "$((inner_width - text_length - padding))" ''
+        )
+
+        local colored_text="${color}${spaces_L}${text}${spaces_R}${reset}"
+
+        local border_top="┌$(printf '─%.0s' $(seq 1 $inner_width))┐"
+        local border_bottom="└$(printf '─%.0s' $(seq 1 $inner_width))┘"
+
+        printf "\n%s\n" "${border_top}"
+        printf "│%b│\n" "${colored_text}"
+        printf "%s\n\n" "${border_bottom}"
 }
