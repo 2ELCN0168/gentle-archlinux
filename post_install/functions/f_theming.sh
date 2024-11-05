@@ -102,6 +102,6 @@ create_themes() {
         printf "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}"
         printf "${tty_theme}${N_F}.\n\n"
 
-        cp -r "/post_install/files/tty_theme.d" "/etc"
+        cp -r "/post_install/files/tty_themes.d" "/etc"
 }
 
