@@ -6,7 +6,7 @@
 # running in UEFI mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - none.
@@ -33,13 +33,17 @@ bootloader_choice() {
                 return
         fi
         while true; do
-                printf "==${C_C}BOOTLOADER${N_F}========\n\n"
+                printf "┌──────────────────────────────┐\n"
+                printf "│   ${C_C}BOOTLOADER${N_F}     │\n"
+                printf "└──────────────────────────────┘\n\n"
+                #printf "==${C_C}BOOTLOADER${N_F}========\n\n"
 
                 printf "${C_W}[0] - ${C_C}rEFInd${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_Y}GRUB2${N_F}\n"
                 printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n"
 
-                printf "\n====================\n\n"
+                # printf "\n====================\n\n"
+                printf "────────────────────────────────\n\n"
                 
                 printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
                 printf "[0/1/2] -> ${N_F}"
