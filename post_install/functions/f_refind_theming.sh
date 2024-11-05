@@ -6,19 +6,19 @@ refind_theming() {
 
         local dest_path="/boot/EFI/refind/themes/catppuccin"
         
-        if [[ "${theme_color}" -ne 2 ]]; then
+        if [[ "${theme_brightness}" =~ [01] ]]; then
                 mkdir -p "/boot/EFI/refind/themes"
                 git clone "https://github.com/catppuccin/refind" \
                 "${dest_path}" 1> "/dev/null" 2>&1
         fi
 
-        if [[ "${theme_color}" -eq 0 ]]; then
+        if [[ "${theme_brightness}" -eq 1 ]]; then
                 printf "\ninclude themes/catppuccin/latte.conf" \
                 1>> "/boot/EFI/refind/refind.conf"
 
                 cp -a "${dest_path}/assets/latte/icons/os_arch.png" \
                 "/boot/vmlinuz-${linux_kernel}.png"
-        elif [[ "${theme_color}" -eq 1 ]]; then
+        elif [[ "${theme_brightness}" -eq 0 ]]; then
                 printf "\ninclude themes/catppuccin/mocha.conf" \
                 1>> "/boot/EFI/refind/refind.conf"
                 
