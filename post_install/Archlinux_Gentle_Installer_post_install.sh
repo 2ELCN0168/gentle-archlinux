@@ -17,7 +17,7 @@ source_files() {
     source "${f_path}/configurations/f_set_time.sh"
     source "${f_path}/configurations/f_set_vconsole.sh"
     source "${f_path}/configurations/f_set_vim_nvim.sh"
-    source "${f_path}/f_xdg_dirs.sh"
+    source "${f_path}/configurations/f_xdg_dirs.sh"
 
     source "${f_path}/f_greetings_pi.sh"
     source "${f_path}/f_hardening_rules.sh"
