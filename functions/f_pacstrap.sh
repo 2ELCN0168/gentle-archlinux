@@ -24,7 +24,8 @@ ask_packages() {
         export guest_agent=""
 
         while true; do
-                printf "==${C_C}GUEST AGENTS${N_F}========\n\n"
+
+                print_box "Guest agents" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_C}qemu-guest-agent (Qemu/Proxmox)"
                 printf "${N_F} (default)\n"
@@ -35,7 +36,7 @@ ask_packages() {
                 printf "actually)${N_F}\n"
                 printf "${C_W}[4] - ${C_G}None${N_F}\n"
                 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Choose the guest-agent you want to "
                 printf "install. If none, choose 4. (useful in virtual "
