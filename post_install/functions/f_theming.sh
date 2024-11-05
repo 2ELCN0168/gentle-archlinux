@@ -1,6 +1,6 @@
 create_themes() {
 
-        export theme_color=""
+        export theme_brightness=-1
 
         while true; do
 
@@ -10,7 +10,13 @@ create_themes() {
                 printf "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} "
                 printf "[default]\n"
                 printf "${C_W}[2] - ${C_R}Red impact (dark)${N_F}\n"
-                printf "${C_W}[3] - ${N_F}Keep default TTY colors\n\n"
+                printf "${C_W}[3] - ${C_R}Dracula (dark)${N_F}\n"
+                printf "${C_W}[4] - ${C_R}Mono Amber (dark)${N_F}\n"
+                printf "${C_W}[5] - ${C_R}Mono Green (dark)${N_F}\n"
+                printf "${C_W}[6] - ${C_R}Powershell (medium)${N_F}\n"
+                printf "${C_W}[7] - ${C_R}Ryuuko (medium)${N_F}\n"
+                printf "${C_W}[8] - ${C_R}Batman (medium)${N_F}\n"
+                printf "${C_W}[9] - ${N_F}Keep default TTY colors\n\n"
 
                 printf "────────────────────────────────────────\n\n"
 
@@ -26,40 +32,60 @@ create_themes() {
                 case "${ans_tty_theme}" in
                         [0])
                                 tty_theme="Catppuccin latte"
-                                path="/etc/tty_themes.d/tty_catppuccin_latte.sh"
-                                printf "\nsource ${path}" \
-                                1>> "/etc/skel/.bashrc" \
-                                1>> "/etc/skel/.zshrc" \
-                                1>> "/root/.bashrc" \
-                                1>> "/root/.zshrc"
-                                theme_color=0
+                                path="/etc/tty_themes.d/catppuccin_latte.sh"
+                                theme_brightness=1
                                 break
                                 ;;
                         [1])
                                 tty_theme="Tokyonight Storm"
-                                path="/etc/tty_themes.d/tty_tokyonight_storm.sh"
-                                printf "\nsource ${path}" \
-                                1>> "/etc/skel/.bashrc" \
-                                1>> "/etc/skel/.zshrc" \
-                                1>> "/root/.bashrc" \
-                                1>> "/root/.zshrc"
-                                theme_color=1
+                                path="/etc/tty_themes.d/tokyonight_storm.sh"
+                                theme_brightness=0
                                 break
                                 ;;
                         [2])
                                 tty_theme="Red impact"
-                                path="/etc/tty_themes.d/tty_red_impact.sh"
-                                printf "\nsource ${path}" \
-                                1>> "/etc/skel/.bashrc" \
-                                1>> "/etc/skel/.zshrc" \
-                                1>> "/root/.bashrc" \
-                                1>> "/root/.zshrc"
-                                theme_color=1
+                                path="/etc/tty_themes.d/red_impact.sh"
+                                theme_brightness=0
                                 break
                                 ;;
                         [3])
+                                tty_theme="Dracula"
+                                path="/etc/tty_themes.d/dracula.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [4])
+                                tty_theme="Mono Amber"
+                                path="/etc/tty_themes.d/mono_amber.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [5])
+                                tty_theme="Mono Green"
+                                path="/etc/tty_themes.d/mono_green.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [6])
+                                tty_theme="Powershell"
+                                path="/etc/tty_themes.d/powershell.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [7])
+                                tty_theme="Ryuuko"
+                                path="/etc/tty_themes.d/ryuuko.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [8])
+                                tty_theme="Batman"
+                                path="/etc/tty_themes.d/batman.sh"
+                                theme_brightness=0
+                                break
+                                ;;
+                        [9])
                                 tty_theme="Default"
-                                theme_color=2
                                 break
                                 ;;
                         *)
@@ -68,6 +94,11 @@ create_themes() {
                 esac
         done
         
+        if [[ "${tty_theme}" != "Default" ]]; then
+                echo "source ${path}" 1>> "/etc/skel/.bashrc" \
+                1>> "/etc/skel/.zshrc" 1>> "/root/.bashrc" 1>> "/root/.zshrc"
+        fi
+
         printf "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}"
         printf "${tty_theme}${N_F}.\n\n"
 
