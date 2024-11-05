@@ -124,7 +124,7 @@ display_disks() {
         lsblk --nodeps --output NAME |
         grep --invert-match --extended-regexp "${exclude_pattern}"
 
-        printf "────────────────────────────────────────\n\n"
+        printf "\n────────────────────────────────────────\n\n"
 
         printf "${C_C}:: ${C_W}Which block device do you want to use? " 
         printf "(default=sda) Type \"[q]\" to quit -> ${N_F}"
