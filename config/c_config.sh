@@ -54,22 +54,26 @@ export SUC="${C_G}[*]${N_F}"
 #     printf "%s\n\n" "${border_bottom}"
 # }
 
-
 print_box() {
     local text="${1}"
     local color="${2}"
     local reset="\033[0m"
     local padding="${3:-2}"  # Par défaut, 2 espaces de chaque côté
-    local width=$(( ${#text} + padding * 2 ))
+    local text_length=${#text}
+    local total_length=$((text_length + padding * 2))
     
-    # Ajustement des espaces pour éviter le décalage
-    local colored_text="${color}$(printf ' %.0s' $(seq 1 $padding))${text}$(printf ' %.0s' $(seq 1 $padding))${reset}"
+    # Génération des espaces de chaque côté
+    local padding_left=$(printf ' %.0s' $(seq 1 $padding))
+    local padding_right=$(printf ' %.0s' $(seq 1 $((total_length - text_length - padding))))
+
+    # Génération du texte coloré avec padding
+    local colored_text="${color}${padding_left}${text}${padding_right}${reset}"
 
     # Génération des bordures
-    local border_top="┌$(printf '─%.0s' $(seq 1 $((width + 2))))┐"
-    local border_bottom="└$(printf '─%.0s' $(seq 1 $((width + 2))))┘"
+    local border_top="┌$(printf '─%.0s' $(seq 1 $((total_length + 2))))┐"
+    local border_bottom="└$(printf '─%.0s' $(seq 1 $((total_length + 2))))┘"
 
-    # Affichage de la boîte avec espace autour du texte
+    # Affichage de la boîte
     printf "\n%s\n" "${border_top}"
     printf "│%b│\n" "${colored_text}"
     printf "%s\n\n" "${border_bottom}"
