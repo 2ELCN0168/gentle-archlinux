@@ -34,13 +34,13 @@ bootloader_choice() {
         fi
         while true; do
 
-                print_box "Bootloader" "${C_C}" 25
+                print_box "Bootloader" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_C}rEFInd${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_Y}GRUB2${N_F}\n"
                 printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n\n"
 
-                printf "\n─────────────────────────\n\n"
+                printf "\n────────────────────────────────────────\n\n"
                 
                 printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
                 printf "[0/1/2] -> ${N_F}"
