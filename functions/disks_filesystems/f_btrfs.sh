@@ -193,9 +193,11 @@ btrfs_mgmt() {
         for i in "${btrfs_subvols[@]:3:2}"; do
                 local clean_i="${i//@/}"
                 printf "${C_W}> ${INFO} Enabling quota for ${C_G}@"
-                printf "${clean_i}${N_F}"
+                printf "${clean_i}${N_F}\n"
                 btrfs quota enable "/mnt/${clean_i}"
                 btrfs quota rescan "/mnt/${clean_i}" 1> "/dev/null" 2>&1
                 btrfs qgroup limit 5G "/mnt/${clean_i}"
         done
+
+        printf "\n"
 }
