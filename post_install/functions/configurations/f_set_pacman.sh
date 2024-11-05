@@ -5,7 +5,7 @@
 # Modify the pacman configuration.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-06
+# Last updated: 2024-11-05
 # 
 ### Dependencies:
 # - none.
@@ -20,8 +20,8 @@
 set_pacman() {
 
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf AGAIIIIN
-        printf "${C_W}> ${INFO} ${N_F}Uncommenting ${C_W}'Color'${N_F} and "
-        printf "${C_W}'ParallelDownloads 5'${N_F} in ${C_P}/mnt/etc/"
+        printf "${C_W}> ${INFO} ${N_F}Uncommenting ${C_G}'Color'${N_F} and "
+        printf "${C_G}'ParallelDownloads 5'${N_F} in ${C_P}/mnt/etc/"
         printf "pacman.conf${N_F} AGAIIIIN.\n\n"
 
         #sed -i '/^\s*#\(Color\|ParallelDownloads\)/ s/^#//' /etc/pacman.conf
