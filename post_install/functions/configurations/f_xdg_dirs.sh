@@ -26,10 +26,11 @@ create_xdg_dirs() {
         while true; do
                 printf "${C_C}:: ${C_W}Do you want to create regular user "
                 printf "directories?\n"
-                printf "(Documents, Pictures, Downloads, etc.) [Y/n] -> "
+                printf "${C_Y}(Documents, Pictures, Downloads, etc.)${N_F} "
+                printf "[Y/n] -> "
 
                 local ans_xdg_dirs
-                read -p ans_xdg_dirs
+                read -r ans_xdg_dirs
                 : "${ans_xdg_dirs:=Y}"
                 printf "\n"
 
@@ -46,7 +47,7 @@ create_xdg_dirs() {
         # Execute as the user created before
         if sudo --user="${username}" xdg-user-dirs-update \
         1> "/dev/null" 2>&1; then
-                printf "${C_W}> ${INFO} User directories created for user"
+                printf "${C_W}> ${INFO} User directories created for user "
                 printf "${C_P}${username}${N_F}\n"
         else
                 printf "${C_W}> ${WARN} Could not create user directories for "
