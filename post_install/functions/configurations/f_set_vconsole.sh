@@ -5,7 +5,7 @@
 # Set the vconsole.conf file in /etc.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-11-05
 # 
 ### Dependencies:
 # - none.
@@ -23,13 +23,15 @@ set_vconsole() {
         local keymap=""
 
         while true; do
-                printf "\n==${C_C}KEYMAP${N_F}============\n\n"
 
-                printf "${C_W}[0] - ${C_B}US INTL. - QWERTY${N_F} [default]\n"
+                print_box "Keymap" "${C_C}" 40 
+
+                printf "${C_W}[0] - ${C_B}US INTL. - QWERTY with dead keys"
+                printf "${N_F} [default]\n"
                 printf "${C_W}[1] - ${C_B}US - QWERTY${N_F}\n"
                 printf "${C_W}[2] - ${C_C}FR - AZERTY${N_F}\n"
                 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Select your keymap -> ${N_F}"
 

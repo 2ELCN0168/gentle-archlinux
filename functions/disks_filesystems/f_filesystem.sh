@@ -5,7 +5,7 @@
 # Ask the user which filesystem they want to use. 
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - none.
@@ -26,13 +26,13 @@ filesystem_choice() {
 
         while true; do
                 
-                printf "==${C_C}FILESYSTEM${N_F}========\n\n"
+                print_box "Filesystem" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_Y}BTRFS${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_C}XFS${N_F}\n"
-                printf "${C_W}[2] - ${C_R}EXT4${N_F}\n"
+                printf "${C_W}[2] - ${C_R}EXT4${N_F}\n\n"
                 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Which filesystem do you want to use? "
                 printf "[0/1/2] -> ${N_F}"

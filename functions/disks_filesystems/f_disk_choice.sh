@@ -6,7 +6,7 @@
 # want to use LVM.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-23
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - none.
@@ -119,12 +119,12 @@ display_disks() {
                 exclude_pattern+="|${disk}"
         done
 
-        printf "\n==${C_C}DISK${N_F}==============\n\n"
+        print_box "Disks" "${C_C}" 40 
 
         lsblk --nodeps --output NAME |
         grep --invert-match --extended-regexp "${exclude_pattern}"
 
-        printf "\n====================\n\n"
+        printf "────────────────────────────────────────\n\n"
 
         printf "${C_C}:: ${C_W}Which block device do you want to use? " 
         printf "(default=sda) Type \"[q]\" to quit -> ${N_F}"

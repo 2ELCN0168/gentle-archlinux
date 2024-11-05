@@ -8,11 +8,12 @@ systemd_networkd() {
         local gateway=""
 
         while true; do
-                printf "==${C_C}INT. CONFIG.${N_F}======\n\n"
+
+                print_box "Network interfaces" "${C_C}" 40 
 
                 ls "/sys/class/net" | column -t | grep -v "lo"
 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W} Which interface do you want to "
                 printf "configure with systemd-networkd? Type the name as you "

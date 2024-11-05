@@ -23,7 +23,8 @@ desktop_env() {
         local desktop_env=""
 
         while true; do
-                printf "==${C_C}DESKTOP ENV.${N_F}======\n\n"
+
+                print_box "Desktop Environment" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_C}GNOME${N_F}\n"
                 printf "${C_W}[1] - ${C_C}KDE Plasma${N_F}\n"
@@ -34,7 +35,7 @@ desktop_env() {
                 printf "${C_W}[6] - ${C_C}Xfce${N_F}\n"
                 printf "${C_W}[7] - ${C_Y}None${N_F} (default)\n"
 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
                 
                 printf "${C_C}${BOLD}:: ${C_W}Which one do you prefer? "
                 printf "[0-7] -> ${N_F}"

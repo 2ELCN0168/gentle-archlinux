@@ -5,7 +5,7 @@
 # Ask the user for the kernel to use.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - none.
@@ -30,15 +30,14 @@ ask_kernel() {
 
         while true; do
 
-                printf "==${C_C}KERNEL${N_F}============\n\n"
+                print_box "Kernel" "${C_C}" 40
 
                 printf "${C_W}[0] - ${C_C}linux${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_R}linux-lts${N_F}\n"
                 printf "${C_W}[2] - ${C_P}linux-hardened${N_F}\n"
-                printf "${C_W}[3] - ${C_Y}linux-zen${N_F}\n"
+                printf "${C_W}[3] - ${C_Y}linux-zen${N_F}\n\n"
                 
-                printf "\n====================\n\n"
-
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}${BOLD}:: ${C_W}Which kernel do you want to "
                 printf "install? -> ${N_F}"

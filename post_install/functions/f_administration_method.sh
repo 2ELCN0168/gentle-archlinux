@@ -24,14 +24,15 @@ admin_method() {
         done
 
         while true; do
-                printf "==${C_C}ADMINISTRATION${N_F}====\n\n"
 
+                print_box "Administration" "${C_C}" 40 
+                
                 printf "${C_W}[0] - ${C_Y}Complete with 'adm' groups${C_R} "
                 printf "[Recommended]${N_F}\n"
                 printf "${C_W}[1] - ${C_B}Standard usage of 'sudo' "
                 printf "${N_F}[default]\n"
                 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Complete method will create a lot of "
                 printf "groups for each type of usage (e.g., disk management "

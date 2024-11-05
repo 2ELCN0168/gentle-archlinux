@@ -6,7 +6,7 @@
 # intended to be used with LVM at the moment.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-03
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - btrfs-progs.
@@ -37,12 +37,12 @@ btrfs_mgmt() {
 
         while true; do
 
-                printf "==${C_C}SUBVOLUMES${N_F}========\n\n"
+                print_box "Subvolumes" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_Y}Make subvolumes!${N_F} (default)\n"
-                printf "${C_W}[1] - ${C_C}No subvolumes this time${N_F}\n"
+                printf "${C_W}[1] - ${C_C}No subvolumes this time${N_F}\n\n"
                 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Do you want to use subvolumes? "
                 printf "[0/1] -> ${N_F}"

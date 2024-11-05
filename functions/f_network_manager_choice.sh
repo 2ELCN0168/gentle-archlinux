@@ -5,7 +5,7 @@
 # Ask the user which network manager they want to use.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-04
+# Last updated: 2024-11-05
 #
 ### Dependencies:
 # - network-manager (indirectly); 
@@ -28,7 +28,7 @@ net_manager() {
                 net_menu                             
 
                 local ans_net_manager=""
-                read -p ans_net_manager
+                read -r ans_net_manager
                 : "${ans_net_manager:=0}"
 
                 if [[ "${ans_net_manager}" -eq 0 ]]; then
@@ -50,13 +50,14 @@ net_manager() {
 }
 
 net_menu() {
-        printf "\n==${C_C}NETWORK MANAGER${N_F}===\n\n"
+
+        print_box "Network Manager" "${C_C}" 40 
 
         printf "${C_W}[0] - ${C_G}systemd-networkd${N_F} [default]\n"
         printf "${C_W}[1] - ${C_C}NetworkManager${N_F}\n"
         printf "${C_Y}[+] - Skip ->${N_F}\n"
 
-        printf "\n====================\n\n"
+        printf "────────────────────────────────────────\n\n"
 
         printf "${C_C}:: ${C_W}Which network manager do you want to use? -> "
         printf "${N_F}"

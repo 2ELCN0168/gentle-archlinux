@@ -3,7 +3,8 @@ create_themes() {
         export theme_color=""
 
         while true; do
-                printf "==${C_C}THEMES${N_F}============\n\n"
+
+                print_box "Themes" "${C_C}" 40 
 
                 printf "${C_W}[0] - ${C_W}Catppuccin latte (light)${N_F}\n"
                 printf "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} "
@@ -11,7 +12,7 @@ create_themes() {
                 printf "${C_W}[2] - ${C_R}Red impact (dark)${N_F}\n"
                 printf "${C_W}[3] - ${N_F}Keep default TTY colors\n"
 
-                printf "\n====================\n\n"
+                printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Which theme do you prefer for your TTY? "
                 printf "Each one will be created anyway. -> ${N_F}"
