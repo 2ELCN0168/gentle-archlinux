@@ -58,10 +58,10 @@ print_box() {
 
         local colored_text="${color}${spaces_L}${text}${spaces_R}${reset}"
 
-        local border_top="┌$(printf '─%.0s' $(seq 1 $inner_width))┐"
+        local border_top="╒$(printf '═%.0s' $(seq 1 $inner_width))╕"
         local border_bottom="└$(printf '─%.0s' $(seq 1 $inner_width))┘"
 
         printf "\n%s\n" "${border_top}"
-        printf "│%b│\n" "${colored_text}"
+        printf "╡%b╞\n" "${colored_text}"
         printf "%s\n\n" "${border_bottom}"
 }
