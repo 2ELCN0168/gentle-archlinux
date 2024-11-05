@@ -26,12 +26,12 @@ get_cpu_brand() {
 
         case "${vendor}" in
                 "GenuineIntel")
-                        printf "${C_W}> ${INFO} ${C_C}INTEL CPU ${N_F} "
+                        printf "${C_W}> ${INFO} ${C_C}INTEL CPU${N_F} "
                         printf "detected.\n\n"
                         cpuBrand="INTEL"
                         ;;
                 "AuthenticAMD")
-                        printf "${C_W}> ${INFO} ${C_R}AMD CPU ${N_F} "
+                        printf "${C_W}> ${INFO} ${C_R}AMD CPU${N_F} "
                         printf "detected.\n\n"
                         cpuBrand="AMD"
                         ;;
