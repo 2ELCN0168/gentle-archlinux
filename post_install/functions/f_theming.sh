@@ -10,12 +10,12 @@ create_themes() {
                 printf "${C_W}[1] - ${C_C}Tokyonight storm (dark)${N_F} "
                 printf "[default]\n"
                 printf "${C_W}[2] - ${C_R}Red impact (dark)${N_F}\n"
-                printf "${C_W}[3] - ${C_R}Dracula (dark)${N_F}\n"
-                printf "${C_W}[4] - ${C_R}Mono Amber (dark)${N_F}\n"
-                printf "${C_W}[5] - ${C_R}Mono Green (dark)${N_F}\n"
-                printf "${C_W}[6] - ${C_R}Powershell (medium)${N_F}\n"
-                printf "${C_W}[7] - ${C_R}Ryuuko (medium)${N_F}\n"
-                printf "${C_W}[8] - ${C_R}Batman (medium)${N_F}\n"
+                printf "${C_W}[3] - ${C_P}Dracula (dark)${N_F}\n"
+                printf "${C_W}[4] - ${C_Y}Mono Amber (dark)${N_F}\n"
+                printf "${C_W}[5] - ${C_G}Mono Green (dark)${N_F}\n"
+                printf "${C_W}[6] - ${C_B}Powershell (medium)${N_F}\n"
+                printf "${C_W}[7] - ${C_Y}Ryuuko (medium)${N_F}\n"
+                printf "${C_W}[8] - ${C_Y}Batman (medium)${N_F}\n"
                 printf "${C_W}[9] - ${N_F}Keep default TTY colors\n\n"
 
                 printf "────────────────────────────────────────\n\n"
@@ -102,6 +102,6 @@ create_themes() {
         printf "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}"
         printf "${tty_theme}${N_F}.\n\n"
 
-        cp -r "./files/tty_theme.d" "/etc"
+        cp -r "/post_install/files/tty_theme.d" "/etc"
 }
 
