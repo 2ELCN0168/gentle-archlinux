@@ -9,7 +9,7 @@
 # process.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-11-05
 # 
 ### Dependencies:
 # - systemd-resolved.
@@ -59,6 +59,7 @@ main() {
         ln -sf "/run/systemd/resolve/stub-resolv.conf" "/etc/resolv.conf"
         if [[ -L "/etc/resolv.conf" ]]; then
                 printf "${C_G}The link has been created. ${C_W}Exiting.${N_F}"
+                printf "\n\n"
                 return 0
         else
                 printf "${C_R}The link has not been created. An error occured. "
