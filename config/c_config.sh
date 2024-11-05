@@ -34,17 +34,22 @@ export ERR="${C_R}[!]${N_F}"
 export SUC="${C_G}[*]${N_F}"
 
 print_box() {
+
     local text="${1}"
     local color="${2}"
     local reset="\033[0m"
-    local width="${#text}"
+
+    # NOTE:
+    # 4 is equal to default spaces number if nothing is provided at argument 3
+    local padding="${3:-4}"
+    local width=$(( ${#text} + padding * 2 ))
     
-    local colored_text="${color}${text}${reset}"
+    local colored_text="${color}$(printf ' %.0s' $(seq 1 $padding))${text}$(printf ' %.0s' $(seq 1 $padding))${reset}"
 
     local border_top="┌$(printf '─%.0s' $(seq 1 $((width + 2))))┐"
     local border_bottom="└$(printf '─%.0s' $(seq 1 $((width + 2))))┘"
 
     printf "\n%s\n" "${border_top}"
-    printf "│ %b │\n" "${colored_text}"
+    printf "│%b│\n" "${colored_text}"
     printf "%s\n\n" "${border_bottom}"
 }
