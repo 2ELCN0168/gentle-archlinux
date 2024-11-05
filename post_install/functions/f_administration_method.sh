@@ -14,7 +14,6 @@ admin_method() {
                 printf "\n"
 
                 if [[ "${ans_sudoer}" =~ [yY] ]]; then
-                        printf "\n"
                         break
                 elif [[ "${ans_sudoer}" =~ [nN] ]]; then
                         return
@@ -30,16 +29,16 @@ admin_method() {
                 printf "${C_W}[0] - ${C_Y}Complete with 'adm' groups${C_R} "
                 printf "[Recommended]${N_F}\n"
                 printf "${C_W}[1] - ${C_B}Standard usage of 'sudo' "
-                printf "${N_F}[default]\n"
+                printf "${N_F}[default]\n\n"
                 
                 printf "────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W}Complete method will create a lot of "
-                printf "groups for each type of usage (e.g., disk management "
+                printf "groups for each type of usage ${C_Y}(disk management "
                 printf "packages, services, etc.).${N_F}\n"
 
-                printf "${C_C}:: ${C_W}Standard method will enable 'wheel' "
-                printf "group only.${N_F}\n"
+                printf "${C_C}:: ${C_W}Standard method will enable ${C_C}"
+                printf "'wheel'${C_W} group only.${N_F}\n"
 
                 printf "${C_C}:: ${C_W}Which method of administration do you "
                 printf "want for your system? -> ${N_F}"

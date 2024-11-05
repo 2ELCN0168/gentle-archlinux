@@ -55,7 +55,7 @@ set_time() {
                 printf "${C_W}[4] - ${C_C}South Korea (Seoul)${N_F}\n"
                 printf "${C_W}[5] - ${C_R}Russia (Moscow)${N_F}\n"
                 printf "${C_W}[6] - ${C_R}China (CST - Shanghai)${N_F}\n"
-                printf "${C_W}[7] - ${C_R}North Korea (Pyongyang)${N_F}\n"
+                printf "${C_W}[7] - ${C_R}North Korea (Pyongyang)${N_F}\n\n"
                 
                 printf "────────────────────────────────────────\n\n"
 

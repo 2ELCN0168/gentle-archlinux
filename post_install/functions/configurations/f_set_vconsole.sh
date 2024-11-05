@@ -29,7 +29,7 @@ set_vconsole() {
                 printf "${C_W}[0] - ${C_B}US INTL. - QWERTY with dead keys"
                 printf "${N_F} [default]\n"
                 printf "${C_W}[1] - ${C_B}US - QWERTY${N_F}\n"
-                printf "${C_W}[2] - ${C_C}FR - AZERTY${N_F}\n"
+                printf "${C_W}[2] - ${C_C}FR - AZERTY${N_F}\n\n"
                 
                 printf "────────────────────────────────────────\n\n"
 

@@ -9,11 +9,11 @@ systemd_networkd() {
 
         while true; do
 
-                print_box "Network interfaces" "${C_C}" 40 
+                print_box "Systemd-Networkd" "${C_C}" 40 
 
                 ls "/sys/class/net" | column -t | grep -v "lo"
 
-                printf "────────────────────────────────────────\n\n"
+                printf "\n────────────────────────────────────────\n\n"
 
                 printf "${C_C}:: ${C_W} Which interface do you want to "
                 printf "configure with systemd-networkd? Type the name as you "
