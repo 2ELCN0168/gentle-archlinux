@@ -50,6 +50,7 @@ create_user() {
                 "magical-teapot"
                 "isometric-owl"
                 "weird-canary"
+                "cute-bacteria"
         )
 
         local default_username=$(shuf -n 1 -e "${usernames[@]}")
