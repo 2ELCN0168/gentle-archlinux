@@ -5,7 +5,7 @@
 # This is the ending function with some informations on what to do next.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-06
+# Last updated: 2024-11-05
 # 
 ### Dependencies:
 # - none. 
@@ -13,13 +13,12 @@
 ### Usage:
 #
 # 1. Display the logo;
-# 2. Move the post install scripts to the user directory;
+# 2. Move the post install scripts to the user home directory;
 # 3. Say bye-bye.
 #
 
 ending() {
 
-        local path="/post_install/gentle-archlinux_misc_scripts"
 
         printf "${C_W}> ${SUC} ${C_G}Congratulations. The system has been "
         printf "installed.${N_F}\n\n"
@@ -30,11 +29,12 @@ ending() {
         fi
 
         if [[ "${createUser}" =~ [yY] ]]; then
-                cp -a "${path}" "/home/${username}"
-                chown -R "${username}:" \
+                cp -a "/post_install/gentle-archlinux_misc_scripts" \
+                "/home/${username}"
+                chown -R ${username}: \
                 "/home/${username}/gentle-archlinux_misc_scripts"
         else
-                cp -a "${path}" "/root"
+                cp -a "/post_install/gentle-archlinux_misc_scripts" "/root"
 
         fi
 
