@@ -34,13 +34,13 @@ bootloader_choice() {
         fi
         while true; do
                 printf "┌──────────────────────────────┐\n"
-                printf "│   ${C_C}BOOTLOADER${N_F}     │\n"
+                printf "│         ${C_C}BOOTLOADER${N_F}     │\n"
                 printf "└──────────────────────────────┘\n\n"
                 #printf "==${C_C}BOOTLOADER${N_F}========\n\n"
 
                 printf "${C_W}[0] - ${C_C}rEFInd${N_F} (default)\n"
                 printf "${C_W}[1] - ${C_Y}GRUB2${N_F}\n"
-                printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n"
+                printf "${C_W}[2] - ${C_R}systemd-boot${N_F}\n\n"
 
                 # printf "\n====================\n\n"
                 printf "────────────────────────────────\n\n"
