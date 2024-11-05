@@ -15,57 +15,51 @@ alias public="cd ${HOME}/Public"
 alias ipb='printf "\033[92m"; curl -s ifconfig.me; printf "\033[0m"'
 
 # COLORS
-alias diff='diff --color=auto'
+alias diff='command diff --color=auto'
 alias ll='command ls -lh --color=auto'
 alias ls='command ls --color=auto'
 alias ip='command ip -color=auto'
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias grep='command grep --color=auto'
+alias egrep='command grep -E --color=auto'
+alias fgrep='command fgrep --color=auto'
+
+# THEMES
+alias _themes="__show_themes"
+
+__show_themes() {
+
+        local themes=("/etc/tty_themes.d/"*)
+        printf "There are ${#themes[@]} themes in /etc/tty_themes.d/:\n\n"
+        for i in "${themes[@]}"; do
+                local name=$(basename ${i})
+                printf "\033[96m"
+                printf "%s\n" "${name}"
+                printf "\033[0m"
+        done
+        printf "\n"
+}
+
+alias _tokyo="source /etc/tty_themes.d/tokyonight_storm.sh"
+alias _latte="source /etc/tty_themes.d/catppuccin_latte.sh"
+alias _dracula="source /etc/tty_themes.d/dracula.sh"
+alias _amber="source /etc/tty_themes.d/mono_amber.sh"
+alias _green="source /etc/tty_themes.d/mono_green.sh"
+alias _powershell="source /etc/tty_themes.d/powershell.sh"
+alias _red="source /etc/tty_themes.d/red_impact.sh"
+alias _ryuuko="source /etc/tty_themes.d/ryuuko.sh"
+alias _batman="source /etc/tty_themes.d/batman.sh"
 
 # SAFETY
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+alias rm='command rm -i'
+alias cp='command cp -i'
+alias mv='command mv -i'
 
-# CUSTOM OUTPUTS
-lsblk() {
-        # BRIGHT CYAN
-        printf "\033[96m"
-        command lsblk "${@}"
-        printf "\033[0m"
-        printf "\n"
-}
-
-blkid() {
-        # BRIGHT BLUE
-        printf "\033[94m"
-        command blkid "${@}"
-        printf "\033[0m"
-        printf "\n"
-}
-
-ss() {
+# CUSTOM OUTPUTS - USED IN ALIASES
+_ss() {
         # BRIGHT GREEN
         printf "\033[92m"
         command ss "${@}"
         printf "\033[0m"
-}
-
-uptime() {
-        # BRIGHT RED
-        printf "\033[91m"
-        command uptime "${@}"
-        printf "\033[0m"
-        printf "\n"
-}
-
-ps() {
-        # BRIGHT YELLOW
-        printf "\033[93m"
-        command ps "${@}"
-        printf "\033[0m"
-        printf "\n"
 }
 
 _free() {
@@ -92,6 +86,40 @@ _du() {
         printf "\n"
 }
 
+# CUSTOM OUTPUTS - STANDARD
+lsblk() {
+        # BRIGHT CYAN
+        printf "\033[96m"
+        command lsblk "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
+blkid() {
+        # BRIGHT BLUE
+        printf "\033[94m"
+        command blkid "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
+uptime() {
+        # BRIGHT RED
+        printf "\033[91m"
+        command uptime "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
+ps() {
+        # BRIGHT YELLOW
+        printf "\033[93m"
+        command ps "${@}"
+        printf "\033[0m"
+        printf "\n"
+}
+
+
 ping() {
         # BRIGHT BLUE
         printf "\033[94m"
@@ -109,9 +137,9 @@ traceroute() {
 }
 
 # CONVENIENCE
-alias untar='tar xvf'
-alias sstcp='ss -eant'
-alias ssudp='ss -eanu'
+alias untar='command tar xvf'
+alias sstcp='_ss -eant'
+alias ssudp='_ss -eanu'
 
 # READABILITY
 alias du='_du -h'
