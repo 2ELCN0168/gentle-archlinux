@@ -34,7 +34,7 @@ ask_packages() {
                 printf "${C_W}[2] - ${C_Y}open-vm-tools (VMWare)${N_F}\n"
                 printf "${C_W}[3] - ${C_B}hyperv (Hyper-V but not working "
                 printf "actually)${N_F}\n"
-                printf "${C_W}[4] - ${C_G}None${N_F}\n"
+                printf "${C_W}[4] - ${C_G}None${N_F}\n\n"
                 
                 printf "────────────────────────────────────────\n\n"
 
