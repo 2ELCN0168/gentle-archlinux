@@ -32,3 +32,19 @@ export INFO="${C_C}[>]${N_F}"
 export WARN="${C_Y}[@]${N_F}"
 export ERR="${C_R}[!]${N_F}"
 export SUC="${C_G}[*]${N_F}"
+
+print_box() {
+    local text="${1}"
+    local color="${2}"
+    local reset="\033[0m"
+    local width="${#text}"
+    
+    local colored_text="${color}${text}${reset}"
+
+    local border_top="┌$(printf '─%.0s' $(seq 1 $((width + 2))))┐"
+    local border_bottom="└$(printf '─%.0s' $(seq 1 $((width + 2))))┘"
+
+    printf "\n%s\n" "${border_top}"
+    printf "│ %b │\n" "${colored_text}"
+    printf "%s\n\n" "${border_bottom}"
+}
