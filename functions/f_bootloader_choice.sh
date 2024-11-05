@@ -34,7 +34,7 @@ bootloader_choice() {
         fi
         while true; do
                 printf "┌──────────────────────────────┐\n"
-                printf "│         ${C_C}BOOTLOADER${N_F}     │\n"
+                printf "│         ${C_C}BOOTLOADER${N_F}           │\n"
                 printf "└──────────────────────────────┘\n\n"
                 #printf "==${C_C}BOOTLOADER${N_F}========\n\n"
 
