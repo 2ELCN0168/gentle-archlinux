@@ -87,9 +87,7 @@ main() {
         # INFO:
         # Transfer post_install directory to "/mnt" and launch the second phase
         # script after chrooting.
-        [[ -d "./post_install/config" ]] && mkdir "./post_install/config"
-
-        cp -a ./config/* "./post_install/config"
+        cp -a "./config/" "./post_install/"
         # cp -a "./config/c_config.sh" "post_install/config/c_config.sh"
         # cp -a "./config/c_formatting.sh" "post_install/config/c_formatting.sh"
         cp -a "post_install" "/mnt"
