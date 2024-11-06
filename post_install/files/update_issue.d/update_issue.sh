@@ -88,7 +88,7 @@ print_box() {
         printf "%s\n\n" "${border_bottom}"
 }
 
-welcome_text="Welcome to Archlinux /\\"
+welcome_text="Welcome to Archlinux /\\ "
 print_box "${welcome_text}" "${C}" > "/etc/issue"
 
 generate_line "Hostname (FQDN)" "${HOSTNAME}" "${Y}" "${C}">> "/etc/issue"
