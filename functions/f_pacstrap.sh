@@ -147,7 +147,8 @@ ask_packages() {
                 if [[ "${ans_monitoring_pack}" =~ [yY] ]]; then
                         printf "${C_W}> ${INFO} ${C_Y}Monitoring pack"
                         printf "${N_F} will be installed.\n\n"
-                        additionalPackages+=("btop" "htop" "bmon" "iotop")
+                        additionalPackages+=("btop" "htop" "bmon" "iotop"
+                        "bottom")
                         break
                 elif [[ "${ans_monitoring_pack}" =~ [nN] ]]; then
                         break
