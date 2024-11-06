@@ -80,11 +80,11 @@ print_box() {
 
         local colored_text="${color}${spaces_L}${text}${spaces_R}${reset}"
 
-        local border_top="╒$(printf '═%.0s' $(seq 1 $inner_width))╕"
+        local border_top="┌$(printf '─%.0s' $(seq 1 $inner_width))┐"
         local border_bottom="└$(printf '─%.0s' $(seq 1 $inner_width))┘"
 
         printf "\n%s\n" "${border_top}"
-        printf "╡%b╞\n" "${colored_text}"
+        printf "│%b│\n" "${colored_text}"
         printf "%s\n\n" "${border_bottom}"
 }
 
@@ -155,3 +155,5 @@ print_box "Filesystem(s) usage" "${G}" 1>> "/etc/issue"
 lsblk -o MOUNTPOINTS -n | grep -v '^$' | while read -r mount_point; do
     generate_disk_usage_bar "$mount_point" 1>> "/etc/issue"
 done
+
+echo "" >> "/etc/issue"
