@@ -1,0 +1,6 @@
+[Unit]
+Description=Automatically update /etc/issue
+
+[Service]
+Type=oneshot
+ExecStart=/etc/update_issue.d/update_issue.sh
