@@ -28,8 +28,8 @@ lvm_luks_try() {
                 (( result += 1 ))
         fi
 
-        if lsblk -o NAME,FSTYPE | grep -q '/dev/mapper' &&
-        lsblk -o NAME,FSTYPE | grep -qi 'crypto_LUKS'; then
+        if lsblk -o NAME,TYPE -rn | awk '/crypt/ { print $1 }' \
+        1> "/dev/null" 2>&1; then
                 printf "${C_W}> ${INFO} ${C_P}LUKS partition is detected."
                 printf "${N_F}\n\n"
                 (( result += 2 ))
@@ -128,14 +128,27 @@ luks_deletion() {
         done
 
         if [[ "${ans_close_luks}" =~ [yY] ]]; then
-                if cryptsetup close root 1> "/dev/null" 2>&1; then
-                        printf "${C_W}> ${SUC} ${C_P}LUKS partition "
-                        printf "closed.${N_F}\n\n"
-                else
-                        printf "${C_W}> ${ERR} ${C_P}LUKS partition "
-                        printf "could not be closed.${N_F}\n\n"
-                        exit 1
-                fi
+                # if cryptsetup close root 1> "/dev/null" 2>&1; then
+                #         printf "${C_W}> ${SUC} ${C_P}LUKS partition "
+                #         printf "closed.${N_F}\n\n"
+                # else
+                #         printf "${C_W}> ${ERR} ${C_P}LUKS partition "
+                #         printf "could not be closed.${N_F}\n\n"
+                #         exit 1
+                # fi
+
+                for i in $(lsblk -o NAME,TYPE -rn |
+                awk '/crypt/ { print $1 }'); do
+                        if cryptsetup close "/dev/mapper/${i}" \
+                        1> "/dev/null" 2>&1; then
+                                printf "${C_W}> ${SUC} ${C_P}LUKS partition "
+                                printf "'${i}' closed.${N_F}\n\n"
+                        else
+                                printf "${C_W}> ${ERR} ${C_P}LUKS partition "
+                                printf "'${i}' could not be closed.${N_F}\n\n"
+                                exit 1
+                        fi
+                done
         elif [[ "${ans_close_luks}" =~ [nN] ]]; then 
                 printf "${C_W}> ${WARN} ${C_P}No LUKS partition will "
                 printf "be closed.${N_F}\n\n"
