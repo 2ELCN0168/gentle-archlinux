@@ -6,7 +6,7 @@
 # intended to be used with LVM at the moment.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - btrfs-progs.
@@ -51,24 +51,18 @@ btrfs_mgmt() {
                 read ans_btrfs_subvols
                 : "${ans_btrfs_subvols:=0}"
 
-                case "${ans_btrfs_subvols}" in
-                        [0])
-                                btrfsSubvols=1
-                                printf "${C_W}> ${INFO} ${C_G}You chose to "
-                                printf "make subvolumes. Good choice.${N_F}\n\n"
-                                break
-                                ;;
-                        [1])
-                                btrfsSubvols=0
-                                printf "${C_W}> ${INFO} ${C_Y}No subvolume "
-                                printf "will be created.${N_F}\n\n"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_btrfs_subvols}" =~ [01] ]] && break || invalid_answer
         done
+
+        if [[ "${ans_btrfs_subvols}" -eq 0 ]]; then
+                btrfsSubvols=1
+                printf "${C_W}> ${INFO} ${C_G}You chose to "
+                printf "make subvolumes. Good choice.${N_F}\n\n"
+        elif [[ "${ans_btrfs_subvols}" -eq 1 ]]; then
+                btrfsSubvols=0
+                printf "${C_W}> ${INFO} ${C_Y}No subvolume "
+                printf "will be created.${N_F}\n\n"
+        fi
         
         # INFO:
         # Formatting the root partition before creating subvolumes.
@@ -97,6 +91,7 @@ btrfs_mgmt() {
         # being able to create the subvolumes.
         printf "${C_W}> ${INFO} Mounting ${C_G}${root_part}${N_F} to ${C_P}"
         printf "${C_P}/mnt${N_F}\n"
+
         if mount "${root_part}" "/mnt" 1> "/dev/null" 2>&1; then
                 printf "${C_W}> ${SUC} Mounted ${C_C}${root_part}${N_F} to "
                 printf "${C_P}/mnt${N_F}\n"
@@ -121,7 +116,7 @@ btrfs_mgmt() {
                 fi
         done
 
-        echo ""
+        printf "\n"
         
         # INFO:
         # Unmount /dev/sdX2 to free the mountpoint for @ subvolume
@@ -173,22 +168,18 @@ btrfs_mgmt() {
                 read ans_btrfs_subvols_quotas
                 : "${ans_btrfs_subvols_quotas:=Y}"
 
-                case "${ans_btrfs_subvols_quotas}" in
-                        [yY])
-                                printf "${C_W}> ${INFO} ${C_G}You chose to "
-                                printf "enable quotas.${N_F}\n\n"
-                                break
-                                ;;
-                        [nN])
-                                printf "${C_W}> ${INFO} ${C_Y}There will be no "
-                                printf "quotas on your subvolumes.${N_F}\n\n"
-                                return
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_btrfs_subvols_quotas}" =~ [yYnN] ]] && break ||
+                invalid_answer
         done
+
+        if [[ "${ans_btrfs_subvols_quotas}" =~ [yY] ]]; then
+                        printf "${C_W}> ${INFO} ${C_G}You chose to "
+                        printf "enable quotas.${N_F}\n\n"
+        elif [[ "${ans_btrfs_subvols_quotas}" =~ [yY] ]]; then
+                        printf "${C_W}> ${INFO} ${C_Y}There will be no "
+                        printf "quotas on your subvolumes.${N_F}\n\n"
+                        return
+        fi
 
         for i in "${btrfs_subvols[@]:3:2}"; do
                 local clean_i="${i//@/}"
