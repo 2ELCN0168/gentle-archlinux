@@ -29,11 +29,16 @@ disk_choice() {
 
         if [[ "${filesystem}" != 'BTRFS' ]]; then
 
-                printf "${C_C}:: ${C_W}Do you plan to use LVM? [Y/n] -> ${N_F}"
-                
-                local ans_use_lvm=""
-                read ans_use_lvm
-                : "${ans_use_lvm:=Y}"
+                while true; do
+                        printf "${C_C}:: ${C_W}Do you plan to use LVM? "
+                        printf "[Y/n] -> ${N_F}"
+                        
+                        local ans_use_lvm=""
+                        read ans_use_lvm
+                        : "${ans_use_lvm:=Y}"
+
+                        [[ "${ans_use_lvm}" =~ [yYnN] ]] && break
+                done
 
                 if [[ "${ans_use_lvm}" =~ [yY] ]]; then
                         LVM=1
