@@ -44,7 +44,7 @@ lvm_luks_try() {
         case "${result}" in 
                 1) lvm_deletion ;;
                 2) luks_deletion ;;
-                3) luks_deletion && lvm_deletion ;;
+                3) lvm_deletion && luks_deletion ;;
         esac
 }
 
@@ -117,7 +117,7 @@ luks_deletion() {
 
         while true; do
                 printf "${B_C} [?] - Do you want to close any present LUKS "
-                printf "partition? [Y/n] -> ${N_F}"
+                printf "partition? [Y/n] -> ${N_F} "
 
                 local ans_close_luks=""
                 read ans_close_luks
