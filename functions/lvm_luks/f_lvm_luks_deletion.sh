@@ -28,8 +28,8 @@ lvm_luks_try() {
                 (( result += 1 ))
         fi
 
-        if [[ ! -z $(lsblk -o NAME,TYPE -rn | awk '/crypt/ { print $1 }' \
-        1> "/dev/null" 2>&1) ]]; then
+        if [[ ! -z $(lsblk -o NAME,TYPE -rn |
+        awk '/crypt/ { print $1 }') ]]; then
                 printf "${C_W}> ${INFO} ${C_P}LUKS partition is detected."
                 printf "${N_F}\n\n"
                 (( result += 2 ))
