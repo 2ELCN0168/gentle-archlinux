@@ -80,15 +80,13 @@ disk_choice() {
                                 read ans_block_dev
                                 : "${ans_block_dev:=sda}"
 
-                                [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                                [[ -b "/dev/${ans_block_dev}" ]] && break ||
                                 invalid_answer && continue
-
-                                printf "${C_W}> ${INFO} ${N_F} The disk to use "
-                                printf "is ${C_G}/dev/${ans_block_dev}"
-                                printf "${N_F}\n\n"
-                                disks_array+=("/dev/${ans_block_dev}")
-                                break
                         done
+                        printf "${C_W}> ${INFO} ${N_F} The disk to use "
+                        printf "is ${C_G}/dev/${ans_block_dev}"
+                        printf "${N_F}\n\n"
+                        disks_array+=("/dev/${ans_block_dev}")
                 else
                         invalid_answer
                 fi
@@ -101,18 +99,15 @@ disk_choice() {
                         read ans_block_dev
                         : "${ans_block_dev:=sda}"
 
-                        [[ ! -b "/dev/${ans_block_dev}" ]] && \
+                        [[ -b "/dev/${ans_block_dev}" ]] && break ||
                         invalid_answer && continue
-
-                        printf "${C_W}> ${INFO} ${N_F}The disk to use is "
-                        printf "${C_G}/dev/${ans_block_dev}${N_F}\n\n"
-                        disks_array+=("/dev/${ans_block_dev}")
-                        break
                 done
+                printf "${C_W}> ${INFO} ${N_F}The disk to use is "
+                printf "${C_G}/dev/${ans_block_dev}${N_F}\n\n"
+                disks_array+=("/dev/${ans_block_dev}")
         fi
 
         local disk="${ans_block_dev}"
-
         user_disk="${disks_array[0]}"
 }
 
