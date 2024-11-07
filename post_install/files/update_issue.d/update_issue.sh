@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# NOTE:
 # This script is executed by a systemd service to update dynamically the 
 # /etc/issue file.
 
@@ -100,23 +101,6 @@ print_box() {
         printf "%s\n\n" "${border_bottom}"
 }
 
-welcome_text="Welcome to Archlinux /\\ "
-print_box "${welcome_text}" "${C}" > "/etc/issue"
-
-generate_line "Hostname (FQDN)" "${HOSTNAME}" "${Y}" "${C}" 1>> "/etc/issue"
-generate_line "Kernel" "${KERNEL}" "${Y}" "${G}" 1>> "/etc/issue"
-display_ip_addresses 1>> "/etc/issue"
-generate_line "CPU" "${CPU}" "${Y}" "${R}" 1>> "/etc/issue"
-generate_line "Uptime" "${UPTIME}" "${Y}" "${G}" 1>> "/etc/issue"
-generate_line "Packages (Pacman)" "${PACKAGES}" "${Y}" "${P}" 1>> "/etc/issue"
-generate_line "Machine function" "${MACHINETYPE}" "${Y}" "${G}" 1>> "/etc/issue"
-generate_line "Users logged in" "${USERS}" "${Y}" "${B}" 1>> "/etc/issue"
-generate_line "Unauthorized access state" "${ACCESS}" "${R}" "${R}" \
-1>> "/etc/issue"
-
-echo "" 1>> "/etc/issue"
-
-
 # Calculation of total length to not exceed (defined in LINE_LENGTH)
 BAR_LENGTH=$((LINE_LENGTH - TEXT_LENGTH))
 
@@ -163,6 +147,22 @@ generate_disk_usage_bar() {
         printf "%-${MOUNT_POINT_WIDTH}s usage: [%b%b%b] %3d%%\n" \
         "${mount_point}" "${color}" "${bar}" "${N}" "${disk_usage}"
 }
+
+welcome_text="Welcome to Archlinux"
+print_box "${welcome_text}" "${C}" > "/etc/issue"
+
+generate_line "Hostname (FQDN)" "${HOSTNAME}" "${Y}" "${C}" 1>> "/etc/issue"
+generate_line "Kernel" "${KERNEL}" "${Y}" "${G}" 1>> "/etc/issue"
+display_ip_addresses 1>> "/etc/issue"
+generate_line "CPU" "${CPU}" "${Y}" "${R}" 1>> "/etc/issue"
+generate_line "Uptime" "${UPTIME}" "${Y}" "${G}" 1>> "/etc/issue"
+generate_line "Packages (Pacman)" "${PACKAGES}" "${Y}" "${P}" 1>> "/etc/issue"
+generate_line "Machine function" "${MACHINETYPE}" "${Y}" "${G}" 1>> "/etc/issue"
+generate_line "Users logged in" "${USERS}" "${Y}" "${B}" 1>> "/etc/issue"
+generate_line "Unauthorized access state" "${ACCESS}" "${R}" "${R}" \
+1>> "/etc/issue"
+
+echo "" 1>> "/etc/issue"
 
 print_box "Filesystem(s) usage" "${G}" 1>> "/etc/issue"
 
