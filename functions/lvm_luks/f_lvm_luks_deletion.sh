@@ -28,7 +28,8 @@ lvm_luks_try() {
                 (( result += 1 ))
         fi
 
-        if lsblk -f | grep -qi 'LUKS'; then
+        if lsblk -o NAME,FSTYPE | grep -q '/dev/mapper' &&
+        lsblk -o NAME,FSTYPE | grep -qi 'crypto_LUKS'; then
                 printf "${C_W}> ${INFO} ${C_P}LUKS partition is detected."
                 printf "${N_F}\n\n"
                 (( result += 2 ))
