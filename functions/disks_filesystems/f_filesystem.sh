@@ -5,7 +5,7 @@
 # Ask the user which filesystem they want to use. 
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - none.
@@ -42,12 +42,17 @@ filesystem_choice() {
                 : "${ans_filesystem:=0}"
                 printf "\n"
 
-                [[ "${ans_filesystem}" -eq 0 ]] && filesystem="BTRFS" && break
-                [[ "${ans_filesystem}" -eq 1 ]] && filesystem="XFS" && break
-                [[ "${ans_filesystem}" -eq 2 ]] && filesystem="EXT4" && break
-                invalid_answer
+                if [[ "${ans_filesystem}" =~ ^[0-2]$ ]]; then
+                        case "${ans_filesystem}" in
+                                0) filesystem="BTRFS" ;;
+                                1) filesystem="XFS" ;;
+                                2) filesystem="EXT4" ;;
+                        esac
+                        break
+                else
+                        invalid_answer
+                fi
         done
+
         printf "${C_W}> ${INFO} ${N_F}You chose ${C_W}${filesystem}${N_F}\n"
 }
-
-
