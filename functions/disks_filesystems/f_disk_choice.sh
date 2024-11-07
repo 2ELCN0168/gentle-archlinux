@@ -37,7 +37,8 @@ disk_choice() {
                         read ans_use_lvm
                         : "${ans_use_lvm:=Y}"
 
-                        [[ "${ans_use_lvm}" =~ ^[yYnN]$ ]] && break
+                        [[ "${ans_use_lvm}" =~ ^[yYnN]$ ]] && break ||
+                        invalid_answer
                 done
 
                 if [[ "${ans_use_lvm}" =~ ^[yY]$ ]]; then
@@ -83,7 +84,7 @@ disk_choice() {
                         printf "is ${C_G}/dev/${ans_block_dev}"
                         printf "${N_F}\n\n"
                         disks_array+=("/dev/${ans_block_dev}")
-                else invalid_answer fi
+                fi
         elif [[ "${filesystem}" == 'BTRFS' ]]; then
                 while true; do
                         display_disks
