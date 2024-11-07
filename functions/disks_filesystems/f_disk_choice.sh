@@ -37,25 +37,24 @@ disk_choice() {
                         read ans_use_lvm
                         : "${ans_use_lvm:=Y}"
 
-                        [[ "${ans_use_lvm}" =~ [yYnN] ]] && break
+                        [[ "${ans_use_lvm}" =~ '^[yYnN]$' ]] && break
                 done
 
-                if [[ "${ans_use_lvm}" =~ [yY] ]]; then
+                if [[ "${ans_use_lvm}" =~ '^[yY]$' ]]; then
                         LVM=1
                         local chosen_disks=()
                         while true; do
+
+                                [[ -z $(lsblk -d --output NAME | 
+                                grep -vE "${exclude_pattern}") ]] && break
+
                                 display_disks ${chosen_disks[@]}
-
-                                #if [[ -z $(lsblk -d --output NAME | 
-                                #grep -vE "${exclude_pattern}") ]]; then
-                                #        break
-                                #fi
-
+                                
                                 local ans_block_dev
                                 read ans_block_dev
                                 : "${ans_block_dev:=sda}"
 
-                                [[ "${ans_block_dev}" =~ [qQ] ]] && break
+                                [[ "${ans_block_dev}" =~ '^[qQ]$' ]] && break
 
                                 [[ ! -b "/dev/${ans_block_dev}" ]] && \
                                 invalid_answer && continue
@@ -71,7 +70,7 @@ disk_choice() {
                         done
                         printf "\n${C_W}> ${INFO} The selected disks "
                         printf "are ${C_G}${chosen_disks[@]}${N_F}\n\n"
-                elif [[ "${ans_use_lvm}" =~ [nN] ]]; then
+                elif [[ "${ans_use_lvm}" =~ '^[nN]$' ]]; then
                         LVM=0
                         while true; do
                                 display_disks
