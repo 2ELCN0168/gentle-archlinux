@@ -6,7 +6,7 @@
 # It can be used on several disks at the same time.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-04
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - sgdisk;
@@ -39,11 +39,11 @@ default_formatting() {
         printf "${C_W}> ${INFO} Formatting ${C_C}${root_part}${N_F} to "
         printf "${C_C}${filesystem}${N_F}.\n\n"
 
-        [[ "${filesystem}" == 'XFS' ]] && mkfs.xfs -f -L Archlinux \
-        "${root_part}" 1> "/dev/null" 2>&1
-        
-        [[ "${filesystem}" == 'EXT4' ]] && mkfs.ext4 -L Archlinux \
-        "${root_part}" 1> "/dev/null" 2>&1
+        if [[ "${filesystem}" == "XFS" ]]; then
+                mkfs.xfs -f -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
+        elif [[ "${filesystem}" == "EXT4" ]]; then
+                mkfs.ext4 -L Archlinux "${root_part}" 1> "/dev/null" 2>&1
+        fi
 
         # INFO: 
         # "mount_default()" is defined in "./f_mount_default.sh"
@@ -168,9 +168,10 @@ lvm_mgmt() {
                 for i in "${logical_volumes[@]}"; do
                         local lv_name=$(echo "${i}" | cut -d ';' -f 1)
 
-                        [[ "${filesystem}" == "XFS" ]] && fs="xfs"
-                        [[ "${filesystem}" == "EXT4" ]] && fs="ext4"
-
+                        case "${filesystem}" in
+                                "XFS") fs="xfs" ;;
+                                "EXT4") fs="ext4" ;;
+                        esac
                         
                         mkfs."${fs}" -L Arch_${lv_name} \
                         "/dev/mapper/${vg_name}-${lv_name}" 1> "/dev/null" 2>&1

@@ -5,7 +5,7 @@
 # Ask the user for the kernel to use.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - none.
@@ -46,41 +46,36 @@ ask_kernel() {
                 read ans_kernel
                 : "${ans_kernel:=0}"
 
-                case "${ans_kernel}" in
-                        0)
-                                printf "${C_W}> ${INFO} You chose the " 
-                                printf "standard linux kernel.\n\n"
-                                linux_kernel="linux"
-                                kernel_initramfs="initramfs-linux.img"
-                                break
-                                ;;
-                        1)
-                                printf "${C_W}> ${INFO} You chose the LTS " 
-                                printf "linux kernel. Useful for servers.\n\n"
-                                linux_kernel="linux-lts"
-                                kernel_initramfs="initramfs-linux-lts.img"
-                                break
-                                ;;
-                        2)
-                                printf "${C_W}> ${INFO} You chose the "
-                                printf "hardened linux kernel. I see you're "
-                                printf "a paranoid, don't worry we're three."
-                                printf "\n\n"
-                                linux_kernel="linux-hardened"
-                                kernel_initramfs="initramfs-linux-hardened.img"
-                                break
-                                ;;
-                        3)
-                                printf "${C_W}> ${INFO} You chose the "
-                                printf "zen linux kernel. That's your choice."
-                                printf "\n\n"
-                                linux_kernel="linux-zen"
-                                kernel_initramfs="initramfs-linux-zen.img"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_kernel}" =~ ^[0-3]$ ]] && break || invalid_answer
         done
+
+        case "${ans_kernel}" in
+                0)
+                        printf "${C_W}> ${INFO} You chose the " 
+                        printf "standard linux kernel.\n\n"
+                        linux_kernel="linux"
+                        kernel_initramfs="initramfs-linux.img"
+                        ;;
+                1)
+                        printf "${C_W}> ${INFO} You chose the LTS " 
+                        printf "linux kernel. Useful for servers.\n\n"
+                        linux_kernel="linux-lts"
+                        kernel_initramfs="initramfs-linux-lts.img"
+                        ;;
+                2)
+                        printf "${C_W}> ${INFO} You chose the "
+                        printf "hardened linux kernel. I see you're "
+                        printf "a paranoid, don't worry we're three."
+                        printf "\n\n"
+                        linux_kernel="linux-hardened"
+                        kernel_initramfs="initramfs-linux-hardened.img"
+                        ;;
+                3)
+                        printf "${C_W}> ${INFO} You chose the "
+                        printf "zen linux kernel. That's your choice."
+                        printf "\n\n"
+                        linux_kernel="linux-zen"
+                        kernel_initramfs="initramfs-linux-zen.img"
+                        ;;
+        esac
 }

@@ -31,7 +31,7 @@ net_manager() {
                 read -r ans_net_manager
                 : "${ans_net_manager:=0}"
 
-                [[ "${ans_net_manager}" =~ [012] ]] && break
+                [[ "${ans_net_manager}" =~ ^[012]$ ]] && break
         done
 
         if [[ "${ans_net_manager}" -eq 0 ]]; then

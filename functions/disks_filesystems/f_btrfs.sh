@@ -51,7 +51,8 @@ btrfs_mgmt() {
                 read ans_btrfs_subvols
                 : "${ans_btrfs_subvols:=0}"
 
-                [[ "${ans_btrfs_subvols}" =~ [01] ]] && break || invalid_answer
+                [[ "${ans_btrfs_subvols}" =~ ^[01]$ ]] && break ||
+                invalid_answer
         done
 
         if [[ "${ans_btrfs_subvols}" -eq 0 ]]; then
@@ -168,14 +169,14 @@ btrfs_mgmt() {
                 read ans_btrfs_subvols_quotas
                 : "${ans_btrfs_subvols_quotas:=Y}"
 
-                [[ "${ans_btrfs_subvols_quotas}" =~ [yYnN] ]] && break ||
+                [[ "${ans_btrfs_subvols_quotas}" =~ ^[yYnN]$ ]] && break ||
                 invalid_answer
         done
 
-        if [[ "${ans_btrfs_subvols_quotas}" =~ [yY] ]]; then
+        if [[ "${ans_btrfs_subvols_quotas}" =~ ^[yY]$ ]]; then
                         printf "${C_W}> ${INFO} ${C_G}You chose to "
                         printf "enable quotas.${N_F}\n\n"
-        elif [[ "${ans_btrfs_subvols_quotas}" =~ [yY] ]]; then
+        elif [[ "${ans_btrfs_subvols_quotas}" =~ ^[nN]$ ]]; then
                         printf "${C_W}> ${INFO} ${C_Y}There will be no "
                         printf "quotas on your subvolumes.${N_F}\n\n"
                         return

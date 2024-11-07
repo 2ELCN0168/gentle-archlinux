@@ -6,7 +6,7 @@
 # running in UEFI mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - none.
@@ -49,28 +49,25 @@ bootloader_choice() {
                 read ans_bootloader
                 : "${ans_bootloader:=0}"
 
-                case "${ans_bootloader}" in
-                        0) 
-                                printf "${C_W}> ${INFO} We will "
-                                printf "install ${C_C}rEFInd${N_F}\n\n"
-                                bootloader="REFIND"
-                                break
-                                ;;
-                        1)
-                                printf "${C_W}> ${INFO} We will "
-                                printf "install ${C_Y}GRUB2${N_F}\n\n"
-                                bootloader="GRUB"
-                                break
-                                ;;
-                        2)
-                                printf "${C_W}> ${INFO} We will "
-                                printf "install ${C_R}systemd-boot${N_F}\n\n"
-                                bootloader="SYSTEMDBOOT"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_bootloader}" =~ ^[0-2]$ ]] && break ||
+                invalid_answer
         done
+
+        case "${ans_bootloader}" in
+                0) 
+                        printf "${C_W}> ${INFO} We will "
+                        printf "install ${C_C}rEFInd${N_F}\n\n"
+                        bootloader="REFIND"
+                        ;;
+                1)
+                        printf "${C_W}> ${INFO} We will "
+                        printf "install ${C_Y}GRUB2${N_F}\n\n"
+                        bootloader="GRUB"
+                        ;;
+                2)
+                        printf "${C_W}> ${INFO} We will "
+                        printf "install ${C_R}systemd-boot${N_F}\n\n"
+                        bootloader="SYSTEMDBOOT"
+                        ;;
+        esac
 }

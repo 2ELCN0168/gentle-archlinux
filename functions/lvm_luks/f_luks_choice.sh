@@ -32,14 +32,14 @@ luks_choice() {
                 read ans_luks
                 : "${ans_luks:=N}"
 
-                [[ "${ans_luks}" =~ [yYnN] ]] && break || invalid_answer
+                [[ "${ans_luks}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
 
-        if [[ "${ans_luks}" =~ [yY] ]]; then
+        if [[ "${ans_luks}" =~ ^[yY]$ ]]; then
                 wantEncrypted=1
                 printf "${C_W}> ${INFO} ${C_G}cryptsetup "
                 printf "${N_F} will be installed.\n\n"
-        elif [[ "${ans_luks}" =~ [nN] ]]; then
+        elif [[ "${ans_luks}" =~ ^[nN]$ ]]; then
                 wantEncrypted=0
                 printf "${C_W}> ${INFO} ${C_R}cryptsetup "
                 printf "${N_F} won't be installed.\n\n"

@@ -9,7 +9,7 @@
 # hypervisor.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-07
 #
 ### Dependencies:
 # - pacman (pactrap script) (included); 
@@ -46,49 +46,43 @@ ask_packages() {
                 read ans_guest_agent
                 : "${ans_guest_agent:=0}"
 
-                case "${ans_guest_agent}" in
-                        [0])
-                                guest_agent="QEMU"
-                                printf "${C_W}> ${INFO} ${C_G}qemu-guest-agent" 
-                                printf "${N_F} will be installed.\n\n" 
-                                additionalPackages+=("qemu-guest-agent")
-                                break
-                                ;;
-                        [1])
-                                guest_agent="VIRTUALBOX"
-                                printf "${C_W}> ${INFO} ${C_G}virtualbox-gues" 
-                                printf "t-utils${N_F} will be installed.\n\n"
-                                additionalPackages+=("virtualbox-guest-utils")
-                                break
-                                ;;
-                        [2])
-                                guest_agent="VMWARE"
-                                printf "${C_W}> ${INFO} ${C_G}open-vm-tools"
-                                printf "${N_F} will be installed.\n\n"
-                                additionalPackages+=("open-vm-tools")
-                                break
-                                ;;
-                        [3])
-                                guest_agent="HYPERV"
-                                printf "${C_W}> ${INFO} ${C_G}hyperv${N_F} "
-                                printf "will be installed.\n\n"
-                                additionalPackages+=("hyperv")
-                                break
-                                ;;
-                        [4])
-                                printf "${C_W}> ${INFO} ${C_G}No guest-agent"
-                                printf "${N_F} will be installed.\n\n"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
-                
-                # INFO:
-                # Check post_install/function/f_enable_guest_agents.sh for 
-                # enabling guest agents services.
+                [[ "${ans_guest_agent}" =~ ^[0-4]$ ]] && break || invalid_answer
         done
+
+        case "${ans_guest_agent}" in
+                [0])
+                        guest_agent="QEMU"
+                        printf "${C_W}> ${INFO} ${C_G}qemu-guest-agent" 
+                        printf "${N_F} will be installed.\n\n" 
+                        additionalPackages+=("qemu-guest-agent")
+                        ;;
+                [1])
+                        guest_agent="VIRTUALBOX"
+                        printf "${C_W}> ${INFO} ${C_G}virtualbox-gues" 
+                        printf "t-utils${N_F} will be installed.\n\n"
+                        additionalPackages+=("virtualbox-guest-utils")
+                        ;;
+                [2])
+                        guest_agent="VMWARE"
+                        printf "${C_W}> ${INFO} ${C_G}open-vm-tools"
+                        printf "${N_F} will be installed.\n\n"
+                        additionalPackages+=("open-vm-tools")
+                        ;;
+                [3])
+                        guest_agent="HYPERV"
+                        printf "${C_W}> ${INFO} ${C_G}hyperv${N_F} "
+                        printf "will be installed.\n\n"
+                        additionalPackages+=("hyperv")
+                        ;;
+                [4])
+                        printf "${C_W}> ${INFO} ${C_G}No guest-agent"
+                        printf "${N_F} will be installed.\n\n"
+                        ;;
+        esac
+        
+        # INFO:
+        # Check post_install/function/f_enable_guest_agents.sh for 
+        # enabling guest agents services.
 
         while true; do
                 printf "${C_C}:: ${C_W}Do you want to add networking tools "
@@ -100,18 +94,15 @@ ask_packages() {
                 read ans_net_pack
                 : "${ans_net_pack:=Y}"
 
-                if [[ "${ans_net_pack}" =~ [yY] ]]; then
-                        printf "${C_W}> ${INFO} ${C_C}Networking "
-                        printf "pack${N_F} will be installed.\n\n"
-                        additionalPackages+=("bind-tools" "ldns" "nmon" "nload"
-                        "nethogs" "jnettop" "iptraf-ng" "tcpdump" "nmap")
-                        break
-                elif [[ "${ans_net_pack}" =~ [nN] ]]; then
-                        break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_net_pack}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        if [[ "${ans_net_pack}" =~ ^[yY]$ ]]; then
+                printf "${C_W}> ${INFO} ${C_C}Networking "
+                printf "pack${N_F} will be installed.\n\n"
+                additionalPackages+=("bind-tools" "ldns" "nmon" "nload"
+                "nethogs" "jnettop" "iptraf-ng" "tcpdump" "nmap")
+        fi
 
         while true; do
                 printf "${C_C}:: ${C_W}Do you want to add helping tools "
@@ -122,18 +113,15 @@ ask_packages() {
                 read ans_help_pack
                 : "${ans_help_pack:=Y}"
 
-                if [[ "${ans_help_pack}" =~ [yY] ]]; then
-                        printf "${C_W}> ${INFO} ${C_G}Helping pack${N_F} will "
-                        printf "be installed.\n\n"
-                        additionalPackages+=("texinfo" "tealdeer" "man" 
-                        "man-pages")
-                        break
-                elif [[ "${ans_help_pack}" =~ [nN] ]]; then
-                        break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_help_pack}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        if [[ "${ans_help_pack}" =~ ^[yY]$ ]]; then
+                printf "${C_W}> ${INFO} ${C_G}Helping pack${N_F} will "
+                printf "be installed.\n\n"
+                additionalPackages+=("texinfo" "tealdeer" "man" 
+                "man-pages")
+        fi
 
         while true; do
                 printf "${C_C}:: ${C_W}Do you want to add monitoring tools "
@@ -144,18 +132,15 @@ ask_packages() {
                 read ans_monitoring_pack
                 : "${ans_monitoring_pack:=Y}" 
 
-                if [[ "${ans_monitoring_pack}" =~ [yY] ]]; then
-                        printf "${C_W}> ${INFO} ${C_Y}Monitoring pack"
-                        printf "${N_F} will be installed.\n\n"
-                        additionalPackages+=("btop" "htop" "bmon" "iotop"
-                        "bottom")
-                        break
-                elif [[ "${ans_monitoring_pack}" =~ [nN] ]]; then
-                        break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_help_pack}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        if [[ "${ans_monitoring_pack}" =~ ^[yY]$ ]]; then
+                printf "${C_W}> ${INFO} ${C_Y}Monitoring pack"
+                printf "${N_F} will be installed.\n\n"
+                additionalPackages+=("btop" "htop" "bmon" "iotop"
+                "bottom")
+        fi
 }
 
 pacstrap_install() {
@@ -175,14 +160,12 @@ pacstrap_install() {
                 "zsh-history-substring-search"
         )
 
-        [[ "${filesystem}" == 'BTRFS' ]] && \
-        additionalPackages+=("btrfs-progs")
+        case "${filesystem}" in
+                "BTRFS") additionalPackages+=("btrfs-progs") ;;
+                "XFS") additionalPackages+=("xfsprogs") ;;
+                "EXT4") additionalPackages+=("e2fsprogs") ;;
+        esac
 
-        [[ "${filesystem}" == 'XFS' ]] && \
-        additionalPackages+=("xfsprogs")
-
-        [[ "${filesystem}" == 'EXT4' ]] && \
-        additionalPackages+=("e2fsprogs")
 
         [[ "${disk}" =~ "nvme" ]] && \
         additionalPackages+=("nvme-cli" "libnvme")
@@ -206,31 +189,28 @@ pacstrap_install() {
         additionalPackages+=("grub")
         
 
-        [[ "${cpuBrand}" == 'INTEL' ]] && \
-        additionalPackages+=("intel-ucode")
-
-        [[ "${cpuBrand}" == 'AMD' ]] && \
-        additionalPackages+=("amd-ucode")
-
+        case "${cpuBrand}" in
+                "INTEL") additionalPackages+=("intel-ucode") ;;
+                "AMD") additionalPackages+=("amd-ucode") ;;
+        esac
         
+
         [[ "${net_manager}" == 'networkmanager' ]] && \
         additionalPackages+=("networkmanager")
 
 
-        [[ "${linux_kernel}" == "linux" ]] && \
-        additionalPackages+=("linux" "linux-headers")
+        case "${linux_kernel}" in
+                "linux") 
+                        additionalPackages+=("linux" "linux-headers") ;;
+                "linux-lts") 
+                        additionalPackages+=("linux-lts" "linux-lts-headers") ;;
+                "linux-hardened")
+                        additionalPackages+=("linux-hardened" 
+                        "linux-hardened-headers") ;;
+                "linux-zen")
+                        additionalPackages+=("linux-zen" "linux-zen-headers") ;;
+        esac
 
-        [[ "${linux_kernel}" == "linux-lts" ]] && \
-        additionalPackages+=("linux-lts" "linux-lts-headers")
-
-        [[ "${linux_kernel}" == "linux-hardened" ]] && \
-        additionalPackages+=(
-                "linux-hardened"
-                "linux-hardened-headers"
-        )
-
-        [[ "${linux_kernel}" == "linux-zen" ]] && \
-        additionalPackages+=("linux-zen" "linux-zen-headers")
 
         # INFO:
         # Uncomment #Color and #ParallelDownloads 5 in /etc/pacman.conf
