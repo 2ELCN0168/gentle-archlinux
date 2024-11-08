@@ -7,7 +7,7 @@ ask_newuser() {
                 # INFO:
                 # If the root account is disabled, create a user account
                 # without asking the user.
-                [[ "${root_state}" -eq 0 ]] && break
+                [[ "${root_state}" -eq 0 ]] && break 
 
                 printf "${C_C}:: ${C_W}Would you like to create a user? "
                 printf "[Y/n] -> ${N_F}" 
@@ -19,11 +19,11 @@ ask_newuser() {
                 [[ "${createUser}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
 
-        if [[ "${createUser}" =~ ^[yY]$ ]]; then
-                create_user
-        elif [[ "${createUser}" =~ ^[nN]$ ]]; then
+        if [[ "${createUser}" =~ ^[nN]$ ]]; then
                 printf "${C_W}> ${INFO} No user will be created.\n\n"
+                return
         fi
+        create_user
 }
 
 create_user() {
