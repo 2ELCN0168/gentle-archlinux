@@ -6,7 +6,7 @@
 # No window manager included.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-19
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - pacman;
@@ -44,43 +44,19 @@ desktop_env() {
                 read ans_gui
                 : "${ans_gui:=7}"
 
-                case "${ans_gui}" in
-                        [0])
-                                desktop_env="gnome"
-                                break
-                                ;;
-                        [1])
-                                desktop_env="plasma"
-                                break
-                                ;;
-                        [2])
-                                desktop_env="mate"
-                                break
-                                ;;
-                        [3])
-                                desktop_env="cinnamon"
-                                break
-                                ;;
-                        [4])
-                                desktop_env="lxde"
-                                break
-                                ;;
-                        [5])
-                                desktop_env="mate"
-                                break
-                                ;;
-                        [6])
-                                desktop_env="xfce4"
-                                break
-                                ;;
-                        [7])
-                                return
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_gui}" =~ ^[0-7]$ ]] && break || invalid_answer
         done
+
+        case "${ans_gui}" in
+                0) desktop_env="gnome" ;;
+                1) desktop_env="plasma" ;;
+                2) desktop_env="mate" ;;
+                3) desktop_env="cinnamon" ;;
+                4) desktop_env="lxde" ;;
+                5) desktop_env="mate" ;;
+                6) desktop_env="xfce4" ;;
+                7) return ;;
+        esac
 
         printf "${C_W}> ${INFO} Installing ${C_G}${desktop_env}${N_F}.\n"
         sleep 2
@@ -96,9 +72,8 @@ desktop_env() {
 
         sleep 2
 
-        if [[ "${desktop_env}" != "gnome" ]]; then
-                install_sddm
-        else
+        [[ "${desktop_env}" != "gnome" ]] && install_sddm
+
                 printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
                 printf "${C_W} gdm.service .${N_F}\n"
 

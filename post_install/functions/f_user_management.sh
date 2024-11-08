@@ -16,18 +16,14 @@ ask_newuser() {
                 : "${createUser:=Y}"
                 printf "\n"
 
-                if [[ "${createUser}" =~ [yY] ]]; then
-                        break
-                elif [[ "${createUser}" =~ [nN] ]]; then
-                        printf "${C_W}> ${INFO} ${N_F}No user will be created."
-                        printf "\n\n"
-                        return
-                else
-                        invalid_answer
-                fi
+                [[ "${createUser}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
 
-        create_user
+        if [[ "${createUser}" =~ ^[yY]$ ]]; then
+                create_user
+        elif [[ "${createUser}" =~ ^[nN]$ ]]; then
+                printf "${C_W}> ${INFO} No user will be created.\n\n"
+        fi
 }
 
 create_user() {

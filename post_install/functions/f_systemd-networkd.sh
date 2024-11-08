@@ -43,33 +43,30 @@ systemd_networkd() {
                 read ans_dhcp
                 : "${ans_dhcp:=N}"
 
-                if [[ "${ans_dhcp}" =~ [yY] ]]; then
-                        printf "${C_W}> ${INFO} The interface to configure is "
-                        printf "${C_G}${network_interface}${N_F}\n\n"
-
-                        printf "${C_C}:: ${C_W}What will be your IP address "
-                        printf "(IP/CIDR)? WARNING WHEN TYPING "
-                        printf "(e.g., 192.168.1.231/24) -> ${N_F}"
-                        
-                        read address
-                        printf "\n\n"
-
-                        printf "${C_C}:: ${C_W}What will be the gateway IP? "
-                        printf "WARNING WHEN TYPING (e.g., 192.168.1.1) "
-                        printf "-> ${N_F}"
-
-                        read gateway
-                        printf "\n"
-
-                        break
-                elif [[ "${ans_dhcp}" =~ [nN] ]]; then
-                       printf "${C_W}> ${INFO} DHCP will be ${C_G}enabled"
-                       printf "${N_F}.\n\n"
-                       break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_dhcp}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+        
+        if [[ "${ans_dhcp}" =~ ^[yY]$ ]]; then
+                printf "${C_W}> ${INFO} The interface to configure is "
+                printf "${C_G}${network_interface}${N_F}\n\n"
+
+                printf "${C_C}:: ${C_W}What will be your IP address "
+                printf "(IP/CIDR)? WARNING WHEN TYPING "
+                printf "(e.g., 192.168.1.231/24) -> ${N_F}"
+                
+                read address
+                printf "\n\n"
+
+                printf "${C_C}:: ${C_W}What will be the gateway IP? "
+                printf "WARNING WHEN TYPING (e.g., 192.168.1.1) "
+                printf "-> ${N_F}"
+
+                read gateway
+                printf "\n"
+        elif [[ "${ans_dhcp}" =~ ^[nN]$ ]]; then
+               printf "${C_W}> ${INFO} DHCP will be ${C_G}enabled"
+               printf "${N_F}.\n\n"
+        fi
         
         local if_path="/etc/systemd/network/05-${network_interface}.network"
 
@@ -78,7 +75,7 @@ systemd_networkd() {
 
         printf "[Network]\n" 1>> "${if_path}"
 
-        if [[ "${ans_dhcp}" == [nN] ]]; then
+        if [[ "${ans_dhcp}" =~ ^[nN]$ ]]; then
                 printf "DHCP=yes\n" 1>> "${if_path}"
                 printf "Domains=${domain}\n" 1>> "${if_path}"
         else

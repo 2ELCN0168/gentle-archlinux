@@ -12,29 +12,26 @@ systemd_resolved() {
                 : "${ans_set_dns:=N}"
                 printf "\n"
 
-                if [[ "${ans_set_dns}" =~ [yY] ]]; then
-                        ask_dns=1
-                        break
-                elif [[ "${ans_set_dns}" =~ [nN] ]]; then
-                        printf "${C_W}> ${INFO} ${N_F}Changing DNS to ${C_Y}"
-                        printf "1.1.1.1${N_F} and ${C_Y}9.9.9.9${N_F}.\n"
-
-                        printf "\nDNS=1.1.1.1#cloudflare-dns.com" \
-                        1>> "/etc/systemd/resolved.conf"
-                        printf "\nFallbackDNS=9.9.9.9#dns.quad9.net" \
-                        1>> "/etc/systemd/resolved.conf"
-
-                        printf "${C_W}> ${INFO} ${N_F}Enabling ${C_P}DNSoverTLS"
-                        printf "${N_F}.\n\n"
-
-                        printf "\nDNSOverTLS=yes" \
-                        1>> "/etc/systemd/resolved.conf"
-
-                        break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_set_dns}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        if [[ "${ans_set_dns}" =~ ^[yY]$ ]]; then
+                ask_dns=1
+        elif [[ "${ans_set_dns}" =~ ^[nN]$ ]]; then
+                printf "${C_W}> ${INFO} ${N_F}Changing DNS to ${C_Y}"
+                printf "1.1.1.1${N_F} and ${C_Y}9.9.9.9${N_F}.\n"
+
+                printf "\nDNS=1.1.1.1#cloudflare-dns.com" \
+                1>> "/etc/systemd/resolved.conf"
+                printf "\nFallbackDNS=9.9.9.9#dns.quad9.net" \
+                1>> "/etc/systemd/resolved.conf"
+
+                printf "${C_W}> ${INFO} ${N_F}Enabling ${C_P}DNSoverTLS"
+                printf "${N_F}.\n\n"
+
+                printf "\nDNSOverTLS=yes" 1>> "/etc/systemd/resolved.conf"
+
+        fi
 
         if [[ "${ask_dns}" -eq 1 ]]; then
                 printf "${C_C}:: ${C_W}What will be the primary DNS? "
@@ -68,20 +65,19 @@ systemd_resolved() {
                         read ans_dns_tls
                         : "${ans_dns_tls:=Y}"
 
-                        if [[ "${ans_dns_tls}" =~ [yY] ]]; then
-                                printf "\nDNSOverTLS=yes" \
-                                1>> "/etc/systemd/resolved.conf"
-                                printf "${C_W}> ${INFO} DNSoverTLS "
-                                printf "${C_G}enabled${N_F}.\n"
-                                break
-                        elif [[ "${ans_dns_tls}" =~ [nN] ]]; then
-                                printf "${C_W}> ${INFO} DNSoverTLS ${C_Y}won't "
-                                printf "be enabled${N_F}.\n"
-                                break
-                        else
-                                invalid_answer
-                        fi
+                        [[ "${ans_dns_tls}" =~ ^[yYnN]$ ]] && break ||
+                        invalid_answer
                 done
+
+                if [[ "${ans_dns_tls}" =~ ^[yY]$ ]]; then
+                        printf "\nDNSOverTLS=yes" \
+                        1>> "/etc/systemd/resolved.conf"
+                        printf "${C_W}> ${INFO} DNSoverTLS "
+                        printf "${C_G}enabled${N_F}.\n"
+                elif [[ "${ans_dns_tls}" =~ ^[nN]$ ]]; then
+                        printf "${C_W}> ${INFO} DNSoverTLS ${C_Y}won't "
+                        printf "be enabled${N_F}.\n"
+                fi
         fi
 
         printf "\n"

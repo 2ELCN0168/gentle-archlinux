@@ -5,7 +5,7 @@
 # Install different bootloaders with rEFInd as fallback if UEFI mode.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-20
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - rEFInd (optionnal);
@@ -19,9 +19,11 @@
 
 install_bootloader() {
 
-        [[ "${bootloader}" == "REFIND" ]] && install_refind
-        [[ "${bootloader}" == "GRUB" ]] && install_grub
-        [[ "${bootloader}" == "SYSTEMDBOOT" ]] && install_systemdboot
+        case "${bootloader}" in
+                "REFIND") install_refind ;;
+                "GRUB") install_grub ;;
+                "SYSTEMDBOOT") install_systemdboot ;;
+        esac
 }
 
 declare_bootloader_vars() {
@@ -46,27 +48,28 @@ refind_as_fallback() {
                 : "${ans_install_refind:=Y}"
                 printf "\n"
 
-                if [[ "${ans_install_refind}" =~ [yY] ]]; then
-                        bootloader="REFIND"
-                        install_refind
-                        break
-                elif [[ "${ans_install_refind}" =~ [nN] ]]; then
-                        printf "${C_W}> ${WARN} Fine, I guess you know "
-                        printf "what you're doing.\n\n"
-                        break
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_install_refind}" =~ ^[yYnN]$ ]] && break ||
+                invalid_answer
         done
+
+        if [[ "${ans_install_refind}" =~ ^[yY]$ ]]; then
+                bootloader="REFIND"
+                install_refind
+        elif [[ "${ans_install_refind}" =~ ^[nN]$ ]]; then
+                printf "${C_W}> ${WARN} Fine, I guess you know "
+                printf "what you're doing.\n\n"
+        fi
 }
 
 install_refind() {
 
         declare_bootloader_vars
-        
-        [[ "${cpuBrand}" == "INTEL" ]] && isMicrocode=" initrd=intel-ucode.img"
-        [[ "${cpuBrand}" == "AMD" ]] && isMicrocode=" initrd=amd-ucode.img"
 
+        case "${cpuBrand}" in
+                "INTEL") isMicrocode=" initrd=intel-ucode.img" ;;
+                "AMD") isMicrocode=" initrd=amd-ucode.img" ;;
+        esac
+        
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
                 isEncrypt="rd.luks.name="
@@ -75,7 +78,6 @@ install_refind() {
                 elif [[ "${LVM}" -eq 1 ]]; then
                         isEncryptEnding="=root root=/dev/mapper/${vg_name}-root"
                 fi
-
         elif [[ "${wantEncrypted}" -eq 0 ]]; then
                 rootLine="root=UUID="
         fi
@@ -112,7 +114,6 @@ install_refind() {
                 "${rootLine}" "${isEncrypt}" "${uuid}" "${isEncryptEnding}" \
                 "${kernel_initramfs}" "${isBTRFS}" "${isMicrocode}"
                 )
-
 
                 printf "${boot_string}" > "/boot/refind_linux.conf"
         else
@@ -164,8 +165,11 @@ install_grub() {
         # Make a backup of /etc/default/grub
         cp -a "/etc/default/grub" "/etc/default/grub.bak"
 
-        [[ "${cpuBrand}" == "INTEL" ]] && isMicrocode=" initrd=intel-ucode.img"
-        [[ "${cpuBrand}" == "AMD" ]] && isMicrocode=" initrd=amd-ucode.img"
+        case "${cpuBrand}" in
+                "INTEL") isMicrocode=" initrd=intel-ucode.img" ;;
+                "AMD") isMicrocode=" initrd=amd-ucode.img" ;;
+        esac
+
 
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
@@ -192,12 +196,9 @@ install_grub() {
         # ${isEncryptEnding} rw initrd=${kernel_initramfs}\
         # ${isBTRFS}${isMicrocode}\""
 
-        grubKernelParameters=$(
-        printf "\"%s%s%s%s rw initrd=%s%s%s\"" \
+        grubKernelParameters=$(printf "\"%s%s%s%s rw initrd=%s%s%s\"" \
         "${rootLine}" "${isEncrypt}" "${uuid}" "${isEncryptEnding}" \
-        "${kernel_initramfs}" "${isBTRFS}" "${isMicrocode}"
-        )
-        
+        "${kernel_initramfs}" "${isBTRFS}" "${isMicrocode}")
 
         printf "${C_W}> ${INFO} Inserting ${C_P}${grubKernelParameters}${N_F} "
         printf "to /etc/default/grub.\n"
@@ -220,8 +221,10 @@ install_systemdboot() {
         declare_bootloader_vars
         # x kernel_name="" -> /functions/f_kernel_choice.sh 
 
-        [[ "${cpuBrand}" == "INTEL" ]] && isMicrocode="initrd=intel-ucode.img"
-        [[ "${cpuBrand}" == "AMD" ]] && isMicrocode="initrd=amd-ucode.img"
+        case "${cpuBrand}" in
+                "INTEL") isMicrocode="initrd=intel-ucode.img" ;;
+                "AMD") isMicrocode="initrd=amd-ucode.img" ;;
+        esac
 
         if [[ "${wantEncrypted}" -eq 1 ]]; then
                 rootLine=""
@@ -259,10 +262,9 @@ install_systemdboot() {
                 printf "initrd  /${isMicrocode}" \
                 1>> "/boot/loader/entries/arch.conf"
                 
-                local bootctl_options=$(
-                printf "options %s%s%s%s rw %s" "${rootLine}" "${isEncrypt}" \
-                "${uuid}" "${isEncryptEnding}" "${isBTRFS}"
-                )
+                local bootctl_options=$(printf "options %s%s%s%s rw %s" \
+                "${rootLine}" "${isEncrypt}" "${uuid}" "${isEncryptEnding}" \
+                "${isBTRFS}")
 
                 printf "\n${bootctl_options}" \
                 1>> "/boot/loader/entries/arch.conf"

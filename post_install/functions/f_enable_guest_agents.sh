@@ -5,7 +5,7 @@
 # If the user installed guest agent, enable it.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-06
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - the guest agents listed in the case.
@@ -19,9 +19,7 @@
 
 enable_guest_agents() {
 
-        if [[ -z "${guest_agent}" ]]; then
-                return 0
-        fi
+        [[ -z "${guest_agent}" ]] && return
 
         case "${guest_agent}" in
                 "QEMU")

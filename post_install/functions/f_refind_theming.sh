@@ -6,7 +6,7 @@ refind_theming() {
 
         local dest_path="/boot/EFI/refind/themes/catppuccin"
         
-        if [[ "${theme_brightness}" =~ [01] ]]; then
+        if [[ "${theme_brightness}" =~ ^[01]$ ]]; then
                 mkdir -p "/boot/EFI/refind/themes"
                 git clone "https://github.com/catppuccin/refind" \
                 "${dest_path}" 1> "/dev/null" 2>&1

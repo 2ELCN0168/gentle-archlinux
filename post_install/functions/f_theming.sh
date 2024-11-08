@@ -29,70 +29,59 @@ create_themes() {
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
 
-                case "${ans_tty_theme}" in
-                        [0])
-                                tty_theme="Catppuccin latte"
-                                path="/etc/tty_themes.d/catppuccin_latte.sh"
-                                theme_brightness=1
-                                break
-                                ;;
-                        [1])
-                                tty_theme="Tokyonight Storm"
-                                path="/etc/tty_themes.d/tokyonight_storm.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [2])
-                                tty_theme="Red impact"
-                                path="/etc/tty_themes.d/red_impact.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [3])
-                                tty_theme="Dracula"
-                                path="/etc/tty_themes.d/dracula.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [4])
-                                tty_theme="Mono Amber"
-                                path="/etc/tty_themes.d/mono_amber.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [5])
-                                tty_theme="Mono Green"
-                                path="/etc/tty_themes.d/mono_green.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [6])
-                                tty_theme="Powershell"
-                                path="/etc/tty_themes.d/powershell.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [7])
-                                tty_theme="Ryuuko"
-                                path="/etc/tty_themes.d/ryuuko.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [8])
-                                tty_theme="Batman"
-                                path="/etc/tty_themes.d/batman.sh"
-                                theme_brightness=0
-                                break
-                                ;;
-                        [9])
-                                tty_theme="Default"
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_tty_theme}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        case "${ans_tty_theme}" in
+                [0])
+                        tty_theme="Catppuccin latte"
+                        path="/etc/tty_themes.d/catppuccin_latte.sh"
+                        theme_brightness=1
+                        ;;
+                [1])
+                        tty_theme="Tokyonight Storm"
+                        path="/etc/tty_themes.d/tokyonight_storm.sh"
+                        theme_brightness=0
+                        ;;
+                [2])
+                        tty_theme="Red impact"
+                        path="/etc/tty_themes.d/red_impact.sh"
+                        theme_brightness=0
+                        ;;
+                [3])
+                        tty_theme="Dracula"
+                        path="/etc/tty_themes.d/dracula.sh"
+                        theme_brightness=0
+                        ;;
+                [4])
+                        tty_theme="Mono Amber"
+                        path="/etc/tty_themes.d/mono_amber.sh"
+                        theme_brightness=0
+                        ;;
+                [5])
+                        tty_theme="Mono Green"
+                        path="/etc/tty_themes.d/mono_green.sh"
+                        theme_brightness=0
+                        ;;
+                [6])
+                        tty_theme="Powershell"
+                        path="/etc/tty_themes.d/powershell.sh"
+                        theme_brightness=0
+                        ;;
+                [7])
+                        tty_theme="Ryuuko"
+                        path="/etc/tty_themes.d/ryuuko.sh"
+                        theme_brightness=0
+                        ;;
+                [8])
+                        tty_theme="Batman"
+                        path="/etc/tty_themes.d/batman.sh"
+                        theme_brightness=0
+                        ;;
+                [9])
+                        tty_theme="Default"
+                        ;;
+        esac
         
         if [[ "${tty_theme}" != "Default" ]]; then
                 echo "source ${path}" 1>> "/etc/skel/.bashrc" \

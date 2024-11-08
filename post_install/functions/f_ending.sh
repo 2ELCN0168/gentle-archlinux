@@ -5,7 +5,7 @@
 # This is the ending function with some informations on what to do next.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - none. 
@@ -28,7 +28,7 @@ ending() {
                 fastfetch
         fi
 
-        if [[ "${createUser}" =~ [yY] ]]; then
+        if [[ "${createUser}" =~ ^[yY]$ ]]; then
                 cp -a "/post_install/gentle-archlinux_misc_scripts" \
                 "/home/${username}"
                 chown -R ${username}: \
