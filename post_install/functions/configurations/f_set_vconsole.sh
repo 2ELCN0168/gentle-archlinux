@@ -5,7 +5,7 @@
 # Set the vconsole.conf file in /etc.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - none.
@@ -40,12 +40,14 @@ set_vconsole() {
                 : "${ans_keymap:=0}"
                 printf "\n"
 
-                [[ "${ans_keymap}" == "0" ]] && keymap="us-acentos" && break
-                [[ "${ans_keymap}" == "1" ]] && keymap="us" && break
-                [[ "${ans_keymap}" == "2" ]] && keymap="fr" && break
-
-                invalid_answer
+                [[ "${ans_keymap}" =~ ^[0-2]$ ]] && break || invalid_answer
         done
+
+        case "${ans_keymap}" in
+                0) keymap="us-acentos" ;;
+                1) keymap="us" ;;
+                2) keymap="fr" ;;
+        esac
 
         printf "${C_W}> ${INFO} ${N_F}You chose ${C_P}${keymap}${N_F}.\n\n"
 

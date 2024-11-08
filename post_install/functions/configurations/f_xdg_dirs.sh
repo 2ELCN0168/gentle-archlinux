@@ -5,7 +5,7 @@
 # Create XDG user directories (Pictures, Documents, Videos, etc.)
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - xdg-user-dirs. 
@@ -34,14 +34,10 @@ create_xdg_dirs() {
                 : "${ans_xdg_dirs:=Y}"
                 printf "\n"
 
-                if [[ "${ans_xdg_dirs}" =~ [yY] ]]; then
-                        break
-                elif [[ "${ans_xdg_dirs}" =~ [nN] ]]; then
-                        return
-                else
-                        invalid_answer
-                fi
+                [[ "${ans_xdg_dirs}" =~ ^[yYnN]$ ]] && break || invalid_answer
         done
+
+        [[ "${ans_xdg_dirs}" =~ ^[nN]$ ]] && return
 
         # INFO:
         # Execute as the user created before

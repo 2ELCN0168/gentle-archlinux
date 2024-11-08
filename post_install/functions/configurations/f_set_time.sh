@@ -5,7 +5,7 @@
 # Ask the user their country and then applying local time.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - none.
@@ -66,68 +66,59 @@ set_time() {
                 : "${ans_localtime:=0}"
                 printf "\n"
 
-                case "${ans_localtime}" in
-                        [0])
-                                country="France"
-                                locales="fr"
-                                ln -sf "/usr/share/zoneinfo/Europe/Paris" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [1])
-                                country="England"
-                                locales="gb"
-                                ln -sf "/usr/share/zoneinfo/Europe/London" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [2])
-                                country="the US"
-                                ln -sf "/usr/share/zoneinfo/America/New_York" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [3])
-                                country="Japan"
-                                locales="ja"
-                                ln -sf "/usr/share/zoneinfo/Japan" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [4])
-                                country="South Korea"
-                                locales="ko"
-                                ln -sf "/usr/share/zoneinfo/Asia/Seoul" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [5])
-                                country="Russia"
-                                locales="ru"
-                                ln -sf "/usr/share/zoneinfo/Europe/Moscow" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [6])
-                                country="China"
-                                locales="zh"
-                                ln -sf "/usr/share/zoneinfo/Asia/Shanghai" \
-                                "/etc/localtime"
-                                break
-                                ;;
-                        [7])
-                                country="North Korea >:) "
-                                locales="ko"
-                                ln -sf "/usr/share/zoneinfo/Asia/Pyongyang" \
-                                "/etc/localtime"
-                                nKorea=1
-                                break
-                                ;;
-                        *)
-                                invalid_answer
-                                ;;
-                esac
+                [[ "${ans_localtime}" =~ ^[0-7]$ ]] && break || invalid_answer
         done
+
+        case "${ans_localtime}" in
+                [0])
+                        country="France"
+                        locales="fr"
+                        ln -sf "/usr/share/zoneinfo/Europe/Paris" \
+                        "/etc/localtime"
+                        ;;
+                [1])
+                        country="England"
+                        locales="gb"
+                        ln -sf "/usr/share/zoneinfo/Europe/London" \
+                        "/etc/localtime"
+                        ;;
+                [2])
+                        country="the US"
+                        ln -sf "/usr/share/zoneinfo/America/New_York" \
+                        "/etc/localtime"
+                        ;;
+                [3])
+                        country="Japan"
+                        locales="ja"
+                        ln -sf "/usr/share/zoneinfo/Japan" \
+                        "/etc/localtime"
+                        ;;
+                [4])
+                        country="South Korea"
+                        locales="ko"
+                        ln -sf "/usr/share/zoneinfo/Asia/Seoul" \
+                        "/etc/localtime"
+                        ;;
+                [5])
+                        country="Russia"
+                        locales="ru"
+                        ln -sf "/usr/share/zoneinfo/Europe/Moscow" \
+                        "/etc/localtime"
+                        ;;
+                [6])
+                        country="China"
+                        locales="zh"
+                        ln -sf "/usr/share/zoneinfo/Asia/Shanghai" \
+                        "/etc/localtime"
+                        ;;
+                [7])
+                        country="North Korea >:) "
+                        locales="ko"
+                        ln -sf "/usr/share/zoneinfo/Asia/Pyongyang" \
+                        "/etc/localtime"
+                        nKorea=1
+                        ;;
+        esac
 
         printf "${C_W}> ${INFO} You live in ${C_Y}${country}${N_F}.\n\n"
 }
