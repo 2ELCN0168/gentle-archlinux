@@ -29,7 +29,7 @@ create_themes() {
                 read ans_tty_theme
                 : "${ans_tty_theme:=1}"
 
-                [[ "${ans_tty_theme}" =~ ^[yYnN]$ ]] && break || invalid_answer
+                [[ "${ans_tty_theme}" =~ ^[0-9]$ ]] && break || invalid_answer
         done
 
         case "${ans_tty_theme}" in
