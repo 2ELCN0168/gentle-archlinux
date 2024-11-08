@@ -9,7 +9,7 @@
 # process.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - systemd-resolved.
@@ -49,24 +49,22 @@ main() {
                 : "${ans_enable_dns:=Y}"
                 printf "\n"
 
-                [[ "${ans_enable_dns}" =~ [yY] ]] && break 
-                [[ "${ans_enable_dns}" =~ [nN] ]] && \
-                printf "${C_Y}Nothing has been done.${N_F}\n\n" && exit 0
-
+                [[ "${ans_enable_dns}" =~ ^[yYnN]$ ]] && break ||
                 printf "${C_Y}Not a valid answer.${N_F}\n\n"
         done
 
-        ln -sf "/run/systemd/resolve/stub-resolv.conf" "/etc/resolv.conf"
-        if [[ -L "/etc/resolv.conf" ]]; then
+        [[ "${ans_enable_dns}" =~ [nN] ]] && \
+        printf "${C_Y}Nothing has been done.${N_F}\n\n" && exit 0
+
+        if ln -sf "/run/systemd/resolve/stub-resolv.conf" \
+        "/etc/resolv.conf"; then
                 printf "${C_G}The link has been created. ${C_W}Exiting.${N_F}"
                 printf "\n\n"
-                return 0
         else
                 printf "${C_R}The link has not been created. An error occured. "
                 printf "You may want to execute the command \"ln -sf "
                 printf "/run/systemd/resolve/stub-resolv.conf "
                 printf "/etc/resolv.conf\" manually. ${C_W}Exiting.${N_F}\n\n"
-                return 1
         fi
 }
 

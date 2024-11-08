@@ -7,7 +7,7 @@
 # Install paru (AUR helper) if the user is not root.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - git.
@@ -46,12 +46,13 @@ main() {
                 : "${ans_paru:=Y}"
                 printf "\n"
 
-                [[ "${ans_paru}" =~ [yY] ]] && break
-                [[ "${ans_paru}" =~ [nN] ]] && \
-                printf "${C_Y}Nothing has been done${N_F}\n\n" && exit 0
-
+                [[ "${ans_paru}" =~ ^[yYnN]$ ]] && break ||
                 printf "${C_Y}Not a valid answer.${N_F}\n\n"
         done
+
+
+        [[ "${ans_paru}" =~ [nN] ]] && \
+        printf "${C_Y}Nothing has been done${N_F}\n\n" && exit 0
 
         cd "${HOME}"
         git clone "https://aur.archlinux.org/paru.git"
@@ -59,10 +60,8 @@ main() {
         makepkg -si
         if paru --version; then
                 printf "${C_G}Paru has been installed.${N_F}\n"
-                return 0
         else
                 printf "${C_R}An error occured during the installation.${N_F}\n"
-                return 1
         fi
 }
 

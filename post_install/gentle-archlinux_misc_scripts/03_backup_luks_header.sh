@@ -7,7 +7,7 @@
 # If the user is root, backup the LUKS header (and if LUKS is used obviously).
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-10-05
+# Last updated: 2024-11-08
 # 
 ### Dependencies:
 # - cryptsetup.
@@ -42,8 +42,8 @@ main() {
         fi
 
 
-        if ! lsblk -f | grep crypto | awk '{ print $1 }' |
-        tr -d [└][─] 1> "/dev/null" 2>&1; then
+        if ! lsblk -rno NAME,FSTYPE | awk '/crypto/ { print $1 }' \
+        1> "/dev/null" 2>&1; then
                 printf "${C_W}:: ${C_R}It seems that you have no disk using "
                 printf "LUKS. Exiting.\n"
                 exit 1
@@ -61,23 +61,22 @@ main() {
                 : "${ans_luks_header:=Y}"
                 printf "\n"
 
-                [[ "${ans_luks_header}" =~ [yY] ]] && break
-                [[ "${ans_luks_header}" =~ [nN] ]] && \
-                printf "${C_Y}Nothing has been done.${N_F}\n\n" && exit 0
-
+                [[ "${ans_luks_header}" =~ ^[yYnN]$ ]] && break ||
                 printf "${C_Y}Not a valid answer.${N_F}\n\n"
         done
 
-        if cryptsetup luksHeaderBackup "/dev/$(lsblk -f | grep crypto |
-        awk '{ print $1 }' | tr -d [└][─])" --header-backup-file \
+        [[ "${ans_luks_header}" =~ [nN] ]] && \
+        printf "${C_Y}Nothing has been done.${N_F}\n\n" && exit 0
+
+
+        if cryptsetup luksHeaderBackup "/dev/$(lsblk -rno NAME,FSTYPE | 
+        awk '/crypto/ { print $1 }')" --header-backup-file \
         "${HOME}/$(date +%Y%m%d)_luks_header_file.img"; then
                 printf "File saved at ${C_G}${HOME}/"
                 printf "$(date +%Y%m%d)_luks_header_file.img${N_F}\n"
-                return 0
         else
                 printf "${C_R}Error during backup. Nothing has been done."
                 printf "${N_F}\n"
-                return 1
         fi
 }
 
