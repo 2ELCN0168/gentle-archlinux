@@ -72,18 +72,17 @@ desktop_env() {
 
         sleep 2
 
-        [[ "${desktop_env}" != "gnome" ]] && install_sddm
+        [[ "${desktop_env}" != "gnome" ]] && install_sddm && return
 
-                printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
-                printf "${C_W} gdm.service .${N_F}\n"
+        printf "${C_W}> ${INFO} ${C_W}systemctl ${C_G}enable"
+        printf "${C_W} gdm.service .${N_F}\n"
 
-                if systemctl enable "gdm.service" 1> "/dev/null" 2>&1; then
-                        printf "${C_W}> ${SUC} ${C_G}Enabled "
-                        printf "${C_Y}gdm.service${N_F}.\n\n"
-                else
-                        printf "${C_W}> ${WARN} ${C_R}Cannot enable "
-                        printf "${C_Y}gdm.service${N_F}.\n\n"
-                fi
+        if systemctl enable "gdm.service" 1> "/dev/null" 2>&1; then
+                printf "${C_W}> ${SUC} ${C_G}Enabled "
+                printf "${C_Y}gdm.service${N_F}.\n\n"
+        else
+                printf "${C_W}> ${WARN} ${C_R}Cannot enable "
+                printf "${C_Y}gdm.service${N_F}.\n\n"
         fi
 }
 
