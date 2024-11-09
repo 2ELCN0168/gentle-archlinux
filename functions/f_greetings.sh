@@ -102,7 +102,7 @@ greetings() {
                                 printf "${C_W}> ${ERR} ${C_W}Error while "
                                 printf  "unmounting ${C_C}${i}${C_W}.\n"
 
-                                printf  "You may want to unmount it manually"
+                                printf  "You may want to unmount it manually "
                                 printf  "before starting the installation.\n"
                         fi
                 done
