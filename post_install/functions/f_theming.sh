@@ -93,7 +93,10 @@ create_themes() {
 
         if [[ "${tty_theme}" != "Default" ]]; then
                 for i in "${shellrc[@]}"; do
-                        sed -i "/ID2642/c\source ${path}" "${i}"
+                        # NOTE:
+                        # Replace line with ID2642 by the sourcing of the theme
+                        # selected
+                        sed -i "s/^\(\s*\)# ID2642.*/\1source ${path}/" "${i}"
                 done
         fi
 
