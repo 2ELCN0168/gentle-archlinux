@@ -13,10 +13,14 @@ set_issue() {
 
         if [[ "${ans_issue}" =~ ^[yY]$ ]]; then
                 printf "${C_W}> ${INFO} If you want to change it, edit "
-                printf "the file ${C_P}/etc/issue${N_F} after reboot."
-                printf "\n\n"
-                cp -a "/post_install/files/issue" "/etc/issue" \
+                printf "the file ${C_P}/etc/update_issue.d/update_issue.sh "
+                printf "${N_F} after reboot.\n\n"
+                cp -a "/post_install/files/update_issue.d" "/etc/" \
                 1> "/dev/null" 2>&1
+                cp -a "/post_install/files/systemd/system/update-issue"* \
+                "/etc/systemd/system" 1> "/dev/null" 2>&1
+
+                systemctl enable update-issue.timer 1> "/dev/null" 2>&1
         elif [[ "${ans_issue}" =~ ^[nN]$ ]]; then
                 printf "${C_W}> ${INFO} No /etc/issue file will be "
                 printf "created.\n\n"
