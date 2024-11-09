@@ -83,9 +83,18 @@ create_themes() {
                         ;;
         esac
         
+        local shellrc=(
+                        "/etc/skel/.zshrc" 
+                        "/etc/skel/.bashrc" 
+                        "/root/.zshrc" 
+                        "/root/.bashrc"
+        )
+
+
         if [[ "${tty_theme}" != "Default" ]]; then
-                echo "source ${path}" 1>> "/etc/skel/.bashrc" \
-                1>> "/etc/skel/.zshrc" 1>> "/root/.bashrc" 1>> "/root/.zshrc"
+                for i in "${shellrc[@]}"; do
+                        sed -i "/ID2642/c\source ${path}" "${i}"
+                done
         fi
 
         printf "${C_W}> ${INFO} ${C_W}TTY theme has been set to ${C_C}"
