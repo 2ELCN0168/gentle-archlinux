@@ -54,25 +54,45 @@ cd gentle-archlinux
 - _systemd-networkd._
 
 **_Support for LUKS encrypted partition ;_**
+
 **_Auto-install microcode based on CPU vendor detection ;_**
+
 **_(Choice) - Guest agent for VM installations ;_**
+
 **_(Choice) - Networking tools ;_**
+
 **_(Choice) - Monitoring tools ;_**
+
 **_(Choice) - Helping tools ;_**
+
 **_sshguard/nftables installation ;_**
+
 **_Lock/Unlock root account ;_**
+
 **_Custom vim/neovim configuration files (Basic, suitable for server use) ;_**
+
 **_Custom initcpio based on choices ;_**
+
 **_ZSH + basic plugins for it ;_**
+
 **_Choices for country timezone or keymap ;_**
+
 **_Choices and recommendations for username/hostname/domain-name ;_**
+
 **_Custom .zshrc and .bashrc ;_**
+
 **_Custom TTY themes ;_**
+
 **_Custom motd/issue script ;_**
+
 **_Custom systemd services/timers ;_**
+
 **_Custom environment variables and aliases/functions (+colored output of some commands like lsblk, ping, blkid, traceroute, etc.) ;_**
+
 **_Support for different desktop environments (-c parameter only) ;_**
+
 **_Hardening mode based on ANSI recommendations (Work in progress) ;_**
+
 **_Post-installation scripts for the user ;_**
 
 And a bit more than that but I don't find it useful to write it there.
