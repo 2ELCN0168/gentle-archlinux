@@ -2,6 +2,8 @@
 
 ![Gentle_Arch](assets/0_Gentle_Arch.png)
 
+[![asciicast](https://asciinema.org/a/Q9bjJnyZMZ9IoNqNzCTTdkNDR.png)](https://asciinema.org/a/Q9bjJnyZMZ9IoNqNzCTTdkNDR)
+
 This script is an automated installation of Archlinux.
 As I don't like that much the official "archinstall" script, I decided to do my own.
 
@@ -49,4 +51,3 @@ mmcblk devices are not supported actually.
 - [ ] - Add hardening mode ;
 - [ ] - Adapt sudoers.d config, enable insults, change $SUDO_PROMPT ;
 - [x] - Regex to check username/hostname validity ;
-
