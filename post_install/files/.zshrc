@@ -5,9 +5,19 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' rehash true
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
+
+zmodload zsh/net/tcp
+
+setopt append_history share_history histignorealldups
+
 # PLUGINS #
 
-source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "/usr/share/zsh/plugins/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 PROMPT="%F{red}[%f%B%F{white}%n%f%b%F{red}@%f%F{white}%m%f%F{red}:%f%B%~%b%F{red}]%f(%F{red}%*%f)%F{red}%#%f "
 

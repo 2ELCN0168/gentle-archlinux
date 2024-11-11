@@ -6,7 +6,7 @@
 # No window manager included.
 #
 ### Author: 2ELCN0168
-# Last updated: 2024-11-08
+# Last updated: 2024-11-11
 # 
 ### Dependencies:
 # - pacman;
@@ -15,7 +15,8 @@
 ### Usage:
 #
 # 1. Download a window manager;
-# 2. Installing a theme for sddm.
+# 2. Installing a theme for sddm;
+# 3. Revert to the network manager from the DE to avoid conflicts.
 #
 
 desktop_env() {
@@ -46,6 +47,8 @@ desktop_env() {
 
                 [[ "${ans_gui}" =~ ^[0-7]$ ]] && break || invalid_answer
         done
+
+        [[ "${ans_gui}" -ne 7 ]] && revert_net_manager
 
         case "${ans_gui}" in
                 0) desktop_env="gnome" ;;
@@ -118,4 +121,14 @@ install_sddm() {
         printf "Current=sddm-astronaut-theme\n" >> "/etc/sddm.conf"
         
         printf "\n"
+}
+
+revert_net_manager() {
+
+        printf "${C_W}> ${INFO} ${C_W}The network manager you chose before may "
+        printf "cause conflict with the one from the DE. Your choice will be "
+        printf "discarded.${N_F}\n\n"
+
+        # Defined in f_network_manager.sh
+        net_manager=""
 }
