@@ -19,6 +19,8 @@ source_files() {
     source "${f_path}/configurations/f_set_vim_nvim.sh"
     source "${f_path}/configurations/f_xdg_dirs.sh"
 
+    source "${f_path}/p_full/f_nerd_fonts.sh"
+
     source "${f_path}/f_greetings_pi.sh"
     source "${f_path}/f_hardening_rules.sh"
     source "${f_path}/f_messages.sh"
@@ -96,8 +98,14 @@ main() {
                 set_motd
         fi
 
-        # INSTALL DESKTOP ENVIRONMENT
-        [[ "${param_full}" -eq 1 ]] && desktop_env
+        if [[ "${param_full}" -eq 1 ]]; then
+                
+                # INSTALL DESKTOP ENVIRONMENT
+                desktop_env
+
+                # INSTALL nerd-fonts
+                nerd_fonts
+        fi
         
         # ENABLE GUEST AGENTS
         enable_guest_agents
