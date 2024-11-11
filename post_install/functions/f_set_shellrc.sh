@@ -9,14 +9,17 @@ set_term_env() {
                 cp "/post_install/files/${i}" "/etc/skel/${i}"
         done
 
+        cp -r "/post_install/files/.config" "/etc/skel"
+
         local files=(
                 ".bashrc"
                 ".bash_profile"
                 ".zshrc"
+                ".config"
         )
 
         for i in "${files[@]}"; do
-                cp "/etc/skel/${i}" "/root"
+                cp -r "/etc/skel/${i}" "/root"
         done
 
         [[ ! -e "/etc/shell_config.d" ]] && mkdir "/etc/shell_conf.d"
