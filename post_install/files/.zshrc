@@ -9,8 +9,11 @@ autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' rehash true
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
 
 zmodload zsh/net/tcp
+
+setopt append_history share_history histignorealldups
 
 # PLUGINS #
 
