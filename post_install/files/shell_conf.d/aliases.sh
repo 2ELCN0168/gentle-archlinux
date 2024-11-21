@@ -54,6 +54,8 @@ if [[ "${TERM}" == "linux" ]]; then
         alias _red="source /etc/tty_themes.d/red_impact.sh"
         alias _ryuuko="source /etc/tty_themes.d/ryuuko.sh"
         alias _batman="source /etc/tty_themes.d/batman.sh"
+        alias _synth="source /etc/tty_themes.d/synthwave86.sh"
+        alias _eforest="source /etc/tty_themes.d/everforest_dark.sh"
 fi
 
 # SAFETY

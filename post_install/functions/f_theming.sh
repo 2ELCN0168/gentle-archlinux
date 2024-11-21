@@ -14,8 +14,8 @@ create_themes() {
                 printf "${C_W}[4] - ${C_Y}Mono Amber (dark)${N_F}\n"
                 printf "${C_W}[5] - ${C_G}Mono Green (dark)${N_F}\n"
                 printf "${C_W}[6] - ${C_B}Powershell (medium)${N_F}\n"
-                printf "${C_W}[7] - ${C_Y}Ryuuko (medium)${N_F}\n"
-                printf "${C_W}[8] - ${C_Y}Batman (medium)${N_F}\n"
+                printf "${C_W}[7] - ${C_Y}Synthwave 86 (medium)${N_F}\n"
+                printf "${C_W}[8] - ${C_Y}Everforest (dark)${N_F}\n"
                 printf "${C_W}[9] - ${N_F}Keep default TTY colors\n\n"
 
                 printf "────────────────────────────────────────\n\n"
@@ -69,13 +69,13 @@ create_themes() {
                         theme_brightness=0
                         ;;
                 [7])
-                        tty_theme="Ryuuko"
-                        path="/etc/tty_themes.d/ryuuko.sh"
+                        tty_theme="Synthwave 86"
+                        path="/etc/tty_themes.d/syntwave86.sh"
                         theme_brightness=0
                         ;;
                 [8])
-                        tty_theme="Batman"
-                        path="/etc/tty_themes.d/batman.sh"
+                        tty_theme="Everforest Dark"
+                        path="/etc/tty_themes.d/everforest_dark.sh"
                         theme_brightness=0
                         ;;
                 [9])
