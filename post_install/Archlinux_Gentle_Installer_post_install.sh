@@ -69,6 +69,9 @@ main() {
         
         [[ "${param_minimal}" -ne 1 ]] && set_term_env
 
+        # THEMING
+        [[ "${param_minimal}" -ne 1 ]] && create_themes
+
         # CREATE USER
         ask_newuser
 
@@ -90,7 +93,6 @@ main() {
         if [[ "${param_minimal}" -ne 1 ]]; then
 
                 # THEMING
-                create_themes
                 refind_theming
 
                 # CUSTOMIZE MESSAGES
