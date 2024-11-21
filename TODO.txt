@@ -3,3 +3,5 @@
 Correct while; true on every post_install functions ;
 Correct regex on every post_install functions ;
 Add post_install script for read-only system
+
+!!BUG WITH INSTALL BOOTLOADER LUKS/LVM!!
