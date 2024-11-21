@@ -70,7 +70,7 @@ create_themes() {
                         ;;
                 [7])
                         tty_theme="Synthwave 86"
-                        path="/etc/tty_themes.d/syntwave86.sh"
+                        path="/etc/tty_themes.d/synthwave86.sh"
                         theme_brightness=0
                         ;;
                 [8])
