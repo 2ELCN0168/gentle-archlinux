@@ -155,6 +155,7 @@ alias du='_du -h'
 alias df='_df -h' # May be replaced in "REPLACEMENTS"
 alias free='_free -h'
 alias tree='tree -CQhu --du --sort name'
+alias history='fc -li 1'
 
 # REPLACEMENTS
 if command -v eza 1> "/dev/null" 2>&1; then
