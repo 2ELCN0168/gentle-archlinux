@@ -118,6 +118,9 @@ main() {
         # CONFIGURE SYSTEMD-RESOLVED
         systemd_resolved
 
+        # Need to be redone
+        systemctl enable pacman-filesdb-refresh.timer 1> "/dev/null" 2>&1
+
         # ENDING
         ending
 

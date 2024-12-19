@@ -232,7 +232,7 @@ pacstrap_install() {
         "git" "terminus-font" "openssh" "gparted" "wget" "gdisk" "ntfs-3g"
         "traceroute" "systemctl-tui" "hdparm" "neovim" "vim" "vi" "dos2unix"
         "tree" "fastfetch" "dhclient" "tmux" "arch-audit" "xdg-user-dirs"
-        "arch-install-scripts")
+        "arch-install-scripts" "pacman-contrib")
 
         pacstrap -K "/mnt" "${base_packages[@]}" "${zsh_packages[@]}" \
         "${additionalPackages[@]}" || exit 1
