@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
@@ -13,7 +13,16 @@ zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
 
 zmodload zsh/net/tcp
 
-setopt append_history share_history histignorealldups
+setopt append_history 
+setopt share_history
+setopt extendedglob
+setopt promptsubst
+setopt histignorealldups
+
+# Exit on Ctrl+D even if command line is filled
+exit_zsh() { exit }
+zle -N exit_zsh
+bindkey '^D' exit_zsh
 
 # PLUGINS #
 
